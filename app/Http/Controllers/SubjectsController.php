@@ -20,11 +20,11 @@ class SubjectsController extends Controller
 	);
 
     public function getIndex() {
-    	return view('subjects.index', this->$arrayAsignaturas);
+    	return view('subjects.index', $this->$arrayAsignaturas);
     }
 
     public function getShow($id) {
-    	return view('subjects.show', this->$arrayAsignaturas[id]);
+    	return view('subjects.show', $this->$arrayAsignaturas[id]);
     }
 
     public function getCreate() {
@@ -32,7 +32,7 @@ class SubjectsController extends Controller
     }
 
      public function getEdit($id) {
-     	return view('subjects.edit', this->$arrayAsignaturas[id];
+     	return view('subjects.edit', $this->$arrayAsignaturas[id]);
      }
 
 }

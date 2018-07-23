@@ -21,10 +21,10 @@ Route::get('logout', function () {
     return 'Logout usuario';
 });
 
-Route::get('subjects', 'SubjectsController@subjects.index');
+Route::get('subjects', 'SubjectsController@getIndex');
 
-Route::get('subjects/show/{id}', 'SubjectsController@subjects.show');
+Route::get('subjects/show/{id}', 'SubjectsController@getShow');
 
-Route::get('subjects/create', 'SubjectsController@subjects.create');
+Route::get('subjects/create', 'SubjectsController@getCreate');
 
-Route::get('subjects/edit/{id}', 'SubjectsController@subjects.edit');
+Route::get('subjects/edit/{id}', 'SubjectsController@getEdit');

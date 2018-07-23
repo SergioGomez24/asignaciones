@@ -7,31 +7,67 @@
             Añadir asignatura
          </div>
          <div class="card-body" style="padding:30px">
-
-            {{-- TODO: Abrir el formulario e indicar el método POST --}}
-
-            {{-- TODO: Protección contra CSRF --}}
+         	<form method="POST">
+         		{{ csrf_field() }}
 
             <div class="form-group">
-               <label for="title">Título</label>
-               <input type="text" name="title" id="title" class="form-control">
+               <label for="code">Código</label>
+               <input type="text" name="code" id="code" class="form-control">
             </div>
 
             <div class="form-group">
-               {{-- TODO: Completa el input para el año --}}
+               <label for="name">Nombre</label>
+               <input type="text" name="name" id="name" class="form-control">
             </div>
 
             <div class="form-group">
-               {{-- TODO: Completa el input para el director --}}
+               <label for="certification">Titulación</label>
+               <input type="text" name="certification" id="certification" class="form-control">
             </div>
 
             <div class="form-group">
-               {{-- TODO: Completa el input para el poster --}}
+               <label for="area">Área</label>
+               <input type="text" name="area" id="area" class="form-control">
             </div>
 
             <div class="form-group">
-               <label for="synopsis">Resumen</label>
-               <textarea name="synopsis" id="synopsis" class="form-control" rows="3"></textarea>
+               <label for="campus">Campus</label>
+               <input type="text" name="campus" id="campus" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label for="center">Centro</label>
+               <input type="text" name="center" id="center" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label for="cTheory">Creditos Teoria</label>
+               <input type="number" name="cTheory" id="cTheory" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label for="cSeminar">Creditos Seminario</label>
+               <input type="number" name="cSeminar" id="cSeminar" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label for="cPractice">Creditos Práctica</label>
+               <input type="number" name="cPractice" id="cPractice" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label for="duration">Duración</label>
+               <input type="text" name="duration" id="duration" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label for="imparted">Curso en la que se imparte</label>
+               <input type="text" name="imparted" id="imparted" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label for="typeSubject">Tipo de asignatura</label>
+               <input type="number" name="typeSubject" id="typeSubject" class="form-control">
             </div>
 
             <div class="form-group text-center">
@@ -39,9 +75,7 @@
                    Añadir asignatura
                </button>
             </div>
-
-            {{-- TODO: Cerrar formulario --}}
-
+            </form>
          </div>
       </div>
    </div>
