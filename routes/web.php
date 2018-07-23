@@ -11,6 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@getHome');
+
+Route::get('login', function () {
+    return view('auth.login');
 });
+
+Route::get('logout', function () {
+    return 'Logout usuario';
+});
+
+Route::get('subjects', 'SubjectsController@subjects.index');
+
+Route::get('subjects/show/{id}', 'SubjectsController@subjects.show');
+
+Route::get('subjects/create', 'SubjectsController@subjects.create');
+
+Route::get('subjects/edit/{id}', 'SubjectsController@subjects.edit');
