@@ -3,28 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Subject;
 
 class SubjectsController extends Controller
 {
-	private $arrayAsignaturas = array(
-		array(
-			'code' => '1234',
-			'name' => 'Programacion', 
-			'coordinador' => 'Francis Ford'
-		),
-		array(
-			'code' => '567',
-			'name' => 'Algebra', 
-			'coordinador' => 'Francis Ford'
-		)
-	);
 
     public function getIndex() {
-    	return view('subjects.index', $this->$arrayAsignaturas);
+    	$arrayAsignaturas = Subject::all();
+
+    	return view('subjects.index', ['arrayAsignaturas' => $arrayAsignaturas]);
     }
 
     public function getShow($id) {
-    	return view('subjects.show', $this->$arrayAsignaturas[id]);
+    	$asignatura = Subject::findOrFail($id);
+
+    	return view('subjects.show', ['asignatura' => $asignatura]);
     }
 
     public function getCreate() {
@@ -32,7 +25,9 @@ class SubjectsController extends Controller
     }
 
      public function getEdit($id) {
-     	return view('subjects.edit', $this->$arrayAsignaturas[id]);
+		$asignatura = Subject::findOrFail($id); 
+		    	
+     	return view('subjects.edit', ['asignatura' => $asignatura]);
      }
 
 }
