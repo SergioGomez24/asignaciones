@@ -12,19 +12,19 @@
 */
 
 Route::get('/', 'HomeController@getHome');
+Auth::routes();
 
-Route::get('login', function () {
-    return view('auth.login');
+Route::group(['middleware' => 'auth'], function() {
+
+	Route::get('subjects', 'SubjectsController@getIndex');
+
+	Route::get('subjects/show/{id}', 'SubjectsController@getShow');
+
+	Route::get('subjects/create', 'SubjectsController@getCreate');
+
+	Route::get('subjects/edit/{id}', 'SubjectsController@getEdit');
+
+	Route::get('/home', 'HomeController@index')->name('home');
 });
 
-Route::get('logout', function () {
-    return 'Logout usuario';
-});
 
-Route::get('subjects', 'SubjectsController@getIndex');
-
-Route::get('subjects/show/{id}', 'SubjectsController@getShow');
-
-Route::get('subjects/create', 'SubjectsController@getCreate');
-
-Route::get('subjects/edit/{id}', 'SubjectsController@getEdit');

@@ -6,6 +6,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        @if( Auth::check() )
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item {{ Request::is('subjects') && ! Request::is('subjects/create')? 'active' : ''}}">
@@ -32,5 +33,6 @@
                 </li>
             </ul>
         </div>
+        @endif
     </div>
 </nav>

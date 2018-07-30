@@ -68,7 +68,7 @@
 
             <div class="form-group">
                <label for="typeSubject">Tipo de asignatura</label>
-               <input type="number" name="typeSubject" id="typeSubject" value={{$asignatura->typeSubject}} class="form-control">
+               <input type="text" name="typeSubject" id="typeSubject" value={{$asignatura->typeSubject}} class="form-control">
             </div>
 
             <div class="form-group text-center">
