@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@getHome');
+Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
@@ -21,10 +21,12 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('subjects/show/{id}', 'SubjectsController@getShow');
 
 	Route::get('subjects/create', 'SubjectsController@getCreate');
+	Route::POST('subjects/create', 'SubjectsController@postCreate');
 
 	Route::get('subjects/edit/{id}', 'SubjectsController@getEdit');
+	Route::PUT('subjects/edit/{id}', 'SubjectsController@putEdit');
 
-	Route::get('/home', 'HomeController@index')->name('home');
+	//Route::get('/', 'HomeController@index');
 });
 
 
