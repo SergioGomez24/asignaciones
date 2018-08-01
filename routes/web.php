@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('subjects/edit/{id}', 'SubjectsController@getEdit');
 	Route::PUT('subjects/edit/{id}', 'SubjectsController@putEdit');
 
+	Route::DELETE('/subjects/delete/{id}', 'SubjectsController@deleteSubject');
+
 	//Route::get('/', 'HomeController@index');
 });
 

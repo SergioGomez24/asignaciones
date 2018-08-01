@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subject;
+use Notification;
 
 class SubjectsController extends Controller
 {
@@ -45,7 +46,7 @@ class SubjectsController extends Controller
         $a->imparted = $request->input('imparted');
         $a->typeSubject = $request->input('typeSubject');
         $a->save();
-        //Notification::success('La asignatura se ha guardado exitosamente!');
+        Notification::success('La asignatura se ha guardado exitosamente!');
         return redirect('/subjects');
     }
 
@@ -64,8 +65,15 @@ class SubjectsController extends Controller
         $a->imparted = $request->input('imparted');
         $a->typeSubject = $request->input('typeSubject');
         $a->save();
-        //Notification::success('La asignatura ha sido modificada exitosamente!');
+        Notification::success('La asignatura ha sido modificada exitosamente!');
         return redirect('/subjects/show/'.$id);
+    }
+
+    public function deleteSubject(Request $request, $id){
+        $a = Subject::findOrFail($id);
+        $a->delete();
+        Notification::success('La asignatura fue eliminada exitosamente!');
+        return redirect('/subjects');
     }
 
 }

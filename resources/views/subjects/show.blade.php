@@ -22,6 +22,14 @@
       		<a class="btn btn-default" href="{{ url('/subjects') }}" role="button">
         	Volver al listado
       		</a>
+
+      		<form action="{{action('SubjectsController@deleteSubject', $asignatura->id)}}" method="POST" style="display:inline">
+        		{{ method_field('DELETE') }}
+        		{{ csrf_field() }}
+        		<button type="submit" class="btn btn-default" style="display:inline">
+          			Eliminar asignatura
+        		</button>
+      		</form>
 		</div>
 	</div>
 @stop
