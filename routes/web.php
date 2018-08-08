@@ -10,11 +10,26 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'HomeController@index');
+Route::GET('/logout', 'Auth\LoginController@logout');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
+
+	Route::GET('/', function(){
+		if(Auth::check()){
+			 return Redirect::action('SubjectsController@getIndex');
+		}else {
+			return Redirect::action('HomeController@index');
+		}
+	});
+
+	Route::get('/home', function(){
+		if(Auth::check()){
+			 return Redirect::action('SubjectsController@getIndex');
+		}else {
+			return Redirect::action('HomeController@index');
+		}
+	});
 
 	Route::get('subjects', 'SubjectsController@getIndex');
 
@@ -28,7 +43,6 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::DELETE('/subjects/delete/{id}', 'SubjectsController@deleteSubject');
 
-	//Route::get('/', 'HomeController@index');
 });
 
 
