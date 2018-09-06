@@ -9,29 +9,34 @@ use Notification;
 class SubjectsController extends Controller
 {
 
-    public function getIndex() {
+    public function getIndex() 
+    {
     	$arrayAsignaturas = Subject::all();
 
     	return view('subjects.index', ['arrayAsignaturas' => $arrayAsignaturas]);
     }
 
-    public function getShow($id) {
+    public function getShow($id) 
+    {
     	$asignatura = Subject::findOrFail($id);
 
     	return view('subjects.show', ['asignatura' => $asignatura]);
     }
 
-    public function getCreate() {
+    public function getCreate() 
+    {
     	return view('subjects.create');
     }
 
-     public function getEdit($id) {
+     public function getEdit($id) 
+     {
 		$asignatura = Subject::findOrFail($id); 
 		    	
      	return view('subjects.edit', ['asignatura' => $asignatura]);
      }
 
-     public function postCreate(Request $request){
+     public function postCreate(Request $request) 
+     {
         $a = new Subject;
         $a->name = $request->input('name');
         $a->code = $request->input('code');
@@ -50,7 +55,8 @@ class SubjectsController extends Controller
         return redirect('/subjects');
     }
 
-    public function putEdit(Request $request, $id){
+    public function putEdit(Request $request, $id)
+    {
         $a = Subject::findOrFail($id);
         $a->name = $request->input('name');
         $a->code = $request->input('code');
@@ -69,7 +75,8 @@ class SubjectsController extends Controller
         return redirect('/subjects/show/'.$id);
     }
 
-    public function deleteSubject(Request $request, $id){
+    public function deleteSubject(Request $request, $id)
+    {
         $a = Subject::findOrFail($id);
         $a->delete();
         Notification::success('La asignatura fue eliminada exitosamente!');

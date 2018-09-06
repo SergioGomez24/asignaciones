@@ -17,9 +17,9 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::GET('/', function(){
 		if(Auth::check()){
-			 return view('home');
+			return view('home');
 		}else {
-			return Redirect::action('HomeController@login');
+			return Redirect::action('HomeController@getLogin');
 		}
 	});
 

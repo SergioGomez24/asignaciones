@@ -1,14 +1,22 @@
 @extends('layouts.master')
 @section('content')
-	<div class="row">
-		@foreach( $arrayAsignaturas as $key => $asignatura )
-		<div class="col-xs-6 col-sm-4 col-md-3 text-center">
-			<a href="{{ url('/subjects/show/' . $asignatura->id ) }}">
-				<h4 style="min-height:45px;margin:5px 0 10px 0">
+	<div class="row" style="margin-top:40px">
+   	  <div class="col-md-12">
+        <div class="card">
+          <div class="card-header text-center">
+            Lista de asignaturas
+          </div>
+          <div class="card-body">	
+		  @foreach( $arrayAsignaturas as $key => $asignatura )
+			  <a href="{{ url('/subjects/show/' . $asignatura->id ) }}">
+			    <h5 style="min-height:35px;margin:5px">
 					{{$asignatura->name}}
-				</h4>
-			</a>
-		</div>
-		@endforeach
+				</h5>
+				<hr /> 
+			  </a>
+		  @endforeach
+		  </div>
+	    </div>
+	  </div>
 	</div>
 @stop
