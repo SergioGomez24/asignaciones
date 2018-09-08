@@ -7,7 +7,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ url('/assets/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url('/assets/bootstrap/js/bootstrap.min.js') }}">
+
+    <script src="{{ url('/assets/bootstrap/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url('/assets/bootstrap/popper.min.js') }}"></script>
+
+    <script src="{{ url('/assets/bootstrap/js/bootstrap.min.js') }}"></script>
 
   </head>
   <body>

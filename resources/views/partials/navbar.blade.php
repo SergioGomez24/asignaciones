@@ -10,6 +10,7 @@
         @if( Auth::check() )
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                <!--
                 <li class="nav-item {{ Request::is('subjects') && ! Request::is('subjects/create')? 'active' : ''}}">
                     <a class="nav-link" href="{{url('/subjects')}}">
                         <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
@@ -21,7 +22,24 @@
                         <span>&#10010</span> Añadir asignatura
                     </a>
                 </li>
+                -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Asignaturas
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{url('/subjects')}}">Lista de Asignaturas</a>
+                        <a class="dropdown-item" href="{{url('/subjects/create')}}"><span>&#10010</span>Añadir Asignatura</a>
+                    </div>
+                </li>
             </ul>
+
+
+            <div class="dropdown-menu">
+                <h6 class="dropdown-header">Dropdown header</h6>
+                <a class="dropdown-item" href="#">Lista de Asignaturas</a>
+                <a class="dropdown-item" href="#">Añadir Asignatura</a>
+            </div>
 
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
