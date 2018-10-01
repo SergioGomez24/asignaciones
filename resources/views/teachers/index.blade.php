@@ -4,13 +4,13 @@
    	  <div class="col-md-12">
         <div class="card">
           <div class="card-header text-center">
-            Lista de asignaturas
+            Lista de profesores
           </div>
           <div class="card-body">	
-		  @foreach( $arrayAsignaturas as $key => $asignatura )
-			  <a href="{{ url('/subjects/show/' . $asignatura->id ) }}">
+		  @foreach( $arrayProfesores as $key => $profesor )
+			  <a href="{{ url('/teachers/show/' . $profesor->id ) }}">
 			    <h5 style="min-height:35px;margin:5px;color:#000000">
-					{{$asignatura->name}}
+					{{$profesor->name}}
 				</h5>
 				<hr /> 
 			  </a>

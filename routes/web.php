@@ -13,6 +13,7 @@
 Route::GET('/logout', 'Auth\LoginController@logout');
 Auth::routes();
 
+/* Rutas de Subjects */
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::GET('/', function(){
@@ -37,4 +38,19 @@ Route::group(['middleware' => 'auth'], function() {
 
 });
 
+/* Rutas de Teachers */
+Route::group(['middleware' => 'auth'], function() {
 
+	Route::get('teachers', 'TeachersController@getIndex');
+
+	Route::get('teachers/show/{id}', 'TeachersController@getShow');
+
+	Route::get('teachers/create', 'TeachersController@getCreate');
+	Route::POST('teachers/create', 'TeachersController@postCreate');
+
+	Route::get('teachers/edit/{id}', 'TeachersController@getEdit');
+	Route::PUT('teachers/edit/{id}', 'TeachersController@putEdit');
+
+	Route::DELETE('/teachers/delete/{id}', 'TeachersController@deleteTeacher');
+
+});

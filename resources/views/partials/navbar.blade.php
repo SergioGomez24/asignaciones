@@ -34,13 +34,6 @@
                 </li>
             </ul>
 
-
-            <div class="dropdown-menu">
-                <h6 class="dropdown-header">Dropdown header</h6>
-                <a class="dropdown-item" href="#">Lista de Asignaturas</a>
-                <a class="dropdown-item" href="#">Añadir Asignatura</a>
-            </div>
-
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
                     <form action="{{ url('/logout') }}" method="POST" style="display:inline">
