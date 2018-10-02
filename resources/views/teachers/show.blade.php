@@ -7,17 +7,12 @@
             <h2> {{$profesor->name}} </h2>
           </div>
           <div class="card-body">
-      		  <h5> Código: {{$asignatura->code}} </h5>
-      		  <h5> Titulación: {{$asignatura->certification}} </h5>
-      		  <h5> Area: {{$asignatura->area}} </h5>
-      		  <h5> Campus: {{$asignatura->campus}} </h5>
-      		  <h5> Centro: {{$asignatura->center}} </h5>
-      		  <h5> Créditos teoria: {{$asignatura->cTheory}} </h5>
-      		  <h5> Créditos seminario: {{$asignatura->cSeminar}} </h5>
-      		  <h5> Créditos prácticas: {{$asignatura->cPractice}} </h5>
-      		  <h5> Duración: {{$asignatura->duration}} </h5>
-      		  <h5> Curso en la que se imparte: {{$asignatura->imparted}} </h5>
-      		  <h5> Tipo de asignatura: {{$asignatura->typeSubject}} </h5>
+      		  <h5> DNI: {{$profesor->dni}} </h5>
+      		  <h5> Categoría: {{$profesor->category}} </h5>
+      		  <h5> Area: {{$profesor->area}} </h5>
+      		  <h5> Créditos iniciales: {{$profesor->cInitial}} </h5>
+      		  <h5> Fecha inicio categoría: {{$profesor->dateCategory}} </h5>
+      		  <h5> Fecha inicio UCA: {{$profesor->dateUCA}} </h5>
 
       		  <a class="btn btn-warning" href="{{ url('/teachers/edit/'.$profesor->id) }}" role="button" style="margin-right: 15px">
         	   Editar profesor

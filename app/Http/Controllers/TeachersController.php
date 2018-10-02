@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Teacher;
 use Notification;
 
-class SubjectsController extends Controller
+class TeachersController extends Controller
 {
 
     public function getIndex() 
@@ -37,42 +37,32 @@ class SubjectsController extends Controller
 
      public function postCreate(Request $request) 
      {
-        $a = new Subject;
-        $a->name = $request->input('name');
-        $a->code = $request->input('code');
-        $a->certification = $request->input('certification');
-        $a->area = $request->input('area');
-        $a->campus = $request->input('campus');
-        $a->center = $request->input('center');
-        $a->cTheory = $request->input('cTheory');
-        $a->cSeminar = $request->input('cSeminar');
-        $a->cPractice = $request->input('cPractice');
-        $a->duration = $request->input('duration');
-        $a->imparted = $request->input('imparted');
-        $a->typeSubject = $request->input('typeSubject');
-        $a->save();
+        $t = new Teacher;
+        $t->name = $request->input('name');
+        $t->dni = $request->input('dni');
+        $t->category = $request->input('category');
+        $t->area = $request->input('area');
+        $t->cInitial = $request->input('cInitial');
+        $t->dateCategory = $request->input('dateCategory');
+        $t->dateUCA = $request->input('dateUCA');
+        $t->save();
         Notification::success('El profesor se ha guardado exitosamente!');
         return redirect('/teachers');
     }
 
     public function putEdit(Request $request, $id)
     {
-        $a = Subject::findOrFail($id);
-        $a->name = $request->input('name');
-        $a->code = $request->input('code');
-        $a->certification = $request->input('certification');
-        $a->area = $request->input('area');
-        $a->campus = $request->input('campus');
-        $a->center = $request->input('center');
-        $a->cTheory = $request->input('cTheory');
-        $a->cSeminar = $request->input('cSeminar');
-        $a->cPractice = $request->input('cPractice');
-        $a->duration = $request->input('duration');
-        $a->imparted = $request->input('imparted');
-        $a->typeSubject = $request->input('typeSubject');
-        $a->save();
-        Notification::success('La asignatura ha sido modificado exitosamente!');
-        return redirect('/subjects/show/'.$id);
+        $t = Teacher::findOrFail($id);
+        $t->name = $request->input('name');
+        $t->dni = $request->input('dni');
+        $t->category = $request->input('category');
+        $t->area = $request->input('area');
+        $t->cInitial = $request->input('cInitial');
+        $t->dateCategory = $request->input('dateCategory');
+        $t->dateUCA = $request->input('dateUCA');
+        $t->save();
+        Notification::success('El profesor ha sido modificado exitosamente!');
+        return redirect('/teachers/show/'.$id);
     }
 
     public function deleteTeacher(Request $request, $id)

@@ -32,6 +32,16 @@
                         <a class="dropdown-item" href="{{url('/subjects/create')}}"><span>&#10010</span>Añadir Asignatura</a>
                     </div>
                 </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Profesores
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{url('/teachers')}}">Lista de Profesores</a>
+                        <a class="dropdown-item" href="{{url('/teachers/create')}}"><span>&#10010</span>Añadir Profesor</a>
+                    </div>
+                </li>
             </ul>
 
             <ul class="navbar-nav navbar-right">
