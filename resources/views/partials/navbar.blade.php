@@ -55,6 +55,16 @@
                 </li>
             </ul>
         </div>
+        @else
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarte') }}</a>
+                </li>
+            </ul>
         @endif
     </div>
 </nav>
