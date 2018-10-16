@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ url('/assets/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/master.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/master.css') }}">
 
     <script src="{{ url('/assets/bootstrap/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ url('/assets/bootstrap/popper.min.js') }}"></script>
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    <a href="{{ url('/') }}"><img src={{ asset('img/ESI.jpg') }} id="logo"/></a>
+    <!-- Header -->
     @include('partials.navbar')
     <div class="container">
     @notification()
