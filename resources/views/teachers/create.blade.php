@@ -4,7 +4,7 @@
    <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header text-center">
-            Añadir profesor
+            <h5> Añadir profesor </h5>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST">

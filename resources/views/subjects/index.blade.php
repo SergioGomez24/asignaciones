@@ -4,7 +4,7 @@
    	  <div class="col-md-12">
         <div class="card">
           <div class="card-header text-center">
-            Lista de asignaturas
+            <h5> Lista de asignaturas </h5>
           </div>
           <div class="card-body">	
 		  @foreach( $arrayAsignaturas as $key => $asignatura )

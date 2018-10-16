@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a href="{{ url('/') }}"><img src={{ asset('img/UCALogo.png') }} height="50" width="250" id="logo"/></a>
+        <a href="{{ url('/') }}"><img src={{ asset('img/UCALogo.png') }} height="50" width="200" id="logo"/></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
