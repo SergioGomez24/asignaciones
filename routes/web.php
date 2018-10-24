@@ -54,3 +54,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::DELETE('/teachers/delete/{id}', 'TeachersController@deleteTeacher');
 
 });
+
+Route::get('requests',['middleware' => 'auth', function() {
+	return view('requests');
+]});
