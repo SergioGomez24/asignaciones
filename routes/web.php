@@ -57,4 +57,4 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::get('requests',['middleware' => 'auth', function() {
 	return view('requests');
-]});
+}]);

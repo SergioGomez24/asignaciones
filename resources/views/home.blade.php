@@ -16,7 +16,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <a href="#" role="button" class="btn btn-primary" aria-pressed="true">Iniciar solicitud</a>
+                    <a href="{{url('/requests')}}" role="button" class="btn btn-primary" aria-pressed="true">Iniciar solicitud</a>
                 </div>
             </div>
         </div>
