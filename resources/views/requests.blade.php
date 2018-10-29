@@ -13,14 +13,44 @@
          			<form method="POST">
          			{{ csrf_field() }}
 
-            		<div class="form-group">
-            			<h6> Base de Datos </h6>
-               			<label for="credT">Creditos Teoria</label>
-               			<input type="text" name="credT" id="credT" class="form-control">
-               			<label for="credP">Creditos Prácticas</label>
-               			<input type="text" name="credP" id="credP" class="form-control">
-               			<label for="credS">Creditos Seminarios</label>
-               			<input type="text" name="credS" id="credS" class="form-control">
+         			<h6> Curso:{{ $course }} </h6>
+
+         			<h6> Base de Datos </h6>
+            		<div class="form-group row">
+            			<div class="credT" style="margin-left:15px">
+							<label for="credT" >Creditos Teoria</label>
+               				<input type="text" name="credT" id="credT" class="form-control" placeholder="1-3 créditos">
+               			</div>
+               			<div class="credP" style="margin-left:15px">
+							<label for="credP">Creditos Prácticas</label>
+               				<input type="text" name="credP" id="credP" class="form-control" placeholder="1-3 créditos">
+               			</div>
+               			<div class="clasS" style="margin-left:15px">
+               				<label for="credS">Creditos Seminarios</label>
+               				<input type="text" name="credS" id="credS" class="form-control" placeholder="1-3 créditos">
+               			</div>
+            		</div>
+
+            		<h6> Programación web </h6>
+            		<div class="form-group row">
+            			<div class="credT" style="margin-left:15px">
+							<label for="credT" >Creditos Teoria</label>
+               				<input type="text" name="credT" id="credT" class="form-control" placeholder="1-3 créditos">
+               			</div>
+               			<div class="credP" style="margin-left:15px">
+							<label for="credP">Creditos Prácticas</label>
+               				<input type="text" name="credP" id="credP" class="form-control" placeholder="1-3 créditos">
+               			</div>
+               			<div class="clasS" style="margin-left:15px">
+               				<label for="credS">Creditos Seminarios</label>
+               				<input type="text" name="credS" id="credS" class="form-control" placeholder="1-3 créditos">
+               			</div>
+            		</div>
+
+            		<div class="form-group text-center">
+               			<button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">
+                   		enviar
+               			</button>
             		</div>
 
             	 	</form>

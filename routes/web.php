@@ -1,4 +1,5 @@
 <?php
+use App\Course;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,6 +11,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::GET('/logout', 'Auth\LoginController@logout');
 Auth::routes();
 
@@ -56,5 +58,6 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 Route::get('requests',['middleware' => 'auth', function() {
-	return view('requests');
+	$course = Course::all()->last();
+	return view('requests',['course' => $course]);
 }]);
