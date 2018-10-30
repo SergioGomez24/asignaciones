@@ -1,5 +1,4 @@
 <?php
-use App\Course;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +56,13 @@ Route::group(['middleware' => 'auth'], function() {
 
 });
 
-Route::get('requests',['middleware' => 'auth', function() {
-	$course = Course::all()->last();
-	return view('requests',['course' => $course]);
-}]);
+/* Rutas de Solicitudes */
+Route::group(['middleware' => 'auth'], function() {
+
+	Route::get('application', 'ApplicationController@getIndex');
+
+	Route::get('application/create', 'ApplicationController@getCreate');
+
+
+
+});

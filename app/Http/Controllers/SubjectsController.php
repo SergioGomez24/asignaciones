@@ -50,6 +50,7 @@ class SubjectsController extends Controller
         $a->duration = $request->input('duration');
         $a->imparted = $request->input('imparted');
         $a->typeSubject = $request->input('typeSubject');
+        $a->coordinator = $request->input('coordinator');
         $a->save();
         Notification::success('La asignatura se ha guardado exitosamente!');
         return redirect('/subjects');
@@ -70,6 +71,7 @@ class SubjectsController extends Controller
         $a->duration = $request->input('duration');
         $a->imparted = $request->input('imparted');
         $a->typeSubject = $request->input('typeSubject');
+        $a->coordinator = $request->input('coordinator');
         $a->save();
         Notification::success('La asignatura ha sido modificada exitosamente!');
         return redirect('/subjects/show/'.$id);

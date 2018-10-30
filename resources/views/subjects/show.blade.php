@@ -18,6 +18,7 @@
       		  <h5> Duración: {{$asignatura->duration}} </h5>
       		  <h5> Curso en la que se imparte: {{$asignatura->imparted}} </h5>
       		  <h5> Tipo de asignatura: {{$asignatura->typeSubject}} </h5>
+            <h5> Coordinador: {{$asignatura->coordinator}} </h5>
 
       		  <a class="btn btn-warning" href="{{ url('/subjects/edit/'.$asignatura->id) }}" role="button" style="margin-right: 15px">
         	   Editar asignatura

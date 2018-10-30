@@ -13,7 +13,7 @@
          			<form method="POST">
          			{{ csrf_field() }}
 
-         			<h6> Curso:{{ $course }} </h6>
+         			<h5 class="text-center"> Curso: {{$course->course}} </h5>
 
          			<h6> Base de Datos </h6>
             		<div class="form-group row">
