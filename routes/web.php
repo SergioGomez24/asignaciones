@@ -14,16 +14,16 @@
 Route::GET('/logout', 'Auth\LoginController@logout');
 Auth::routes();
 
-/* Rutas de Subjects */
-Route::group(['middleware' => 'auth'], function() {
-
-	Route::GET('/', function(){
+Route::GET('/', function(){
 		if(Auth::check()){
 			return view('home');
 		}else {
 			return Redirect::action('HomeController@getLogin');
 		}
-	});
+});
+
+/* Rutas de Subjects */
+Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('subjects', 'SubjectsController@getIndex');
 
