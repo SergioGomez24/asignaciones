@@ -27,6 +27,7 @@ class CreateSubjectsTable extends Migration
             $table->string('duration');
             $table->string('imparted');
             $table->string('typeSubject');
+            $table->string('coordinator');
             $table->timestamps();
         });
     }
