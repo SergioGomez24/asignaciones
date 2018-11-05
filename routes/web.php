@@ -11,14 +11,14 @@
 |
 */
 
-Route::GET('/logout', 'Auth\LoginController@logout');
 Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::GET('/', function(){
+Route::get('/', function(){
 		if(Auth::check()){
 			return view('home');
 		}else {
-			return Redirect::action('HomeController@getLogin');
+			return view('auth.login');
 		}
 });
 
@@ -30,12 +30,12 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('subjects/show/{id}', 'SubjectsController@getShow');
 
 	Route::get('subjects/create', 'SubjectsController@getCreate');
-	Route::POST('subjects/create', 'SubjectsController@postCreate');
+	Route::post('subjects/create', 'SubjectsController@postCreate');
 
 	Route::get('subjects/edit/{id}', 'SubjectsController@getEdit');
-	Route::PUT('subjects/edit/{id}', 'SubjectsController@putEdit');
+	Route::put('subjects/edit/{id}', 'SubjectsController@putEdit');
 
-	Route::DELETE('/subjects/delete/{id}', 'SubjectsController@deleteSubject');
+	Route::delete('/subjects/delete/{id}', 'SubjectsController@deleteSubject');
 
 });
 
@@ -47,12 +47,12 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('teachers/show/{id}', 'TeachersController@getShow');
 
 	Route::get('teachers/create', 'TeachersController@getCreate');
-	Route::POST('teachers/create', 'TeachersController@postCreate');
+	Route::post('teachers/create', 'TeachersController@postCreate');
 
 	Route::get('teachers/edit/{id}', 'TeachersController@getEdit');
-	Route::PUT('teachers/edit/{id}', 'TeachersController@putEdit');
+	Route::put('teachers/edit/{id}', 'TeachersController@putEdit');
 
-	Route::DELETE('/teachers/delete/{id}', 'TeachersController@deleteTeacher');
+	Route::delete('/teachers/delete/{id}', 'TeachersController@deleteTeacher');
 
 });
 
