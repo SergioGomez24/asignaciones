@@ -20,21 +20,8 @@
       		  <h5> Tipo de asignatura: {{$asignatura->typeSubject}} </h5>
             <h5> Coordinador: {{$asignatura->coordinator}} </h5>
 
-      		  <a class="btn btn-warning" href="{{ url('/subjects/edit/'.$asignatura->id) }}" role="button" style="margin-right: 15px">
-        	   Editar asignatura
+      		  <a class="btn btn-default" href="{{ url('/subjects') }}" role="button" style="margin-right: 15px">Volver al listado
       		  </a>
-      		
-      		  <a class="btn btn-default" href="{{ url('/subjects') }}" role="button" style="margin-right: 15px">
-        	   Volver al listado
-      		  </a>
-
-      		  <form action="{{action('SubjectsController@deleteSubject', $asignatura->id)}}" method="POST" style="display:inline">
-        		  {{ method_field('DELETE') }}
-        		  {{ csrf_field() }}
-        		  <button type="submit" class="btn btn-default" style="display:inline">
-          			 Eliminar asignatura
-        		  </button>
-      		  </form>
           </div>
         </div>
 		</div>

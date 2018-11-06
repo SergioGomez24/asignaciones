@@ -20,7 +20,7 @@ Route::get('/', function(){
 		}else {
 			return view('auth.login');
 		}
-});
+})->middleware('auth');
 
 /* Rutas de Subjects */
 Route::group(['middleware' => 'auth'], function() {

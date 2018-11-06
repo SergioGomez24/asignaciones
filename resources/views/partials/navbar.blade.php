@@ -9,6 +9,10 @@
         @if( Auth::check() )
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('/')}}">Inicio</a>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                     Asignaturas
@@ -48,7 +52,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarte') }}</a>
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registrate') }}</a>
                 </li>
             </ul>
         @endif
