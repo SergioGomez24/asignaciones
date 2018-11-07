@@ -1,5 +1,13 @@
 @extends('layouts.master')
 @section('content')
+<script language="JavaScript"> 
+function pregunta(){ 
+    if (confirm('¿Estas seguro de que quieres borrar esta asignatura?')){ 
+       document.formBorrar.submit() 
+    } 
+} 
+</script>
+
 	<div class="row" style="margin-top:40px">
    	  <div class="col-md-12">
         <div class="card">
@@ -8,17 +16,22 @@
           </div>
           <div class="card-body">	
 		  @foreach( $arrayAsignaturas as $key => $asignatura )
-			<a href="{{ url('/subjects/show/' . $asignatura->id ) }}">
-				<h5 style="min-height:35px;margin:5px;color:#000000">
-					{{$asignatura->name}}
-				</h5>
-			</a>
-			<a class="fas" href="{{ url('/subjects/edit/'.$asignatura->id) }}" style="margin-left: 850px">&#xf044</a>
-
-			<a class="fas" href="{{ url('/subjects/delete/'.$asignatura->id) }}" style="margin-left: 900px">&#xf2ed</a>
-					
-			<hr /> 
-			  
+		  <div id="nombreAsignatura">
+			<h5><a href="{{ url('/subjects/show/' . $asignatura->id ) }}" style="color: #000000;">{{$asignatura->name}}</a></h5>
+		  </div>
+		  <div id="iconoEditar">
+			<a class="fas" href="{{ url('/subjects/edit/'.$asignatura->id) }}" style="color: #000000;">&#xf044</a>
+		  </div>
+		  <div id="iconoBorrar">
+		  	<form name="formBorrar" action="{{action('SubjectsController@deleteSubject', $asignatura->id)}}" method="POST" style="display:inline">
+        		  {{ method_field('DELETE') }}
+        		  {{ csrf_field() }}
+        		  <button type="submit" class="fas" onclick="pregunta()" style="display:inline">&#xf2ed
+        		  </button>
+      		</form>
+			<!--<a class="fas" href="{{ url('/subjects/delete/'.$asignatura->id) }}" style="color: #000000;">&#xf2ed</a>-->
+		  </div>	
+		  </br><hr />
 		  @endforeach
 		  </div>
 	    </div>
