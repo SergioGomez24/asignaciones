@@ -2,14 +2,25 @@ body {
   background-color: #F4D03F;
 }
 
-#nombreAsignatura, #iconoEditar, #iconoBorrar {
+#nombrelist {
 	float: left;
 }
 
 #iconoEditar  {
-	margin-left: 800px;
+	float: right;
+	margin-right: 80px;
 }
 
 #iconoBorrar {
-	margin-left: 50px;
+	float: right;
+	margin-right: 10px;
+}
+
+#titlistado {
+	float: left;
+	margin-left: 440px;
+}
+
+#btnAñadir {
+	float: right;
 }

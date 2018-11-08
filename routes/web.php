@@ -59,9 +59,9 @@ Route::group(['middleware' => 'auth'], function() {
 /* Rutas de Solicitudes */
 Route::group(['middleware' => 'auth'], function() {
 
-	Route::get('application', 'ApplicationController@getIndex');
+	Route::get('applications', 'ApplicationsController@getIndex');
 
-	Route::get('application/create', 'ApplicationController@getCreate');
+	Route::get('applications/create', 'ApplicationsController@getCreate');
 
 
 

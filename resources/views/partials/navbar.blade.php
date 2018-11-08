@@ -14,23 +14,11 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    Asignaturas
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{url('/subjects')}}">Lista de Asignaturas</a>
-                        <a class="dropdown-item" href="{{url('/subjects/create')}}"><span>&#10010</span>Añadir Asignatura</a>
-                    </div>
+                    <a class="nav-link" href="{{url('/subjects')}}" >Asignaturas</a>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    Profesores
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{url('/teachers')}}">Lista de Profesores</a>
-                        <a class="dropdown-item" href="{{url('/teachers/create')}}"><span>&#10010</span>Añadir Profesor</a>
-                    </div>
+                    <a class="nav-link" href="{{url('/teachers')}}">Profesores</a>
                 </li>
             </ul>
 

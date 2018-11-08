@@ -8,13 +8,20 @@ use App\Application;
 use App\Subject;
 use Notification;
 
-class ApplicationController extends Controller
+class ApplicationsController extends Controller
 {
 	public function getIndex() 
     {
     	$arraySolicitudes = Application::all();
 
-    	return view('application.index', ['arraySolicitudes' => $arraySolicitudes]);
+    	return view('applications.index', ['arraySolicitudes' => $arraySolicitudes]);
+    }
+
+    public function getShow($id)
+    {
+        $solicitud = Application::findOrFail($id);
+
+        return view('applications.show', ['solicitud' => $solicitud]);
     }
 
     public function getCreate() 
@@ -22,7 +29,22 @@ class ApplicationController extends Controller
     	$course = Course::all()->last();
     	$arrayAsignaturas = Subject::all();
 
-		return view('application.create')->with('course',$course)
+		return view('applications.create')->with('course',$course)
 										 ->with('arrayAsignaturas',$arrayAsignaturas);
+    }
+
+    public function postCreate(Request $request) 
+     {
+        $a = new Application;
+        $a->name = $request->input('name');
+        $a->code = $request->input('code');
+        $a->certification = $request->input('certification');
+        $a->area = $request->input('area');
+        $a->campus = $request->input('campus');
+        $a->center = $request->input('center');
+        $a->cTheory = $request->input('cTheory');
+        $a->save();
+        Notification::success('La solicitud se ha guardado exitosamente!');
+        return redirect('/applications');
     }
 }
