@@ -48,3 +48,21 @@ class ApplicationsController extends Controller
         return redirect('/applications');
     }
 }
+
+
+/*
+public function guardar(Request $request)
+{
+   foreach ($request->all() as $req){
+        $cronograma = new Cronograma();
+        $cronograma->codPlanA = $req['codPlanf'];
+        $cronograma->codEtp = $req['etapa'];
+        $cronograma->fechaIni = $req['fechaIni'];
+        $cronograma->fechaFin = $req['fechaFin'];
+        $cronograma->dias_habiles = $req['dias_habiles'];
+        $cronograma->save();
+   }
+
+    return redirect('auditoria/listar');
+}
+*/

@@ -13,7 +13,9 @@
             <form method="POST">
               {{ csrf_field() }}
 
-         			<h5 class="text-center"> Curso: {{$course->course}} </h5>
+         			<h5 class="text-center"> Profesor: {{ auth()->user()->name }} </h5>
+              <h6 class="text-center"> Curso: {{$course->course}} </h6>
+
 
          			@foreach( $arrayAsignaturas as $asignatura )
                 <h6> {{$asignatura->name}} </h6>

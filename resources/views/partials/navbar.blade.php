@@ -23,13 +23,15 @@
             </ul>
 
             <ul class="navbar-nav navbar-right">
-                <li class="nav-item">
-                    <form action="{{ url('/logout') }}" method="POST" style="display:inline">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">{{ auth()->user()->name }}</a>
+                    <div class="dropdown-menu">
+                        <form action="{{ url('/logout') }}" method="POST" style="display:inline">
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-link nav-link" style="display:inline;cursor:pointer">
-                            Cerrar sesión
-                        </button>
-                    </form>
+                            <button type="submit" class="btn btn-link nav-link" style="display:inline;cursor:pointer">Cerrar sesión
+                            </button>
+                        </form>
+                    </div>
                 </li>
             </ul>
         </div>
