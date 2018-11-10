@@ -3,11 +3,12 @@
 <script language="JavaScript"> 
 function pregunta(){ 
     if (confirm('¿Estas seguro de que quieres borrar esta asignatura?')){ 
-       document.formBorrar.submit() 
-    } 
+       return true; 
+    }else {
+    	return false;
+    }
 } 
 </script>
-
 	<div class="row" style="margin-top:40px">
    	  <div class="col-md-12">
         <div class="card">
@@ -19,18 +20,18 @@ function pregunta(){
 		  <div id="nombreAsignatura">
 			<h5><a href="{{ url('/subjects/show/' . $asignatura->id ) }}" style="color: #000000;">{{$asignatura->name}}</a></h5>
 		  </div>
-		  <div id="iconoEditar">
-			<a class="fas" href="{{ url('/subjects/edit/'.$asignatura->id) }}" style="color: #000000;">&#xf044</a>
-		  </div>
 		  <div id="iconoBorrar">
 		  	<form name="formBorrar" action="{{action('SubjectsController@deleteSubject', $asignatura->id)}}" method="POST" style="display:inline">
-        		  {{ method_field('DELETE') }}
-        		  {{ csrf_field() }}
-        		  <button type="submit" class="fas" onclick="pregunta()" style="display:inline">&#xf2ed
-        		  </button>
+        		{{ method_field('DELETE') }}
+        		{{ csrf_field() }}
+        		<button type="submit" class="btn btn-danger" onclick="pregunta()" style="display:inline;">Borrar
+        		</button>
       		</form>
-			<!--<a class="fas" href="{{ url('/subjects/delete/'.$asignatura->id) }}" style="color: #000000;">&#xf2ed</a>-->
-		  </div>	
+		  </div>
+		  <div id="iconoEditar">
+			<a class="btn btn-success" href="{{ url('/subjects/edit/'.$asignatura->id) }}">Editar</a>
+		  </div>
+		  <!--<a class="fas" href="{{ url('/subjects/delete/'.$asignatura->id) }}" style="color: #000000;">&#xf2ed</a>-->	
 		  </br><hr />
 		  @endforeach
 		  </div>

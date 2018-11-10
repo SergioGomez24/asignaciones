@@ -2,14 +2,17 @@ body {
   background-color: #F4D03F;
 }
 
-#nombreAsignatura, #iconoEditar, #iconoBorrar {
+#nombreAsignatura {
 	float: left;
 }
 
-#iconoEditar  {
-	margin-left: 800px;
+#iconoBorrar {
+	float: right;
+	margin-left: 40px;
 }
 
-#iconoBorrar {
-	margin-left: 50px;
+#iconoEditar  {
+	float: right;
+	
 }
+
