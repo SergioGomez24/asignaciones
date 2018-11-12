@@ -22,15 +22,15 @@
                   <div class="form-group row">
                     <div class="credT" style="margin-left:15px">
                       <label for="credT" >Creditos Teoria</label>
-                      <input type="text" name="credT" id="credT" class="form-control" placeholder="1-3 créditos">
+                      <input type="text" name="data[credT]" id="credT" class="form-control" placeholder="1-3 créditos">
                     </div>
                     <div class="credP" style="margin-left:15px">
                       <label for="credP">Creditos Prácticas</label>
-                      <input type="text" name="credP" id="credP" class="form-control" placeholder="1-3 créditos">
+                      <input type="text" name="data[credP]" id="credP" class="form-control" placeholder="1-3 créditos">
                     </div>
                     <div class="clasS" style="margin-left:15px">
                       <label for="credS">Creditos Seminarios</label>
-                      <input type="text" name="credS" id="credS" class="form-control" placeholder="1-3 créditos">
+                      <input type="text" name="data[credS]" id="credS" class="form-control" placeholder="1-3 créditos">
                     </div>
                   </div>
               @endforeach

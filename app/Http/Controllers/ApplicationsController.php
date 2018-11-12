@@ -33,6 +33,7 @@ class ApplicationsController extends Controller
 										 ->with('arrayAsignaturas',$arrayAsignaturas);
     }
 
+/*
     public function postCreate(Request $request) 
      {
         $a = new Application;
@@ -47,22 +48,27 @@ class ApplicationsController extends Controller
         Notification::success('La solicitud se ha guardado exitosamente!');
         return redirect('/applications');
     }
+}*/
+
+    public function postCreate(Request $request)
+    {
+        $course = Course::all()->last();
+        $arrayAsignaturas = Subject::all();
+
+        foreach ($request->all() as $req){
+            foreach ($arrayAsignaturas as $asignatura) {
+                $a = new Application;
+                $a->subject = $asignatura->name;
+                $a->teacher = Auth()->user()->name;
+                $a->course = $course->course;
+                $a->credT = $req['credT'];
+                $a->credP = $req['credP'];
+                $a->credS = $req['credS'];
+                $a->save();
+            }
+        }
+
+        Notification::success('La solicitud se ha guardado exitosamente!');
+        return redirect('/applications');
+    }
 }
-
-
-/*
-public function guardar(Request $request)
-{
-   foreach ($request->all() as $req){
-        $cronograma = new Cronograma();
-        $cronograma->codPlanA = $req['codPlanf'];
-        $cronograma->codEtp = $req['etapa'];
-        $cronograma->fechaIni = $req['fechaIni'];
-        $cronograma->fechaFin = $req['fechaFin'];
-        $cronograma->dias_habiles = $req['dias_habiles'];
-        $cronograma->save();
-   }
-
-    return redirect('auditoria/listar');
-}
-*/

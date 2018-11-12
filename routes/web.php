@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('applications', 'ApplicationsController@getIndex');
 
 	Route::get('applications/create', 'ApplicationsController@getCreate');
+	Route::post('applications/create', 'ApplicationsController@postCreate');
 
 
 

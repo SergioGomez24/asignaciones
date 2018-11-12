@@ -10,8 +10,8 @@ class UsersTableSeeder extends Seeder
 		DB::table('users')->delete();
 
 		$user = new User;
-		$user->name = 'Garcia Garcia, Jose';
-		$user->email = 'josegarcia@jose.com';
+		$user->name = 'Jose';
+		$user->email = 'jose@jose.com';
 		$user->password = bcrypt('hola');
 		$user->role = 'Director';
 		$user->remember_token = '';
