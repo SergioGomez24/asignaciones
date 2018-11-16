@@ -20,9 +20,9 @@ class CreateApplicationsTable extends Migration
             $table->string('teacher');
             //$table->foreign('teacher')->references('name')->on('teachers');
             $table->string('course');
-            $table->string('credT');
-            $table->string('credP');
-            $table->string('credS');
+            $table->integer('credT')->unsigned();
+            $table->integer('credP')->unsigned();
+            $table->integer('credS')->unsigned();
             $table->timestamps();
         });
     }
