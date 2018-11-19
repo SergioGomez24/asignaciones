@@ -13,11 +13,11 @@
                     <a class="nav-link" href="{{url('/')}}">Inicio</a>
                 </li>
 
-                <li class="nav-item dropdown">
+                <li class="nav-item">
                     <a class="nav-link" href="{{url('/subjects')}}" >Asignaturas</a>
                 </li>
 
-                <li class="nav-item dropdown">
+                <li class="nav-item">
                     <a class="nav-link" href="{{url('/teachers')}}">Profesores</a>
                 </li>
             </ul>
@@ -26,10 +26,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">{{ auth()->user()->name }}</a>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{url('/settings')}}">Ajustes</a>
+                        
                         <form action="{{ url('/logout') }}" method="POST" style="display:inline">
                         {{ csrf_field() }}
-                            <button type="submit" class="btn btn-link nav-link" style="display:inline;cursor:pointer">Cerrar sesión
-                            </button>
+                            <input type="submit" class="dropdown-item" style="display:inline;cursor:pointer" value="Cerrar sesión"/>
                         </form>
                     </div>
                 </li>
