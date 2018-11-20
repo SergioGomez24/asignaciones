@@ -24,7 +24,7 @@
                <label for="category">Categoría</label>
                <select name="category" id="category" class="form-control">
                   <option>Catedratico
-                  <option>Fijo
+                  <option>Titular de Escuela
                </select>
             </div>
 

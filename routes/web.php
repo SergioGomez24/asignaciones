@@ -22,10 +22,6 @@ Route::get('/', function(){
 		}
 })->middleware('auth');
 
-Route::get('settings', function() {
-	return view('settings.index');
-})->middleware('auth');
-
 /* Rutas de Subjects */
 Route::group(['middleware' => 'auth'], function() {
 
@@ -74,10 +70,19 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
 
+	Route::get('settings', function() {
+	return view('settings.index');
+	});
+
 	Route::get('settings/categories', 'CategoriesController@getIndex');
 
 	Route::get('settings/categories/create', 'CategoriesController@getCreate');
 	Route::post('settings/categories/create', 'CategoriesController@postCreate');
+
+	Route::get('settings/categories/show/{id}', 'CategoriesController@getShow');
+
+	Route::get('settings/categories/edit/{id}', 'CategoriesController@getEdit');
+	Route::put('settings/categories/edit/{id}', 'CategoriesController@putEdit');
 
 	Route::delete('/settings/categories/delete/{id}', 'CategoriesController@deleteCategory');
 

@@ -19,13 +19,13 @@ function pregunta(){
             	<h5 > Lista de categorias </h5>
             </div>
             <div id="btnAñadir">
-            	<a class="btn btn-primary btn-sm" href="{{ url('/categories/create') }}">Añadir categoria</a>
+            	<a class="btn btn-primary btn-sm" href="{{ url('/settings/categories/create') }}">Añadir categoria</a>
             </div>
           </div>
           <div class="card-body">	
 		  @foreach( $arrayCategorias as $key => $categoria )
 		  <div id="nombrelist">
-			<h5><a href="{{ url('/categories/show/' . $categoria->id ) }}" style="color: #000000;">{{$categoria->name}}</a></h5>
+			<h5><a href="{{ url('/settings/categories/show/' . $categoria->id ) }}" style="color: #000000;">{{$categoria->name}}</a></h5>
 		  </div>
 		  <div id="iconoBorrar">
 		  	<form name="formBorrar" action="{{action('CategoriesController@deleteCategory', $categoria->id)}}" method="POST" style="display:inline">
@@ -35,7 +35,7 @@ function pregunta(){
       		</form>
 		  </div>
 		  <div id="iconoEditar">
-			<a class="btn btn-secondary btn-sm" href="{{ url('/categories/edit/'.$categoria->id) }}">Editar</a>
+			<a class="btn btn-secondary btn-sm" href="{{ url('/settings/categories/edit/'.$categoria->id) }}">Editar</a>
 		  </div>
 		  </br><hr />
 		  @endforeach
