@@ -68,12 +68,14 @@ Route::group(['middleware' => 'auth'], function() {
 
 });
 
+/* Ajustes */
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('settings', function() {
 	return view('settings.index');
 	});
 
+	/* Ajustes categoria */
 	Route::get('settings/categories', 'CategoriesController@getIndex');
 
 	Route::get('settings/categories/create', 'CategoriesController@getCreate');
@@ -85,6 +87,19 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::put('settings/categories/edit/{id}', 'CategoriesController@putEdit');
 
 	Route::delete('/settings/categories/delete/{id}', 'CategoriesController@deleteCategory');
+
+	/* Ajustes area */
+	Route::get('settings/areas', 'AreasController@getIndex');
+
+	Route::get('settings/areas/create', 'AreasController@getCreate');
+	Route::post('settings/areas/create', 'AreasController@postCreate');
+
+	Route::get('settings/areas/show/{id}', 'AreasController@getShow');
+
+	Route::get('settings/areas/edit/{id}', 'AreasController@getEdit');
+	Route::put('settings/areas/edit/{id}', 'AreasController@putEdit');
+
+	Route::delete('/settings/areas/delete/{id}', 'AreasController@deleteArea');
 
 
 
