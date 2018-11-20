@@ -22,12 +22,17 @@
 
             <div class="form-group">
                <label for="category">Categoría</label>
-               <input type="text" name="category" id="category" class="form-control">
+               <select name="category" id="category" class="form-control">
+                  <option>Catedratico
+                  <option>Fijo
+               </select>
             </div>
 
             <div class="form-group">
                <label for="area">Área</label>
-               <input type="text" name="area" id="area" class="form-control">
+               <select name="area" id="area" class="form-control">
+                  <option>Lenguaje y sistemas informaticos
+               </select>
             </div>
 
             <div class="form-group">

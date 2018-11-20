@@ -22,22 +22,30 @@
 
             <div class="form-group">
                <label for="certification">Titulación</label>
-               <input type="text" name="certification" id="certification" class="form-control">
+               <select name="certification" id="certification" class="form-control">
+                  <option>Grado en Ingeniería Informática
+               </select>
             </div>
 
             <div class="form-group">
                <label for="area">Área</label>
-               <input type="text" name="area" id="area" class="form-control">
+               <select name="area" id="area" class="form-control">
+                  <option>Lenguaje y sistemas informaticos
+               </select>
             </div>
 
             <div class="form-group">
                <label for="campus">Campus</label>
-               <input type="text" name="campus" id="campus" class="form-control">
+               <select name="campus" id="campus" class="form-control">
+                  <option>Campus de Puerto Real
+               </select>
             </div>
 
             <div class="form-group">
                <label for="center">Centro</label>
-               <input type="text" name="center" id="center" class="form-control">
+               <select name="center" id="center" class="form-control">
+                  <option>Escuela Superior de Ingeniería
+               </select>
             </div>
 
             <div class="form-group">
@@ -57,17 +65,28 @@
 
             <div class="form-group">
                <label for="duration">Duración</label>
-               <input type="text" name="duration" id="duration" class="form-control">
+               <select name="duration" id="duration" class="form-control">
+                  <option>Primer semestre
+                  <option>Segundo semestre
+               </select>
             </div>
 
             <div class="form-group">
                <label for="imparted">Curso en la que se imparte</label>
-               <input type="text" name="imparted" id="imparted" class="form-control">
+               <select name="imparted" id="imparted" class="form-control">
+                  <option>Primero
+                  <option>Segundo
+                  <option>Tercero
+                  <option>Cuarto
+               </select>
             </div>
 
             <div class="form-group">
                <label for="typeSubject">Tipo de asignatura</label>
-               <input type="text" name="typeSubject" id="typeSubject" class="form-control">
+               <select name="typeSubject" id="typeSubject" class="form-control">
+                  <option>Obligatoria
+                  <option>Optativa
+               </select>
             </div>
 
             <div class="form-group">
