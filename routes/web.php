@@ -101,7 +101,18 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::delete('/settings/areas/delete/{id}', 'AreasController@deleteArea');
 
+	/* Ajustes titulacion */
+	Route::get('settings/certifications', 'CertificationsController@getIndex');
 
+	Route::get('settings/certifications/create', 'CertificationsController@getCreate');
+	Route::post('settings/certifications/create', 'CertificationsController@postCreate');
+
+	Route::get('settings/certifications/show/{id}', 'CertificationsController@getShow');
+
+	Route::get('settings/certifications/edit/{id}', 'CertificationsController@getEdit');
+	Route::put('settings/certifications/edit/{id}', 'CertificationsController@putEdit');
+
+	Route::delete('/settings/certifications/delete/{id}', 'CertificationsController@deleteCertification');
 
 });
 
