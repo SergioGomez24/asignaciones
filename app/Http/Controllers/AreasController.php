@@ -52,7 +52,7 @@ class AreasController extends Controller
         return redirect('/settings/areas/show/'.$id);
     }
 
-    public function deleteCategory(Request $request, $id)
+    public function deleteArea(Request $request, $id)
     {
         $a = Area::findOrFail($id);
         $a->delete();

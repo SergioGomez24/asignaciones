@@ -114,5 +114,31 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::delete('/settings/certifications/delete/{id}', 'CertificationsController@deleteCertification');
 
+	/* Ajustes campus */
+	Route::get('settings/campus', 'CampusController@getIndex');
+
+	Route::get('settings/campus/create', 'CampusController@getCreate');
+	Route::post('settings/campus/create', 'CampusController@postCreate');
+
+	Route::get('settings/campus/show/{id}', 'CampusController@getShow');
+
+	Route::get('settings/campus/edit/{id}', 'CampusController@getEdit');
+	Route::put('settings/campus/edit/{id}', 'CampusController@putEdit');
+
+	Route::delete('/settings/campus/delete/{id}', 'CampusController@deleteCampus');
+
+	/* Ajustes centros */
+	Route::get('settings/centers', 'CentersController@getIndex');
+
+	Route::get('settings/centers/create', 'CentersController@getCreate');
+	Route::post('settings/centers/create', 'CentersController@postCreate');
+
+	Route::get('settings/centers/show/{id}', 'CentersController@getShow');
+
+	Route::get('settings/centers/edit/{id}', 'CentersController@getEdit');
+	Route::put('settings/centers/edit/{id}', 'CentersController@putEdit');
+
+	Route::delete('/settings/centers/delete/{id}', 'CentersController@deleteCenter');
+
 });
 

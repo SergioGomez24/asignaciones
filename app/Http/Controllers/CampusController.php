@@ -48,15 +48,15 @@ class CampusController extends Controller
         $c = Campus::findOrFail($id);
         $c->name = $request->input('name');
         $c->save();
-        Notification::success('El campus ha sido modificada exitosamente!');
+        Notification::success('El campus ha sido modificado exitosamente!');
         return redirect('/settings/campus/show/'.$id);
     }
 
-    public function deleteCategory(Request $request, $id)
+    public function deleteCampus(Request $request, $id)
     {
         $c = Campus::findOrFail($id);
         $c->delete();
-        Notification::success('El campus fue eliminada exitosamente!');
+        Notification::success('El campus fue eliminado exitosamente!');
         return redirect('/settings/campus');
     }
 

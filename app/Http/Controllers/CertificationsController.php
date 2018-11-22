@@ -52,7 +52,7 @@ class CertificationsController extends Controller
         return redirect('/settings/certifications/show/'.$id);
     }
 
-    public function deleteCategory(Request $request, $id)
+    public function deleteCertification(Request $request, $id)
     {
         $c = Certification::findOrFail($id);
         $c->delete();
