@@ -15,12 +15,16 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->string('name');
             $table->string('certification');
+            $table->foreign('certification')->references('name')->on('certifications');
             $table->string('area');
+            $table->foreign('area')->references('name')->on('areas');
             $table->string('campus');
+            $table->foreign('campus')->references('name')->on('campus');
             $table->string('center');
+            $table->foreign('center')->references('name')->on('centers');
             $table->tinyInteger('cTheory');
             $table->tinyInteger('cSeminar');
             $table->tinyInteger('cPractice');

@@ -17,12 +17,13 @@ class DatabaseSeeder extends Seeder
 		$this->call(UsersTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(CoursesTableSeeder::class);
-        $this->call(SubjectsTableSeeder::class);
-        $this->call(TeachersTableSeeder::class);
         $this->call(AreasTableSeeder::class);
         $this->call(CertificationsTableSeeder::class);
         $this->call(CampusTableSeeder::class);
         $this->call(CentersTableSeeder::class);
+        $this->call(SubjectsTableSeeder::class);
+        $this->call(TeachersTableSeeder::class);
+        $this->call(PrioritiesTableSeeder::class);
 		Model::reguard();
     }
 }

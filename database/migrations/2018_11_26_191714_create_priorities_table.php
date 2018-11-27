@@ -16,7 +16,9 @@ class CreatePrioritiesTable extends Migration
         Schema::create('priorities', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('priority')->unsigned();
+            $table->foreign('priority')->references('rank')->on('categories');
             $table->string('teacher');
+            $table->foreign('teacher')->references('name')->on('teachers');
             $table->date('dateCategory');
             $table->timestamps();
         });

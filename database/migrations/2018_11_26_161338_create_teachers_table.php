@@ -15,10 +15,12 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('dni');
             $table->string('category');
+            $table->foreign('category')->references('name')->on('categories');
             $table->string('area');
+            $table->foreign('area')->references('name')->on('areas');
             $table->tinyInteger('cInitial');
             $table->date('dateCategory');
             $table->date('dateUCA');
