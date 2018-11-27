@@ -16,11 +16,10 @@ class PrioritiesTableSeeder extends Seeder
 
 		foreach ($priorities as $key => $prioridad) {
 			$p = new Priority;
-			$p = "{{$prioridad->rank}}";
-			$p = "{{$prioridad->name}}";
-			$p = "{{$prioridad->dateCategory}}";
+			$p->priority = $prioridad->rank;
+			$p->teacher = $prioridad->name;
+			$p->dateCategory = $prioridad->dateCategory;
 			$p->save();
-
 		}
 
 	}

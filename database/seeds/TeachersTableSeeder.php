@@ -17,6 +17,16 @@ class TeachersTableSeeder extends Seeder
 		$t->dateCategory = '2018-09-20';
 		$t->dateUCA = '2018-09-15';
 		$t->save();
+
+		$t = new Teacher;
+		$t->name = 'Sergio Gomez';
+		$t->dni = '12A';
+		$t->category = 'Titular de escuela';
+		$t->area = 'Lenguaje y Sistemas Informáticos';
+		$t->cInitial = 24;
+		$t->dateCategory = '2018-09-21';
+		$t->dateUCA = '2018-09-16';
+		$t->save();
 	}
 
 
