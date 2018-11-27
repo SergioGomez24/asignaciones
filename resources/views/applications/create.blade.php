@@ -4,7 +4,7 @@
 <div class="row" style="margin-top:40px">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-8">
+      <div class="col-md-12">
         <div class="card">
           <div class="card-header text-center">
             <h5> Selección de asignaturas </h5>
@@ -16,25 +16,55 @@
          			<h5 class="text-center"> Profesor: {{ auth()->user()->name }} </h5>
               <h6 class="text-center"> Curso: {{$course->course}} </h6>
 
-
          			@foreach( $arrayAsignaturas as $asignatura )
-                <h6> {{$asignatura->name}} </h6>
+                <h5> {{$asignatura->name}} </h5>
                   <div class="form-group row">
-                    <div class="credT" style="margin-left:15px">
-                      <label for="credT" >Creditos Teoria</label>
+                    <div class="col-md-2">
+                      <h6>Titulación</h6>
+                      <p>{{$asignatura->certification}}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <h6>Area</h6>
+                      <p>{{$asignatura->area}}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <h6>Campus</h6>
+                      <p>{{$asignatura->campus}}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <h6>Centro</h6>
+                      <p>{{$asignatura->center}}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <h6>Curso</h6>
+                      <p>{{$asignatura->imparted}}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <h6>Duración</h6>
+                      <p>{{$asignatura->duration}}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <h6>Tipo de asignatura</h6>
+                      <p>{{$asignatura->typeSubject}}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <h6>Coordinador</h6>
+                      <p>{{$asignatura->coordinator}}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <h6><label for="credT" >Creditos Teoria</label></h6>
                       <input type="number" name="credT[]" id="credT" class="form-control" placeholder="1-3 créditos">
                     </div>
-                    <div class="credP" style="margin-left:15px">
-                      <label for="credP">Creditos Prácticas</label>
+                    <div class="col-md-2">
+                      <h6><label for="credP">Creditos Prácticas</label></h6>
                       <input type="number" name="credP[]" id="credP" class="form-control" placeholder="1-3 créditos">
                     </div>
-                    <div class="clasS" style="margin-left:15px">
-                      <label for="credS">Creditos Seminarios</label>
+                    <div class="col-md-2">
+                      <h6><label for="credS">Creditos Seminarios</label></h6>
                       <input type="number" name="credS[]" id="credS" class="form-control" placeholder="1-3 créditos">
                     </div>
                   </div>
               @endforeach
-
               <div class="form-group text-center">
                	<button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">
                   enviar
