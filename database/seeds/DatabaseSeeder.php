@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CentersTableSeeder::class);
         $this->call(SubjectsTableSeeder::class);
         $this->call(TeachersTableSeeder::class);
-        //$this->call(PrioritiesTableSeeder::class);
+        $this->call(PrioritiesTableSeeder::class);
 		Model::reguard();
     }
 }

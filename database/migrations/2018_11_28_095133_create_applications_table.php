@@ -16,9 +16,9 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->increments('id');
             $table->string('subject');
-            //$table->foreign('subject')->references('name')->on('subjects');
+            $table->foreign('subject')->references('name')->on('subjects');
             $table->string('teacher');
-            //$table->foreign('teacher')->references('name')->on('teachers');
+            $table->foreign('teacher')->references('name')->on('teachers');
             $table->string('course');
             $table->integer('credT')->unsigned();
             $table->integer('credP')->unsigned();

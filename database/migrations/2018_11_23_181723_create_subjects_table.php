@@ -16,7 +16,7 @@ class CreateSubjectsTable extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('certification');
             $table->foreign('certification')->references('name')->on('certifications');
             $table->string('area');

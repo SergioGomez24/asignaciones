@@ -63,6 +63,10 @@
                       <h6><label for="credS">Creditos Seminarios</label></h6>
                       <input type="number" name="credS[]" id="credS" class="form-control" placeholder="1-3 créditos">
                     </div>
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-primary" style="margin-top:35px;">elegir
+                      </button>
+                    </div>
                   </div>
               @endforeach
               <div class="form-group text-center">

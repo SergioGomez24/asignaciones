@@ -33,7 +33,7 @@ class ApplicationsController extends Controller
 										 ->with('arrayAsignaturas',$arrayAsignaturas);
     }
 
-    public function postCreate(Request $request)
+    /*public function postCreate(Request $request)
     {
         $course = Course::all()->last();
         $arrayAsignaturas = Subject::all();
@@ -54,21 +54,19 @@ class ApplicationsController extends Controller
         Notification::success('La solicitud se ha guardado exitosamente!');
         return redirect('/applications');
     }
-}
+}*/
 
-/*
     public function postCreate(Request $request) 
      {
         $a = new Application;
-        $a->name = $request->input('name');
-        $a->code = $request->input('code');
-        $a->certification = $request->input('certification');
-        $a->area = $request->input('area');
-        $a->campus = $request->input('campus');
-        $a->center = $request->input('center');
-        $a->cTheory = $request->input('cTheory');
+        $a->subject = $asignatura->name;
+        $a->teacher = Auth()->user()->name;
+        $a->course = $course->course;
+        $a->credT = $request->input('credT');
+        $a->credP = $request->input('credP');
+        $a->credS = $request->input('credS');
         $a->save();
         Notification::success('La solicitud se ha guardado exitosamente!');
-        return redirect('/applications');
+        //return redirect('/applications');
     }
-}*/
+}
