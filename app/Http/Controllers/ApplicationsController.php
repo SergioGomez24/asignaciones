@@ -58,8 +58,10 @@ class ApplicationsController extends Controller
 
     public function postCreate(Request $request) 
      {
+        $course = Course::all()->last();
+
         $a = new Application;
-        $a->subject = $asignatura->name;
+        $a->subject = $request->input('subject');
         $a->teacher = Auth()->user()->name;
         $a->course = $course->course;
         $a->credT = $request->input('credT');
@@ -67,6 +69,6 @@ class ApplicationsController extends Controller
         $a->credS = $request->input('credS');
         $a->save();
         Notification::success('La solicitud se ha guardado exitosamente!');
-        //return redirect('/applications');
+        return redirect('/applications/create');
     }
 }
