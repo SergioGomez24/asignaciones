@@ -2,7 +2,7 @@
 
 @section('content')
 <script language="JavaScript"> 
-function enviar(){
+  function enviar(){
     var vCredT = document.getElementById("credT").value;
     var vCredP = document.getElementById("credP").value;
     var vCredS = document.getElementById("credS").value;
@@ -12,8 +12,14 @@ function enviar(){
     }else{
       document.getElementById("submit").disabled = false;
     }
+  }
+
+  function seleccionar(){
+    var lista = document.getElementById("subject");
+    var valorSeleccionado = lista.options[lista.selectedIndex].value;
     
-}
+  }
+
 </script>
 
 <div class="row" style="margin-top:40px">
@@ -86,26 +92,32 @@ function enviar(){
               @endforeach-->
               <div class="form-group">
                <h6><label for="subject">Selecciona una asignatura</label></h6>
-               <select name="subject" id="subject" class="form-control">
+               <select name="subject" id="subject" class="form-control" required onchange="seleccionar()">
+                  <option value="">Elige una asignatura</option>
                   @foreach($arrayAsignaturas as $asignatura)
                   <option value="{{$asignatura->name}}">{{$asignatura->name}}</option>
                   @endforeach
                </select>
               </div>
 
-              <div class="form-group row">
               <div class="col-md-2">
-                      <h6><label for="credT" >Creditos Teoria</label></h6>
-                      <input type="number" name="credT" id="credT" class="form-control" onkeyup="enviar()" placeholder="1-3 créditos">
-                    </div>
-                    <div class="col-md-2">
-                      <h6><label for="credP">Creditos Prácticas</label></h6>
-                      <input type="number" name="credP" id="credP" class="form-control" onkeyup="enviar()" placeholder="1-3 créditos">
-                    </div>
-                    <div class="col-md-2">
-                      <h6><label for="credS">Creditos Seminarios</label></h6>
-                      <input type="number" name="credS" id="credS" class="form-control" onkeyup="enviar()" placeholder="1-3 créditos">
-                    </div>
+                <h6>Coordinador</h6>
+                <p>{{$asignatura->coordinator}}</p>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-2">
+                  <h6><label for="credT" >Creditos Teoria</label></h6>
+                  <input type="number" name="credT" id="credT" class="form-control" onkeyup="enviar()" placeholder="1-3 créditos">
+                </div>
+                <div class="col-md-2">
+                  <h6><label for="credP">Creditos Prácticas</label></h6>
+                  <input type="number" name="credP" id="credP" class="form-control" onkeyup="enviar()" placeholder="1-3 créditos">
+                </div>
+                <div class="col-md-2">
+                  <h6><label for="credS">Creditos Seminarios</label></h6>
+                  <input type="number" name="credS" id="credS" class="form-control" onkeyup="enviar()" placeholder="1-3 créditos">
+                </div>
               </div>
 
               <div class="form-group text-center">
