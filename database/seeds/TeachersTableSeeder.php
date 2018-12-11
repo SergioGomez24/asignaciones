@@ -11,8 +11,8 @@ class TeachersTableSeeder extends Seeder
 		$t = new Teacher;
 		$t->name = 'Jose Garcia';
 		$t->dni = '11A';
-		$t->category = 'Catedratico';
-		$t->area = 'Lenguaje y Sistemas Informáticos';
+		$t->category_id = 1;
+		$t->area_id = 1;
 		$t->cInitial = 24;
 		$t->dateCategory = '2018-09-20';
 		$t->dateUCA = '2018-09-15';
@@ -21,8 +21,8 @@ class TeachersTableSeeder extends Seeder
 		$t = new Teacher;
 		$t->name = 'Sergio Gomez';
 		$t->dni = '12A';
-		$t->category = 'Titular de escuela';
-		$t->area = 'Lenguaje y Sistemas Informáticos';
+		$t->category_id = 2;
+		$t->area_id = 1;
 		$t->cInitial = 24;
 		$t->dateCategory = '2018-09-21';
 		$t->dateUCA = '2018-09-16';

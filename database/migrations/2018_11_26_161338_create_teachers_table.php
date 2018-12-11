@@ -17,10 +17,10 @@ class CreateTeachersTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('dni');
-            $table->string('category');
-            $table->foreign('category')->references('name')->on('categories');
-            $table->string('area');
-            $table->foreign('area')->references('name')->on('areas');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->integer('area_id')->unsigned();
+            $table->foreign('area_id')->references('id')->on('areas');
             $table->tinyInteger('cInitial');
             $table->date('dateCategory');
             $table->date('dateUCA');

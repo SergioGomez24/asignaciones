@@ -9,7 +9,7 @@ class PrioritiesTableSeeder extends Seeder
 		DB::table('priorities')->delete();
 
 		$priorities = DB::table('categories')
-        	->join('teachers','teachers.category', '=', 'categories.name')
+        	->join('teachers','teachers.category_id', '=', 'categories.id')
 			->select('categories.rank','teachers.name','teachers.dateCategory')
 			->orderBy('categories.rank', 'ASC','teachers.dateCategory')
 			->get();

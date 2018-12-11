@@ -23,7 +23,7 @@
 
             <div class="form-group">
                <label for="certification">Titulación</label>
-               <input type="text" name="certification" id="certification" value="{{$asignatura->certification}}" class="form-control">
+               <input type="text" name="certification" id="certification" value="{{$asignatura->certification_id}}" class="form-control">
             </div>
 
             <div class="form-group">

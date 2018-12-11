@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subject;
+use App\Certification;
+use App\Area;
+use App\Campus;
+use App\Center;
 use Notification;
 
 class SubjectsController extends Controller
@@ -25,7 +29,15 @@ class SubjectsController extends Controller
 
     public function getCreate() 
     {
-    	return view('subjects.create');
+        $arrayTitulaciones = Certification::all();
+        $arrayAreas = Area::all();
+        $arrayCampus = Campus::all();
+        $arrayCentros = Center::all();
+
+    	return view('subjects.create')->with('arrayTitulaciones',$arrayTitulaciones)
+                                      ->with('arrayAreas',$arrayAreas)
+                                      ->with('arrayCampus',$arrayCampus)
+                                      ->with('arrayCentros',$arrayCentros);
     }
 
      public function getEdit($id) 

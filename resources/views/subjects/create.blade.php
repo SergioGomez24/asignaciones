@@ -23,28 +23,40 @@
             <div class="form-group">
                <label for="certification">Titulación</label>
                <select name="certification" id="certification" class="form-control">
-                  <option>Grado en Ingeniería Informática
+                  <option value="">Elige una titulación</option>
+                  @foreach($arrayTitulaciones as $titulacion)
+                  <option value="{{$titulacion->id}}">{{$titulacion->name}}</option>
+                  @endforeach
                </select>
             </div>
 
             <div class="form-group">
                <label for="area">Área</label>
                <select name="area" id="area" class="form-control">
-                  <option>Lenguaje y sistemas informaticos
+                  <option value="">Elige un area</option>
+                  @foreach($arrayAreas as $area)
+                  <option value="{{$area->id}}">{{$area->name}}</option>
+                  @endforeach
                </select>
             </div>
 
             <div class="form-group">
                <label for="campus">Campus</label>
                <select name="campus" id="campus" class="form-control">
-                  <option>Campus de Puerto Real
+                  <option value="">Elige un campus</option>
+                  @foreach($arrayCampus as $campus)
+                  <option value="{{$campus->id}}">{{$campus->name}}</option>
+                  @endforeach
                </select>
             </div>
 
             <div class="form-group">
                <label for="center">Centro</label>
                <select name="center" id="center" class="form-control">
-                  <option>Escuela Superior de Ingeniería
+                  <option value="">Elige un centro</option>
+                  @foreach($arrayCentros as $centro)
+                  <option value="{{$centro->id}}">{{$centro->name}}</option>
+                  @endforeach
                </select>
             </div>
 
