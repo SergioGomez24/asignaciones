@@ -22,23 +22,43 @@
             </div>
 
             <div class="form-group">
-               <label for="certification">Titulación</label>
-               <input type="text" name="certification" id="certification" value="{{$asignatura->certification_id}}" class="form-control">
+               <label for="certification_id">Titulación</label>
+               <select name="certification_id" id="certification_id" class="form-control" required>
+                  <option value="{{$asignatura->certification_id}}">{{$certification->name}}</option>
+                  @foreach($arrayTitulaciones as $titulacion)
+                  <option value="{{$titulacion->id}}">{{$titulacion->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group">
-               <label for="area">Área</label>
-               <input type="text" name="area" id="area" value="{{$asignatura->area}}" class="form-control">
+               <label for="area_id">Área</label>
+               <select name="area_id" id="area_id" class="form-control" required>
+                  <option value="{{$asignatura->area_id}}">{{$area->name}}</option>
+                  @foreach($arrayAreas as $area)
+                  <option value="{{$area->id}}">{{$area->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group">
-               <label for="campus">Campus</label>
-               <input type="text" name="campus" id="campus" value="{{$asignatura->campus}}" class="form-control">
+               <label for="campus_id">Campus</label>
+               <select name="campus_id" id="campus_id" class="form-control" required>
+                  <option value="{{$asignatura->campus_id}}">{{$campus->name}}</option>
+                  @foreach($arrayCampus as $campus)
+                  <option value="{{$campus->id}}">{{$campus->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group">
-               <label for="center">Centro</label>
-               <input type="text" name="center" id="center" value="{{$asignatura->center}}" class="form-control">
+               <label for="center_id">Centro</label>
+               <select name="center_id" id="center_id" class="form-control" required>
+                  <option value="{{$asignatura->center_id}}">{{$center->name}}</option>
+                  @foreach($arrayCentros as $centro)
+                  <option value="{{$centro->id}}">{{$centro->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group">

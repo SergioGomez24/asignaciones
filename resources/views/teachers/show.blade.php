@@ -8,8 +8,8 @@
           </div>
           <div class="card-body">
       		  <h5> DNI: {{$profesor->dni}} </h5>
-      		  <h5> Categoría: {{$profesor->category}} </h5>
-      		  <h5> Area: {{$profesor->area}} </h5>
+      		  <h5> Categoría: {{$categoria->name}} </h5>
+      		  <h5> Area: {{$area->name}} </h5>
       		  <h5> Créditos iniciales: {{$profesor->cInitial}} </h5>
       		  <h5> Fecha inicio categoría: {{$profesor->dateCategory}} </h5>
       		  <h5> Fecha inicio UCA: {{$profesor->dateUCA}} </h5>

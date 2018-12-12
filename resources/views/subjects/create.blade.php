@@ -1,28 +1,43 @@
 @extends('layouts.master')
 @section('content')
-	<div class="row" style="margin-top:40px">
+<script language="JavaScript"> 
+  function validar(){
+    var vCredT = document.getElementById("cTheory").value;
+    var vCredP = document.getElementById("cPractice").value;
+    var vCredS = document.getElementById("cSeminar").value;
+
+    if(vCredS == "" && vCredT == "" && vCredP == ""){
+      alert("Introduce los créditos");
+      return false;
+    }else{
+      return true;
+    }
+  }
+</script>
+
+<div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header text-center">
             <h5> Añadir asignatura </h5>
          </div>
          <div class="card-body" style="padding:30px">
-         	<form method="POST">
+         	<form method="POST" onsubmit="return validar()">
          		{{ csrf_field() }}
 
             <div class="form-group">
                <label for="code">Código</label>
-               <input type="text" name="code" id="code" class="form-control">
+               <input type="text" name="code" id="code" class="form-control" required>
             </div>
 
             <div class="form-group">
                <label for="name">Nombre</label>
-               <input type="text" name="name" id="name" class="form-control">
+               <input type="text" name="name" id="name" class="form-control" required>
             </div>
 
             <div class="form-group">
-               <label for="certification">Titulación</label>
-               <select name="certification" id="certification" class="form-control">
+               <label for="certification_id">Titulación</label>
+               <select name="certification_id" id="certification_id" class="form-control" required>
                   <option value="">Elige una titulación</option>
                   @foreach($arrayTitulaciones as $titulacion)
                   <option value="{{$titulacion->id}}">{{$titulacion->name}}</option>
@@ -31,8 +46,8 @@
             </div>
 
             <div class="form-group">
-               <label for="area">Área</label>
-               <select name="area" id="area" class="form-control">
+               <label for="area_id">Área</label>
+               <select name="area_id" id="area_id" class="form-control" required>
                   <option value="">Elige un area</option>
                   @foreach($arrayAreas as $area)
                   <option value="{{$area->id}}">{{$area->name}}</option>
@@ -41,8 +56,8 @@
             </div>
 
             <div class="form-group">
-               <label for="campus">Campus</label>
-               <select name="campus" id="campus" class="form-control">
+               <label for="campus_id">Campus</label>
+               <select name="campus_id" id="campus_id" class="form-control" required>
                   <option value="">Elige un campus</option>
                   @foreach($arrayCampus as $campus)
                   <option value="{{$campus->id}}">{{$campus->name}}</option>
@@ -51,8 +66,8 @@
             </div>
 
             <div class="form-group">
-               <label for="center">Centro</label>
-               <select name="center" id="center" class="form-control">
+               <label for="center_id">Centro</label>
+               <select name="center_id" id="center_id" class="form-control" required>
                   <option value="">Elige un centro</option>
                   @foreach($arrayCentros as $centro)
                   <option value="{{$centro->id}}">{{$centro->name}}</option>
@@ -103,7 +118,7 @@
 
             <div class="form-group">
                <label for="coordinator">Coordinador</label>
-               <input type="text" name="coordinator" id="coordinator" class="form-control">
+               <input type="text" name="coordinator" id="coordinator" class="form-control" required>
             </div>
 
 

@@ -24,7 +24,23 @@ class SubjectsController extends Controller
     {
     	$asignatura = Subject::findOrFail($id);
 
-    	return view('subjects.show', ['asignatura' => $asignatura]);
+        $cer_id = $asignatura->certification_id;
+        $certification = Certification::findOrFail($cer_id);
+
+        $a_id = $asignatura->area_id;
+        $area = Area::findOrFail($a_id);
+
+        $ca_id = $asignatura->campus_id;
+        $campus = Campus::findOrFail($ca_id);
+
+        $cen_id = $asignatura->center_id;
+        $center = Center::findOrFail($cen_id);
+
+    	return view('subjects.show')->with('asignatura',$asignatura)
+                                    ->with('certification',$certification)
+                                    ->with('area',$area)
+                                    ->with('campus',$campus)
+                                    ->with('center',$center);
     }
 
     public function getCreate() 
@@ -40,22 +56,15 @@ class SubjectsController extends Controller
                                       ->with('arrayCentros',$arrayCentros);
     }
 
-     public function getEdit($id) 
-     {
-		$asignatura = Subject::findOrFail($id); 
-		    	
-     	return view('subjects.edit', ['asignatura' => $asignatura]);
-     }
-
-     public function postCreate(Request $request) 
-     {
+    public function postCreate(Request $request) 
+    {
         $a = new Subject;
         $a->name = $request->input('name');
         $a->code = $request->input('code');
-        $a->certification = $request->input('certification');
-        $a->area = $request->input('area');
-        $a->campus = $request->input('campus');
-        $a->center = $request->input('center');
+        $a->certification_id = $request->input('certification_id');
+        $a->area_id = $request->input('area_id');
+        $a->campus_id = $request->input('campus_id');
+        $a->center_id = $request->input('center_id');
         $a->cTheory = $request->input('cTheory');
         $a->cSeminar = $request->input('cSeminar');
         $a->cPractice = $request->input('cPractice');
@@ -68,15 +77,48 @@ class SubjectsController extends Controller
         return redirect('/subjects');
     }
 
+    public function getEdit($id) 
+    {
+		$asignatura = Subject::findOrFail($id);
+
+        $cer_id = $asignatura->certification_id;
+        $certification = Certification::findOrFail($cer_id);
+
+        $a_id = $asignatura->area_id;
+        $area = Area::findOrFail($a_id);
+
+        $ca_id = $asignatura->campus_id;
+        $campus = Campus::findOrFail($ca_id);
+
+        $cen_id = $asignatura->center_id;
+        $center = Center::findOrFail($cen_id);
+
+        $arrayTitulaciones = Certification::all();
+        $arrayAreas = Area::all();
+        $arrayCampus = Campus::all();
+        $arrayCentros = Center::all();
+        
+		    	
+     	return view('subjects.edit')->with('asignatura',$asignatura)
+                                    ->with('arrayTitulaciones',$arrayTitulaciones)
+                                    ->with('arrayAreas',$arrayAreas)
+                                    ->with('arrayCampus',$arrayCampus)
+                                    ->with('arrayCentros',$arrayCentros)
+                                    ->with('certification',$certification)
+                                    ->with('area',$area)
+                                    ->with('campus',$campus)
+                                    ->with('center',$center);
+    }
+
     public function putEdit(Request $request, $id)
     {
         $a = Subject::findOrFail($id);
         $a->name = $request->input('name');
         $a->code = $request->input('code');
-        $a->certification = $request->input('certification');
-        $a->area = $request->input('area');
-        $a->campus = $request->input('campus');
-        $a->center = $request->input('center');
+        $a->certification_id = $request->input('certification_id');
+        $a->area_id = $request->input('area_id');
+        $a->campus_id = $request->input('campus_id');
+        $a->center_id = $request->input('center_id');
         $a->cTheory = $request->input('cTheory');
         $a->cSeminar = $request->input('cSeminar');
         $a->cPractice = $request->input('cPractice');

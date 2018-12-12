@@ -25,9 +25,9 @@ class CreateSubjectsTable extends Migration
             $table->foreign('campus_id')->references('id')->on('campus');
             $table->integer('center_id')->unsigned();
             $table->foreign('center_id')->references('id')->on('centers');
-            $table->tinyInteger('cTheory');
-            $table->tinyInteger('cSeminar');
-            $table->tinyInteger('cPractice');
+            $table->tinyInteger('cTheory')->nullable();
+            $table->tinyInteger('cSeminar')->nullable();
+            $table->tinyInteger('cPractice')->nullable();
             $table->string('duration');
             $table->string('imparted');
             $table->string('typeSubject');

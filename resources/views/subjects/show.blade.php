@@ -9,10 +9,10 @@
           <div class="card-body">
             <div class="col-md-5" style="float: left;">
               <h5> Código: {{$asignatura->code}}</h5>
-      		    <h5> Titulación: {{$asignatura->certification}} </h5>
-      		    <h5> Area: {{$asignatura->area}} </h5>
-      		    <h5> Campus: {{$asignatura->campus}} </h5>
-      		    <h5> Centro: {{$asignatura->center}} </h5>
+      		    <h5> Titulación: {{$certification->name}} </h5>
+      		    <h5> Area: {{$area->name}} </h5>
+      		    <h5> Campus: {{$campus->name}} </h5>
+      		    <h5> Centro: {{$center->name}} </h5>
               <h5> Duración: {{$asignatura->duration}} </h5>
               <h5> Curso en la que se imparte: {{$asignatura->imparted}} </h5>
               <h5> Tipo de asignatura: {{$asignatura->typeSubject}} </h5>

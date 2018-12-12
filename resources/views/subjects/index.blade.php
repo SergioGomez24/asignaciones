@@ -32,7 +32,7 @@ function pregunta(){
         		  {{ method_field('DELETE') }}
         		  {{ csrf_field() }}
         		  <input class="btn btn-danger btn-sm" type="button" onclick="pregunta()" value="Borrar"/>
-      		</form>
+      	</form>
 		  </div>
 		  <div id="iconoEditar">
 			<a class="btn btn-secondary btn-sm" href="{{ url('/subjects/edit/'.$asignatura->id) }}">Editar</a>

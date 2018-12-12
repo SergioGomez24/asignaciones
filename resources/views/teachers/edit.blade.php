@@ -22,13 +22,23 @@
             </div>
 
             <div class="form-group">
-               <label for="category">Categoría</label>
-               <input type="text" name="category" id="category" value="{{$profesor->category}}" class="form-control">
+               <label for="category_id">Categoría</label>
+               <select name="category_id" id="category_id" class="form-control" required>
+                  <option value="{{$profesor->category_id}}">{{$categoria->name}}</option>
+                  @foreach($arrayCategorias as $categoria)
+                  <option value="{{$categoria->id}}">{{$categoria->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group">
-               <label for="area">Área</label>
-               <input type="text" name="area" id="area" value="{{$profesor->area}}" class="form-control">
+               <label for="area_id">Área</label>
+               <select name="area_id" id="area_id" class="form-control" required>
+                  <option value="{{$profesor->area_id}}">{{$area->name}}</option>
+                  @foreach($arrayAreas as $area)
+                  <option value="{{$area->id}}">{{$area->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group">
