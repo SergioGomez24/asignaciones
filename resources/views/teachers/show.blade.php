@@ -3,8 +3,13 @@
 	<div class="row" style="margin-top:40px">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header text-center">
-            <h2> {{$profesor->name}} </h2>
+          <div class="card-header">
+            <div id="titlistado">
+               <h2 > {{$profesor->name}} </h2>
+            </div>
+            <div id="btnCabecera">
+               <a class="btn btn-primary btn-sm" href="{{ url('/teachers') }}">Volver al listado</a>
+            </div>
           </div>
           <div class="card-body">
       		  <h5> DNI: {{$profesor->dni}} </h5>

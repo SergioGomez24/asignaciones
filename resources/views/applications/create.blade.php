@@ -106,15 +106,15 @@
               </div>
 
               <div class="form-group row">
-                <div class="col-md-2">
+                <div class="col-md-2" style="margin-left: 180px;">
                   <h6><label for="credT" >Creditos Teoria</label></h6>
                   <input type="number" name="credT" id="credT" class="form-control" onkeyup="enviar()" placeholder="0-{{$asignatura->cTheory}} créditos">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" style="margin-left: 100px;">
                   <h6><label for="credP">Creditos Prácticas</label></h6>
                   <input type="number" name="credP" id="credP" class="form-control" onkeyup="enviar()" placeholder="0-{{$asignatura->cPractice}} créditos">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" style="margin-left: 100px;">
                   <h6><label for="credS">Creditos Seminarios</label></h6>
                   <input type="number" name="credS" id="credS" class="form-control" onkeyup="enviar()" placeholder="0-{{$asignatura->cSeminar}} créditos">
                 </div>

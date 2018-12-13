@@ -18,7 +18,7 @@ function pregunta(){
           	<div id="titlistado">
             	<h5 > Lista de asignaturas </h5>
             </div>
-            <div id="btnAñadir">
+            <div id="btnCabecera">
             	<a class="btn btn-primary btn-sm" href="{{ url('/subjects/create') }}">Añadir asignatura</a>
             </div>
           </div>
@@ -31,7 +31,7 @@ function pregunta(){
 		  	<form name="formBorrar" action="{{action('SubjectsController@deleteSubject', $asignatura->id)}}" method="POST" style="display:inline">
         		  {{ method_field('DELETE') }}
         		  {{ csrf_field() }}
-        		  <input class="btn btn-danger btn-sm" type="button" onclick="pregunta()" value="Borrar"/>
+        		  <input class="btn btn-danger btn-sm" type="submit" onclick="pregunta()" value="Borrar"/>
       	</form>
 		  </div>
 		  <div id="iconoEditar">
