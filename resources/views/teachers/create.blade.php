@@ -17,12 +17,31 @@
 
             <div class="form-group">
                <label for="name">Nombre</label>
-               <input type="text" name="name" id="name" class="form-control">
+               <input type="text" name="name" id="name" class="form-control" required>
             </div>
 
             <div class="form-group">
                <label for="dni">DNI</label>
-               <input type="text" name="dni" id="dni" class="form-control">
+               <input type="text" name="dni" id="dni" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+               <label for="email">Correo electrónico</label>
+               <input type="email" name="email" id="email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+               <label for="password">Contraseña</label>
+               <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+               <label for="role">Rol</label>
+               <select name="role" id="role" class="form-control" required>
+                  <option value="">Elige un rol</option>
+                  <option value="Profesor">Profesor</option>
+                  <option value="Director">Director</option>
+               </select>
             </div>
 
             <div class="form-group">

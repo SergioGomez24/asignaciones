@@ -2,15 +2,16 @@
 
 @section('content')
 <script language="JavaScript"> 
-  function enviar(){
+  function validacion(){
     var vCredT = document.getElementById("credT").value;
     var vCredP = document.getElementById("credP").value;
     var vCredS = document.getElementById("credS").value;
 
     if(vCredS == "" && vCredT == "" && vCredP == ""){
-      document.getElementById("submit").disabled = true;
+      alert("Introduce los créditos");
+      return false;
     }else{
-      document.getElementById("submit").disabled = false;
+      return true;
     }
   }
 
@@ -31,7 +32,7 @@
             <h5> Selección de asignaturas </h5>
           </div>
           <div class="card-body" style="padding:30px">
-            <form method="POST">
+            <form method="POST" onsubmit="return validacion()">
               {{ csrf_field() }}
 
          			<h5 class="text-center"> Profesor: {{ auth()->user()->name }} </h5>
@@ -108,20 +109,20 @@
               <div class="form-group row">
                 <div class="col-md-2" style="margin-left: 180px;">
                   <h6><label for="credT" >Creditos Teoria</label></h6>
-                  <input type="number" name="credT" id="credT" class="form-control" onkeyup="enviar()" placeholder="0-{{$asignatura->cTheory}} créditos">
+                  <input type="number" name="credT" id="credT" class="form-control" placeholder="0-{{$asignatura->cTheory}} créditos">
                 </div>
                 <div class="col-md-2" style="margin-left: 100px;">
                   <h6><label for="credP">Creditos Prácticas</label></h6>
-                  <input type="number" name="credP" id="credP" class="form-control" onkeyup="enviar()" placeholder="0-{{$asignatura->cPractice}} créditos">
+                  <input type="number" name="credP" id="credP" class="form-control" placeholder="0-{{$asignatura->cPractice}} créditos">
                 </div>
                 <div class="col-md-2" style="margin-left: 100px;">
                   <h6><label for="credS">Creditos Seminarios</label></h6>
-                  <input type="number" name="credS" id="credS" class="form-control" onkeyup="enviar()" placeholder="0-{{$asignatura->cSeminar}} créditos">
+                  <input type="number" name="credS" id="credS" class="form-control" placeholder="0-{{$asignatura->cSeminar}} créditos">
                 </div>
               </div>
 
               <div class="form-group text-center">
-                <button disabled="" type="submit" id="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">
+                <button type="submit" id="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">
                   enviar solicitud
                 </button>
               </div>

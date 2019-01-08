@@ -23,23 +23,26 @@ function pregunta(){
             </div>
           </div>
           <div class="card-body">	
-		  @foreach( $arrayAreas as $key => $area )
-		  <div id="nombrelist">
-			<h5><a href="{{ url('/settings/areas/show/' . $area->id ) }}" style="color: #000000;">{{$area->name}}</a></h5>
-		  </div>
-		  <div id="iconoBorrar">
-		  	<form name="formBorrar" action="{{action('AreasController@deleteArea', $area->id)}}" method="POST" style="display:inline">
-        		  {{ method_field('DELETE') }}
-        		  {{ csrf_field() }}
-        		  <input class="btn btn-danger btn-sm" type="submit" onclick="pregunta()" value="Borrar"/>
-      		</form>
-		  </div>
-		  <div id="iconoEditar">
-			<a class="btn btn-secondary btn-sm" href="{{ url('/settings/areas/edit/'.$area->id) }}">Editar</a>
-		  </div>
-		  </br><hr />
-		  @endforeach
-		  </div>
+		        @foreach( $arrayAreas as $key => $area )
+		          <div id="nombrelist">
+			         <h5><a href="{{ url('/settings/areas/show/' . $area->id ) }}" style="color: #000000;">{{$area->name}}</a></h5>
+		          </div>
+		          <div id="iconoBorrar">
+		  	         <form name="formBorrar" action="{{action('AreasController@deleteArea', $area->id)}}" method="POST" style="display:inline">
+        		      {{ method_field('DELETE') }}
+        		      {{ csrf_field() }}
+        		      <input class="btn btn-danger btn-sm" type="submit" onclick="pregunta()" value="Borrar"/>
+      		        </form>
+		          </div>
+		          <div id="iconoEditar">
+			         <a class="btn btn-secondary btn-sm" href="{{ url('/settings/areas/edit/'.$area->id) }}">Editar</a>
+		          </div>
+		          </br><hr />
+		        @endforeach
+		    </div>
+        <div>
+          <a class="btn btn-link btn-sm" href="{{ url('/settings') }}" style="float: right;">Volver a ajustes</a>
+        </div>
 	    </div>
 	  </div>
 	</div>

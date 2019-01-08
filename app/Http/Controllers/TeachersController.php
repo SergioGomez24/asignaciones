@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Teacher;
 use App\Category;
 use App\Area;
+use App\User;
 use Notification;
 
 class TeachersController extends Controller
@@ -53,6 +54,14 @@ class TeachersController extends Controller
         $t->dateCategory = $request->input('dateCategory');
         $t->dateUCA = $request->input('dateUCA');
         $t->save();
+
+        $u = new User;
+        $u->name = $request->input('name');
+        $u->email = $request->input('email');
+        $u->password = $request->input('password');
+        $u->role = $request->input('role');
+        $u->save();
+
         Notification::success('El profesor se ha guardado exitosamente!');
         return redirect('/teachers');
     }

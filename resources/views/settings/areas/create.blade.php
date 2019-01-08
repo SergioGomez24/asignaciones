@@ -3,13 +3,8 @@
 	<div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
-         <div class="card-header">
-            <div style="float: left; margin-left: 190px;">
-               <h5 > Añadir area </h5>
-            </div>
-            <div id="btnCabecera">
-               <a class="btn btn-primary btn-sm" href="{{ url('/settings/areas') }}">Volver al listado</a>
-            </div>
+         <div class="card-header text-center">
+            <h5 > Añadir area </h5>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST">
@@ -26,6 +21,9 @@
                </button>
             </div>
             </form>
+         </div>
+         <div>
+            <a class="btn btn-link btn-sm" href="{{ url('/settings/areas') }}" style="float: right;">Volver al listado</a>
          </div>
       </div>
    </div>
