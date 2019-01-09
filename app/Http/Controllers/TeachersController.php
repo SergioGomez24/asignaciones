@@ -23,6 +23,8 @@ class TeachersController extends Controller
     {
     	$profesor = Teacher::findOrFail($id);
 
+        $usuario = User::findOrFail($id);
+
         $cat_id = $profesor->category_id;
         $categoria = Category::findOrFail($cat_id);
 
@@ -30,6 +32,7 @@ class TeachersController extends Controller
         $area = Area::findOrFail($a_id);
 
     	return view('teachers.show')->with('profesor',$profesor)
+                                    ->with('usuario',$usuario)
                                     ->with('categoria',$categoria)
                                     ->with('area',$area);
     }
@@ -70,6 +73,8 @@ class TeachersController extends Controller
     {
         $profesor = Teacher::findOrFail($id);
 
+        $usuario = User::findOrFail($id);
+
         $cat_id = $profesor->category_id;
         $categoria = Category::findOrFail($cat_id);
 
@@ -80,6 +85,7 @@ class TeachersController extends Controller
         $arrayAreas = Area::all(); 
                 
         return view('teachers.edit')->with('profesor',$profesor)
+                                    ->with('usuario',$usuario)
                                     ->with('categoria',$categoria)
                                     ->with('area',$area)
                                     ->with('arrayCategorias',$arrayCategorias)
@@ -97,6 +103,13 @@ class TeachersController extends Controller
         $t->dateCategory = $request->input('dateCategory');
         $t->dateUCA = $request->input('dateUCA');
         $t->save();
+
+        $u = User::findOrFail($id);
+        $u->name = $request->input('name');
+        $u->email = $request->input('email');
+        $u->role = $request->input('role');
+        $u->save();
+
         Notification::success('El profesor ha sido modificado exitosamente!');
         return redirect('/teachers/show/'.$id);
     }
@@ -105,6 +118,10 @@ class TeachersController extends Controller
     {
         $t = Teacher::findOrFail($id);
         $t->delete();
+
+        $u = User::findOrFail($id);
+        $u->delete();
+        
         Notification::success('El profesor fue eliminado exitosamente!');
         return redirect('/teachers');
     }

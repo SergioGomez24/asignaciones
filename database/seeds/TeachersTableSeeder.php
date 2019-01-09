@@ -11,6 +11,7 @@ class TeachersTableSeeder extends Seeder
 		$t = new Teacher;
 		$t->name = 'Jose Garcia';
 		$t->dni = '11A';
+		$t->user_id = 1;
 		$t->category_id = 1;
 		$t->area_id = 1;
 		$t->cInitial = 24;
@@ -21,6 +22,7 @@ class TeachersTableSeeder extends Seeder
 		$t = new Teacher;
 		$t->name = 'Sergio Gomez';
 		$t->dni = '12A';
+		$t->user_id = 2;
 		$t->category_id = 2;
 		$t->area_id = 1;
 		$t->cInitial = 24;

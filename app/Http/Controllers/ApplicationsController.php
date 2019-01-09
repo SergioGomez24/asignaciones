@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Course;
 use App\Application;
 use App\Subject;
+use App\Campus;
 use Notification;
 
 class ApplicationsController extends Controller
@@ -28,9 +29,11 @@ class ApplicationsController extends Controller
     {
     	$course = Course::all()->last();
     	$arrayAsignaturas = Subject::all();
+        $arrayCampus = Campus::all();
 
 		return view('applications.create')->with('course',$course)
-										 ->with('arrayAsignaturas',$arrayAsignaturas);
+										  ->with('arrayAsignaturas',$arrayAsignaturas)
+                                          ->with('arrayCampus',$arrayCampus);
     }
 
     public function postCreate(Request $request) 

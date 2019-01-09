@@ -27,6 +27,20 @@
             </div>
 
             <div class="form-group">
+               <label for="email">Correo electrónico</label>
+               <input type="email" name="email" id="email" value="{{$usuario->email}}" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label for="role">Rol</label>
+               <select name="role" id="role" class="form-control" required>
+                  <option value="{{$usuario->role}}">{{$usuario->role}}</option>
+                  <option value="Profesor">Profesor</option>
+                  <option value="Director">Director</option>
+               </select>
+            </div>
+
+            <div class="form-group">
                <label for="category_id">Categoría</label>
                <select name="category_id" id="category_id" class="form-control" required>
                   <option value="{{$profesor->category_id}}">{{$categoria->name}}</option>

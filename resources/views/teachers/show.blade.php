@@ -13,6 +13,8 @@
           </div>
           <div class="card-body">
       		  <h5> DNI: {{$profesor->dni}} </h5>
+            <h5> Correo electrónico: {{$usuario->email}} </h5>
+            <h5> Rol: {{$usuario->role}} </h5>
       		  <h5> Categoría: {{$categoria->name}} </h5>
       		  <h5> Area: {{$area->name}} </h5>
       		  <h5> Créditos iniciales: {{$profesor->cInitial}} </h5>

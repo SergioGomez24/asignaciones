@@ -92,6 +92,16 @@
                   </div>
               @endforeach-->
               <div class="form-group">
+               <h6><label for="campus">Selecciona un campus</label></h6>
+               <select name="campus" id="campus" class="form-control" required onchange="seleccionar()">
+                  <option value="">Elige un campus</option>
+                  @foreach($arrayCampus as $campus)
+                  <option value="{{$campus->name}}">{{$campus->name}}</option>
+                  @endforeach
+               </select>
+              </div>
+
+              <div class="form-group">
                <h6><label for="subject">Selecciona una asignatura</label></h6>
                <select name="subject" id="subject" class="form-control" required onchange="seleccionar()">
                   <option value="">Elige una asignatura</option>
