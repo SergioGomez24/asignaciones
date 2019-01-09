@@ -15,10 +15,22 @@
     }
   }
 
-  function seleccionar(){
-    var lista = document.getElementById("subject");
-    var valorSeleccionado = lista.options[lista.selectedIndex].value;
+  function onSelectCampusChange() {
+    var lista = document.getElementById("campus");
+    var campus_id = lista.options[lista.selectedIndex].value;
+
+    if(! campus_id) {
+
+      $('#subjects').html('<option value="">Selecciona asignatura </option>');
+      return;
+    }
     
+    $.get('/api/campus/'+campus_id+'/subjects', function(data) {
+      var html_select = '<option value="">Selecciona asignatura </option>';
+      for (var i = 0; i < data.length; ++i) {
+        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>';
+        $('#subjects').html(html_select);
+    });
   }
 
 </script>
@@ -93,21 +105,21 @@
               @endforeach-->
               <div class="form-group">
                <h6><label for="campus">Selecciona un campus</label></h6>
-               <select name="campus" id="campus" class="form-control" required onchange="seleccionar()">
+               <select name="campus" id="campus" class="form-control" required onchange="onSelectCampusChange()">
                   <option value="">Elige un campus</option>
                   @foreach($arrayCampus as $campus)
-                  <option value="{{$campus->name}}">{{$campus->name}}</option>
+                  <option value="{{$campus->id}}">{{$campus->name}}</option>
                   @endforeach
                </select>
               </div>
 
               <div class="form-group">
                <h6><label for="subject">Selecciona una asignatura</label></h6>
-               <select name="subject" id="subject" class="form-control" required onchange="seleccionar()">
-                  <option value="">Elige una asignatura</option>
+               <select name="subject" id="subject" class="form-control" required>
+                  <!--<option value="">Elige una asignatura</option>
                   @foreach($arrayAsignaturas as $asignatura)
                   <option value="{{$asignatura->name}}">{{$asignatura->name}}</option>
-                  @endforeach
+                  @endforeach-->
                </select>
               </div>
 

@@ -13,6 +13,11 @@ use Notification;
 class SubjectsController extends Controller
 {
 
+    public function byCampus($id) {
+        
+        return Subject::where('campus_id', $id)->get();
+    }
+
     public function getIndex() 
     {
     	$arrayAsignaturas = Subject::all();
