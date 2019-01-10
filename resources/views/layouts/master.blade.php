@@ -11,6 +11,7 @@
 
     <script src="{{ url('/assets/bootstrap/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ url('/assets/bootstrap/popper.min.js') }}"></script>
+    <script src="{{ url('/assets/bootstrap/dropdown.js') }}"></script>
 
     <script src="{{ url('/assets/bootstrap/js/bootstrap.min.js') }}"></script>
 

@@ -15,9 +15,10 @@
     }
   }
 
-  function onSelectCampusChange() {
+  /*function onSelectCampusChange() {
     var lista = document.getElementById("campus");
     var campus_id = lista.options[lista.selectedIndex].value;
+    alert(campus_id);
 
     if(! campus_id) {
 
@@ -30,7 +31,8 @@
       for (var i = 0; i < data.length; ++i) {
         html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>';
         $('#subjects').html(html_select);
-    });
+      }
+    });*/
   }
 
 </script>
@@ -105,7 +107,7 @@
               @endforeach-->
               <div class="form-group">
                <h6><label for="campus">Selecciona un campus</label></h6>
-               <select name="campus" id="campus" class="form-control" required onchange="onSelectCampusChange()">
+               <select name="campus" id="campus" class="form-control" required>
                   <option value="">Elige un campus</option>
                   @foreach($arrayCampus as $campus)
                   <option value="{{$campus->id}}">{{$campus->name}}</option>
@@ -116,8 +118,8 @@
               <div class="form-group">
                <h6><label for="subject">Selecciona una asignatura</label></h6>
                <select name="subject" id="subject" class="form-control" required>
-                  <!--<option value="">Elige una asignatura</option>
-                  @foreach($arrayAsignaturas as $asignatura)
+                  <option value="">Elige una asignatura</option>
+                  <!--@foreach($arrayAsignaturas as $asignatura)
                   <option value="{{$asignatura->name}}">{{$asignatura->name}}</option>
                   @endforeach-->
                </select>

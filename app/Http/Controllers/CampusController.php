@@ -4,10 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Campus;
+use App\Subject;
 use Notification;
 
 class CampusController extends Controller
 {
+    public function getSubjects(Request $request, $id) {
+        if($request->ajax()){
+            $subjects = Subject::byCampus($id);
+            return response()->json($subjects);
+        }
+
+    }
+
 	public function getIndex() 
     {
     	$arrayCampus = Campus::all();
