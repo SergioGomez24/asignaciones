@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Course;
 use App\Application;
 use App\Subject;
@@ -34,6 +35,12 @@ class ApplicationsController extends Controller
 		return view('applications.create')->with('course',$course)
 										  ->with('arrayAsignaturas',$arrayAsignaturas)
                                           ->with('arrayCampus',$arrayCampus);
+    }
+
+    public function getSubjects() {
+        $camp_id = Input::get('campus_id');
+        $subjects = Subject::where('campus_id', '=', $camp_id)->get();
+        return response()->json($subjects);
     }
 
     public function postCreate(Request $request) 

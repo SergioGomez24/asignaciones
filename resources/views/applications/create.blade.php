@@ -1,42 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-<script language="JavaScript"> 
-  function validacion(){
-    var vCredT = document.getElementById("credT").value;
-    var vCredP = document.getElementById("credP").value;
-    var vCredS = document.getElementById("credS").value;
-
-    if(vCredS == "" && vCredT == "" && vCredP == ""){
-      alert("Introduce los créditos");
-      return false;
-    }else{
-      return true;
-    }
-  }
-
-  /*function onSelectCampusChange() {
-    var lista = document.getElementById("campus");
-    var campus_id = lista.options[lista.selectedIndex].value;
-    alert(campus_id);
-
-    if(! campus_id) {
-
-      $('#subjects').html('<option value="">Selecciona asignatura </option>');
-      return;
-    }
-    
-    $.get('/api/campus/'+campus_id+'/subjects', function(data) {
-      var html_select = '<option value="">Selecciona asignatura </option>';
-      for (var i = 0; i < data.length; ++i) {
-        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>';
-        $('#subjects').html(html_select);
-      }
-    });*/
-  }
-
-</script>
-
 <div class="row" style="margin-top:40px">
   <div class="container">
     <div class="row justify-content-center">
@@ -105,24 +69,25 @@
                     </div>
                   </div>
               @endforeach-->
+              <div class="col-md-4">
               <div class="form-group">
                <h6><label for="campus">Selecciona un campus</label></h6>
                <select name="campus" id="campus" class="form-control" required>
                   <option value="">Elige un campus</option>
-                  @foreach($arrayCampus as $campus)
-                  <option value="{{$campus->id}}">{{$campus->name}}</option>
+                  @foreach($arrayCampus as $c)
+                  <option value="{{$c->id}}">{{$c->name}}</option>
                   @endforeach
                </select>
               </div>
+              </div>
 
+              <div class="col-md-4">
               <div class="form-group">
                <h6><label for="subject">Selecciona una asignatura</label></h6>
                <select name="subject" id="subject" class="form-control" required>
                   <option value="">Elige una asignatura</option>
-                  <!--@foreach($arrayAsignaturas as $asignatura)
-                  <option value="{{$asignatura->name}}">{{$asignatura->name}}</option>
-                  @endforeach-->
                </select>
+              </div>
               </div>
 
               <div class="col-md-2">
@@ -160,4 +125,35 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript"> 
+  function validacion(){
+    var vCredT = document.getElementById("credT").value;
+    var vCredP = document.getElementById("credP").value;
+    var vCredS = document.getElementById("credS").value;
+
+    if(vCredS == "" && vCredT == "" && vCredP == ""){
+      alert("Introduce los créditos");
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  $('#campus').on('change', function(e) {
+    console.log(e);
+    var campus_id = e.target.value;
+    $.get('/asignaciones/public/json-subjects?campus_id='+ campus_id, function(data) {
+      console.log(data);
+      $('#subject').empty();
+      $('#subject').append('<option value="">Elige una asignatura</option>');
+
+      $.each(data, function(index, subjectsObj) {
+        $('#subject').append('<option value="'+ subjectsObj.id +'">'+ subjectsObj.name +'</option>');
+      })
+    });
+    
+  });
+
+</script>
 @stop
