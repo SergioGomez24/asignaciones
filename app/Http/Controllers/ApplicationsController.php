@@ -8,6 +8,7 @@ use App\Course;
 use App\Application;
 use App\Subject;
 use App\Campus;
+use App\Certification;
 use Notification;
 
 class ApplicationsController extends Controller
@@ -31,10 +32,12 @@ class ApplicationsController extends Controller
     	$course = Course::all()->last();
     	$arrayAsignaturas = Subject::all();
         $arrayCampus = Campus::all();
+        $arrayTitulaciones = Certification::all();
 
 		return view('applications.create')->with('course',$course)
 										  ->with('arrayAsignaturas',$arrayAsignaturas)
-                                          ->with('arrayCampus',$arrayCampus);
+                                          ->with('arrayCampus',$arrayCampus)
+                                          ->with('arrayTitulaciones',$arrayTitulaciones);
     }
 
     public function getSubjects() {
