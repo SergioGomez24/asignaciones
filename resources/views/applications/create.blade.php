@@ -70,7 +70,7 @@
                   </div>
               @endforeach-->
               <div class="form-group row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <h6><label for="certification">Selecciona una Titulación</label></h6>
                   <select name="certification" id="certification" class="form-control" required>
                     <option value="">Elige una titulación</option>
@@ -80,7 +80,7 @@
                   </select>
                 </div>
 
-                <div class="col-md-3" style="margin-left: 130px;">
+                <div class="col-md-4">
                   <h6><label for="campus">Selecciona un campus</label></h6>
                   <select name="campus" id="campus" class="form-control" required>
                     <option value="">Elige un campus</option>
@@ -90,7 +90,7 @@
                   </select>
                 </div>
 
-                <div class="col-md-3" style="margin-left: 130px;">
+                <div class="col-md-4">
                   <h6><label for="imparted">Selecciona el curso en la que se imparte</label></h6>
                   <select name="imparted" id="imparted" class="form-control" required>
                     <option value="">Elige el curso en la que se imparte</option>
@@ -116,15 +116,15 @@
               </div>
 
               <div class="form-group row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <h6><label for="credT" >Creditos Teoria</label></h6>
                   <input type="number" name="credT" id="credT" class="form-control" placeholder="0-{{$asignatura->cTheory}} créditos">
                 </div>
-                <div class="col-md-3" style="margin-left: 130px;">
+                <div class="col-md-4">
                   <h6><label for="credP">Creditos Prácticas</label></h6>
                   <input type="number" name="credP" id="credP" class="form-control" placeholder="0-{{$asignatura->cPractice}} créditos">
                 </div>
-                <div class="col-md-3" style="margin-left: 130px;">
+                <div class="col-md-4">
                   <h6><label for="credS">Creditos Seminarios</label></h6>
                   <input type="number" name="credS" id="credS" class="form-control" placeholder="0-{{$asignatura->cSeminar}} créditos">
                 </div>
@@ -174,10 +174,10 @@
     });
   });
 
-  $('#imparted').on('change', function(e) {
-    console.log(e);
-    var imparted_name = e.target.value;
-    $.get('/asignaciones/public/json-subjects?imparted_name='+ imparted_name, function(data) {
+  $('#imparted').on('change', function(a) {
+    console.log(a);
+    var imparted = a.target.value;
+    $.get('/asignaciones/public/json-subjects1?imparted='+ imparted, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
@@ -186,7 +186,6 @@
         $('#subject').append('<option value="'+ subjectsObj.id +'">'+ subjectsObj.name +'</option>');
       })
     });
-    
   });
 
 </script>

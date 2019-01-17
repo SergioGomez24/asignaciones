@@ -46,6 +46,12 @@ class ApplicationsController extends Controller
         return response()->json($subjects);
     }
 
+    public function getSubjects1() {
+        $imparted_name = Input::get('imparted');
+        $subjects = Subject::where('imparted', '=', $imparted_name)->get();
+        return response()->json($subjects);
+    }
+
     public function postCreate(Request $request) 
      {
         $course = Course::all()->last();
