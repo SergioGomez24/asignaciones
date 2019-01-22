@@ -160,10 +160,16 @@
     }
   }
 
+  var campus_id = document.getElementById("campus").value;
+  var imparted_name = document.getElementById("imparted").value;
+  //var campus_id = document.getElementById("campus").value;
+
+
   $('#campus').on('change', function(e) {
     console.log(e);
-    var campus_id = e.target.value;
-    $.get('/asignaciones/public/json-subjects?campus_id='+ campus_id, function(data) {
+    campus_id = e.target.value;
+    console.log(imparted_name);
+    $.get('/asignaciones/public/json-subjects?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
@@ -176,8 +182,8 @@
 
   $('#imparted').on('change', function(a) {
     console.log(a);
-    var imparted = a.target.value;
-    $.get('/asignaciones/public/json-subjects1?imparted='+ imparted, function(data) {
+    imparted_name = a.target.value;
+    $.get('/asignaciones/public/json-subjects?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');

@@ -42,13 +42,18 @@ class ApplicationsController extends Controller
 
     public function getSubjects() {
         $camp_id = Input::get('campus_id');
-        $subjects = Subject::where('campus_id', '=', $camp_id)->get();
-        return response()->json($subjects);
-    }
-
-    public function getSubjects1() {
         $imparted_name = Input::get('imparted');
-        $subjects = Subject::where('imparted', '=', $imparted_name)->get();
+        console.log($camp_id);
+        if($imparted_name == ""){
+            $subjects = Subject::where('campus_id', '=', $camp_id)->get();
+        } else {
+            if($camp_id == "") {
+                $subjects = Subject::where('imparted', '=', $imparted_name)->get();
+            } else {
+                $subjects = Subject::where('campus_id', '=', $camp_id)
+                            ->where('imparted', '=', $imparted_name)->get();
+            }
+        }
         return response()->json($subjects);
     }
 
