@@ -160,16 +160,34 @@
     }
   }
 
+  var certification_id = document.getElementById("certification").value;
   var campus_id = document.getElementById("campus").value;
   var imparted_name = document.getElementById("imparted").value;
-  //var campus_id = document.getElementById("campus").value;
 
+  $('#certification').on('change', function(e) {
+    console.log(e);
+    certification_id = e.target.value;
+    console.log(imparted_name);
+    console.log(campus_id);
+    console.log(certification_id);
+    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
+      console.log(data);
+      $('#subject').empty();
+      $('#subject').append('<option value="">Elige una asignatura</option>');
+
+      $.each(data, function(index, subjectsObj) {
+        $('#subject').append('<option value="'+ subjectsObj.id +'">'+ subjectsObj.name +'</option>');
+      })
+    });
+  });
 
   $('#campus').on('change', function(e) {
     console.log(e);
     campus_id = e.target.value;
     console.log(imparted_name);
-    $.get('/asignaciones/public/json-subjects?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
+    console.log(campus_id);
+    console.log(certification_id);
+    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
@@ -183,7 +201,10 @@
   $('#imparted').on('change', function(a) {
     console.log(a);
     imparted_name = a.target.value;
-    $.get('/asignaciones/public/json-subjects?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
+    console.log(imparted_name);
+    console.log(campus_id);
+    console.log(certification_id);
+    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');

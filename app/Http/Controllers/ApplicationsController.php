@@ -41,19 +41,35 @@ class ApplicationsController extends Controller
     }
 
     public function getSubjects() {
+        $cert_id = Input::get('certification_id');
         $camp_id = Input::get('campus_id');
         $imparted_name = Input::get('imparted');
-        console.log($camp_id);
-        if($imparted_name == ""){
-            $subjects = Subject::where('campus_id', '=', $camp_id)->get();
-        } else {
-            if($camp_id == "") {
-                $subjects = Subject::where('imparted', '=', $imparted_name)->get();
+
+        if($camp_id == "" && $imparted_name == "") {
+            $subjects = Subject::where('certification_id', '=', $cert_id)->get();
+        } else 
+            if($cert_id == "" && $imparted_name == "") {
+                $subjects = Subject::where('campus_id', '=', $camp_id)->get();
+            } else 
+                if($cert_id == "" && $camp_id == "") {
+                    $subjects = Subject::where('imparted', '=', $imparted_name)->get();
+            } else
+                if($cert_id == "") {
+                    $subjects = Subject::where('campus_id', '=', $camp_id)
+                                        ->where('imparted', '=', $imparted_name)->get();
+            } else
+                if($camp_id == "") {
+                    $subjects = Subject::where('certification_id', '=', $cert_id)
+                                        ->where('imparted', '=', $imparted_name)->get();
+            } else
+                if($imparted_name == "") {
+                    $subjects = Subject::where('campus_id', '=', $camp_id)
+                                        ->where('certification_id', '=', $cert_id)->get();
             } else {
                 $subjects = Subject::where('campus_id', '=', $camp_id)
-                            ->where('imparted', '=', $imparted_name)->get();
+                                    ->where('certification_id', '=', $cert_id)
+                                    ->where('imparted', '=', $imparted_name)->get();
             }
-        }
         return response()->json($subjects);
     }
 
