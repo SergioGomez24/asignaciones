@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('applications/create', 'ApplicationsController@getCreate');
 	Route::get('json-subjects', 'ApplicationsController@getSubjects');
+	Route::get('json-subject', 'ApplicationsController@getSubject');
 	Route::post('applications/create', 'ApplicationsController@postCreate');
 
 

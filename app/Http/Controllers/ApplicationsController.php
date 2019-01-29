@@ -74,6 +74,14 @@ class ApplicationsController extends Controller
         return response()->json($subjects);
     }
 
+    public function getSubject() {
+        $subject_id = Input::get('id');
+
+        $subject = Subject::where('id', '=', $subject_id)->get();
+
+        return response()->json($subject);
+    }
+
     public function postCreate(Request $request) 
      {
         $course = Course::all()->last();

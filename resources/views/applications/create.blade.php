@@ -16,59 +16,6 @@
          			<h5 class="text-center"> Profesor: {{ auth()->user()->name }} </h5>
               <h6 class="text-center"> Curso: {{$course->course}} </h6>
 
-         			<!--@foreach( $arrayAsignaturas as $asignatura )
-                <h5> {{$asignatura->name}} </h5>
-                  <div class="form-group row">
-                    <div class="col-md-2">
-                      <h6>Titulación</h6>
-                      <p>{{$asignatura->certification}}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <h6>Area</h6>
-                      <p>{{$asignatura->area}}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <h6>Campus</h6>
-                      <p>{{$asignatura->campus}}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <h6>Centro</h6>
-                      <p>{{$asignatura->center}}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <h6>Curso</h6>
-                      <p>{{$asignatura->imparted}}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <h6>Duración</h6>
-                      <p>{{$asignatura->duration}}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <h6>Tipo de asignatura</h6>
-                      <p>{{$asignatura->typeSubject}}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <h6>Coordinador</h6>
-                      <p>{{$asignatura->coordinator}}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <h6><label for="credT" >Creditos Teoria</label></h6>
-                      <input type="number" name="credT" id="credT" class="form-control" placeholder="1-3 créditos">
-                    </div>
-                    <div class="col-md-2">
-                      <h6><label for="credP">Creditos Prácticas</label></h6>
-                      <input type="number" name="credP" id="credP" class="form-control" placeholder="1-3 créditos">
-                    </div>
-                    <div class="col-md-2">
-                      <h6><label for="credS">Creditos Seminarios</label></h6>
-                      <input type="number" name="credS" id="credS" class="form-control" placeholder="1-3 créditos">
-                    </div>
-                    <div class="col-md-2">
-                      <button type="submit" class="btn btn-primary" style="margin-top:35px;">elegir
-                      </button>
-                    </div>
-                  </div>
-              @endforeach-->
               <div class="form-group row">
                 <div class="col-md-4">
                   <h6><label for="certification">Selecciona una Titulación</label></h6>
@@ -110,23 +57,45 @@
                </select>
               </div>
 
-              <div class="col-md-2">
-                <h6>Coordinador</h6>
-                <p>{{$asignatura->coordinator}}</p>
-              </div>
+              <div class="form-group row">
+                <div class="col-md-3">
+                  <h6>Código</h6>
+                  <p id="code"></p>
+                </div>
+
+                <div class="col-md-3">
+                  <h6>Area</h6>
+                  <p id="area"></p>
+                </div>
+
+                <div class="col-md-3">
+                  <h6>Duración</h6>
+                  <p id="duration"></p>
+                </div>
+
+                <div class="col-md-3">
+                  <h6>Tipo de Asignatura</h6>
+                  <p id="typeSubject"></p>
+                </div>
+
+                <div class="col-md-3">
+                  <h6>Coordinador</h6>
+                  <p id="coordinator"></p>
+                </div>
+              </div>     
 
               <div class="form-group row">
                 <div class="col-md-4">
                   <h6><label for="credT" >Creditos Teoria</label></h6>
-                  <input type="number" name="credT" id="credT" class="form-control" placeholder="0-{{$asignatura->cTheory}} créditos">
+                  <input type="number" name="credT" id="credT" class="form-control" placeholder="Introduce créditos">
                 </div>
                 <div class="col-md-4">
                   <h6><label for="credP">Creditos Prácticas</label></h6>
-                  <input type="number" name="credP" id="credP" class="form-control" placeholder="0-{{$asignatura->cPractice}} créditos">
+                  <input type="number" name="credP" id="credP" class="form-control" placeholder="Introduce créditos">
                 </div>
                 <div class="col-md-4">
                   <h6><label for="credS">Creditos Seminarios</label></h6>
-                  <input type="number" name="credS" id="credS" class="form-control" placeholder="0-{{$asignatura->cSeminar}} créditos">
+                  <input type="number" name="credS" id="credS" class="form-control" placeholder="Introduce créditos">
                 </div>
               </div>
 
@@ -163,6 +132,7 @@
   var certification_id = document.getElementById("certification").value;
   var campus_id = document.getElementById("campus").value;
   var imparted_name = document.getElementById("imparted").value;
+  var subject_id = document.getElementById("subject").value;
 
   $('#certification').on('change', function(e) {
     console.log(e);
@@ -198,9 +168,9 @@
     });
   });
 
-  $('#imparted').on('change', function(a) {
-    console.log(a);
-    imparted_name = a.target.value;
+  $('#imparted').on('change', function(e) {
+    console.log(e);
+    imparted_name = e.target.value;
     console.log(imparted_name);
     console.log(campus_id);
     console.log(certification_id);
@@ -211,6 +181,26 @@
 
       $.each(data, function(index, subjectsObj) {
         $('#subject').append('<option value="'+ subjectsObj.id +'">'+ subjectsObj.name +'</option>');
+      })
+    });
+  });
+
+  $('#subject').on('change', function(e) {
+    subject_id = e.target.value;
+    $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
+      $('#code').empty();
+      $('#area').empty();
+      $('#duration').empty();
+      $('#typeSubject').empty();
+      $('#coordinator').empty();
+      $('#credT').empty();
+      $.each(data, function(index, subjectObj) {
+        $('#code').append('<p>'+ subjectObj.code +'</p>');
+        $('#area').append('<p>'+ subjectObj.area_id +'</p>');
+        $('#duration').append('<p>'+ subjectObj.duration +'</p>');
+        $('#typeSubject').append('<p>'+ subjectObj.typeSubject +'</p>');
+        $('#coordinator').append('<p>'+ subjectObj.coordinator +'</p>');
+        $('#credT').append('<input placeholder="0-'+ subjectObj.cTheory +'"></input>');
       })
     });
   });
