@@ -170,7 +170,7 @@
     console.log(imparted_name);
     console.log(campus_id);
     console.log(certification_id);
-    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
+    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted='+ imparted_name, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
@@ -187,7 +187,7 @@
     console.log(imparted_name);
     console.log(campus_id);
     console.log(certification_id);
-    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
+    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted='+ imparted_name, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
@@ -204,7 +204,7 @@
     console.log(imparted_name);
     console.log(campus_id);
     console.log(certification_id);
-    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '?campus_id='+ campus_id + '?imparted='+ imparted_name, function(data) {
+    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted='+ imparted_name, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');

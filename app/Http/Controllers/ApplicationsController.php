@@ -45,31 +45,32 @@ class ApplicationsController extends Controller
         $camp_id = Input::get('campus_id');
         $imparted_name = Input::get('imparted');
 
-        if($camp_id == "" && $imparted_name == "") {
+        if ($camp_id == "" && $imparted_name == "") {
             $subjects = Subject::where('certification_id', '=', $cert_id)->get();
-        } else 
-            if($cert_id == "" && $imparted_name == "") {
-                $subjects = Subject::where('campus_id', '=', $camp_id)->get();
-            } else 
-                if($cert_id == "" && $camp_id == "") {
-                    $subjects = Subject::where('imparted', '=', $imparted_name)->get();
-            } else
-                if($cert_id == "") {
-                    $subjects = Subject::where('campus_id', '=', $camp_id)
-                                        ->where('imparted', '=', $imparted_name)->get();
-            } else
-                if($camp_id == "") {
-                    $subjects = Subject::where('certification_id', '=', $cert_id)
-                                        ->where('imparted', '=', $imparted_name)->get();
-            } else
-                if($imparted_name == "") {
-                    $subjects = Subject::where('campus_id', '=', $camp_id)
-                                        ->where('certification_id', '=', $cert_id)->get();
-            } else {
+
+        } elseif ($cert_id == "" && $imparted_name == "") {
+            $subjects = Subject::where('campus_id', '=', $camp_id)->get();
+
+        } elseif ($cert_id == "" && $camp_id == "") {
+            $subjects = Subject::where('imparted', '=', $imparted_name)->get();
+
+        } elseif ($cert_id == "") {
+            $subjects = Subject::where('campus_id', '=', $camp_id)
+                                ->where('imparted', '=', $imparted_name)->get();
+
+        } elseif ($camp_id == "") {
+            $subjects = Subject::where('certification_id', '=', $cert_id)
+                                ->where('imparted', '=', $imparted_name)->get();
+
+        } elseif ($imparted_name == "") {
+            $subjects = Subject::where('campus_id', '=', $camp_id)
+                                ->where('certification_id', '=', $cert_id)->get();
+
+        } else {
                 $subjects = Subject::where('campus_id', '=', $camp_id)
                                     ->where('certification_id', '=', $cert_id)
                                     ->where('imparted', '=', $imparted_name)->get();
-            }
+        }
         return response()->json($subjects);
     }
 
