@@ -15,14 +15,14 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('subject');
-            $table->foreign('subject')->references('name')->on('subjects');
+            $table->integer('subject_id')->unsigned();
+            $table->foreign('subject_id')->references('id')->on('subjects');
             $table->string('teacher');
             $table->foreign('teacher')->references('name')->on('teachers');
             $table->string('course');
-            $table->integer('credT')->unsigned()->nullable();
-            $table->integer('credP')->unsigned()->nullable();
-            $table->integer('credS')->unsigned()->nullable();
+            $table->decimal('cTheory',10,0)->unsigned()->nullable();
+            $table->decimal('cPractice',10,0)->unsigned()->nullable();
+            $table->decimal('cSeminar',10,0)->unsigned()->nullable();
             $table->timestamps();
         });
     }

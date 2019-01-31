@@ -9,6 +9,7 @@ use App\Application;
 use App\Subject;
 use App\Campus;
 use App\Certification;
+use App\Area;
 use Notification;
 
 class ApplicationsController extends Controller

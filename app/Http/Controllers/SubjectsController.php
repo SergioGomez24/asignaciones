@@ -8,6 +8,9 @@ use App\Certification;
 use App\Area;
 use App\Campus;
 use App\Center;
+use App\Coursesubject;
+use App\Durationsubject;
+use App\Typesubject;
 use Notification;
 
 class SubjectsController extends Controller
@@ -48,11 +51,17 @@ class SubjectsController extends Controller
         $arrayAreas = Area::all();
         $arrayCampus = Campus::all();
         $arrayCentros = Center::all();
+        $arrayCursoAsignaturas = Coursesubject::all();
+        $arrayDuracionAsignaturas = Durationsubject::all();
+        $arrayTipoAsignaturas = Typesubject::all();
 
     	return view('subjects.create')->with('arrayTitulaciones',$arrayTitulaciones)
                                       ->with('arrayAreas',$arrayAreas)
                                       ->with('arrayCampus',$arrayCampus)
-                                      ->with('arrayCentros',$arrayCentros);
+                                      ->with('arrayCentros',$arrayCentros)
+                                      ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas)
+                                      ->with('arrayDuracionAsignaturas',$arrayDuracionAsignaturas)
+                                      ->with('arrayTipoAsignaturas',$arrayTipoAsignaturas);
     }
 
     public function postCreate(Request $request) 
@@ -92,10 +101,14 @@ class SubjectsController extends Controller
         $cen_id = $asignatura->center_id;
         $center = Center::findOrFail($cen_id);
 
+        $dur_id = $asignatura->duration_id;
+        $duration = Durationsubject::findOrFail($dur_id);
+
         $arrayTitulaciones = Certification::all();
         $arrayAreas = Area::all();
         $arrayCampus = Campus::all();
         $arrayCentros = Center::all();
+        $arrayDuracionAsignaturas = Durationsubject::all();
         
 		    	
      	return view('subjects.edit')->with('asignatura',$asignatura)
@@ -103,10 +116,12 @@ class SubjectsController extends Controller
                                     ->with('arrayAreas',$arrayAreas)
                                     ->with('arrayCampus',$arrayCampus)
                                     ->with('arrayCentros',$arrayCentros)
+                                    ->with('arrayDuracionAsignaturas',$arrayDuracionAsignaturas)
                                     ->with('certification',$certification)
                                     ->with('area',$area)
                                     ->with('campus',$campus)
-                                    ->with('center',$center);
+                                    ->with('center',$center)
+                                    ->with('duration',$duration);
     }
 
     public function putEdit(Request $request, $id)
@@ -121,7 +136,7 @@ class SubjectsController extends Controller
         $a->cTheory = $request->input('cTheory');
         $a->cSeminar = $request->input('cSeminar');
         $a->cPractice = $request->input('cPractice');
-        $a->duration = $request->input('duration');
+        $a->duration_id = $request->input('duration_id');
         $a->imparted = $request->input('imparted');
         $a->typeSubject = $request->input('typeSubject');
         $a->coordinator = $request->input('coordinator');

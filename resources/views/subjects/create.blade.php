@@ -32,18 +32,18 @@
 
             <div class="form-group">
                <label for="code">Código</label>
-               <input type="text" name="code" id="code" class="form-control" required>
+               <input type="text" name="code" id="code" class="form-control" placeholder="Ejemplo:111" required>
             </div>
 
             <div class="form-group">
                <label for="name">Nombre</label>
-               <input type="text" name="name" id="name" class="form-control" required>
+               <input type="text" name="name" id="name" class="form-control" placeholder="Nombre Apellidos" required>
             </div>
 
             <div class="form-group">
                <label for="certification_id">Titulación</label>
                <select name="certification_id" id="certification_id" class="form-control" required>
-                  <option value="">Elige una titulación</option>
+                  <option value="">Selecciona una titulación</option>
                   @foreach($arrayTitulaciones as $titulacion)
                   <option value="{{$titulacion->id}}">{{$titulacion->name}}</option>
                   @endforeach
@@ -53,7 +53,7 @@
             <div class="form-group">
                <label for="area_id">Área</label>
                <select name="area_id" id="area_id" class="form-control" required>
-                  <option value="">Elige un area</option>
+                  <option value="">Selecciona un area</option>
                   @foreach($arrayAreas as $area)
                   <option value="{{$area->id}}">{{$area->name}}</option>
                   @endforeach
@@ -63,7 +63,7 @@
             <div class="form-group">
                <label for="campus_id">Campus</label>
                <select name="campus_id" id="campus_id" class="form-control" required>
-                  <option value="">Elige un campus</option>
+                  <option value="">Selecciona un campus</option>
                   @foreach($arrayCampus as $campus)
                   <option value="{{$campus->id}}">{{$campus->name}}</option>
                   @endforeach
@@ -73,7 +73,7 @@
             <div class="form-group">
                <label for="center_id">Centro</label>
                <select name="center_id" id="center_id" class="form-control" required>
-                  <option value="">Elige un centro</option>
+                  <option value="">Selecciona un centro</option>
                   @foreach($arrayCentros as $centro)
                   <option value="{{$centro->id}}">{{$centro->name}}</option>
                   @endforeach
@@ -82,48 +82,52 @@
 
             <div class="form-group">
                <label for="cTheory">Creditos Teoria</label>
-               <input type="number" name="cTheory" id="cTheory" class="form-control">
+               <input type="number" name="cTheory" id="cTheory" class="form-control" placeholder="Ejemplo:2">
             </div>
 
             <div class="form-group">
                <label for="cSeminar">Creditos Seminario</label>
-               <input type="number" name="cSeminar" id="cSeminar" class="form-control">
+               <input type="number" name="cSeminar" id="cSeminar" class="form-control" placeholder="Ejemplo:2">
             </div>
 
             <div class="form-group">
                <label for="cPractice">Creditos Práctica</label>
-               <input type="number" name="cPractice" id="cPractice" class="form-control">
+               <input type="number" name="cPractice" id="cPractice" class="form-control" placeholder="Ejemplo:2">
             </div>
 
             <div class="form-group">
                <label for="duration">Duración</label>
                <select name="duration" id="duration" class="form-control">
-                  <option>Primer semestre
-                  <option>Segundo semestre
+                  <option value="">Selecciona la duración de la asignatura</option>
+                  @foreach($arrayDuracionAsignaturas as $duracionA)
+                  <option value="{{$duracionA->id}}">{{$duracionA->name}}</option>
+                  @endforeach
                </select>
             </div>
 
             <div class="form-group">
                <label for="imparted">Curso en la que se imparte</label>
                <select name="imparted" id="imparted" class="form-control">
-                  <option>Primero
-                  <option>Segundo
-                  <option>Tercero
-                  <option>Cuarto
+                  <option value="">Selecciona el curso en la que se imparte</option>
+                  @foreach($arrayCursoAsignaturas as $cursoA)
+                  <option value="{{$cursoA->id}}">{{$cursoA->name}}</option>
+                  @endforeach
                </select>
             </div>
 
             <div class="form-group">
                <label for="typeSubject">Tipo de asignatura</label>
                <select name="typeSubject" id="typeSubject" class="form-control">
-                  <option>Obligatoria
-                  <option>Optativa
+                  <option value="">Selecciona el tipo de la asignatura</option>
+                  @foreach($arrayTipoAsignaturas as $tipoA)
+                  <option value="{{$tipoA->id}}">{{$tipoA->name}}</option>
+                  @endforeach
                </select>
             </div>
 
             <div class="form-group">
                <label for="coordinator">Coordinador</label>
-               <input type="text" name="coordinator" id="coordinator" class="form-control" required>
+               <input type="text" name="coordinator" id="coordinator" class="form-control"placeholder="Nombre Apellidos" required>
             </div>
 
 

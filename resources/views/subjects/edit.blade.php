@@ -83,7 +83,12 @@
 
             <div class="form-group">
                <label for="duration">Duración</label>
-               <input type="text" name="duration" id="duration" value="{{$asignatura->duration}}" class="form-control">
+               <select name="duration" id="duration" class="form-control" required>
+                  <option value="{{$asignatura->duration_id}}">{{$duration->name}}</option>
+                  @foreach($arrayDuracionAsignaturas as $duracionA)
+                  <option value="{{$duracionA->id}}">{{$duracionA->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group">

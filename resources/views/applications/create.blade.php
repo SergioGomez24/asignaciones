@@ -87,15 +87,15 @@
               <div class="form-group row">
                 <div class="col-md-4">
                   <h6><label for="credT" >Creditos Teoria</label></h6>
-                  <input type="number" name="credT" id="credT" class="form-control" placeholder="Introduce créditos">
+                  <input type="number" name="credT" id="credT" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
                 </div>
                 <div class="col-md-4">
                   <h6><label for="credP">Creditos Prácticas</label></h6>
-                  <input type="number" name="credP" id="credP" class="form-control" placeholder="Introduce créditos">
+                  <input type="number" name="credP" id="credP" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
                 </div>
                 <div class="col-md-4">
                   <h6><label for="credS">Creditos Seminarios</label></h6>
-                  <input type="number" name="credS" id="credS" class="form-control" placeholder="Introduce créditos">
+                  <input type="number" name="credS" id="credS" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
                 </div>
               </div>
 
@@ -137,8 +137,6 @@
   $('#certification').on('change', function(e) {
     console.log(e);
     certification_id = e.target.value;
-    console.log(imparted_name);
-    console.log(campus_id);
     console.log(certification_id);
     $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted='+ imparted_name, function(data) {
       console.log(data);
@@ -154,9 +152,6 @@
   $('#campus').on('change', function(e) {
     console.log(e);
     campus_id = e.target.value;
-    console.log(imparted_name);
-    console.log(campus_id);
-    console.log(certification_id);
     $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted='+ imparted_name, function(data) {
       console.log(data);
       $('#subject').empty();
@@ -171,9 +166,6 @@
   $('#imparted').on('change', function(e) {
     console.log(e);
     imparted_name = e.target.value;
-    console.log(imparted_name);
-    console.log(campus_id);
-    console.log(certification_id);
     $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted='+ imparted_name, function(data) {
       console.log(data);
       $('#subject').empty();
@@ -200,7 +192,7 @@
         $('#duration').append('<p>'+ subjectObj.duration +'</p>');
         $('#typeSubject').append('<p>'+ subjectObj.typeSubject +'</p>');
         $('#coordinator').append('<p>'+ subjectObj.coordinator +'</p>');
-        $('#credT').append('<input placeholder="0-'+ subjectObj.cTheory +'"></input>');
+        $('#credT').append('<input placeholder="'+subjectObj.cTheory+'"></input>');
       })
     });
   });
