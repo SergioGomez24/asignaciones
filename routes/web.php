@@ -29,13 +29,13 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('subjects/show/{id}', 'SubjectsController@getShow');
 
-	Route::get('subjects/create', 'SubjectsController@getCreate');
-	Route::post('subjects/create', 'SubjectsController@postCreate');
+	Route::get('subjects/create', 'SubjectsController@getCreate')->middleware('role');
+	Route::post('subjects/create', 'SubjectsController@postCreate')->middleware('role');
 
-	Route::get('subjects/edit/{id}', 'SubjectsController@getEdit');
-	Route::put('subjects/edit/{id}', 'SubjectsController@putEdit');
+	Route::get('subjects/edit/{id}', 'SubjectsController@getEdit')->middleware('role');
+	Route::put('subjects/edit/{id}', 'SubjectsController@putEdit')->middleware('role');
 
-	Route::delete('/subjects/delete/{id}', 'SubjectsController@deleteSubject');
+	Route::delete('/subjects/delete/{id}', 'SubjectsController@deleteSubject')->middleware('role');
 
 });
 
@@ -46,13 +46,13 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('teachers/show/{id}', 'TeachersController@getShow');
 
-	Route::get('teachers/create', 'TeachersController@getCreate');
-	Route::post('teachers/create', 'TeachersController@postCreate');
+	Route::get('teachers/create', 'TeachersController@getCreate')->middleware('role');
+	Route::post('teachers/create', 'TeachersController@postCreate')->middleware('role');
 
-	Route::get('teachers/edit/{id}', 'TeachersController@getEdit');
-	Route::put('teachers/edit/{id}', 'TeachersController@putEdit');
+	Route::get('teachers/edit/{id}', 'TeachersController@getEdit')->middleware('role');
+	Route::put('teachers/edit/{id}', 'TeachersController@putEdit')->middleware('role');
 
-	Route::delete('/teachers/delete/{id}', 'TeachersController@deleteTeacher');
+	Route::delete('/teachers/delete/{id}', 'TeachersController@deleteTeacher')->middleware('role');
 
 });
 
@@ -71,7 +71,7 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 /* Ajustes */
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => ['auth', 'role']], function() {
 
 	Route::get('settings', function() {
 	return view('settings.index');

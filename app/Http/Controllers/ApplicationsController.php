@@ -91,9 +91,9 @@ class ApplicationsController extends Controller
         $a->subject = $request->input('subject');
         $a->teacher = Auth()->user()->name;
         $a->course = $course->course;
-        $a->credT = $request->input('credT');
-        $a->credP = $request->input('credP');
-        $a->credS = $request->input('credS');
+        $a->cTheory = $request->input('cTheory');
+        $a->cPractice = $request->input('cPractice');
+        $a->cSeminar = $request->input('cSeminar');
         $a->save();
         Notification::success('La solicitud se ha guardado exitosamente!');
         return redirect('/applications/create');

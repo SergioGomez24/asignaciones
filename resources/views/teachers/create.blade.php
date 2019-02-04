@@ -17,28 +17,28 @@
 
             <div class="form-group">
                <label for="name">Nombre</label>
-               <input type="text" name="name" id="name" class="form-control" required>
+               <input type="text" name="name" id="name" class="form-control" placeholder="Nombre Apellidos" required>
             </div>
 
             <div class="form-group">
                <label for="dni">DNI</label>
-               <input type="text" name="dni" id="dni" class="form-control" required>
+               <input type="text" name="dni" id="dni" class="form-control" placeholder="Ejemplo: 123A" required>
             </div>
 
             <div class="form-group">
                <label for="email">Correo electrónico</label>
-               <input type="email" name="email" id="email" class="form-control" required>
+               <input type="email" name="email" id="email" class="form-control" placeholder="Ejemplo: correo@uca.es" required>
             </div>
 
             <div class="form-group">
                <label for="password">Contraseña</label>
-               <input type="password" name="password" id="password" class="form-control" required>
+               <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña inicio sesion" required>
             </div>
 
             <div class="form-group">
                <label for="role">Rol</label>
                <select name="role" id="role" class="form-control" required>
-                  <option value="">Elige un rol</option>
+                  <option value="">Selecciona un rol</option>
                   <option value="Profesor">Profesor</option>
                   <option value="Director">Director</option>
                </select>
@@ -47,7 +47,7 @@
             <div class="form-group">
                <label for="category_id">Categoría</label>
                <select name="category_id" id="category_id" class="form-control" required>
-                  <option value="">Elige una categoría</option>
+                  <option value="">Selecciona una categoría</option>
                   @foreach($arrayCategorias as $categoria)
                   <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                   @endforeach
@@ -57,7 +57,7 @@
             <div class="form-group">
                <label for="area_id">Área</label>
                <select name="area_id" id="area_id" class="form-control" required>
-                  <option value="">Elige un area</option>
+                  <option value="">Selecciona un area</option>
                   @foreach($arrayAreas as $area)
                   <option value="{{$area->id}}">{{$area->name}}</option>
                   @endforeach

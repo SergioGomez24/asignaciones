@@ -16,7 +16,7 @@
     <script src="{{ url('/assets/bootstrap/js/bootstrap.min.js') }}"></script>
 
   </head>
-  <body>
+  <body background="{{ asset('img/fondo.jpg') }}">
     <!-- Header -->
     @include('partials.navbar')
     <div class="container">

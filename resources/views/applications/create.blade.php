@@ -86,16 +86,16 @@
 
               <div class="form-group row">
                 <div class="col-md-4">
-                  <h6><label for="credT" >Creditos Teoria</label></h6>
-                  <input type="number" name="credT" id="credT" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
+                  <h6><label for="cTheory" >Creditos Teoria</label></h6>
+                  <input type="number" name="cTheory" id="cTheory" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
                 </div>
                 <div class="col-md-4">
                   <h6><label for="credP">Creditos Prácticas</label></h6>
-                  <input type="number" name="credP" id="credP" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
+                  <input type="number" name="cPractice" id="cPractice" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
                 </div>
                 <div class="col-md-4">
-                  <h6><label for="credS">Creditos Seminarios</label></h6>
-                  <input type="number" name="credS" id="credS" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
+                  <h6><label for="cSeminar">Creditos Seminarios</label></h6>
+                  <input type="number" name="cSeminar" id="cSeminar" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
                 </div>
               </div>
 
@@ -115,19 +115,7 @@
   </div>
 </div>
 
-<script type="text/javascript"> 
-  function validacion(){
-    var vCredT = document.getElementById("credT").value;
-    var vCredP = document.getElementById("credP").value;
-    var vCredS = document.getElementById("credS").value;
-
-    if(vCredS == "" && vCredT == "" && vCredP == ""){
-      alert("Introduce los créditos");
-      return false;
-    }else{
-      return true;
-    }
-  }
+<script type="text/javascript">
 
   var certification_id = document.getElementById("certification").value;
   var campus_id = document.getElementById("campus").value;
@@ -196,6 +184,19 @@
       })
     });
   });
+
+  function validacion(){
+    var vCredT = document.getElementById("cTheory").value;
+    var vCredP = document.getElementById("cPractice").value;
+    var vCredS = document.getElementById("cSeminar").value;
+
+    if(vCredS == "" && vCredT == "" && vCredP == ""){
+      alert("Introduce los créditos");
+      return false;
+    }else{
+      return true;
+    }
+  }
 
 </script>
 @stop
