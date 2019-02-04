@@ -82,8 +82,8 @@
             </div>
 
             <div class="form-group">
-               <label for="duration">Duración</label>
-               <select name="duration" id="duration" class="form-control" required>
+               <label for="duration_id">Duración</label>
+               <select name="duration_id" id="duration_id" class="form-control" required>
                   <option value="{{$asignatura->duration_id}}">{{$duration->name}}</option>
                   @foreach($arrayDuracionAsignaturas as $duracionA)
                   <option value="{{$duracionA->id}}">{{$duracionA->name}}</option>
@@ -92,13 +92,23 @@
             </div>
 
             <div class="form-group">
-               <label for="imparted">Curso en la que se imparte</label>
-               <input type="text" name="imparted" id="imparted" value="{{$asignatura->imparted}}" class="form-control">
+               <label for="imparted_id">Curso en la que se imparte</label>
+               <select name="imparted_id" id="imparted_id" class="form-control" required>
+                  <option value="{{$asignatura->imparted_id}}">{{$imparted->name}}</option>
+                  @foreach($arrayCursoAsignaturas as $cursoA)
+                  <option value="{{$cursoA->id}}">{{$cursoA->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group">
-               <label for="typeSubject">Tipo de asignatura</label>
-               <input type="text" name="typeSubject" id="typeSubject" value="{{$asignatura->typeSubject}}" class="form-control">
+               <label for="typeSubject_id">Tipo de asignatura</label>
+               <select name="typeSubject_id" id="typeSubject_id" class="form-control" required>
+                  <option value="{{$asignatura->typeSubject_id}}">{{$typeSubject->name}}</option>
+                  @foreach($arrayTipoAsignaturas as $tipoA)
+                  <option value="{{$tipoA->id}}">{{$tipoA->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group">

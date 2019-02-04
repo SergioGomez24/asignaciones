@@ -96,8 +96,8 @@
             </div>
 
             <div class="form-group">
-               <label for="duration">Duración</label>
-               <select name="duration" id="duration" class="form-control">
+               <label for="duration_id">Duración</label>
+               <select name="duration_id" id="duration_id" class="form-control">
                   <option value="">Selecciona la duración de la asignatura</option>
                   @foreach($arrayDuracionAsignaturas as $duracionA)
                   <option value="{{$duracionA->id}}">{{$duracionA->name}}</option>
@@ -106,8 +106,8 @@
             </div>
 
             <div class="form-group">
-               <label for="imparted">Curso en la que se imparte</label>
-               <select name="imparted" id="imparted" class="form-control">
+               <label for="imparted_id">Curso en la que se imparte</label>
+               <select name="imparted_id" id="imparted_id" class="form-control">
                   <option value="">Selecciona el curso en la que se imparte</option>
                   @foreach($arrayCursoAsignaturas as $cursoA)
                   <option value="{{$cursoA->id}}">{{$cursoA->name}}</option>
@@ -116,8 +116,8 @@
             </div>
 
             <div class="form-group">
-               <label for="typeSubject">Tipo de asignatura</label>
-               <select name="typeSubject" id="typeSubject" class="form-control">
+               <label for="typeSubject_id">Tipo de asignatura</label>
+               <select name="typeSubject_id" id="typeSubject_id" class="form-control">
                   <option value="">Selecciona el tipo de la asignatura</option>
                   @foreach($arrayTipoAsignaturas as $tipoA)
                   <option value="{{$tipoA->id}}">{{$tipoA->name}}</option>
@@ -127,7 +127,7 @@
 
             <div class="form-group">
                <label for="coordinator">Coordinador</label>
-               <input type="text" name="coordinator" id="coordinator" class="form-control"placeholder="Nombre Apellidos" required>
+               <input type="text" name="coordinator" id="coordinator" class="form-control" placeholder="Nombre Apellidos" required>
             </div>
 
 

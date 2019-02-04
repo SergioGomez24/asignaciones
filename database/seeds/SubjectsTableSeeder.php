@@ -19,8 +19,8 @@ class SubjectsTableSeeder extends Seeder
 		$subject->cSeminar = 1;
 		$subject->cPractice = 2;
 		$subject->duration_id = 1;
-		$subject->imparted = 'Primer Curso';
-		$subject->typeSubject = 'Obligatoria';
+		$subject->imparted_id = 1;
+		$subject->typeSubject_id = 1;
 		$subject->coordinator = 'Jose Garcia';
 		$subject->save();
 
@@ -35,8 +35,8 @@ class SubjectsTableSeeder extends Seeder
 		$subject->cSeminar = 1;
 		$subject->cPractice = 2;
 		$subject->duration_id = 1;
-		$subject->imparted = 'Segundo Curso';
-		$subject->typeSubject = 'Obligatoria';
+		$subject->imparted_id = 2;
+		$subject->typeSubject_id = 2;
 		$subject->coordinator = 'Sergio Gomez';
 		$subject->save();
 

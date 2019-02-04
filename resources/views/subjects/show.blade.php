@@ -18,9 +18,9 @@
       		    <h5> Area: {{$area->name}} </h5>
       		    <h5> Campus: {{$campus->name}} </h5>
       		    <h5> Centro: {{$center->name}} </h5>
-              <h5> Duración: {{$asignatura->duration}} </h5>
-              <h5> Curso en la que se imparte: {{$asignatura->imparted}} </h5>
-              <h5> Tipo de asignatura: {{$asignatura->typeSubject}} </h5>
+              <h5> Duración: {{$duration->name}} </h5>
+              <h5> Curso en la que se imparte: {{$imparted->name}} </h5>
+              <h5> Tipo de asignatura: {{$typeSubject->name}} </h5>
               <h5> Coordinador: {{$asignatura->coordinator}} </h5>
             </div>
             <div class="col-md-5" style="float: right;">

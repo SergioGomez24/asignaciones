@@ -38,11 +38,23 @@ class SubjectsController extends Controller
         $cen_id = $asignatura->center_id;
         $center = Center::findOrFail($cen_id);
 
+        $dur_id = $asignatura->duration_id;
+        $duration = Durationsubject::findOrFail($dur_id);
+
+        $imp_id = $asignatura->imparted_id;
+        $imparted = Coursesubject::findOrFail($imp_id);
+
+        $type_id = $asignatura->typeSubject_id;
+        $typeSubject = Typesubject::findOrFail($type_id);
+
     	return view('subjects.show')->with('asignatura',$asignatura)
                                     ->with('certification',$certification)
                                     ->with('area',$area)
                                     ->with('campus',$campus)
-                                    ->with('center',$center);
+                                    ->with('center',$center)
+                                    ->with('duration',$duration)
+                                    ->with('imparted',$imparted)
+                                    ->with('typeSubject',$typeSubject);
     }
 
     public function getCreate() 
@@ -76,9 +88,9 @@ class SubjectsController extends Controller
         $a->cTheory = $request->input('cTheory');
         $a->cSeminar = $request->input('cSeminar');
         $a->cPractice = $request->input('cPractice');
-        $a->duration = $request->input('duration');
-        $a->imparted = $request->input('imparted');
-        $a->typeSubject = $request->input('typeSubject');
+        $a->duration_id = $request->input('duration_id');
+        $a->imparted_id = $request->input('imparted_id');
+        $a->typeSubject_id = $request->input('typeSubject_id');
         $a->coordinator = $request->input('coordinator');
         $a->save();
         Notification::success('La asignatura se ha guardado exitosamente!');
@@ -104,11 +116,19 @@ class SubjectsController extends Controller
         $dur_id = $asignatura->duration_id;
         $duration = Durationsubject::findOrFail($dur_id);
 
+        $imp_id = $asignatura->imparted_id;
+        $imparted = Coursesubject::findOrFail($imp_id);
+
+        $type_id = $asignatura->typeSubject_id;
+        $typeSubject = Typesubject::findOrFail($type_id);
+ 
         $arrayTitulaciones = Certification::all();
         $arrayAreas = Area::all();
         $arrayCampus = Campus::all();
         $arrayCentros = Center::all();
         $arrayDuracionAsignaturas = Durationsubject::all();
+        $arrayCursoAsignaturas = Coursesubject::all();
+        $arrayTipoAsignaturas = Typesubject::all();
         
 		    	
      	return view('subjects.edit')->with('asignatura',$asignatura)
@@ -117,11 +137,15 @@ class SubjectsController extends Controller
                                     ->with('arrayCampus',$arrayCampus)
                                     ->with('arrayCentros',$arrayCentros)
                                     ->with('arrayDuracionAsignaturas',$arrayDuracionAsignaturas)
+                                    ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas)
+                                    ->with('arrayTipoAsignaturas',$arrayTipoAsignaturas)
                                     ->with('certification',$certification)
                                     ->with('area',$area)
                                     ->with('campus',$campus)
                                     ->with('center',$center)
-                                    ->with('duration',$duration);
+                                    ->with('duration',$duration)
+                                    ->with('imparted',$imparted)
+                                    ->with('typeSubject',$typeSubject);
     }
 
     public function putEdit(Request $request, $id)
@@ -137,8 +161,8 @@ class SubjectsController extends Controller
         $a->cSeminar = $request->input('cSeminar');
         $a->cPractice = $request->input('cPractice');
         $a->duration_id = $request->input('duration_id');
-        $a->imparted = $request->input('imparted');
-        $a->typeSubject = $request->input('typeSubject');
+        $a->imparted_id = $request->input('imparted_id');
+        $a->typeSubject_id = $request->input('typeSubject_id');
         $a->coordinator = $request->input('coordinator');
         $a->save();
         Notification::success('La asignatura ha sido modificada exitosamente!');

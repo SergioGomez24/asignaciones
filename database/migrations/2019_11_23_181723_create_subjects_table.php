@@ -30,8 +30,10 @@ class CreateSubjectsTable extends Migration
             $table->decimal('cPractice',10,0)->nullable()->unsigned();
             $table->integer('duration_id')->unsigned();
             $table->foreign('duration_id')->references('id')->on('durationsubjects');
-            $table->string('imparted');
-            $table->string('typeSubject');
+            $table->integer('imparted_id')->unsigned();
+            $table->foreign('imparted_id')->references('id')->on('coursesubjects');
+            $table->integer('typeSubject_id')->unsigned();
+            $table->foreign('typeSubject_id')->references('id')->on('typesubjects');
             $table->string('coordinator');
             $table->timestamps();
         });
