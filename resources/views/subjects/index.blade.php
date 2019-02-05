@@ -18,15 +18,18 @@ function pregunta(){
           	<div id="titlistado">
             	<h5 > Lista de asignaturas </h5>
             </div>
+            @if (Auth()->user()->role == 'Director')
             <div id="btnCabecera">
             	<a class="btn btn-primary btn-sm" href="{{ url('/subjects/create') }}">Añadir asignatura</a>
             </div>
+            @endif
           </div>
           <div class="card-body">	
 		  @foreach( $arrayAsignaturas as $key => $asignatura )
 		  <div id="nombrelist">
 			<h5><a href="{{ url('/subjects/show/' . $asignatura->id ) }}" style="color: #000000;">{{$asignatura->name}}</a></h5>
 		  </div>
+      @if (Auth()->user()->role == 'Director')
 		  <div id="iconoBorrar">
 		  	<form name="formBorrar" action="{{action('SubjectsController@deleteSubject', $asignatura->id)}}" method="POST" style="display:inline">
         		  {{ method_field('DELETE') }}
@@ -37,6 +40,7 @@ function pregunta(){
 		  <div id="iconoEditar">
 			<a class="btn btn-secondary btn-sm" href="{{ url('/subjects/edit/'.$asignatura->id) }}">Editar</a>
 		  </div>
+      @endif
 		  </br><hr />
 		  @endforeach
 		  </div>

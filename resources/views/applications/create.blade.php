@@ -173,14 +173,14 @@
       $('#duration').empty();
       $('#typeSubject').empty();
       $('#coordinator').empty();
-      $('#credT').empty();
+      $('#cTheory').empty();
       $.each(data, function(index, subjectObj) {
         $('#code').append('<p>'+ subjectObj.code +'</p>');
         $('#area').append('<p>'+ subjectObj.area_id +'</p>');
-        $('#duration').append('<p>'+ subjectObj.duration +'</p>');
-        $('#typeSubject').append('<p>'+ subjectObj.typeSubject +'</p>');
+        $('#duration').append('<p>'+ subjectObj.duration_id +'</p>');
+        $('#typeSubject').append('<p>'+ subjectObj.typeSubject_id +'</p>');
         $('#coordinator').append('<p>'+ subjectObj.coordinator +'</p>');
-        $('#credT').append('<input placeholder="'+subjectObj.cTheory+'"></input>');
+        $('#cTheory').append('<input placeholder="'+subjectObj.cTheory+'"></input>');
       })
     });
   });

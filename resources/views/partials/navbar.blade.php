@@ -26,7 +26,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">{{ auth()->user()->name }}</a>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ url('/teachers/show/' .Auth()->user()->id ) }}">Mi perfil</a>
+                        @if (Auth()->user()->role == 'Director')
                         <a class="dropdown-item" href="{{url('/settings')}}">Ajustes</a>
+                        @endif
                         
                         <form action="{{ url('/logout') }}" method="POST" style="display:inline">
                         {{ csrf_field() }}
