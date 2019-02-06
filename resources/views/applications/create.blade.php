@@ -41,8 +41,9 @@
                   <h6><label for="imparted">Selecciona el curso en la que se imparte</label></h6>
                   <select name="imparted" id="imparted" class="form-control" required>
                     <option value="">Elige el curso en la que se imparte</option>
-                      <option value="Primero">Primero</option>
-                      <option value="Segundo">Segundo</option>
+                    @foreach($arrayCursoAsignaturas as $c)
+                      <option value="{{$c->id}}">{{$c->name}}</option>
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -119,14 +120,14 @@
 
   var certification_id = document.getElementById("certification").value;
   var campus_id = document.getElementById("campus").value;
-  var imparted_name = document.getElementById("imparted").value;
+  var imparted_id = document.getElementById("imparted").value;
   var subject_id = document.getElementById("subject").value;
 
   $('#certification').on('change', function(e) {
     console.log(e);
     certification_id = e.target.value;
     console.log(certification_id);
-    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted='+ imparted_name, function(data) {
+    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted_id='+ imparted_id, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
@@ -140,7 +141,7 @@
   $('#campus').on('change', function(e) {
     console.log(e);
     campus_id = e.target.value;
-    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted='+ imparted_name, function(data) {
+    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted_id='+ imparted_id, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
@@ -153,8 +154,8 @@
 
   $('#imparted').on('change', function(e) {
     console.log(e);
-    imparted_name = e.target.value;
-    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted='+ imparted_name, function(data) {
+    imparted_id = e.target.value;
+    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted_id='+ imparted_id, function(data) {
       console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
