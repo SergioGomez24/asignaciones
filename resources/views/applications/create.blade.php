@@ -65,13 +65,33 @@
                 </div>
 
                 <div class="col-md-3">
+                  <h6>Titulación</h6>
+                  <p id="cert"></p>
+                </div>
+
+                <div class="col-md-3">
                   <h6>Area</h6>
                   <p id="area"></p>
                 </div>
 
                 <div class="col-md-3">
+                  <h6>Campus</h6>
+                  <p id="cam"></p>
+                </div>
+
+                <div class="col-md-3">
+                  <h6>Centro</h6>
+                  <p id="center"></p>
+                </div>
+
+                <div class="col-md-3">
                   <h6>Duración</h6>
                   <p id="duration"></p>
+                </div>
+
+                <div class="col-md-3">
+                  <h6>Curso en la que se imparte</h6>
+                  <p id="imp"></p>
                 </div>
 
                 <div class="col-md-3">
@@ -83,7 +103,22 @@
                   <h6>Coordinador</h6>
                   <p id="coordinator"></p>
                 </div>
-              </div>     
+
+                <div class="col-md-3">
+                  <h6>Créditos Teoria</h6>
+                  <p id="cT"></p>
+                </div>
+
+                <div class="col-md-3">
+                  <h6>Créditos Prácticas</h6>
+                  <p id="cP"></p>
+                </div>
+
+                <div class="col-md-3">
+                  <h6>Créditos Seminarios</h6>
+                  <p id="cS"></p>
+                </div>
+              </div>      
 
               <div class="form-group row">
                 <div class="col-md-4">
@@ -170,20 +205,62 @@
     subject_id = e.target.value;
     $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
       $('#code').empty();
-      $('#area').empty();
-      $('#duration').empty();
-      $('#typeSubject').empty();
       $('#coordinator').empty();
-      $('#cTheory').empty();
+      $('#cT').empty();
+      $('#cP').empty();
+      $('#cS').empty();
       $.each(data, function(index, subjectObj) {
         $('#code').append('<p>'+ subjectObj.code +'</p>');
-        $('#area').append('<p>'+ subjectObj.area_id +'</p>');
-        $('#duration').append('<p>'+ subjectObj.duration_id +'</p>');
-        $('#typeSubject').append('<p>'+ subjectObj.typeSubject_id +'</p>');
         $('#coordinator').append('<p>'+ subjectObj.coordinator +'</p>');
-        $('#cTheory').append('<input placeholder="'+subjectObj.cTheory+'"></input>');
+        $('#cT').append('<p>'+subjectObj.cTheory+'</p>');
+        $('#cP').append('<p>'+subjectObj.cPractice+'</p>');
+        $('#cS').append('<p>'+subjectObj.cSeminar+'</p>');
+        $.get('/asignaciones/public/json-certification?id='+ subjectObj.certification_id, function(d) {
+          $('#cert').empty();
+          $.each(d, function(index, certificationObj) {
+            $('#cert').append('<p>'+ certificationObj.name +'</p>');
+          })
+        });
+        $.get('/asignaciones/public/json-area?id='+ subjectObj.area_id, function(d) {
+          $('#area').empty();
+          $.each(d, function(index, areaObj) {
+            $('#area').append('<p>'+ areaObj.name +'</p>');
+          })
+        });
+        $.get('/asignaciones/public/json-campus?id='+ subjectObj.campus_id, function(d) {
+          $('#cam').empty();
+          $.each(d, function(index, campusObj) {
+            $('#cam').append('<p>'+ campusObj.name +'</p>');
+          })
+        });
+        $.get('/asignaciones/public/json-center?id='+ subjectObj.center_id, function(d) {
+          $('#center').empty();
+          $.each(d, function(index, centerObj) {
+            $('#center').append('<p>'+ centerObj.name +'</p>');
+          })
+        });
+        $.get('/asignaciones/public/json-duration?id='+ subjectObj.duration_id, function(da) {
+          $('#duration').empty();
+          $.each(da, function(index, durationObj) {
+            $('#duration').append('<p>'+ durationObj.name +'</p>');
+          })
+        });
+        $.get('/asignaciones/public/json-imparted?id='+ subjectObj.imparted_id, function(da) {
+          $('#imp').empty();
+          $.each(da, function(index, impartedObj) {
+            $('#imp').append('<p>'+ impartedObj.name +'</p>');
+          })
+        });
+        $.get('/asignaciones/public/json-typeSubject?id='+ subjectObj.typeSubject_id, function(dat) {
+          $('#typeSubject').empty();
+          $.each(dat, function(index, typeSubjectObj) {
+            $('#typeSubject').append('<p>'+ typeSubjectObj.name +'</p>');
+          })
+        });
       })
     });
+
+    
   });
 
   function validacion(){

@@ -10,7 +10,10 @@ use App\Subject;
 use App\Campus;
 use App\Certification;
 use App\Area;
+use App\Center;
 use App\Coursesubject;
+use App\Durationsubject;
+use App\Typesubject;
 use Notification;
 
 class ApplicationsController extends Controller
@@ -84,6 +87,62 @@ class ApplicationsController extends Controller
         $subject = Subject::where('id', '=', $subject_id)->get();
 
         return response()->json($subject);
+    }
+
+    public function getCertification() {
+        $certification_id = Input::get('id');
+
+        $certification = Certification::where('id', '=', $certification_id)->get();
+
+        return response()->json($certification);
+    }
+
+    public function getArea() {
+        $area_id = Input::get('id');
+
+        $area = Area::where('id', '=', $area_id)->get();
+
+        return response()->json($area);
+    }
+
+    public function getCampus() {
+        $campus_id = Input::get('id');
+
+        $campus = Campus::where('id', '=', $campus_id)->get();
+
+        return response()->json($campus);
+    }
+
+    public function getCenter() {
+        $center_id = Input::get('id');
+
+        $center = Center::where('id', '=', $center_id)->get();
+
+        return response()->json($center);
+    }
+
+    public function getDuration() {
+        $duration_id = Input::get('id');
+
+        $duration = Durationsubject::where('id', '=', $duration_id)->get();
+
+        return response()->json($duration);
+    }
+
+    public function getImparted() {
+        $imparted_id = Input::get('id');
+
+        $imparted = Coursesubject::where('id', '=', $imparted_id)->get();
+
+        return response()->json($imparted);
+    }
+
+    public function getTypeSubject() {
+        $typeSubject_id = Input::get('id');
+
+        $typeSubject = Typesubject::where('id', '=', $typeSubject_id)->get();
+
+        return response()->json($typeSubject);
     }
 
     public function postCreate(Request $request) 
