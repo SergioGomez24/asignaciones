@@ -19,7 +19,7 @@
               <div class="form-group row">
                 <div class="col-md-4">
                   <h6><label for="certification">Selecciona una Titulación</label></h6>
-                  <select name="certification" id="certification" class="form-control" required>
+                  <select name="certification" id="certification" class="form-control">
                     <option value="">Elige una titulación</option>
                     @foreach($arrayTitulaciones as $t)
                       <option value="{{$t->id}}">{{$t->name}}</option>
@@ -29,7 +29,7 @@
 
                 <div class="col-md-4">
                   <h6><label for="campus">Selecciona un campus</label></h6>
-                  <select name="campus" id="campus" class="form-control" required>
+                  <select name="campus" id="campus" class="form-control">
                     <option value="">Elige un campus</option>
                     @foreach($arrayCampus as $c)
                       <option value="{{$c->id}}">{{$c->name}}</option>
@@ -39,7 +39,7 @@
 
                 <div class="col-md-4">
                   <h6><label for="imparted">Selecciona el curso en la que se imparte</label></h6>
-                  <select name="imparted" id="imparted" class="form-control" required>
+                  <select name="imparted" id="imparted" class="form-control">
                     <option value="">Elige el curso en la que se imparte</option>
                     @foreach($arrayCursoAsignaturas as $c)
                       <option value="{{$c->id}}">{{$c->name}}</option>
@@ -259,8 +259,6 @@
         });
       })
     });
-
-    
   });
 
   function validacion(){
@@ -271,8 +269,21 @@
     if(vCredS == "" && vCredT == "" && vCredP == ""){
       alert("Introduce los créditos");
       return false;
-    }else{
-      return true;
+    }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
+      alert("Créditos introducidos no validos");
+      return false;
+    }else {
+      $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
+        console.log(data);
+        $.each(data, function(index, subjectObj) {
+          if(vCredT > subjectObj.cTheory || vCredP > subjectObj.cPractice || cCredS > subjectObj.cSeminar) {
+            alert("Céditos introducidos no validos");
+            return false;
+          } else {
+            return true;
+          }
+        })
+      });
     }
   }
 

@@ -150,7 +150,7 @@ class ApplicationsController extends Controller
         $course = Course::all()->last();
 
         $a = new Application;
-        $a->subject = $request->input('subject');
+        $a->subject_id = $request->input('subject');
         $a->teacher = Auth()->user()->name;
         $a->course = $course->course;
         $a->cTheory = $request->input('cTheory');
