@@ -34,7 +34,8 @@ class ApplicationsController extends Controller
 
     public function getCreate() 
     {
-    	$course = Course::all()->last();
+    	$courseObj = Course::all()->last();
+        $course = $courseObj->course;
     	$arrayAsignaturas = Subject::all();
         $arrayCampus = Campus::all();
         $arrayTitulaciones = Certification::all();
@@ -144,6 +145,19 @@ class ApplicationsController extends Controller
 
         return response()->json($typeSubject);
     }
+
+    public function getApplication() {
+        $subject_id = Input::get('subject_id');
+        $teacher = Input::get('teacher');
+        $course = Input::get('course');
+
+        $application = Application::where('subject_id', '=', $subject_id)
+                                    ->where('teacher', '=', $teacher)
+                                    ->where('course', '=', $course)->get();
+
+        return response()->json($application);
+    }
+
 
     public function postCreate(Request $request) 
      {

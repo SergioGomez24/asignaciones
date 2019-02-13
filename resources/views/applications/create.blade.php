@@ -13,8 +13,8 @@
             <form method="POST" onsubmit="return validacion()">
               {{ csrf_field() }}
 
-         			<h5 class="text-center"> Profesor: {{ auth()->user()->name }} </h5>
-              <h6 class="text-center"> Curso: {{$course->course}} </h6>
+         			<h5 class="text-center" id="teacher">Profesor: {{ auth()->user()->name }}</h5>
+              <h6 class="text-center" id="course"> Curso: {{$course}} </h6>
 
               <div class="form-group row">
                 <div class="col-md-4">
@@ -157,6 +157,8 @@
   var campus_id = document.getElementById("campus").value;
   var imparted_id = document.getElementById("imparted").value;
   var subject_id = document.getElementById("subject").value;
+  var teacher = "{{ auth()->user()->name }}";
+  var course = "{{$course}}";
 
   $('#certification').on('change', function(e) {
     console.log(e);
@@ -174,10 +176,8 @@
   });
 
   $('#campus').on('change', function(e) {
-    console.log(e);
     campus_id = e.target.value;
     $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted_id='+ imparted_id, function(data) {
-      console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
 
@@ -188,10 +188,8 @@
   });
 
   $('#imparted').on('change', function(e) {
-    console.log(e);
     imparted_id = e.target.value;
     $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted_id='+ imparted_id, function(data) {
-      console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
 
@@ -265,26 +263,32 @@
     var vCredT = document.getElementById("cTheory").value;
     var vCredP = document.getElementById("cPractice").value;
     var vCredS = document.getElementById("cSeminar").value;
+    var enviar = false;
 
     if(vCredS == "" && vCredT == "" && vCredP == ""){
       alert("Introduce los créditos");
-      return false;
     }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
-      alert("Créditos introducidos no validos");
-      return false;
+      alert("Introduce un valor mayor que 0");
     }else {
       $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
         console.log(data);
         $.each(data, function(index, subjectObj) {
-          if(vCredT > subjectObj.cTheory || vCredP > subjectObj.cPractice || cCredS > subjectObj.cSeminar) {
-            alert("Céditos introducidos no validos");
-            return false;
-          } else {
-            return true;
+          if(vCredT > subjectObj.cTheory || vCredP > subjectObj.cPractice || vCredS > subjectObj.cSeminar) {
+            alert("Créditos introducidos no validos");
+          }else {
+            $.get('/asignaciones/public/json-application?subject_id='+ subject_id + '&teacher='+ teacher + '&course='+ course, function(d) {
+              console.log(d.length);
+              if(data.length > "0") {
+                alert("Asignatura ya seleccionada");
+              }else {
+                enviar = true;
+              }
+            });
           }
         })
       });
     }
+    return enviar;
   }
 
 </script>

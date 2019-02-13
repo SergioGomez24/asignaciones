@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('json-duration', 'ApplicationsController@getDuration');
 	Route::get('json-imparted', 'ApplicationsController@getImparted');
 	Route::get('json-typeSubject', 'ApplicationsController@getTypeSubject');
+	Route::get('json-application', 'ApplicationsController@getApplication');
 	Route::post('applications/create', 'ApplicationsController@postCreate');
 
 
