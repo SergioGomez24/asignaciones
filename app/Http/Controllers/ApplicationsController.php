@@ -160,7 +160,7 @@ class ApplicationsController extends Controller
 
 
     public function postCreate(Request $request) 
-     {
+    {
         $course = Course::all()->last();
 
         $a = new Application;

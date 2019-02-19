@@ -263,33 +263,59 @@
     var vCredT = document.getElementById("cTheory").value;
     var vCredP = document.getElementById("cPractice").value;
     var vCredS = document.getElementById("cSeminar").value;
-    var enviar = false;
+    var enviar;
 
     if(vCredS == "" && vCredT == "" && vCredP == ""){
       alert("Introduce los créditos");
+      enviar = false;
     }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
       alert("Introduce un valor mayor que 0");
-    }else {
+      enviar = false;
+    }
+
+    $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
+      $.each(data, function(index, subjectObj) {
+        if(vCredT > subjectObj.cTheory || vCredP > subjectObj.cPractice || vCredS > subjectObj.cSeminar) {
+          alert("Créditos introducidos no validos");
+          enviar = false;
+        }
+      })
+    });
+
+    $.get('/asignaciones/public/json-application?subject_id='+ subject_id + '&teacher='+ teacher + '&course='+ course, function(d) {
+        console.log(d.length);
+        if(d.length > "0") {
+          alert("Asignatura ya seleccionada");
+          enviar = false;
+        }else {
+          enviar = true;
+        }
+    });
+
+    console.log(enviar);
+    return enviar;
+
+
+    /*else {
       $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
-        console.log(data);
         $.each(data, function(index, subjectObj) {
           if(vCredT > subjectObj.cTheory || vCredP > subjectObj.cPractice || vCredS > subjectObj.cSeminar) {
             alert("Créditos introducidos no validos");
           }else {
             $.get('/asignaciones/public/json-application?subject_id='+ subject_id + '&teacher='+ teacher + '&course='+ course, function(d) {
               console.log(d.length);
-              if(data.length > "0") {
+              if(d.length > "0") {
                 alert("Asignatura ya seleccionada");
               }else {
                 enviar = true;
               }
-            });
+              enviar = true;
+            })
           }
         })
-      });
-    }
-    return enviar;
+      })
+      return enviar;
+    }*/
   }
-
 </script>
 @stop
