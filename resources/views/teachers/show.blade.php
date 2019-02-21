@@ -12,14 +12,14 @@
             </div>
           </div>
           <div class="card-body">
-      		  <h5> DNI: {{$profesor->dni}} </h5>
-            <h5> Correo electrónico: {{$usuario->email}} </h5>
-            <h5> Rol: {{$usuario->role}} </h5>
-      		  <h5> Categoría: {{$categoria->name}} </h5>
-      		  <h5> Area: {{$area->name}} </h5>
-      		  <h5> Créditos iniciales: {{$profesor->cInitial}} </h5>
-      		  <h5> Fecha inicio categoría: {{$profesor->dateCategory}} </h5>
-      		  <h5> Fecha inicio UCA: {{$profesor->dateUCA}} </h5>
+      		  <p><h5 style="display: inline-block;">DNI:</h5> {{$profesor->dni}} </p>
+            <p><h5 style="display: inline-block;">Correo electrónico:</h5> {{$usuario->email}} </p>
+            <p><h5 style="display: inline-block;">Rol:</h5> {{$usuario->role}} </p>
+      		  <p><h5 style="display: inline-block;">Categoría:</h5> {{$categoria->name}} </p>
+      		  <p><h5 style="display: inline-block;">Area:</h5> {{$area->name}} </p>
+      		  <p><h5 style="display: inline-block;">Créditos iniciales:</h5> {{$profesor->cInitial}} </p>
+      		  <p><h5 style="display: inline-block;">Fecha inicio categoría:</h5> {{$profesor->dateCategory}} </p>
+      		  <p><h5 style="display: inline-block;">Fecha inicio UCA:</h5> {{$profesor->dateUCA}} </p>
           </div>
         </div>
 		</div>

@@ -159,6 +159,10 @@
   var subject_id = document.getElementById("subject").value;
   var teacher = "{{ auth()->user()->name }}";
   var course = "{{$course}}";
+  var subObj_credT;
+  var subObj_credS;
+  var subObj_credP;
+  var numAplication;
 
   $('#certification').on('change', function(e) {
     console.log(e);
@@ -213,6 +217,9 @@
         $('#cT').append('<p>'+subjectObj.cTheory+'</p>');
         $('#cP').append('<p>'+subjectObj.cPractice+'</p>');
         $('#cS').append('<p>'+subjectObj.cSeminar+'</p>');
+        subObj_credT = subjectObj.cTheory;
+        subObj_credP = subjectObj.cPractice;
+        subObj_credS = subjectObj.cSeminar;
         $.get('/asignaciones/public/json-certification?id='+ subjectObj.certification_id, function(d) {
           $('#cert').empty();
           $.each(d, function(index, certificationObj) {
@@ -255,6 +262,9 @@
             $('#typeSubject').append('<p>'+ typeSubjectObj.name +'</p>');
           })
         });
+        $.get('/asignaciones/public/json-application?subject_id='+ subject_id + '&teacher='+ teacher + '&course='+ course, function(d) {
+            numAplication = d.length;
+        });
       })
     });
   });
@@ -263,59 +273,20 @@
     var vCredT = document.getElementById("cTheory").value;
     var vCredP = document.getElementById("cPractice").value;
     var vCredS = document.getElementById("cSeminar").value;
-    var enviar;
+    var enviar = false;
 
     if(vCredS == "" && vCredT == "" && vCredP == ""){
       alert("Introduce los créditos");
-      enviar = false;
     }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
       alert("Introduce un valor mayor que 0");
-      enviar = false;
+    }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
+      alert("Créditos introducidos no validos");
+    }else if(numAplication > "0") {
+      alert("Asignatura ya elegida");
+    }else {
+      enviar = true;
     }
-
-    $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
-      $.each(data, function(index, subjectObj) {
-        if(vCredT > subjectObj.cTheory || vCredP > subjectObj.cPractice || vCredS > subjectObj.cSeminar) {
-          alert("Créditos introducidos no validos");
-          enviar = false;
-        }
-      })
-    });
-
-    $.get('/asignaciones/public/json-application?subject_id='+ subject_id + '&teacher='+ teacher + '&course='+ course, function(d) {
-        console.log(d.length);
-        if(d.length > "0") {
-          alert("Asignatura ya seleccionada");
-          enviar = false;
-        }else {
-          enviar = true;
-        }
-    });
-
-    console.log(enviar);
     return enviar;
-
-
-    /*else {
-      $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
-        $.each(data, function(index, subjectObj) {
-          if(vCredT > subjectObj.cTheory || vCredP > subjectObj.cPractice || vCredS > subjectObj.cSeminar) {
-            alert("Créditos introducidos no validos");
-          }else {
-            $.get('/asignaciones/public/json-application?subject_id='+ subject_id + '&teacher='+ teacher + '&course='+ course, function(d) {
-              console.log(d.length);
-              if(d.length > "0") {
-                alert("Asignatura ya seleccionada");
-              }else {
-                enviar = true;
-              }
-              enviar = true;
-            })
-          }
-        })
-      })
-      return enviar;
-    }*/
   }
 </script>
 @stop

@@ -13,20 +13,20 @@
           </div>
           <div class="card-body">
             <div class="col-md-5" style="float: left;">
-              <h5> Código: {{$asignatura->code}}</h5>
-      		    <h5> Titulación: {{$certification->name}} </h5>
-      		    <h5> Area: {{$area->name}} </h5>
-      		    <h5> Campus: {{$campus->name}} </h5>
-      		    <h5> Centro: {{$center->name}} </h5>
-              <h5> Duración: {{$duration->name}} </h5>
-              <h5> Curso en la que se imparte: {{$imparted->name}} </h5>
-              <h5> Tipo de asignatura: {{$typeSubject->name}} </h5>
-              <h5> Coordinador: {{$asignatura->coordinator}} </h5>
+              <p><h5 style="display: inline-block;"> Código:</h5> {{$asignatura->code}}</p>
+      		    <p><h5 style="display: inline-block;"> Titulación:</h5> {{$certification->name}} </p>
+      		    <p><h5 style="display: inline-block;"> Area:</h5> {{$area->name}} </p>
+      		    <p><h5 style="display: inline-block;"> Campus:</h5> {{$campus->name}} </p>
+      		    <p><h5 style="display: inline-block;"> Centro:</h5> {{$center->name}} </p>
+              <p><h5 style="display: inline-block;"> Duración:</h5> {{$duration->name}} </p>
+              <p><h5 style="display: inline-block;"> Curso en la que se imparte:</h5> {{$imparted->name}} </p>
+              <p><h5 style="display: inline-block;"> Tipo de asignatura:</h5> {{$typeSubject->name}} </p>
+              <p><h5 style="display: inline-block;"> Coordinador:</h5> {{$asignatura->coordinator}} </p>
             </div>
             <div class="col-md-5" style="float: right;">
-              <h5> Créditos teoria: {{$asignatura->cTheory}} </h5>
-              <p><h5> Créditos seminario: {{$asignatura->cSeminar}} </h5></p>
-              <p><h5> Créditos prácticas: {{$asignatura->cPractice}} </h5></p>
+              <p><h5 style="display: inline-block;"> Créditos teoria:</h5> {{$asignatura->cTheory}} </p>
+              <p><h5 style="display: inline-block;"> Créditos seminario:</h5> {{$asignatura->cSeminar}} </p>
+              <p><h5 style="display: inline-block;"> Créditos prácticas:</h5> {{$asignatura->cPractice}} </p>
             </div>
           </div>
         </div>
