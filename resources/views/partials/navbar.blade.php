@@ -20,6 +20,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/teachers')}}">Profesores</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('/applications')}}">Solicitudes</a>
+                </li>
             </ul>
 
             <ul class="navbar-nav navbar-right">

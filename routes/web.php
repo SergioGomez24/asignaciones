@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function() {
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('applications', 'ApplicationsController@getIndex');
+	Route::get('applications/course/{course}', 'ApplicationsController@getCourseIndex');
 
 	Route::get('applications/create', 'ApplicationsController@getCreate');
 	Route::get('json-subjects', 'ApplicationsController@getSubjects');
@@ -73,8 +74,6 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('json-typeSubject', 'ApplicationsController@getTypeSubject');
 	Route::get('json-application', 'ApplicationsController@getApplication');
 	Route::post('applications/create', 'ApplicationsController@postCreate');
-
-
 
 });
 

@@ -20,9 +20,18 @@ class ApplicationsController extends Controller
 {
 	public function getIndex() 
     {
-    	$arraySolicitudes = Application::all();
+    	$arrayCursos = Course::all();
 
-    	return view('applications.index', ['arraySolicitudes' => $arraySolicitudes]);
+    	return view('applications.index', ['arrayCursos' => $arrayCursos]);
+    }
+
+    public function getCourseIndex($course)
+    {
+        $arraySolicitudes = Application::where('course', '=', $course)->get();
+
+        return view('applications.course')->with('arraySolicitudes', $arraySolicitudes)
+                                          ->with('course', $course);
+
     }
 
     public function getShow($id)
