@@ -27,9 +27,17 @@ class ApplicationsController extends Controller
 
     public function getCourseIndex($course)
     {
+        $usuario = Auth()->user()->name;
+
         $arraySolicitudes = Application::where('course', '=', $course)->get();
+        $arraySolicitudesCoor = Application::join('subjects','subjects.coordinator', '=', 'applications.teacher')
+            ->where('course', '=', $course)
+            ->where('applications.teacher', '=', $usuario)
+            ->orwhere('subjects.coordinator', '=', $usuario)
+            ->get();
 
         return view('applications.course')->with('arraySolicitudes', $arraySolicitudes)
+                                          ->with('arraySolicitudesCoor', $arraySolicitudesCoor)
                                           ->with('course', $course);
 
     }
