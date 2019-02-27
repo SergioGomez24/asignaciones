@@ -75,6 +75,11 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('json-application', 'ApplicationsController@getApplication');
 	Route::post('applications/create', 'ApplicationsController@postCreate');
 
+	Route::get('applications/edit/{id}', 'ApplicationsController@getEdit');
+	Route::put('applications/edit/{id}', 'ApplicationsController@putEdit');
+
+	Route::delete('/applications/delete/{id}', 'ApplicationsController@deleteApplication');
+
 });
 
 /* Ajustes */

@@ -29,8 +29,13 @@ class ApplicationsController extends Controller
     {
         $usuario = Auth()->user()->name;
 
-        $arraySolicitudes = Application::where('course', '=', $course)->get();
-        $arraySolicitudesCoor = Application::join('subjects','subjects.coordinator', '=', 'applications.teacher')
+        $arraySolicitudes = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
+            ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
+            ->where('course', '=', $course)
+            ->get();
+
+        $arraySolicitudesCoor = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
+            ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
             ->where('course', '=', $course)
             ->where('applications.teacher', '=', $usuario)
             ->orwhere('subjects.coordinator', '=', $usuario)
@@ -40,13 +45,6 @@ class ApplicationsController extends Controller
                                           ->with('arraySolicitudesCoor', $arraySolicitudesCoor)
                                           ->with('course', $course);
 
-    }
-
-    public function getShow($id)
-    {
-        $solicitud = Application::findOrFail($id);
-
-        return view('applications.show', ['solicitud' => $solicitud]);
     }
 
     public function getCreate() 
@@ -190,5 +188,35 @@ class ApplicationsController extends Controller
         $a->save();
         Notification::success('La solicitud se ha guardado exitosamente!');
         return redirect('/applications/create');
+    }
+
+    public function getEdit($id) 
+    {
+        $application = Application::findOrFail($id);
+        $course = $application->course;
+                
+        return view('applications.edit')->with('application', $application)
+                                        ->with('course', $course);
+    }
+
+    public function putEdit(Request $request, $id)
+    {
+        $a = Application::findOrFail($id);
+        $c = $a->course;
+        $a->cTheory = $request->input('cTheory');
+        $a->cSeminar = $request->input('cSeminar');
+        $a->cPractice = $request->input('cPractice');
+        $a->save();
+        Notification::success('La solicitud ha sido modificada exitosamente!');
+        return redirect('/applications/course/'. $c);
+    }
+
+    public function deleteApplication(Request $request, $id)
+    {
+        $a = Application::findOrFail($id);
+        $c = $a->course;
+        $a->delete();
+        Notification::success('La solicitud fue eliminada exitosamente!');
+        return redirect('/applications/course/'. $c);
     }
 }

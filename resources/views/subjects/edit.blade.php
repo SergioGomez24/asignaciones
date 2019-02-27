@@ -68,17 +68,17 @@
 
             <div class="form-group">
                <label for="cTheory">Creditos Teoria</label>
-               <input type="number" name="cTheory" id="cTheory" value="{{$asignatura->cTheory}}" class="form-control">
-            </div>
-
-            <div class="form-group">
-               <label for="cSeminar">Creditos Seminario</label>
-               <input type="number" name="cSeminar" id="cSeminar" value="{{$asignatura->cSeminar}}" class="form-control">
+               <input type="number" name="cTheory" id="cTheory" value="{{$asignatura->cTheory}}" step="0.01" class="form-control">
             </div>
 
             <div class="form-group">
                <label for="cPractice">Creditos Práctica</label>
-               <input type="number" name="cPractice" id="cPractice" value="{{$asignatura->cPractice}}" class="form-control">
+               <input type="number" name="cPractice" id="cPractice" value="{{$asignatura->cPractice}}" step="0.01" class="form-control">
+            </div>
+
+            <div class="form-group">
+               <label for="cSeminar">Creditos Seminario</label>
+               <input type="number" name="cSeminar" id="cSeminar" value="{{$asignatura->cSeminar}}" step="0.01" class="form-control">
             </div>
 
             <div class="form-group">

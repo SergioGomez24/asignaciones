@@ -1,8 +1,8 @@
 @extends('layouts.master')
 @section('content')
-<!--<script language="JavaScript"> 
+<script language="JavaScript"> 
 function pregunta(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres borrar esta asignatura?');
+    var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');
     if(mensaje) {
        document.formBorrar.submit();
        return true; 
@@ -10,7 +10,7 @@ function pregunta(){
     	return false;
     }
 } 
-</script>-->
+</script>
 
 <div class="row" style="margin-top:40px">
   <div class="col-md-12">
@@ -46,7 +46,7 @@ function pregunta(){
 		      @foreach( $arraySolicitudes as $key => $solicitud )
 		      <div class="group row">
             <div class="col-md-2">
-			       <h6 style="color: #000000;">{{$solicitud->subject_id}}</h6>
+			       <h6 style="color: #000000;">{{$solicitud->name}}</h6>
             </div>
 
             <div class="col-md-2">
@@ -64,35 +64,57 @@ function pregunta(){
             <div class="col-md-2">
               <h6 style="color: #000000;">{{$solicitud->cSeminar}}</h6>
             </div>
+
+            <div class="col-md-1">
+              <a class="btn btn-secondary btn-sm" href="{{ url('/applications/edit/'.$solicitud->id) }}">Editar</a>
+            </div>
+
+            <div class="col-md-1">
+              <form name="formBorrar" action="{{action('ApplicationsController@deleteApplication', $solicitud->id)}}" method="POST" style="display:inline">
+              {{ method_field('DELETE') }}
+              {{ csrf_field() }}
+              <input class="btn btn-danger btn-sm" type="submit" onclick="pregunta()" value="Borrar"/>
+              </form>
+            </div>
 		      </div>
 		      </br><hr />
 		      @endforeach
         @else
-          @foreach( $arraySolicitudesCoor as $key => $sol )
-              
-                <div class="group row">
-                  <div class="col-md-2">
-                    <h6 style="color: #000000;">{{$sol->subject_id}}</h6>
-                  </div>
+          @foreach( $arraySolicitudesCoor as $key => $solicitud )
+            <div class="group row">
+              <div class="col-md-2">
+                <h6 style="color: #000000;">{{$solicitud->name}}</h6>
+              </div>
 
-                  <div class="col-md-2">
-                    <h6 style="color: #000000;">{{$sol->teacher}}</h6>
-                  </div>
+              <div class="col-md-2">
+                <h6 style="color: #000000;">{{$solicitud->teacher}}</h6>
+              </div>
 
-                  <div class="col-md-2">
-                    <h6 style="color: #000000;">{{$sol->cTheory}}</h6>
-                  </div>
+              <div class="col-md-2">
+                <h6 style="color: #000000;">{{$solicitud->cTheory}}</h6>
+              </div>
 
-                  <div class="col-md-2">
-                    <h6 style="color: #000000;">{{$sol->cPractice}}</h6>
-                  </div>
+              <div class="col-md-2">
+                <h6 style="color: #000000;">{{$solicitud->cPractice}}</h6>
+              </div>
 
-                  <div class="col-md-2">
-                    <h6 style="color: #000000;">{{$sol->cSeminar}}</h6>
-                  </div>
-                </div>
-                </br><hr />
-              
+              <div class="col-md-2">
+                <h6 style="color: #000000;">{{$solicitud->cSeminar}}</h6>
+              </div>
+
+              <div class="col-md-1">
+                <a class="btn btn-secondary btn-sm" href="{{ url('/applications/edit/'.$solicitud->id) }}">Editar</a>
+              </div>
+
+              <div class="col-md-1">
+                <form name="formBorrar" action="{{action('ApplicationsController@deleteApplication', $solicitud->id)}}" method="POST" style="display:inline">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <input class="btn btn-danger btn-sm" type="submit" onclick="pregunta()" value="Borrar"/>
+                </form>
+              </div>
+            </div>
+            </br><hr />
           @endforeach
         @endif
       </div>
