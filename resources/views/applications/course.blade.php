@@ -22,6 +22,28 @@ function pregunta(){
       </div>
       <div class="card-body">
         <div class="group row">
+          <div class="col-md-4">
+            <h6><label for="subject">Selecciona una Asignatura</label></h6>
+            <select name="subject" id="subject" class="form-control">
+              <option value="">Elige una asignatura</option>
+              @foreach($arrayAsignaturas as $a)
+                <option value="{{$a->id}}">{{$a->name}}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <h6><label for="campus">Selecciona un Profesor</label></h6>
+            <select name="campus" id="campus" class="form-control">
+              <option value="">Elige un profesor</option>
+              @foreach($arrayProfesores as $p)
+                <option value="{{$p->name}}">{{$p->name}}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+
+        <div class="group row" style="margin-top: 10px;">
           <div class="col-md-2">
             <h5 style="color: #000000;">Asignatura</h5>
           </div>

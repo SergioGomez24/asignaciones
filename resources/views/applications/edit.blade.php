@@ -12,7 +12,7 @@
             </div>
          </div>
          <div class="card-body" style="padding:30px">
-         	<form method="POST">
+         	<form method="POST" onsubmit="return validacion()">
          		{{ method_field('PUT') }}
          		{{ csrf_field() }}
 
@@ -41,4 +41,39 @@
       </div>
    </div>
 </div>
+
+<script type="text/javascript">
+
+   var subject_id = "{{$application->subject_id}}";
+   var subObj_credT;
+   var subObj_credS;
+   var subObj_credP;
+
+   window.onload = function() {
+      $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
+         $.each(data, function(index, subjectObj) {
+            subObj_credT = subjectObj.cTheory;
+            subObj_credP = subjectObj.cPractice;
+            subObj_credS = subjectObj.cSeminar;
+         })
+      });
+   }
+
+function validacion(){
+   var vCredT = document.getElementById("cTheory").value;
+   var vCredP = document.getElementById("cPractice").value;
+   var vCredS = document.getElementById("cSeminar").value;
+   var enviar = false;
+
+   if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
+      alert("Introduce un valor mayor que 0");
+   }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
+      alert("Créditos introducidos no validos");
+   }else {
+      enviar = true;
+   }
+   return enviar;
+  }
+
+</script>
 @stop

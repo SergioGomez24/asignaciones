@@ -9,6 +9,7 @@ use App\Application;
 use App\Subject;
 use App\Campus;
 use App\Certification;
+use App\Teacher;
 use App\Area;
 use App\Center;
 use App\Coursesubject;
@@ -28,6 +29,8 @@ class ApplicationsController extends Controller
     public function getCourseIndex($course)
     {
         $usuario = Auth()->user()->name;
+        $arrayAsignaturas = Subject::all();
+        $arrayProfesores = Teacher::all();
 
         $arraySolicitudes = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
             ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
@@ -43,6 +46,8 @@ class ApplicationsController extends Controller
 
         return view('applications.course')->with('arraySolicitudes', $arraySolicitudes)
                                           ->with('arraySolicitudesCoor', $arraySolicitudesCoor)
+                                          ->with('arrayAsignaturas', $arrayAsignaturas)
+                                          ->with('arrayProfesores', $arrayProfesores)
                                           ->with('course', $course);
 
     }
