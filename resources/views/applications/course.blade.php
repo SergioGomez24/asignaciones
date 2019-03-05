@@ -1,17 +1,5 @@
 @extends('layouts.master')
 @section('content')
-<script language="JavaScript"> 
-function pregunta(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');
-    if(mensaje) {
-       document.formBorrar.submit();
-       return true; 
-    } else {
-    	return false;
-    }
-} 
-</script>
-
 <div class="row" style="margin-top:40px">
   <div class="col-md-12">
     <div class="card">
@@ -21,25 +9,34 @@ function pregunta(){
         </div>
       </div>
       <div class="card-body">
-        <div class="group row">
-          <div class="col-md-4">
-            <h6><label for="subject">Selecciona una Asignatura</label></h6>
-            <select name="subject" id="subject" class="form-control">
-              <option value="">Elige una asignatura</option>
-              @foreach($arrayAsignaturas as $a)
-                <option value="{{$a->id}}">{{$a->name}}</option>
-              @endforeach
-            </select>
-          </div>
+        <p><button class="btn btn-info btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Filtros</button></p>
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <div class="group row">
+              <div class="col-md-4">
+                <h6><label for="subject">Selecciona una Asignatura</label></h6>
+                <select name="subject" id="subject" class="form-control">
+                  <option value="">Elige una asignatura</option>
+                  @foreach($arrayAsignaturas as $a)
+                    <option value="{{$a->id}}">{{$a->name}}</option>
+                  @endforeach
+                </select>
+              </div>
 
-          <div class="col-md-4">
-            <h6><label for="campus">Selecciona un Profesor</label></h6>
-            <select name="campus" id="campus" class="form-control">
-              <option value="">Elige un profesor</option>
-              @foreach($arrayProfesores as $p)
-                <option value="{{$p->name}}">{{$p->name}}</option>
-              @endforeach
-            </select>
+              <div class="col-md-4">
+                <h6><label for="teacher">Selecciona un Profesor</label></h6>
+                <select name="teacher" id="teacher" class="form-control">
+                  <option value="">Elige un profesor</option>
+                  @foreach($arrayProfesores as $p)
+                    <option value="{{$p->name}}">{{$p->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <button class="btn-info btn-sm" type="button" id="filters" style="margin-top: 40px;">Aplicar</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -68,23 +65,23 @@ function pregunta(){
 		      @foreach( $arraySolicitudes as $key => $solicitud )
 		      <div class="group row">
             <div class="col-md-2">
-			       <h6 style="color: #000000;">{{$solicitud->name}}</h6>
+			       <h6 id="nameSol" style="color: #000000;">{{$solicitud->name}}</h6>
             </div>
 
             <div class="col-md-2">
-              <h6 style="color: #000000;">{{$solicitud->teacher}}</h6>
+              <h6 id="teacherSol" style="color: #000000;">{{$solicitud->teacher}}</h6>
             </div>
 
             <div class="col-md-2">
-              <h6 style="color: #000000;">{{$solicitud->cTheory}}</h6>
+              <h6 id="cTSol" style="color: #000000;">{{$solicitud->cTheory}}</h6>
             </div>
 
             <div class="col-md-2">
-              <h6 style="color: #000000;">{{$solicitud->cPractice}}</h6>
+              <h6 id="cPSol" style="color: #000000;">{{$solicitud->cPractice}}</h6>
             </div>
 
             <div class="col-md-2">
-              <h6 style="color: #000000;">{{$solicitud->cSeminar}}</h6>
+              <h6 id="cSSol" style="color: #000000;">{{$solicitud->cSeminar}}</h6>
             </div>
 
             <div class="col-md-1">
@@ -143,4 +140,41 @@ function pregunta(){
 	  </div>
 	</div>
 </div>
+
+<script language="JavaScript">
+
+  var subject_id = document.getElementById("subject").value;
+  var teacher = document.getElementById("teacher").value;
+  var course = "{{$course}}";
+
+
+  $('#subject').on('change', function(e) {
+    subject_id = e.target.value;
+    console.log(subject_id);
+  });
+
+  $('#teacher').on('change', function(e) {
+    teacher = e.target.value;
+    console.log(teacher);
+  });
+
+  $('#filters').on('click', function(e) {
+   
+  });
+
+
+
+  function pregunta(){ 
+    var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');
+    if(mensaje) {
+      document.formBorrar.submit();
+      return true; 
+    } else {
+      return false;
+    }
+  }
+
+
+
+</script>
 @stop
