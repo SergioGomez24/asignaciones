@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('applications', 'ApplicationsController@getIndex');
 	Route::get('applications/course/{course}', 'ApplicationsController@getCourseIndex');
+	Route::get('index-filters', 'ApplicationsController@getCourseIndexFilters');
 
 	Route::get('applications/create', 'ApplicationsController@getCreate');
 	Route::get('json-subjects', 'ApplicationsController@getSubjects');

@@ -26,28 +26,36 @@ class ApplicationsController extends Controller
     	return view('applications.index', ['arrayCursos' => $arrayCursos]);
     }
 
-    public function getCourseIndex($course)
+    public function getCourseIndex($course, Request $request)
     {
         $usuario = Auth()->user()->name;
         $arrayAsignaturas = Subject::all();
         $arrayProfesores = Teacher::all();
+        $subj_id = $request->get('subject_id');
+        $teacher = $request->get('teacher');
 
         $arraySolicitudes = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
             ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
             ->where('course', '=', $course)
-            ->get();
+            ->subjectid($subj_id)
+            ->teacher($teacher)
+            ->paginate();
 
         $arraySolicitudesCoor = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
             ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
             ->where('course', '=', $course)
             ->where('applications.teacher', '=', $usuario)
+            ->subjectid($subj_id)
+            ->teacher($teacher)
             ->orwhere('subjects.coordinator', '=', $usuario)
-            ->get();
+            ->paginate();
 
         return view('applications.course')->with('arraySolicitudes', $arraySolicitudes)
                                           ->with('arraySolicitudesCoor', $arraySolicitudesCoor)
                                           ->with('arrayAsignaturas', $arrayAsignaturas)
                                           ->with('arrayProfesores', $arrayProfesores)
+                                          ->with('subj_id', $subj_id)
+                                          ->with('teacher', $teacher)
                                           ->with('course', $course);
 
     }

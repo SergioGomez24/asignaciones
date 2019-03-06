@@ -3,23 +3,14 @@
 @section('content')
 <div class="row" style="margin-top:40px">
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h5> Elecciones de asigaturas para los profesores de la UCA </h5>
-                </div>
-
-                <div class="card-body text-center">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    <a href="{{url('/applications/create')}}" role="button" class="btn btn-primary" aria-pressed="true">Iniciar solicitud</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="jumbotron">
+  <h1 class="display-4">Universidad de Cádiz</h1>
+  <p class="lead">Elecciones de asigaturas para los profesores de la UCA</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{{url('/applications/create')}}" role="button">Iniciar solicitud</a>
+  </p>
+</div>
 </div>
 @endsection
