@@ -15,6 +15,7 @@
 
          			<h5 class="text-center" id="teacher">Profesor: {{ auth()->user()->name }}</h5>
               <h6 class="text-center" id="course"> Curso: {{$course}} </h6>
+              <h6 class="text-center" id="cAvailable"> Creditos Disponibles: {{$prioridadProfesor->cAvailable}} </h6>
 
               <div class="form-group row">
                 <div class="col-md-4">

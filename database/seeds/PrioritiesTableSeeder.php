@@ -10,7 +10,7 @@ class PrioritiesTableSeeder extends Seeder
 
 		$priorities = DB::table('categories')
         	->join('teachers','teachers.category_id', '=', 'categories.id')
-			->select('categories.rank','teachers.name','teachers.dateCategory')
+			->select('categories.rank','teachers.name','teachers.dateCategory', 'teachers.cInitial')
 			->orderBy('categories.rank', 'ASC','teachers.dateCategory')
 			->get();
 
@@ -19,6 +19,8 @@ class PrioritiesTableSeeder extends Seeder
 			$p->priority = $prioridad->rank;
 			$p->teacher = $prioridad->name;
 			$p->dateCategory = $prioridad->dateCategory;
+			$p->course = "2018-19";
+			$p->cAvailable = $prioridad->cInitial;
 			$p->save();
 		}
 

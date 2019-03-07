@@ -10,25 +10,25 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/')}}">Inicio</a>
+                    <a class="nav-link" href="{{url('/')}}" style="color: black; font-weight: bold;">Inicio</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/subjects')}}" >Asignaturas</a>
+                    <a class="nav-link" href="{{url('/subjects')}}" style="color: black; font-weight: bold;">Asignaturas</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/teachers')}}">Profesores</a>
+                    <a class="nav-link" href="{{url('/teachers')}}" style="color: black; font-weight: bold;">Profesores</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/applications')}}">Solicitudes</a>
+                    <a class="nav-link" href="{{url('/applications')}}" style="color: black; font-weight: bold;">Solicitudes</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">{{ auth()->user()->name }}</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black; font-weight: bold;">{{ auth()->user()->name }}</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ url('/teachers/show/' .Auth()->user()->id ) }}">Mi perfil</a>
                         @if (Auth()->user()->role == 'Director')

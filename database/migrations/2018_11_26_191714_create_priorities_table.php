@@ -19,6 +19,9 @@ class CreatePrioritiesTable extends Migration
             $table->foreign('priority')->references('rank')->on('categories');
             $table->string('teacher');
             $table->foreign('teacher')->references('name')->on('teachers');
+            $table->string('course');
+            $table->foreign('course')->references('course')->on('courses');
+            $table->decimal('cAvailable',10,0)->unsigned();
             $table->date('dateCategory');
             $table->timestamps();
         });

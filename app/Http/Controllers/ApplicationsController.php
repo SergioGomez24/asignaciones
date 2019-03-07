@@ -15,6 +15,7 @@ use App\Center;
 use App\Coursesubject;
 use App\Durationsubject;
 use App\Typesubject;
+use App\Priority;
 use Notification;
 
 class ApplicationsController extends Controller
@@ -64,15 +65,18 @@ class ApplicationsController extends Controller
     {
     	$courseObj = Course::all()->last();
         $course = $courseObj->course;
+        $teacher = Auth()->user()->name;
     	$arrayAsignaturas = Subject::all();
         $arrayCampus = Campus::all();
         $arrayTitulaciones = Certification::all();
         $arrayCursoAsignaturas = Coursesubject::all();
+        $prioridadProfesor = Priority::where('teacher', '=', $teacher)->get();
 
 		return view('applications.create')->with('course',$course)
 										  ->with('arrayAsignaturas',$arrayAsignaturas)
                                           ->with('arrayCampus',$arrayCampus)
                                           ->with('arrayTitulaciones',$arrayTitulaciones)
+                                          ->with('prioridadProfesor', $prioridadProfesor)
                                           ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas);
     }
 
