@@ -72,11 +72,15 @@ class ApplicationsController extends Controller
         $arrayCursoAsignaturas = Coursesubject::all();
         $prioridadProfesor = Priority::where('teacher', '=', $teacher)->get();
 
+        foreach ($prioridadProfesor as $prioridad) {
+            $cAvailable = $prioridad->cAvailable;
+        }
+
 		return view('applications.create')->with('course',$course)
 										  ->with('arrayAsignaturas',$arrayAsignaturas)
                                           ->with('arrayCampus',$arrayCampus)
                                           ->with('arrayTitulaciones',$arrayTitulaciones)
-                                          ->with('prioridadProfesor', $prioridadProfesor)
+                                          ->with('cAvailable', $cAvailable)
                                           ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas);
     }
 
@@ -85,7 +89,10 @@ class ApplicationsController extends Controller
         $camp_id = Input::get('campus_id');
         $imparted_id = Input::get('imparted_id');
 
-        if ($camp_id == "" && $imparted_id == "") {
+        if($cert_id == "" && $camp_id == "" && $imparted_id == "") {
+            $subjects = Subject::all();
+
+        }elseif ($camp_id == "" && $imparted_id == "") {
             $subjects = Subject::where('certification_id', '=', $cert_id)->get();
 
         } elseif ($cert_id == "" && $imparted_id == "") {

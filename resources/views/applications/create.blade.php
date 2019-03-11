@@ -6,8 +6,45 @@
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header text-center">
-            <h5> Selección de asignaturas </h5>
+          <div class="card-header">
+            <h5 class="text-center"> Selección de asignaturas </h5>
+            <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold;">Filtrar por</button>
+
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                  <div class="group row">
+                    <div class="col-md-3">
+                      <select name="certification" id="certification" class="form-control">
+                        <option value="">Titulaciones</option>
+                        @foreach($arrayTitulaciones as $t)
+                          <option value="{{$t->id}}">{{$t->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+
+                    <div class="col-md-3">
+                      <select name="campus" id="campus" class="form-control">
+                        <option value="">Campus</option>
+                        @foreach($arrayCampus as $c)
+                          <option value="{{$c->id}}">{{$c->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+
+                    <div class="col-md-3">
+                      <select name="imparted" id="imparted" class="form-control">
+                        <option value="">Cursos</option>
+                        @foreach($arrayCursoAsignaturas as $c)
+                          <option value="{{$c->id}}">{{$c->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+
+                    <button class="btn-primary btn-sm" id="filters" type="button">Aplicar</button>
+
+                  </div>
+              </div>
+            </div>
           </div>
           <div class="card-body" style="padding:30px">
             <form method="POST" onsubmit="return validacion()">
@@ -15,39 +52,7 @@
 
          			<h5 class="text-center" id="teacher">Profesor: {{ auth()->user()->name }}</h5>
               <h6 class="text-center" id="course"> Curso: {{$course}} </h6>
-              <h6 class="text-center" id="cAvailable"> Creditos Disponibles: {{$prioridadProfesor->cAvailable}} </h6>
-
-              <div class="form-group row">
-                <div class="col-md-4">
-                  <h6><label for="certification">Selecciona una Titulación</label></h6>
-                  <select name="certification" id="certification" class="form-control">
-                    <option value="">Elige una titulación</option>
-                    @foreach($arrayTitulaciones as $t)
-                      <option value="{{$t->id}}">{{$t->name}}</option>
-                    @endforeach
-                  </select>
-                </div>
-
-                <div class="col-md-4">
-                  <h6><label for="campus">Selecciona un campus</label></h6>
-                  <select name="campus" id="campus" class="form-control">
-                    <option value="">Elige un campus</option>
-                    @foreach($arrayCampus as $c)
-                      <option value="{{$c->id}}">{{$c->name}}</option>
-                    @endforeach
-                  </select>
-                </div>
-
-                <div class="col-md-4">
-                  <h6><label for="imparted">Selecciona el curso en la que se imparte</label></h6>
-                  <select name="imparted" id="imparted" class="form-control">
-                    <option value="">Elige el curso en la que se imparte</option>
-                    @foreach($arrayCursoAsignaturas as $c)
-                      <option value="{{$c->id}}">{{$c->name}}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
+              <h6 class="text-right" id="cAvailable"> Créditos Disponibles: {{$cAvailable}} </h6>
 
               <div class="form-group">
                <h6><label for="subject">Selecciona una asignatura</label></h6>
@@ -166,35 +171,23 @@
   var numAplication;
 
   $('#certification').on('change', function(e) {
-    console.log(e);
     certification_id = e.target.value;
     console.log(certification_id);
-    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted_id='+ imparted_id, function(data) {
-      console.log(data);
-      $('#subject').empty();
-      $('#subject').append('<option value="">Elige una asignatura</option>');
-
-      $.each(data, function(index, subjectsObj) {
-        $('#subject').append('<option value="'+ subjectsObj.id +'">'+ subjectsObj.name +'</option>');
-      })
-    });
   });
 
   $('#campus').on('change', function(e) {
     campus_id = e.target.value;
-    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted_id='+ imparted_id, function(data) {
-      $('#subject').empty();
-      $('#subject').append('<option value="">Elige una asignatura</option>');
-
-      $.each(data, function(index, subjectsObj) {
-        $('#subject').append('<option value="'+ subjectsObj.id +'">'+ subjectsObj.name +'</option>');
-      })
-    });
+    console.log(campus_id);
   });
 
   $('#imparted').on('change', function(e) {
     imparted_id = e.target.value;
+    console.log(imparted_id);
+  });
+
+  $('#filters').on('click', function(e) {
     $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted_id='+ imparted_id, function(data) {
+      console.log(data);
       $('#subject').empty();
       $('#subject').append('<option value="">Elige una asignatura</option>');
 

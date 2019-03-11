@@ -12,17 +12,17 @@
          		{{ csrf_field() }}
 
             <div class="form-group">
-               <label for="cTheory">Creditos Teoria</label>
+               <label for="cTheory" style="font-weight: bold;">Créditos Teoria</label>
                <input type="number" name="cTheory" id="cTheory" value="{{$application->cTheory}}" step="0.01" class="form-control">
             </div>
 
             <div class="form-group">
-               <label for="cPractice">Creditos Práctica</label>
+               <label for="cPractice" style="font-weight: bold;">Créditos Práctica</label>
                <input type="number" name="cPractice" id="cPractice" value="{{$application->cPractice}}" step="0.01" class="form-control">
             </div>
 
             <div class="form-group">
-               <label for="cSeminar">Creditos Seminario</label>
+               <label for="cSeminar" style="font-weight: bold;">Créditos Seminario</label>
                <input type="number" name="cSeminar" id="cSeminar" value="{{$application->cSeminar}}" step="0.01" class="form-control">
             </div>
 
