@@ -1,16 +1,14 @@
 @extends('layouts.master')
 @section('content')
 <div class="row" style="margin-top:40px">
-  <div class="col-md-12">
+  <div class="offset-md-2 col-md-8">
     <div class="card">
-      <div class="card-header">
-        <div id="titlistado">
-          <h5 > Selecciones por Curso Academico </h5>
-        </div>
+      <div class="card-header text-center">
+          <h5> Solicitudes por Curso Academico </h5>
       </div>
-      <div class="card-body">	
+      <div class="card-body text-center">	
 		  @foreach( $arrayCursos as $key => $curso )
-		    <div id="nombrelist">
+		    <div>
 			    <h5><a href="{{ url('/applications/course/' . $curso->course ) }}" style="color: #000000;">Curso {{$curso->course}}</a></h5>
 		    </div>
 		    </br><hr />
