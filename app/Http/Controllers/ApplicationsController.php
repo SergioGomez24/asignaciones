@@ -70,7 +70,9 @@ class ApplicationsController extends Controller
         $arrayCampus = Campus::all();
         $arrayTitulaciones = Certification::all();
         $arrayCursoAsignaturas = Coursesubject::all();
-        $prioridadProfesor = Priority::where('teacher', '=', $teacher)->get();
+        $prioridadProfesor = Priority::where('teacher', '=', $teacher)
+                                     ->where('course', '=', $course)
+                                     ->get();
 
         foreach ($prioridadProfesor as $prioridad) {
             $cAvailable = $prioridad->cAvailable;

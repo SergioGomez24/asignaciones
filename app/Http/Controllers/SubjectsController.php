@@ -11,6 +11,7 @@ use App\Center;
 use App\Coursesubject;
 use App\Durationsubject;
 use App\Typesubject;
+use App\Teacher;
 use Notification;
 
 class SubjectsController extends Controller
@@ -66,6 +67,7 @@ class SubjectsController extends Controller
         $arrayCursoAsignaturas = Coursesubject::all();
         $arrayDuracionAsignaturas = Durationsubject::all();
         $arrayTipoAsignaturas = Typesubject::all();
+        $arrayProfesores = Teacher::all();
 
     	return view('subjects.create')->with('arrayTitulaciones',$arrayTitulaciones)
                                       ->with('arrayAreas',$arrayAreas)
@@ -73,6 +75,7 @@ class SubjectsController extends Controller
                                       ->with('arrayCentros',$arrayCentros)
                                       ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas)
                                       ->with('arrayDuracionAsignaturas',$arrayDuracionAsignaturas)
+                                      ->with('arrayProfesores', $arrayProfesores)
                                       ->with('arrayTipoAsignaturas',$arrayTipoAsignaturas);
     }
 

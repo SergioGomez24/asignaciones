@@ -273,6 +273,8 @@
       alert("Introduce los créditos");
     }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
       alert("Introduce un valor mayor que 0");
+    }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
+      alert("Introduce un valor positivo");
     }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
       alert("Créditos introducidos no validos");
     }else if(numAplication > "0") {

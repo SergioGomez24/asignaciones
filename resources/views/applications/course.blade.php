@@ -4,12 +4,13 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h5 class="text-center"> Selecciones Curso {{$course}} </h5>
+        <h4 class="text-center"> Selecciones Curso {{$course}} </h4>
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold;">Filtrar por</button>
           <div class="collapse" id="collapseExample">
             <div class="card card-body">
               <form href = "applications/course/{$course}" method="GET">
                 <div class="group row">
+
                   <div class="col-md-3">
                     <select name="subject_id" id="subject_id" class="form-control">
                       <option value="">Asignaturas</option>
@@ -60,7 +61,7 @@
                   <td><form name="formBorrar" action="{{action('ApplicationsController@deleteApplication', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
                   {{ csrf_field() }}
-                  <input class="btn btn-danger btn-sm" type="submit" onclick="pregunta()" value="Borrar"/>
+                  <input class="btn btn-danger btn-sm" type="button" onclick="pregunta()" value="Borrar"/>
                   </form></td>
                 </tr>
               @endforeach
@@ -77,7 +78,7 @@
                   <td><form name="formBorrar" action="{{action('ApplicationsController@deleteApplication', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
                   {{ csrf_field() }}
-                  <input class="btn btn-danger btn-sm" type="submit" onclick="pregunta()" value="Borrar"/>
+                  <input class="btn btn-danger btn-sm" type="button" onclick="pregunta()" value="Borrar"/>
                   </form></td>
                 </tr>
               @endforeach
@@ -94,12 +95,13 @@
 
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');
+    var enviar = false;
+
     if(mensaje) {
       document.formBorrar.submit();
-      return true; 
-    } else {
-      return false;
+      enviar = true; 
     }
+    return enviar;
   }
 
 </script>

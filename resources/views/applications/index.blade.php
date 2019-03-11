@@ -4,14 +4,12 @@
   <div class="offset-md-2 col-md-8">
     <div class="card">
       <div class="card-header text-center">
-          <h5> Solicitudes por Curso Academico </h5>
+          <h4> Solicitudes por Curso Academico </h4>
       </div>
-      <div class="card-body text-center">	
+      <div class="card-body">	
 		  @foreach( $arrayCursos as $key => $curso )
-		    <div>
-			    <h5><a href="{{ url('/applications/course/' . $curso->course ) }}" style="color: #000000;">Curso {{$curso->course}}</a></h5>
-		    </div>
-		    </br><hr />
+			<h5><a href="{{ url('/applications/course/' . $curso->course ) }}" style="color: #000000;">Curso {{$curso->course}}</a></h5>
+		    </br>
 		  @endforeach
 	  </div>
   </div>

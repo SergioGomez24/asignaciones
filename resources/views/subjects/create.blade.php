@@ -107,7 +107,12 @@
 
             <div class="form-group" style="font-weight: bold;">
                <label for="coordinator">Coordinador</label>
-               <input type="text" name="coordinator" id="coordinator" class="form-control" placeholder="Nombre Apellidos" required>
+               <select name="coordinator" id="coordinator" class="form-control">
+                  <option value="">Selecciona el coordinador</option>
+                  @foreach($arrayProfesores as $profesor)
+                  <option value="{{$profesor->name}}">{{$profesor->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
 

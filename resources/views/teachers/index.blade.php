@@ -1,17 +1,5 @@
 @extends('layouts.master')
 @section('content')
-<script language="JavaScript"> 
-function pregunta(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres borrar esta asignatura?');
-    if(mensaje) {
-       document.formBorrar.submit();
-       return true; 
-    } else {
-    	return false;
-    }
-} 
-</script>
-
 <div class="row" style="margin-top:40px">
   <div class="offset-md-1 col-md-10">
     <div class="card">
@@ -43,7 +31,7 @@ function pregunta(){
                   <td align="right"><form name="formBorrar" action="{{action('TeachersController@deleteTeacher', $profesor->id)}}" method="POST">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
-                    <input class="btn btn-danger btn-sm" type="submit" onsubmit="pregunta()" value="Borrar"/>
+                    <input class="btn btn-danger btn-sm" type="button" onclick="pregunta()" value="Borrar"/>
                   </form></td>
                 @endif
               </tr>
@@ -54,4 +42,18 @@ function pregunta(){
 	  </div>
 	</div>
 </div>
+
+<script language="JavaScript"> 
+  function pregunta(){ 
+    var mensaje = confirm('¿Estas seguro de que quieres borrar este profesor?');
+
+    if(mensaje) {
+      document.formBorrar.submit();
+      return true;
+    }else{
+      return false;
+    }
+    
+  } 
+</script>
 @stop
