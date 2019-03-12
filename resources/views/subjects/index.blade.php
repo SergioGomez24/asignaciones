@@ -16,8 +16,8 @@
           <thead>
             <tr>
               <th>Asignatura</th>
-              <th align="right">Editar</th>
-              <th align="right">Eliminar</th>
+              <td align="right" style="font-weight: bold;">Editar</td>
+              <td align="right" style="font-weight: bold;">Eliminar</td>
             </tr>
           </thead>
           <tbody>	

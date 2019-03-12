@@ -6,7 +6,7 @@
 			<div class="col-md-6">
 				<div class="card">
 					<div class="card-header text-center">
-            			<h5 > Ajustes </h5>
+            			<h4 > Ajustes </h4>
             		</div>
             		<div class="card-body text-center">
 					<h5><a href="{{ url('/settings/categories') }}" style="color: #000000;">Categorias</a></h5>
