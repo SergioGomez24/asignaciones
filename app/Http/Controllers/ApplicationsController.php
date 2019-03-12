@@ -61,31 +61,6 @@ class ApplicationsController extends Controller
 
     }
 
-    public function getCreate() 
-    {
-    	$courseObj = Course::all()->last();
-        $course = $courseObj->course;
-        $teacher = Auth()->user()->name;
-    	$arrayAsignaturas = Subject::all();
-        $arrayCampus = Campus::all();
-        $arrayTitulaciones = Certification::all();
-        $arrayCursoAsignaturas = Coursesubject::all();
-        $prioridadProfesor = Priority::where('teacher', '=', $teacher)
-                                     ->where('course', '=', $course)
-                                     ->get();
-
-        foreach ($prioridadProfesor as $prioridad) {
-            $cAvailable = $prioridad->cAvailable;
-        }
-
-		return view('applications.create')->with('course',$course)
-										  ->with('arrayAsignaturas',$arrayAsignaturas)
-                                          ->with('arrayCampus',$arrayCampus)
-                                          ->with('arrayTitulaciones',$arrayTitulaciones)
-                                          ->with('cAvailable', $cAvailable)
-                                          ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas);
-    }
-
     public function getSubjects() {
         $cert_id = Input::get('certification_id');
         $camp_id = Input::get('campus_id');
@@ -199,6 +174,30 @@ class ApplicationsController extends Controller
         return response()->json($application);
     }
 
+    public function getCreate() 
+    {
+        $courseObj = Course::all()->last();
+        $course = $courseObj->course;
+        $teacher = Auth()->user()->name;
+        $arrayAsignaturas = Subject::all();
+        $arrayCampus = Campus::all();
+        $arrayTitulaciones = Certification::all();
+        $arrayCursoAsignaturas = Coursesubject::all();
+        $prioridadProfesor = Priority::where('teacher', '=', $teacher)
+                                     ->where('course', '=', $course)
+                                     ->get();
+
+        foreach ($prioridadProfesor as $prioridad) {
+            $cAvailable = $prioridad->cAvailable;
+        }
+
+        return view('applications.create')->with('course',$course)
+                                          ->with('arrayAsignaturas',$arrayAsignaturas)
+                                          ->with('arrayCampus',$arrayCampus)
+                                          ->with('arrayTitulaciones',$arrayTitulaciones)
+                                          ->with('cAvailable', $cAvailable)
+                                          ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas);
+    }
 
     public function postCreate(Request $request) 
     {
@@ -213,6 +212,17 @@ class ApplicationsController extends Controller
         $a->cSeminar = $request->input('cSeminar');
         $a->save();
         Notification::success('La solicitud se ha guardado exitosamente!');
+
+        $prioridad = Priority::where('teacher', $a->teacher)
+                             ->where('course', $a->course)
+                             ->get();
+
+        foreach ($prioridad as $p) {
+            $p->cAvailable = $p->cAvailable - $a->cTheory - $a->cPractice - $a->cSeminar;
+            $p->save();
+        }
+
+
         return redirect('/applications/create');
     }
 

@@ -15,9 +15,9 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <td style="font-weight: bold;">Asignatura</td>
-              <td align="right" style="font-weight: bold;">Editar</td>
-              <td align="right" style="font-weight: bold;">Eliminar</td>
+              <th>Asignatura</th>
+              <th align="right">Editar</th>
+              <th align="right">Eliminar</th>
             </tr>
           </thead>
           <tbody>	
@@ -26,12 +26,12 @@
                 <td><a href="{{ url('/subjects/show/' . $asignatura->id ) }}" style="color: #000000; font-weight: bold;" > {{$asignatura->name}} </a></td>
 
                 @if (Auth()->user()->role == 'Director')
-                  <td align="right"><a class="btn btn-secondary btn-sm" href="{{ url('/subjects/edit/'.$asignatura->id) }}">Editar</a></td>
+                  <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/subjects/edit/'.$asignatura->id) }}">Editar</a></td>
 
-                  <td align="right"><form name="formBorrar" action="{{action('SubjectsController@deleteSubject', $asignatura->id)}}" method="POST">
+                  <td align="right" ><form name="formBorrar" action="{{action('SubjectsController@deleteSubject', $asignatura->id)}}" method="POST">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
-                    <input class="btn btn-danger btn-sm" type="button" onclick="pregunta()" value="Borrar"/>
+                    <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button> 
                   </form></td>
                 @endif
               </tr>

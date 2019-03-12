@@ -61,7 +61,7 @@
                   <td><form name="formBorrar" action="{{action('ApplicationsController@deleteApplication', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
                   {{ csrf_field() }}
-                  <input class="btn btn-danger btn-sm" type="button" onclick="pregunta()" value="Borrar"/>
+                  <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
                   </form></td>
                 </tr>
               @endforeach
@@ -78,7 +78,7 @@
                   <td><form name="formBorrar" action="{{action('ApplicationsController@deleteApplication', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
                   {{ csrf_field() }}
-                  <input class="btn btn-danger btn-sm" type="button" onclick="pregunta()" value="Borrar"/>
+                  <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
                   </form></td>
                 </tr>
               @endforeach

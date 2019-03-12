@@ -267,7 +267,10 @@
     var vCredT = document.getElementById("cTheory").value;
     var vCredP = document.getElementById("cPractice").value;
     var vCredS = document.getElementById("cSeminar").value;
+    var cAvailable = "{{$cAvailable}}";
     var enviar = false;
+
+    cAvailable = cAvailable - vCredT - vCredP - vCredS;
 
     if(vCredS == "" && vCredT == "" && vCredP == ""){
       alert("Introduce los créditos");
@@ -279,6 +282,8 @@
       alert("Créditos introducidos no validos");
     }else if(numAplication > "0") {
       alert("Asignatura ya elegida");
+    }else if(cAvailable < 0) {
+      alert("Créditos disponibles insuficientes");
     }else {
       enviar = true;
     }

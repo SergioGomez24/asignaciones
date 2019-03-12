@@ -18,10 +18,10 @@ class CreatePrioritiesTable extends Migration
             $table->integer('priority')->unsigned();
             $table->foreign('priority')->references('rank')->on('categories');
             $table->string('teacher');
-            $table->foreign('teacher')->references('name')->on('teachers');
+            $table->foreign('teacher')->references('name')->on('teachers')->onDelete('cascade');
             $table->string('course');
             $table->foreign('course')->references('course')->on('courses');
-            $table->decimal('cAvailable',10,0)->unsigned();
+            $table->decimal('cAvailable',4,2)->unsigned();
             $table->date('dateCategory');
             $table->timestamps();
         });
