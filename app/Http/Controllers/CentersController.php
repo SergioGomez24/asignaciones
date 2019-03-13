@@ -15,13 +15,6 @@ class CentersController extends Controller
     	return view('settings.centers.index', ['arrayCentros' => $arrayCentros]);
     }
 
-    public function getShow($id) 
-    {
-    	$centro = Center::findOrFail($id);
-
-    	return view('settings.centers.show', ['centro' => $centro]);
-    }
-
 	public function getCreate() 
     {
     	return view('settings.centers.create');
@@ -49,7 +42,7 @@ class CentersController extends Controller
         $c->name = $request->input('name');
         $c->save();
         Notification::success('El centro ha sido modificado exitosamente!');
-        return redirect('/settings/centers/show/'.$id);
+        return redirect('/settings/centers');
     }
 
     public function deleteCenter(Request $request, $id)

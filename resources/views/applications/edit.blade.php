@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 	<div class="row" style="margin-top:40px">
-   <div class="offset-md-2 col-md-8">
+   <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header text-center"> 
             <h5> Modificar solicitud </h5>  

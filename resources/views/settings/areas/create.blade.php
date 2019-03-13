@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-	<div class="row" style="margin-top:40px">
+<div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header text-center">
@@ -11,8 +11,8 @@
          		{{ csrf_field() }}
 
             <div class="form-group">
-               <label for="name">Nombre</label>
-               <input type="text" name="name" id="name" class="form-control">
+               <label for="name" style="font-weight: bold;">Nombre</label>
+               <input type="text" name="name" id="name" class="form-control" required>
             </div>
 
             <div class="form-group text-center">
@@ -23,7 +23,7 @@
             </form>
          </div>
          <div>
-            <a class="btn btn-link btn-sm" href="{{ url('/settings/areas') }}" style="float: right;">Volver al listado</a>
+            <a class="btn btn-link btn-sm" href="{{ url('/settings/areas') }}">Volver al listado</a>
          </div>
       </div>
    </div>

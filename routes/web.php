@@ -96,8 +96,6 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 	Route::get('settings/categories/create', 'CategoriesController@getCreate');
 	Route::post('settings/categories/create', 'CategoriesController@postCreate');
 
-	Route::get('settings/categories/show/{id}', 'CategoriesController@getShow');
-
 	Route::get('settings/categories/edit/{id}', 'CategoriesController@getEdit');
 	Route::put('settings/categories/edit/{id}', 'CategoriesController@putEdit');
 

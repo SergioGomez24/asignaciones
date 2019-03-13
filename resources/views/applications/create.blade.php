@@ -7,7 +7,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h5 class="text-center"> Selección de asignaturas </h5>
+            <h4 class="text-center"> Selección de asignaturas </h4>
             <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold;">Filtrar por</button>
 
             <div class="collapse" id="collapseExample">

@@ -15,13 +15,6 @@ class AreasController extends Controller
     	return view('settings.areas.index', ['arrayAreas' => $arrayAreas]);
     }
 
-    public function getShow($id) 
-    {
-    	$area = Area::findOrFail($id);
-
-    	return view('settings.areas.show', ['area' => $area]);
-    }
-
 	public function getCreate() 
     {
     	return view('settings.areas.create');
@@ -49,7 +42,7 @@ class AreasController extends Controller
         $a->name = $request->input('name');
         $a->save();
         Notification::success('La area ha sido modificada exitosamente!');
-        return redirect('/settings/areas/show/'.$id);
+        return redirect('/settings/areas');
     }
 
     public function deleteArea(Request $request, $id)

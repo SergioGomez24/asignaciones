@@ -48,22 +48,23 @@ class TeachersController extends Controller
 
     public function postCreate(Request $request) 
     {
-        $t = new Teacher;
-        $t->name = $request->input('name');
-        $t->dni = $request->input('dni');
-        $t->category_id = $request->input('category_id');
-        $t->area_id = $request->input('area_id');
-        $t->cInitial = $request->input('cInitial');
-        $t->dateCategory = $request->input('dateCategory');
-        $t->dateUCA = $request->input('dateUCA');
-        $t->save();
-
         $u = new User;
         $u->name = $request->input('name');
         $u->email = $request->input('email');
         $u->password = $request->input('password');
         $u->role = $request->input('role');
         $u->save();
+
+        $t = new Teacher;
+        $t->name = $request->input('name');
+        $t->dni = $request->input('dni');
+        $t->user_id = $u->id;
+        $t->category_id = $request->input('category_id');
+        $t->area_id = $request->input('area_id');
+        $t->cInitial = $request->input('cInitial');
+        $t->dateCategory = $request->input('dateCategory');
+        $t->dateUCA = $request->input('dateUCA');
+        $t->save();
 
         Notification::success('El profesor se ha guardado exitosamente!');
         return redirect('/teachers');
@@ -111,7 +112,7 @@ class TeachersController extends Controller
         $u->save();
 
         Notification::success('El profesor ha sido modificado exitosamente!');
-        return redirect('/teachers/show/'.$id);
+        return redirect('/teachers');
     }
 
     public function deleteTeacher(Request $request, $id)

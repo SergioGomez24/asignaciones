@@ -77,7 +77,7 @@
 
             <div class="form-group">
                <label for="duration_id" style="font-weight: bold;">Duración</label>
-               <select name="duration_id" id="duration_id" class="form-control">
+               <select name="duration_id" id="duration_id" class="form-control" required>
                   <option value="">Selecciona la duración de la asignatura</option>
                   @foreach($arrayDuracionAsignaturas as $duracionA)
                   <option value="{{$duracionA->id}}">{{$duracionA->name}}</option>
@@ -87,7 +87,7 @@
 
             <div class="form-group">
                <label for="imparted_id" style="font-weight: bold;">Curso en la que se imparte</label>
-               <select name="imparted_id" id="imparted_id" class="form-control">
+               <select name="imparted_id" id="imparted_id" class="form-control" required>
                   <option value="">Selecciona el curso en la que se imparte</option>
                   @foreach($arrayCursoAsignaturas as $cursoA)
                   <option value="{{$cursoA->id}}">{{$cursoA->name}}</option>
@@ -97,7 +97,7 @@
 
             <div class="form-group">
                <label for="typeSubject_id" style="font-weight: bold;">Tipo de asignatura</label>
-               <select name="typeSubject_id" id="typeSubject_id" class="form-control">
+               <select name="typeSubject_id" id="typeSubject_id" class="form-control" required>
                   <option value="">Selecciona el tipo de la asignatura</option>
                   @foreach($arrayTipoAsignaturas as $tipoA)
                   <option value="{{$tipoA->id}}">{{$tipoA->name}}</option>
@@ -107,7 +107,7 @@
 
             <div class="form-group" style="font-weight: bold;">
                <label for="coordinator">Coordinador</label>
-               <select name="coordinator" id="coordinator" class="form-control">
+               <select name="coordinator" id="coordinator" class="form-control" required>
                   <option value="">Selecciona el coordinador</option>
                   @foreach($arrayProfesores as $profesor)
                   <option value="{{$profesor->name}}">{{$profesor->name}}</option>

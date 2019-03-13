@@ -13,17 +13,17 @@
 
             <div class="form-group">
                <label for="name" style="font-weight: bold;">Nombre Apellidos</label>
-               <input type="text" name="name" id="name" value="{{$profesor->name}}" class="form-control">
+               <input type="text" name="name" id="name" value="{{$profesor->name}}" class="form-control" required>
             </div>
 
             <div class="form-group">
                <label for="dni" style="font-weight: bold;">DNI</label>
-               <input type="text" name="dni" id="dni" value="{{$profesor->dni}}" class="form-control">
+               <input type="text" name="dni" id="dni" value="{{$profesor->dni}}" class="form-control" required>
             </div>
 
             <div class="form-group">
                <label for="email" style="font-weight: bold;">Correo electrónico</label>
-               <input type="email" name="email" id="email" value="{{$usuario->email}}" class="form-control">
+               <input type="email" name="email" id="email" value="{{$usuario->email}}" class="form-control" required>
             </div>
 
             <div class="form-group">
@@ -62,12 +62,12 @@
 
             <div class="form-group">
                <label for="dateCategory" style="font-weight: bold;">Fecha inicio categoria</label>
-               <input type="date" name="dateCategory" id="dateCategory" value="{{$profesor->dateCategory}}" class="form-control">
+               <input type="date" name="dateCategory" id="dateCategory" value="{{$profesor->dateCategory}}" class="form-control" required>
             </div>
 
             <div class="form-group">
                <label for="dateUCA" style="font-weight: bold;">Fecha inicio UCA</label>
-               <input type="date" name="dateUCA" id="dateUCA" value="{{$profesor->dateUCA}}" class="form-control">
+               <input type="date" name="dateUCA" id="dateUCA" value="{{$profesor->dateUCA}}" class="form-control" required>
             </div>
 
             <div class="form-group text-center">

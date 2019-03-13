@@ -7,18 +7,18 @@
             <h5 > Modificar asignatura </h5>
          </div>
          <div class="card-body" style="padding:30px">
-         	<form method="POST">
+         	<form method="POST" onsubmit="return validar()">
          		{{ method_field('PUT') }}
          		{{ csrf_field() }}
 
             <div class="form-group">
                <label for="code" style="font-weight: bold;">Código</label>
-               <input type="text" name="code" id="code" value="{{$asignatura->code}}" class="form-control">
+               <input type="text" name="code" id="code" value="{{$asignatura->code}}" class="form-control" required>
             </div>
 
             <div class="form-group">
                <label for="name" style="font-weight: bold;">Nombre</label>
-               <input type="text" name="name" id="name" value="{{$asignatura->name}}" class="form-control">
+               <input type="text" name="name" id="name" value="{{$asignatura->name}}" class="form-control" required>
             </div>
 
             <div class="form-group">
@@ -63,17 +63,17 @@
 
             <div class="form-group">
                <label for="cTheory" style="font-weight: bold;">Créditos Teoria</label>
-               <input type="number" name="cTheory" id="cTheory" value="{{$asignatura->cTheory}}" step="0.01" class="form-control">
+               <input type="number" name="cTheory" id="cTheory" value="{{$asignatura->cTheory}}" class="form-control">
             </div>
 
             <div class="form-group">
                <label for="cPractice" style="font-weight: bold;">Créditos Práctica</label>
-               <input type="number" name="cPractice" id="cPractice" value="{{$asignatura->cPractice}}" step="0.01" class="form-control">
+               <input type="number" name="cPractice" id="cPractice" value="{{$asignatura->cPractice}}" class="form-control">
             </div>
 
             <div class="form-group">
                <label for="cSeminar" style="font-weight: bold;">Créditos Seminario</label>
-               <input type="number" name="cSeminar" id="cSeminar" value="{{$asignatura->cSeminar}}" step="0.01" class="form-control">
+               <input type="number" name="cSeminar" id="cSeminar" value="{{$asignatura->cSeminar}}" class="form-control">
             </div>
 
             <div class="form-group">
@@ -108,7 +108,12 @@
 
             <div class="form-group">
                <label for="coordinator" style="font-weight: bold;">Coordinador</label>
-               <input type="text" name="coordinator" id="coordinator" value="{{$asignatura->coordinator}}" class="form-control">
+               <select name="coordinator" id="coordinator" class="form-control" required>
+                  <option value="{{$asignatura->coordinator}}">{{$asignatura->coordinator}}</option>
+                  @foreach($arrayProfesores as $profesor)
+                  <option value="{{$profesor->name}}">{{$profesor->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group text-center">
@@ -121,4 +126,19 @@
       </div>
    </div>
 </div>
+
+<script language="JavaScript"> 
+  function validar(){
+    var vCredT = document.getElementById("cTheory").value;
+    var vCredP = document.getElementById("cPractice").value;
+    var vCredS = document.getElementById("cSeminar").value;
+
+    if(vCredS == "" && vCredT == "" && vCredP == ""){
+      alert("Introduce los créditos");
+      return false;
+    }else{
+      return true;
+    }
+  }
+</script>
 @stop

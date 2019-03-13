@@ -16,13 +16,6 @@ class CampusController extends Controller
     	return view('settings.campus.index', ['arrayCampus' => $arrayCampus]);
     }
 
-    public function getShow($id) 
-    {
-    	$campus = Campus::findOrFail($id);
-
-    	return view('settings.campus.show', ['campus' => $campus]);
-    }
-
 	public function getCreate() 
     {
     	return view('settings.campus.create');
@@ -50,7 +43,7 @@ class CampusController extends Controller
         $c->name = $request->input('name');
         $c->save();
         Notification::success('El campus ha sido modificado exitosamente!');
-        return redirect('/settings/campus/show/'.$id);
+        return redirect('/settings/campus');
     }
 
     public function deleteCampus(Request $request, $id)

@@ -132,6 +132,7 @@ class SubjectsController extends Controller
         $arrayDuracionAsignaturas = Durationsubject::all();
         $arrayCursoAsignaturas = Coursesubject::all();
         $arrayTipoAsignaturas = Typesubject::all();
+        $arrayProfesores = Teacher::all();
         
 		    	
      	return view('subjects.edit')->with('asignatura',$asignatura)
@@ -148,7 +149,8 @@ class SubjectsController extends Controller
                                     ->with('center',$center)
                                     ->with('duration',$duration)
                                     ->with('imparted',$imparted)
-                                    ->with('typeSubject',$typeSubject);
+                                    ->with('typeSubject',$typeSubject)
+                                    ->with('arrayProfesores',$arrayProfesores);
     }
 
     public function putEdit(Request $request, $id)
@@ -169,7 +171,7 @@ class SubjectsController extends Controller
         $a->coordinator = $request->input('coordinator');
         $a->save();
         Notification::success('La asignatura ha sido modificada exitosamente!');
-        return redirect('/subjects/show/'.$id);
+        return redirect('/subjects');
     }
 
     public function deleteSubject(Request $request, $id)

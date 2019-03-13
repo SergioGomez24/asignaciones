@@ -68,12 +68,12 @@
 
             <div class="form-group">
                <label for="dateCategory" style="font-weight: bold;">Fecha inicio categoria</label>
-               <input type="date" name="dateCategory" id="dateCategory" class="form-control">
+               <input type="date" name="dateCategory" id="dateCategory" class="form-control" required>
             </div>
 
             <div class="form-group">
                <label for="dateUCA" style="font-weight: bold;">Fecha inicio UCA</label>
-               <input type="date" name="dateUCA" id="dateUCA" class="form-control">
+               <input type="date" name="dateUCA" id="dateUCA" class="form-control" required>
             </div>
 
             <div class="form-group text-center">

@@ -15,13 +15,6 @@ class CertificationsController extends Controller
     	return view('settings.certifications.index', ['arrayTitulaciones' => $arrayTitulaciones]);
     }
 
-    public function getShow($id) 
-    {
-    	$titulacion = Certification::findOrFail($id);
-
-    	return view('settings.certifications.show', ['titulacion' => $titulacion]);
-    }
-
 	public function getCreate() 
     {
     	return view('settings.certifications.create');
@@ -49,7 +42,7 @@ class CertificationsController extends Controller
         $c->name = $request->input('name');
         $c->save();
         Notification::success('La titulacion ha sido modificada exitosamente!');
-        return redirect('/settings/certifications/show/'.$id);
+        return redirect('/settings/certifications');
     }
 
     public function deleteCertification(Request $request, $id)

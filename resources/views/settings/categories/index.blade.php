@@ -11,7 +11,8 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Categoría</th>
+              <td style="font-weight: bold;">Categoría</td>
+              <td style="font-weight: bold;">Rango</td>
               <td align="right" style="font-weight: bold;">Editar</td>
               <td align="right" style="font-weight: bold;">Eliminar</td>
             </tr>
@@ -19,7 +20,9 @@
           <tbody> 
             @foreach( $arrayCategorias as $key => $categoria )
               <tr>
-                <td><a href="{{ url('/settings/categories/show/' . $categoria->id ) }}" style="color: #000000; font-weight: bold;" > {{$categoria->name}} </a></td>
+                <td style="font-weight: bold;">{{$categoria->name}}</td>
+
+                <td style="font-weight: bold;">{{$categoria->rank}}</td>
 
                 <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/settings/categories/edit/'.$categoria->id) }}">Editar</a></td>
 
@@ -34,7 +37,7 @@
         </table>	
 		  </div>
       <div>
-        <a class="btn btn-link btn-sm" href="{{ url('/settings') }}" style="float: right;">Volver a ajustes</a>
+        <a class="btn btn-link btn-sm" href="{{ url('/settings') }}">Volver a ajustes</a>
       </div>
 	  </div>
 	</div>

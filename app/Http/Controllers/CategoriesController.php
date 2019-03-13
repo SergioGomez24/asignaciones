@@ -15,13 +15,6 @@ class CategoriesController extends Controller
     	return view('settings.categories.index', ['arrayCategorias' => $arrayCategorias]);
     }
 
-    public function getShow($id) 
-    {
-    	$categoria = Category::findOrFail($id);
-
-    	return view('settings.categories.show', ['categoria' => $categoria]);
-    }
-
 	public function getCreate() 
     {
     	return view('settings.categories.create');
@@ -31,7 +24,7 @@ class CategoriesController extends Controller
      {
         $c = new Category;
         $c->name = $request->input('name');
-        $c->code = $request->input('rank');
+        $c->rank = $request->input('rank');
         $c->save();
         Notification::success('La categoria se ha guardado exitosamente!');
         return redirect('/settings/categories');
@@ -46,12 +39,12 @@ class CategoriesController extends Controller
 
     public function putEdit(Request $request, $id)
     {
-        $c = Subject::findOrFail($id);
+        $c = Category::findOrFail($id);
         $c->name = $request->input('name');
-        $c->code = $request->input('rank');
+        $c->rank = $request->input('rank');
         $c->save();
         Notification::success('La categoria ha sido modificada exitosamente!');
-        return redirect('/settings/categories/show/'.$id);
+        return redirect('/settings/categories');
     }
 
     public function deleteCategory(Request $request, $id)

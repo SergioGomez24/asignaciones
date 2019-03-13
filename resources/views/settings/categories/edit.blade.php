@@ -12,13 +12,13 @@
          		{{ csrf_field() }}
 
             <div class="form-group">
-               <label for="name">Nombre</label>
-               <input type="text" name="name" id="name" value="{{$categoria->name}}" class="form-control">
+               <label for="name" style="font-weight: bold;">Nombre</label>
+               <input type="text" name="name" id="name" value="{{$categoria->name}}" class="form-control" required>
             </div>
 
              <div class="form-group">
-               <label for="rank">Rango</label>
-               <input type="text" name="rank" id="rank" value="{{$categoria->rank}}" class="form-control">
+               <label for="rank" style="font-weight: bold;">Rango</label>
+               <input type="text" name="rank" id="rank" value="{{$categoria->rank}}" class="form-control" required>
             </div>
 
             <div class="form-group text-center">

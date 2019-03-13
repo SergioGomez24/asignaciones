@@ -8,7 +8,7 @@
 					<div class="card-header text-center">
             			<h4 > Ajustes </h4>
             		</div>
-            		<div class="card-body text-center">
+            		<div class="card-body">
 					<h5><a href="{{ url('/settings/categories') }}" style="color: #000000;">Categorias</a></h5>
 					<h5><a href="{{ url('/settings/areas') }}" style="color: #000000;">Areas</a></h5>
 					<h5><a href="{{ url('/settings/certifications') }}" style="color: #000000;">Titulaciones</a></h5>
