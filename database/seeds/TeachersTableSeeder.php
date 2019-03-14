@@ -29,6 +29,17 @@ class TeachersTableSeeder extends Seeder
 		$t->dateCategory = '2018-09-21';
 		$t->dateUCA = '2018-09-16';
 		$t->save();
+
+		$t = new Teacher;
+		$t->name = 'Juan Gomez';
+		$t->dni = '13A';
+		$t->user_id = 3;
+		$t->category_id = 2;
+		$t->area_id = 1;
+		$t->cInitial = 24;
+		$t->dateCategory = '2018-09-22';
+		$t->dateUCA = '2018-09-17';
+		$t->save();
 	}
 
 

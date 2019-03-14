@@ -10,11 +10,7 @@ use App\Subject;
 use App\Campus;
 use App\Certification;
 use App\Teacher;
-use App\Area;
-use App\Center;
 use App\Coursesubject;
-use App\Durationsubject;
-use App\Typesubject;
 use App\Priority;
 use Notification;
 
@@ -59,107 +55,6 @@ class ApplicationsController extends Controller
                                           ->with('teacher', $teacher)
                                           ->with('course', $course);
 
-    }
-
-    public function getSubjects() {
-        $cert_id = Input::get('certification_id');
-        $camp_id = Input::get('campus_id');
-        $imparted_id = Input::get('imparted_id');
-
-        if($cert_id == "" && $camp_id == "" && $imparted_id == "") {
-            $subjects = Subject::all();
-
-        }elseif ($camp_id == "" && $imparted_id == "") {
-            $subjects = Subject::where('certification_id', '=', $cert_id)->get();
-
-        } elseif ($cert_id == "" && $imparted_id == "") {
-            $subjects = Subject::where('campus_id', '=', $camp_id)->get();
-
-        } elseif ($cert_id == "" && $camp_id == "") {
-            $subjects = Subject::where('imparted_id', '=', $imparted_id)->get();
-
-        } elseif ($cert_id == "") {
-            $subjects = Subject::where('campus_id', '=', $camp_id)
-                                ->where('imparted_id', '=', $imparted_id)->get();
-
-        } elseif ($camp_id == "") {
-            $subjects = Subject::where('certification_id', '=', $cert_id)
-                                ->where('imparted_id', '=', $imparted_id)->get();
-
-        } elseif ($imparted_id == "") {
-            $subjects = Subject::where('campus_id', '=', $camp_id)
-                                ->where('certification_id', '=', $cert_id)->get();
-
-        } else {
-                $subjects = Subject::where('campus_id', '=', $camp_id)
-                                    ->where('certification_id', '=', $cert_id)
-                                    ->where('imparted_id', '=', $imparted_id)->get();
-        }
-        return response()->json($subjects);
-    }
-
-    public function getSubject() {
-        $subject_id = Input::get('id');
-
-        $subject = Subject::where('id', '=', $subject_id)->get();
-
-        return response()->json($subject);
-    }
-
-    public function getCertification() {
-        $certification_id = Input::get('id');
-
-        $certification = Certification::where('id', '=', $certification_id)->get();
-
-        return response()->json($certification);
-    }
-
-    public function getArea() {
-        $area_id = Input::get('id');
-
-        $area = Area::where('id', '=', $area_id)->get();
-
-        return response()->json($area);
-    }
-
-    public function getCampus() {
-        $campus_id = Input::get('id');
-
-        $campus = Campus::where('id', '=', $campus_id)->get();
-
-        return response()->json($campus);
-    }
-
-    public function getCenter() {
-        $center_id = Input::get('id');
-
-        $center = Center::where('id', '=', $center_id)->get();
-
-        return response()->json($center);
-    }
-
-    public function getDuration() {
-        $duration_id = Input::get('id');
-
-        $duration = Durationsubject::where('id', '=', $duration_id)->get();
-
-        return response()->json($duration);
-    }
-
-    public function getImparted() {
-        $imparted_id = Input::get('id');
-
-        $imparted = Coursesubject::where('id', '=', $imparted_id)->get();
-
-        return response()->json($imparted);
-    }
-
-    public function getTypeSubject() {
-        $typeSubject_id = Input::get('id');
-
-        $typeSubject = Typesubject::where('id', '=', $typeSubject_id)->get();
-
-        return response()->json($typeSubject);
     }
 
     public function getApplication() {

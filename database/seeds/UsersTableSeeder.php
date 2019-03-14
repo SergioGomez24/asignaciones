@@ -25,6 +25,14 @@ class UsersTableSeeder extends Seeder
 		$user->remember_token = '';
 		$user->save();
 
+		$user = new User;
+		$user->name = 'Juan Gomez';
+		$user->email = 'juan@juan.com';
+		$user->password = bcrypt('hola');
+		$user->role = 'Profesor';
+		$user->remember_token = '';
+		$user->save();
+
 	}
 
     /**

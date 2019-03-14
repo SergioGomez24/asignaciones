@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Teacher;
 use App\Category;
 use App\Area;
@@ -35,6 +36,30 @@ class TeachersController extends Controller
                                     ->with('usuario',$usuario)
                                     ->with('categoria',$categoria)
                                     ->with('area',$area);
+    }
+
+    public function getTeacher() {
+        $teacher_id = Input::get('id');
+
+        $teacher = Teacher::where('id', '=', $teacher_id)->get();
+
+        return response()->json($teacher);
+    }
+
+    public function getCategory() {
+        $category_id = Input::get('id');
+
+        $category = Category::where('id', '=', $category_id)->get();
+
+        return response()->json($category);
+    }
+
+    public function getUser() {
+        $user_id = Input::get('id');
+
+        $user = User::where('id', '=', $user_id)->get();
+
+        return response()->json($user);
     }
 
     public function getCreate() 

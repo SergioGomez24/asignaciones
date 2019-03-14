@@ -10,7 +10,11 @@
   		<hr class="my-4">
   		<p></p>
   		<p class="lead">
-    		<a class="btn btn-primary btn-lg" href="{{url('/applications/create')}}" role="button">Iniciar solicitud</a>
+        @if (Auth()->user()->role == 'Director')
+    		  <a class="btn btn-primary btn-lg disabled" href="#" role="button" aria-disabled="true">Iniciar solicitud</a>
+        @else
+          <a class="btn btn-primary btn-lg" href="{{url('/applications/create')}}" role="button">Iniciar solicitud</a>
+        @endif
   		</p>
 	</div>
 </div>

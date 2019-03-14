@@ -38,28 +38,36 @@
                       <div class="modal-body">
                         <div class="group row">
                           <div class="col-md-3">
-                            <p style="font-weight: bold;">Código</p>
-                            <p id="code"></p> 
+                            <p style="font-weight: bold;">DNI</p>
+                            <p id="dni"></p> 
                           </div>
                           <div class="col-md-3">
-                            <p style="font-weight: bold;">Titulación</p>
-                            <p id="cert">  </p> 
+                            <p style="font-weight: bold;">Correo electrónico</p>
+                            <p id="email">  </p> 
                           </div>
                           <div class="col-md-3">
-                            <p style="font-weight: bold;">Area</p>
-                            <p id="area">  </p>  
+                            <p style="font-weight: bold;">Rol</p>
+                            <p id="role">  </p>  
                           </div>
                           <div class="col-md-3">
-                            <p style="font-weight: bold;">Campus</p>
-                            <p id="cam">  </p>
+                            <p style="font-weight: bold;">Categoría</p>
+                            <p id="cat">  </p>
                           </div>
                           <div class="col-md-3" >
-                            <p style="font-weight: bold;">Centro</p>
-                            <p id="center">  </p>
+                            <p style="font-weight: bold;">Area</p>
+                            <p id="area">  </p>
                           </div>
                           <div class="col-md-3">
-                            <p style="font-weight: bold;">Duración</p>
-                            <p id="duration"> </p>
+                            <p style="font-weight: bold;">Créditos iniciales</p>
+                            <p id="cInitial"> </p>
+                          </div>
+                          <div class="col-md-3">
+                            <p style="font-weight: bold;">Fecha inicio categoría</p>
+                            <p id="dateCategory"> </p>
+                          </div>
+                          <div class="col-md-3">
+                            <p style="font-weight: bold;">Fecha inicio UCA</p>
+                            <p id="dateUCA"> </p>
                           </div>
                         </div>
                       </div>
@@ -93,6 +101,40 @@
     var teacher_id = button.data('whatever');
 
     console.log(teacher_id);
+    $.get('/asignaciones/public/json-teacher?id='+ teacher_id, function(data) {
+      $('#showTeacherTitle').empty();
+      $('#dni').empty();
+      $('#cInitial').empty();
+      $('#dateCategory').empty();
+      $('#dateUCA').empty();
+      $.each(data, function(index, teacherObj) {
+        $('#showTeacherTitle').append('<h5>'+ teacherObj.name + '</h5>');
+        $('#dni').append('<p>'+ teacherObj.dni +'</p>');
+        $('#cInitial').append('<p>'+ teacherObj.cInitial +'</p>');
+        $('#dateCategory').append('<p>'+ teacherObj.dateCategory+'</p>');
+        $('#dateUCA').append('<p>'+ teacherObj.dateUCA +'</p>');
+        $.get('/asignaciones/public/json-category?id='+ teacherObj.category_id, function(d) {
+          $('#cat').empty();
+          $.each(d, function(index, categoryObj) {
+            $('#cat').append('<p>'+ categoryObj.name +'</p>');
+          })
+        });
+        $.get('/asignaciones/public/json-area?id='+ teacherObj.area_id, function(d) {
+          $('#area').empty();
+          $.each(d, function(index, areaObj) {
+            $('#area').append('<p>'+ areaObj.name +'</p>');
+          })
+        });
+        $.get('/asignaciones/public/json-user?id='+ teacherObj.user_id, function(d) {
+          $('#role').empty();
+          $('#email').empty();
+          $.each(d, function(index, userObj) {
+            $('#role').append('<p>'+ userObj.role +'</p>');
+            $('#email').append('<p>'+ userObj.email +'</p>');
+          })
+        });
+      })
+    });
   });
 
   function pregunta(){ 

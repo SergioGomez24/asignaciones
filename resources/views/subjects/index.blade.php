@@ -7,8 +7,9 @@
         <div class="text-center">
           <h4> Lista de asignaturas </h4>
         </div>
+        <a href="{{ url('/') }}"><img src={{ asset('img/keyboard_return.png') }} height="25" width="25" style="float: left;" /></a>
         @if (Auth()->user()->role == 'Director')
-          <a class="btn btn-primary btn-sm" href="{{ url('/subjects/create') }}">Añadir asignatura</a>
+          <a class="btn btn-primary btn-sm" href="{{ url('/subjects/create') }}" style="float: right;">Añadir asignatura</a>
         @endif
       </div>
       <div class="card-body">
