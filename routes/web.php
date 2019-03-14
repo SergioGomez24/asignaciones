@@ -27,8 +27,6 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('subjects', 'SubjectsController@getIndex');
 
-	Route::get('subjects/show/{id}', 'SubjectsController@getShow');
-
 	Route::get('subjects/create', 'SubjectsController@getCreate')->middleware('role');
 	Route::post('subjects/create', 'SubjectsController@postCreate')->middleware('role');
 
@@ -107,8 +105,6 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 	Route::get('settings/areas/create', 'AreasController@getCreate');
 	Route::post('settings/areas/create', 'AreasController@postCreate');
 
-	Route::get('settings/areas/show/{id}', 'AreasController@getShow');
-
 	Route::get('settings/areas/edit/{id}', 'AreasController@getEdit');
 	Route::put('settings/areas/edit/{id}', 'AreasController@putEdit');
 
@@ -119,8 +115,6 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 
 	Route::get('settings/certifications/create', 'CertificationsController@getCreate');
 	Route::post('settings/certifications/create', 'CertificationsController@postCreate');
-
-	Route::get('settings/certifications/show/{id}', 'CertificationsController@getShow');
 
 	Route::get('settings/certifications/edit/{id}', 'CertificationsController@getEdit');
 	Route::put('settings/certifications/edit/{id}', 'CertificationsController@putEdit');
@@ -133,8 +127,6 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 	Route::get('settings/campus/create', 'CampusController@getCreate');
 	Route::post('settings/campus/create', 'CampusController@postCreate');
 
-	Route::get('settings/campus/show/{id}', 'CampusController@getShow');
-
 	Route::get('settings/campus/edit/{id}', 'CampusController@getEdit');
 	Route::put('settings/campus/edit/{id}', 'CampusController@putEdit');
 
@@ -145,8 +137,6 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 
 	Route::get('settings/centers/create', 'CentersController@getCreate');
 	Route::post('settings/centers/create', 'CentersController@postCreate');
-
-	Route::get('settings/centers/show/{id}', 'CentersController@getShow');
 
 	Route::get('settings/centers/edit/{id}', 'CentersController@getEdit');
 	Route::put('settings/centers/edit/{id}', 'CentersController@putEdit');

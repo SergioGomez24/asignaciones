@@ -21,7 +21,7 @@ class CreatePrioritiesTable extends Migration
             $table->foreign('teacher')->references('name')->on('teachers')->onDelete('cascade');
             $table->string('course');
             $table->foreign('course')->references('course')->on('courses');
-            $table->decimal('cAvailable',4,2)->unsigned();
+            $table->decimal('cAvailable',4,1)->unsigned();
             $table->date('dateCategory');
             $table->timestamps();
         });

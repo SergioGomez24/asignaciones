@@ -129,15 +129,15 @@
               <div class="form-group row">
                 <div class="col-md-4">
                   <h6><label for="cTheory" >Creditos Teoria</label></h6>
-                  <input type="number" name="cTheory" id="cTheory" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
+                  <input type="number" name="cTheory" id="cTheory" class="form-control" step="0.1" placeholder="Introduce créditos"></input>
                 </div>
                 <div class="col-md-4">
                   <h6><label for="credP">Creditos Prácticas</label></h6>
-                  <input type="number" name="cPractice" id="cPractice" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
+                  <input type="number" name="cPractice" id="cPractice" class="form-control" step="0.1" placeholder="Introduce créditos"></input>
                 </div>
                 <div class="col-md-4">
                   <h6><label for="cSeminar">Creditos Seminarios</label></h6>
-                  <input type="number" name="cSeminar" id="cSeminar" class="form-control" step="0.01" placeholder="Introduce créditos"></input>
+                  <input type="number" name="cSeminar" id="cSeminar" class="form-control" step="0.1" placeholder="Introduce créditos"></input>
                 </div>
               </div>
 

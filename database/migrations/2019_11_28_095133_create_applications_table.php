@@ -20,9 +20,9 @@ class CreateApplicationsTable extends Migration
             $table->string('teacher');
             $table->foreign('teacher')->references('name')->on('teachers');
             $table->string('course');
-            $table->decimal('cTheory',3,2)->unsigned()->nullable();
-            $table->decimal('cPractice',3,2)->unsigned()->nullable();
-            $table->decimal('cSeminar',3,2)->unsigned()->nullable();
+            $table->decimal('cTheory',3,1)->unsigned()->nullable();
+            $table->decimal('cPractice',3,1)->unsigned()->nullable();
+            $table->decimal('cSeminar',3,1)->unsigned()->nullable();
             $table->timestamps();
         });
     }

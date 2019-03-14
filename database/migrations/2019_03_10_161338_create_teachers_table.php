@@ -23,7 +23,7 @@ class CreateTeachersTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('area_id')->unsigned();
             $table->foreign('area_id')->references('id')->on('areas');
-            $table->tinyInteger('cInitial');
+            $table->integer('cInitial');
             $table->date('dateCategory');
             $table->date('dateUCA');
             $table->timestamps();

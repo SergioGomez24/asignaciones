@@ -23,41 +23,6 @@ class SubjectsController extends Controller
     	return view('subjects.index', ['arrayAsignaturas' => $arrayAsignaturas]);
     }
 
-    public function getShow($id) 
-    {
-    	$asignatura = Subject::findOrFail($id);
-
-        $cer_id = $asignatura->certification_id;
-        $certification = Certification::findOrFail($cer_id);
-
-        $a_id = $asignatura->area_id;
-        $area = Area::findOrFail($a_id);
-
-        $ca_id = $asignatura->campus_id;
-        $campus = Campus::findOrFail($ca_id);
-
-        $cen_id = $asignatura->center_id;
-        $center = Center::findOrFail($cen_id);
-
-        $dur_id = $asignatura->duration_id;
-        $duration = Durationsubject::findOrFail($dur_id);
-
-        $imp_id = $asignatura->imparted_id;
-        $imparted = Coursesubject::findOrFail($imp_id);
-
-        $type_id = $asignatura->typeSubject_id;
-        $typeSubject = Typesubject::findOrFail($type_id);
-
-    	return view('subjects.show')->with('asignatura',$asignatura)
-                                    ->with('certification',$certification)
-                                    ->with('area',$area)
-                                    ->with('campus',$campus)
-                                    ->with('center',$center)
-                                    ->with('duration',$duration)
-                                    ->with('imparted',$imparted)
-                                    ->with('typeSubject',$typeSubject);
-    }
-
     public function getCreate() 
     {
         $arrayTitulaciones = Certification::all();

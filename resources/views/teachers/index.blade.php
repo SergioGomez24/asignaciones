@@ -16,14 +16,57 @@
           <thead>
             <tr>
               <td style="font-weight: bold;">Profesor</td>
+              @if (Auth()->user()->role == 'Director')
               <td align="right" style="font-weight: bold;">Editar</td>
               <td align="right" style="font-weight: bold;">Eliminar</td>
+              @endif
             </tr>
           </thead>
           <tbody> 
             @foreach( $arrayProfesores as $key => $profesor )
               <tr>
-                <td><a href="{{ url('/teachers/show/' . $profesor->id ) }}" style="color: #000000; font-weight: bold;" > {{$profesor->name}} </a></td>
+                <td><button class="btn btn-light btn-sm" type="button" data-toggle="modal" data-target="#showTeacher" data-whatever="{{$profesor->id}}" style="font-weight: bold;">{{$profesor->name}}</button>
+                <div class="modal fade" id="showTeacher" tabindex="-1" role="dialog" aria-labelledby="showTeacherTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="showTeacherTitle"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="group row">
+                          <div class="col-md-3">
+                            <p style="font-weight: bold;">Código</p>
+                            <p id="code"></p> 
+                          </div>
+                          <div class="col-md-3">
+                            <p style="font-weight: bold;">Titulación</p>
+                            <p id="cert">  </p> 
+                          </div>
+                          <div class="col-md-3">
+                            <p style="font-weight: bold;">Area</p>
+                            <p id="area">  </p>  
+                          </div>
+                          <div class="col-md-3">
+                            <p style="font-weight: bold;">Campus</p>
+                            <p id="cam">  </p>
+                          </div>
+                          <div class="col-md-3" >
+                            <p style="font-weight: bold;">Centro</p>
+                            <p id="center">  </p>
+                          </div>
+                          <div class="col-md-3">
+                            <p style="font-weight: bold;">Duración</p>
+                            <p id="duration"> </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </td>
 
                 @if (Auth()->user()->role == 'Director')
                   <td align="right"><a class="btn btn-secondary btn-sm" href="{{ url('/teachers/edit/'.$profesor->id) }}">Editar</a></td>
@@ -44,6 +87,14 @@
 </div>
 
 <script language="JavaScript"> 
+
+  $('#showTeacher').on('show.bs.modal', function(e) {
+    var button = $(e.relatedTarget)
+    var teacher_id = button.data('whatever');
+
+    console.log(teacher_id);
+  });
+
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar este profesor?');
 
