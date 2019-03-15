@@ -3,8 +3,9 @@
 <div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
-         <div class="card-header text-center">
-            <h5 > Modificar profesor </h5>
+         <div class="card-header">
+            <h5 class="text-center"> Modificar profesor </h5>
+            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/teachers') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST">

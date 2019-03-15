@@ -37,7 +37,7 @@ class SubjectsTableSeeder extends Seeder
 		$subject->duration_id = 1;
 		$subject->imparted_id = 2;
 		$subject->typeSubject_id = 2;
-		$subject->coordinator = 'Juan Garcia';
+		$subject->coordinator = 'Juan Gomez';
 		$subject->save();
 
 	}

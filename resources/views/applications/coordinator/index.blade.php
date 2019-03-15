@@ -9,7 +9,7 @@
       </div>
       <div class="card-body">	
 		  @foreach( $arrayCursos as $key => $curso )
-			<h5><a href="{{ url('/applications/course/' . $curso->course ) }}" style="color: #000000;">Curso {{$curso->course}}</a></h5>
+			<h5><a href="{{ url('/applications/coordinator/course/' . $curso->course ) }}" style="color: #000000;">Curso {{$curso->course}}</a></h5>
 		    </br>
 		  @endforeach
 	  </div>

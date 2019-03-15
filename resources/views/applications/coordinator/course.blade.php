@@ -5,11 +5,11 @@
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Selecciones Curso {{$course}} </h4>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/applications') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
+        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/applications/coordinator') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>
           <div class="collapse" id="collapseExample">
             <div class="card card-body">
-              <form href = "applications/course/{$course}" method="GET">
+              <form href = "applications/coordinator/course/{$course}" method="GET">
                 <div class="group row">
 
                   <div class="col-md-3">
@@ -50,15 +50,14 @@
             </tr>
           </thead>
           <tbody>
-            @if (Auth()->user()->role == "Director")  
-              @foreach( $arraySolicitudes as $key => $solicitud )
+              @foreach( $arraySolicitudesCoor as $key => $solicitud )
                 <tr>
                   <td>{{$solicitud->name}}</td>
                   <td>{{$solicitud->teacher}}</td>
                   <td>{{$solicitud->cTheory}}</td>
                   <td>{{$solicitud->cPractice}}</td>
                   <td>{{$solicitud->cSeminar}}</td>
-                  <td><a class="btn btn-secondary btn-sm" href="{{ url('/applications/edit/'.$solicitud->id) }}">Editar</a></td>
+                  <td><a class="btn btn-secondary btn-sm" href="{{ url('/applications/coordinator/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('ApplicationsController@deleteApplication', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
                   {{ csrf_field() }}
@@ -66,25 +65,7 @@
                   </form></td>
                 </tr>
               @endforeach
-              {!! $arraySolicitudes->render() !!}
-            @else
-              @foreach( $arraySolicitudesProf as $key => $solicitud )
-                <tr>
-                  <td>{{$solicitud->name}}</td>
-                  <td>{{$solicitud->teacher}}</td>
-                  <td>{{$solicitud->cTheory}}</td>
-                  <td>{{$solicitud->cPractice}}</td>
-                  <td>{{$solicitud->cSeminar}}</td>
-                  <td><a class="btn btn-secondary btn-sm" href="{{ url('/applications/edit/'.$solicitud->id) }}">Editar</a></td>
-                  <td><form name="formBorrar" action="{{action('ApplicationsController@deleteApplication', $solicitud->id)}}" method="POST" style="display:inline">
-                  {{ method_field('DELETE') }}
-                  {{ csrf_field() }}
-                  <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
-                  </form></td>
-                </tr>
-              @endforeach
-              {!! $arraySolicitudesProf->render() !!}
-            @endif
+              {!! $arraySolicitudesCoor->render() !!}
           </tbody>
         </table>
       </div>

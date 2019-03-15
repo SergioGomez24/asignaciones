@@ -23,6 +23,13 @@ class ApplicationsController extends Controller
     	return view('applications.index', ['arrayCursos' => $arrayCursos]);
     }
 
+    public function getCoordinatorIndex() 
+    {
+        $arrayCursos = Course::all();
+
+        return view('applications.coordinator.index', ['arrayCursos' => $arrayCursos]);
+    }
+
     public function getCourseIndex($course, Request $request)
     {
         $usuario = Auth()->user()->name;
@@ -38,22 +45,47 @@ class ApplicationsController extends Controller
             ->teacher($teacher)
             ->paginate();
 
-        $arraySolicitudesCoor = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
+        $arraySolicitudesProf = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
             ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
             ->where('course', '=', $course)
             ->where('applications.teacher', '=', $usuario)
             ->subjectid($subj_id)
             ->teacher($teacher)
-            ->orwhere('subjects.coordinator', '=', $usuario)
             ->paginate();
 
         return view('applications.course')->with('arraySolicitudes', $arraySolicitudes)
-                                          ->with('arraySolicitudesCoor', $arraySolicitudesCoor)
+                                          ->with('arraySolicitudesProf', $arraySolicitudesProf)
                                           ->with('arrayAsignaturas', $arrayAsignaturas)
                                           ->with('arrayProfesores', $arrayProfesores)
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher', $teacher)
                                           ->with('course', $course);
+
+    }
+
+    public function getCoordinatorCourse($course, Request $request)
+    {
+        $usuario = Auth()->user()->name;
+        $arrayAsignaturas = Subject::all();
+        $arrayProfesores = Teacher::all();
+        $subj_id = $request->get('subject_id');
+        $teacher = $request->get('teacher');
+
+        $arraySolicitudesCoor = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
+            ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
+            ->where('course', '=', $course)
+            ->where('subjects.coordinator', '=', $usuario)
+            ->where('applications.teacher', '!=', $usuario)
+            ->subjectid($subj_id)
+            ->teacher($teacher)
+            ->paginate();
+
+        return view('applications.coordinator.course')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
+                                                      ->with('arrayAsignaturas', $arrayAsignaturas)
+                                                      ->with('arrayProfesores', $arrayProfesores)
+                                                      ->with('subj_id', $subj_id)
+                                                      ->with('teacher', $teacher)
+                                                      ->with('course', $course);
 
     }
 
@@ -130,6 +162,15 @@ class ApplicationsController extends Controller
                                         ->with('course', $course);
     }
 
+    public function getCoordinatorEdit($id) 
+    {
+        $application = Application::findOrFail($id);
+        $course = $application->course;
+                
+        return view('applications.coordinator.edit')->with('application', $application)
+                                                    ->with('course', $course);
+    }
+
     public function putEdit(Request $request, $id)
     {
         $a = Application::findOrFail($id);
@@ -140,6 +181,18 @@ class ApplicationsController extends Controller
         $a->save();
         Notification::success('La solicitud ha sido modificada exitosamente!');
         return redirect('/applications/course/'. $c);
+    }
+
+    public function putCoordinatorEdit(Request $request, $id)
+    {
+        $a = Application::findOrFail($id);
+        $c = $a->course;
+        $a->cTheory = $request->input('cTheory');
+        $a->cSeminar = $request->input('cSeminar');
+        $a->cPractice = $request->input('cPractice');
+        $a->save();
+        Notification::success('La solicitud ha sido modificada exitosamente!');
+        return redirect('/applications/coordinator/course/'. $c);
     }
 
     public function deleteApplication(Request $request, $id)

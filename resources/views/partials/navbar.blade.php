@@ -30,6 +30,12 @@
                     <a class="nav-link" href="{{url('/settings')}}" style="color: black; font-weight: bold;">Ajustes</a>
                 </li>
                 @endif
+
+                @if (Auth()->user()->role == 'Profesor')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('/applications/coordinator')}}" style="color: black; font-weight: bold;">Coordinación</a>
+                </li>
+                @endif
             </ul>
 
             <ul class="navbar-nav navbar-right">

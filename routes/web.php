@@ -70,7 +70,11 @@ Route::group(['middleware' => 'auth'], function() {
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('applications', 'ApplicationsController@getIndex');
+	Route::get('applications/coordinator', 'ApplicationsController@getCoordinatorIndex');
+
 	Route::get('applications/course/{course}', 'ApplicationsController@getCourseIndex');
+	Route::get('applications/coordinator/course/{course}', 'ApplicationsController@getCoordinatorCourse');
+
 	Route::get('index-filters', 'ApplicationsController@getCourseIndexFilters');
 
 	Route::get('applications/create', 'ApplicationsController@getCreate');
@@ -80,6 +84,9 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('applications/edit/{id}', 'ApplicationsController@getEdit');
 	Route::put('applications/edit/{id}', 'ApplicationsController@putEdit');
+
+	Route::get('applications/coordinator/edit/{id}', 'ApplicationsController@getCoordinatorEdit');
+	Route::put('applications/coordinator/edit/{id}', 'ApplicationsController@putCoordinatorEdit');
 
 	Route::delete('/applications/delete/{id}', 'ApplicationsController@deleteApplication');
 
