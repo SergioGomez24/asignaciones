@@ -116,6 +116,16 @@
 
 <script language="JavaScript"> 
 
+  $(document).ready(initTableSorter);
+  
+  function initTableSorter() {
+  // call the tablesorter plugin
+    $('table').tablesorter({
+    // Sort on the second column, in ascending order
+      sortList: [[1,0]]
+    });
+  }
+
   $('#showSubject').on('show.bs.modal', function(e) {
     var button = $(e.relatedTarget)
     var subject_id = button.data('whatever');

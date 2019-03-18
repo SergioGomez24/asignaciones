@@ -42,8 +42,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black; font-weight: bold;">{{ auth()->user()->name }}</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ url('/teachers/show/' .Auth()->user()->id ) }}" style="color: black; font-weight: bold;">Mi perfil</a>
-                        
+                        <a class="dropdown-item"  href="{{ url('/teachers/show/' .Auth()->user()->id ) }}" style="color: black; font-weight: bold;">Mi perfil</a>
+                    
                         <form action="{{ url('/logout') }}" method="POST" style="display:inline">
                         {{ csrf_field() }}
                             <input type="submit" class="dropdown-item" style="display:inline;cursor:pointer;color: black; font-weight: bold;" value="Cerrar sesión"/>

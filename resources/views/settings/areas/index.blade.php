@@ -5,7 +5,8 @@
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Lista de areas </h4>
-        <a class="btn btn-primary btn-sm" href="{{ url('/settings/areas/create') }}">Añadir area</a>
+        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/settings') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
+        <a class="btn btn-primary btn-sm" href="{{ url('/settings/areas/create') }}" style="float: right;">Añadir area</a>
       </div>
       <div class="card-body">
         <table class="table table-striped">
@@ -33,15 +34,23 @@
           </tbody>
         </table>  	  
 	    </div>
-      <div>
-        <a class="btn btn-link btn-sm" href="{{ url('/settings') }}">Volver a ajustes</a>
-      </div>
 	  </div>
 	</div>
 </div>
 
 <script language="JavaScript"> 
-function pregunta(){ 
+
+  $(document).ready(initTableSorter);
+  
+  function initTableSorter() {
+  // call the tablesorter plugin
+    $('table').tablesorter({
+    // Sort on the second column, in ascending order
+      sortList: [[1,0]]
+    });
+  }
+
+  function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta area?');
     if(mensaje) {
        document.formBorrar.submit();
@@ -49,6 +58,6 @@ function pregunta(){
     } else {
       return false;
     }
-} 
+  } 
 </script>
 @stop

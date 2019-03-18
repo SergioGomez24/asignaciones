@@ -95,6 +95,16 @@
 
 <script language="JavaScript"> 
 
+$(document).ready(initTableSorter);
+  
+function initTableSorter() {
+  // call the tablesorter plugin
+  $('table').tablesorter({
+    // Sort on the second column, in ascending order
+    sortList: [[1,0]]
+  });
+}
+
   $('#showTeacher').on('show.bs.modal', function(e) {
     var button = $(e.relatedTarget)
     var teacher_id = button.data('whatever');

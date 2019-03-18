@@ -3,8 +3,9 @@
 	<div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
-         <div class="card-header text-center">
-            <h5> Modificar centro </h5>
+         <div class="card-header">
+            <h5 class="text-center"> Modificar centro </h5>
+            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/settings/centers') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST">
@@ -22,9 +23,6 @@
                </button>
             </div>
             </form>
-         </div>
-         <div>
-            <a class="btn btn-link btn-sm" href="{{ url('/settings/centers') }}">Volver al listado</a>
          </div>
       </div>
    </div>

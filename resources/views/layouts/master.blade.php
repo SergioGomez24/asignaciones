@@ -14,6 +14,7 @@
     <!--<script src="{{ url('/assets/bootstrap/dropdown.js') }}"></script>-->
 
     <script src="{{ url('/assets/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('/js/jquery.tablesorter.min.js') }}"></script>
 
   </head>
   <body background="{{ asset('img/fondo.jpg') }}">

@@ -37,6 +37,7 @@ class ApplicationsController extends Controller
         $arrayProfesores = Teacher::all();
         $subj_id = $request->get('subject_id');
         $teacher = $request->get('teacher');
+        $contCréditosProf = 0;
 
         $arraySolicitudes = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
             ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
@@ -53,12 +54,17 @@ class ApplicationsController extends Controller
             ->teacher($teacher)
             ->paginate();
 
+        foreach ($arraySolicitudesProf as $key => $solicitud) {
+            $contCréditosProf = $contCréditosProf + $solicitud->cTheory + $solicitud->cPractice + $solicitud->cSeminar;
+        }
+
         return view('applications.course')->with('arraySolicitudes', $arraySolicitudes)
                                           ->with('arraySolicitudesProf', $arraySolicitudesProf)
                                           ->with('arrayAsignaturas', $arrayAsignaturas)
                                           ->with('arrayProfesores', $arrayProfesores)
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher', $teacher)
+                                          ->with('contCréditosProf', $contCréditosProf)
                                           ->with('course', $course);
 
     }
@@ -173,11 +179,74 @@ class ApplicationsController extends Controller
 
     public function putEdit(Request $request, $id)
     {
+        $cTnew = $request->input('cTheory');
+        $cPnew = $request->input('cPractice');
+        $cSnew = $request->input('cSeminar');
+
+        if ($cTnew == "") {
+            $cTnew = 0;
+        }
+
+        if ($cPnew == "") {
+            $cPnew = 0;
+        }
+
+         if ($cSnew == "") {
+            $cSnew = 0;
+        }
+
         $a = Application::findOrFail($id);
         $c = $a->course;
-        $a->cTheory = $request->input('cTheory');
-        $a->cSeminar = $request->input('cSeminar');
-        $a->cPractice = $request->input('cPractice');
+
+        $prioridad = Priority::where('teacher', $a->teacher)
+                             ->where('course', $c)
+                             ->get();
+
+        if ($a->cTheory < $cTnew) {
+            $diferencia = $cTnew - $a->cTheory;
+            foreach ($prioridad as $p) {
+                $p->cAvailable = $p->cAvailable - $diferencia;
+                $p->save();
+            }
+        }elseif($a->cTheory > $cTnew){
+            $diferencia = $a->cTheory - $cTnew;
+            foreach ($prioridad as $p) {
+                $p->cAvailable = $p->cAvailable + $diferencia;
+                $p->save();
+            }
+        }
+
+        if ($a->cPractice < $cPnew) {
+            $diferencia = $cPnew - $a->cPractice;
+            foreach ($prioridad as $p) {
+                $p->cAvailable = $p->cAvailable - $diferencia;
+                $p->save();
+            }
+        }elseif($a->cPractice > $cPnew){
+            $diferencia = $a->cPractice - $cPnew;
+            foreach ($prioridad as $p) {
+                $p->cAvailable = $p->cAvailable + $diferencia;
+                $p->save();
+            }
+        }
+
+        if ($a->cSeminar < $cSnew) {
+            $diferencia = $cSnew - $a->cSeminar;
+            foreach ($prioridad as $p) {
+                $p->cAvailable = $p->cAvailable - $diferencia;
+                $p->save();
+            }
+        }elseif($a->cSeminar > $cSnew){
+            $diferencia = $a->cSeminar - $cSnew;
+            foreach ($prioridad as $p) {
+                $p->cAvailable = $p->cAvailable + $diferencia;
+                $p->save();
+            }
+        }
+
+        $a->cTheory = $cTnew;
+        $a->cSeminar = $cSnew;
+        $a->cPractice = $cPnew;
         $a->save();
         Notification::success('La solicitud ha sido modificada exitosamente!');
         return redirect('/applications/course/'. $c);
@@ -200,6 +269,16 @@ class ApplicationsController extends Controller
         $a = Application::findOrFail($id);
         $c = $a->course;
         $a->delete();
+
+        $prioridad = Priority::where('teacher', $a->teacher)
+                             ->where('course', $c)
+                             ->get();
+
+        foreach ($prioridad as $p) {
+            $p->cAvailable = $p->cAvailable + $a->cTheory + $a->cPractice + $a->cSeminar;
+            $p->save();
+        }
+
         Notification::success('La solicitud fue eliminada exitosamente!');
         return redirect('/applications/course/'. $c);
     }

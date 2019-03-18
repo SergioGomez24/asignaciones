@@ -5,38 +5,42 @@
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Selecciones Curso {{$course}} </h4>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/applications') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
+        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/applications') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
+
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>
-          <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-              <form href = "applications/course/{$course}" method="GET">
-                <div class="group row">
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <form href = "applications/course/{$course}" method="GET">
+              <div class="group row">
 
-                  <div class="col-md-3">
-                    <select name="subject_id" id="subject_id" class="form-control">
-                      <option value="">Asignaturas</option>
-                      @foreach($arrayAsignaturas as $a)
-                        <option value="{{$a->id}}">{{$a->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-
-                  <div class="col-md-3">
-                    <select name="teacher" id="teacher" class="form-control">
-                      <option value="">Profesores</option>
-                      @foreach($arrayProfesores as $p)
-                        <option value="{{$p->name}}">{{$p->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                  <button class="btn-info btn-sm" type="submit">Aplicar</button>
+                <div class="col-md-3">
+                  <select name="subject_id" id="subject_id" class="form-control">
+                    <option value="">Asignaturas</option>
+                    @foreach($arrayAsignaturas as $a)
+                      <option value="{{$a->id}}">{{$a->name}}</option>
+                    @endforeach
+                  </select>
                 </div>
-              </form>
-            </div>
+
+                <div class="col-md-3">
+                  <select name="teacher" id="teacher" class="form-control">
+                    <option value="">Profesores</option>
+                    @foreach($arrayProfesores as $p)
+                      <option value="{{$p->name}}">{{$p->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <button class="btn-info btn-sm" type="submit">Aplicar</button>
+              </div>
+            </form>
           </div>
+        </div>
       </div>
 
       <div class="card-body">
+        @if(Auth()->user()->role == "Profesor")
+          <h6 style="float: right; font-weight: bold;">Créditos acumulados: {{$contCréditosProf}}</h6>
+        @endif
         <table class="table table-striped">
           <thead>
             <tr>
@@ -93,6 +97,16 @@
 </div>
 
 <script language="JavaScript">
+
+  $(document).ready(initTableSorter);
+  
+  function initTableSorter() {
+  // call the tablesorter plugin
+    $('table').tablesorter({
+    // Sort on the second column, in ascending order
+      sortList: [[1,0]]
+    });
+  }
 
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');

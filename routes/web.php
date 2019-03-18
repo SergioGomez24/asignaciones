@@ -56,6 +56,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('json-category', 'TeachersController@getCategory');
 	Route::get('json-user', 'TeachersController@getUser');
 
+	Route::get('teachers/show/{id}', 'TeachersController@getShow');
+
 	Route::get('teachers/create', 'TeachersController@getCreate')->middleware('role');
 	Route::post('teachers/create', 'TeachersController@postCreate')->middleware('role');
 

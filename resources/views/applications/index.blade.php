@@ -5,7 +5,7 @@
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Solicitudes por Curso Academico </h4>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
+        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
       </div>
       <div class="card-body">	
 		  @foreach( $arrayCursos as $key => $curso )
