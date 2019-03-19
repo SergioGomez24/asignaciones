@@ -13,7 +13,12 @@
 
             <div class="form-group">
                <label for="course" style="font-weight: bold;">Curso</label>
-               <input type="text" name="course" id="course" class="form-control" required>
+               <select name="course" id="course" class="form-control" required>
+                  <option value="">Selecciona un curso</option>
+                  @foreach($arrayCursos as $curso)
+                  <option value="{{$curso->name}}">{{$curso->name}}</option>
+                  @endforeach
+               </select>
             </div>
 
             <div class="form-group text-center">

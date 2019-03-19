@@ -68,6 +68,13 @@ Route::group(['middleware' => 'auth'], function() {
 
 });
 
+Route::group(['middleware' => 'auth'], function() {
+	Route::get('elections/create', 'ElectionsController@getCreate')->middleware('role');
+	Route::post('elections/create', 'ElectionsController@postCreate')->middleware('role');
+});
+
+
+
 /* Rutas de Solicitudes */
 Route::group(['middleware' => 'auth'], function() {
 
@@ -79,10 +86,10 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('index-filters', 'SolicitudesController@getCourseIndexFilters');
 
-	Route::get('solicitudes/create', 'SolicitudesController@getCreate');
-	
+	Route::get('solicitudes/election', 'SolicitudesController@getCreateCourse');
+	Route::get('solicitudes/create/{course}', 'SolicitudesController@getCreate');
 	Route::get('json-solicitude', 'SolicitudesController@getSolicitude');
-	Route::post('solicitudes/create', 'SolicitudesController@postCreate');
+	Route::post('solicitudes/create/{course}', 'SolicitudesController@postCreate');
 
 	Route::get('solicitudes/edit/{id}', 'SolicitudesController@getEdit');
 	Route::put('solicitudes/edit/{id}', 'SolicitudesController@putEdit');
@@ -144,6 +151,17 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 	Route::put('settings/campus/edit/{id}', 'CampusController@putEdit');
 
 	Route::delete('/settings/campus/delete/{id}', 'CampusController@deleteCampus');
+
+	/* Ajustes cursos */
+	Route::get('settings/courses', 'CoursesController@getIndex');
+
+	Route::get('settings/courses/create', 'CoursesController@getCreate');
+	Route::post('settings/courses/create', 'CoursesController@postCreate');
+
+	Route::get('settings/courses/edit/{id}', 'CoursesController@getEdit');
+	Route::put('settings/courses/edit/{id}', 'CoursesController@putEdit');
+
+	Route::delete('/settings/courses/delete/{id}', 'CoursesController@deleteCourse');
 
 	/* Ajustes centros */
 	Route::get('settings/centers', 'CentersController@getIndex');

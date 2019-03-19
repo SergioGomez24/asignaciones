@@ -13,7 +13,7 @@
         @if (Auth()->user()->role == 'Director')
     		  <a class="btn btn-primary btn-lg" href="{{url('/elections/create')}}" role="button">Crear una elección</a>
         @else
-          <a class="btn btn-primary btn-lg" href="{{url('/solicitudes/create')}}" role="button">Iniciar solicitud</a>
+          <a class="btn btn-primary btn-lg" href="{{url('/solicitudes/election')}}" role="button">Iniciar solicitud</a>
         @endif
   		</p>
 	</div>

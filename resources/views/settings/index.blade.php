@@ -7,7 +7,7 @@
 				<div class="card">
 					<div class="card-header">
             			<h4 class="text-center"> Ajustes </h4>
-            			<button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
+            			<button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
             		</div>
             		<div class="card-body">
 					<h5><a href="{{ url('/settings/categories') }}" style="color: #000000;">Categorias</a></h5>
@@ -15,6 +15,7 @@
 					<h5><a href="{{ url('/settings/certifications') }}" style="color: #000000;">Titulaciones</a></h5>
 					<h5><a href="{{ url('/settings/campus') }}" style="color: #000000;">Campus</a></h5>
 					<h5><a href="{{ url('/settings/centers') }}" style="color: #000000;">Centros</a></h5>
+					<h5><a href="{{ url('/settings/courses') }}" style="color: #000000;">Cursos</a></h5>
 		  			</div>
 				</div>
 			</div>

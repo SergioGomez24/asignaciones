@@ -4,27 +4,27 @@
   <div class="offset-md-1 col-md-10">
     <div class="card">
       <div class="card-header">
-        <h4 class="text-center"> Lista de centros </h4>
+        <h4 class="text-center"> Lista de cursos </h4>
         <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/settings') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
-        <a class="btn btn-primary btn-sm" href="{{ url('/settings/centers/create') }}" style="float: right;">Añadir centro</a>
+        <a class="btn btn-primary btn-sm" href="{{ url('/settings/courses/create') }}" style="float: right;">Añadir curso</a>
       </div>
       <div class="card-body">	
         <table class="table table-striped">
           <thead>
             <tr>
-              <td style="font-weight: bold;">Centro</td>
+              <td style="font-weight: bold;">Curso</td>
               <td align="right" style="font-weight: bold;">Editar</td>
               <td align="right" style="font-weight: bold;">Eliminar</td>
             </tr>
           </thead>
           <tbody> 
-            @foreach( $arrayCentros as $key => $centro )
+            @foreach( $arrayCursos as $key => $curso )
               <tr>
-                <td style="font-weight: bold;">{{$centro->name}}</td>
+                <td style="font-weight: bold;">{{$curso->name}}</td>
 
-                <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/settings/centers/edit/'.$centro->id) }}">Editar</a></td>
+                <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/settings/courses/edit/'.$curso->id) }}">Editar</a></td>
 
-                <td align="right" ><form name="formBorrar" action="{{action('CentersController@deleteCenter', $centro->id)}}" method="POST">
+                <td align="right" ><form name="formBorrar" action="{{action('CoursesController@deleteCourse', $curso->id)}}" method="POST">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
                   <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button> 
@@ -50,7 +50,7 @@
   }
 
   function pregunta(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres borrar este centro?');
+    var mensaje = confirm('¿Estas seguro de que quieres borrar este curso?');
     if(mensaje) {
        document.formBorrar.submit();
        return true; 

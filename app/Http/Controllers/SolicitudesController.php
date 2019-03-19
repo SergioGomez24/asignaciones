@@ -11,6 +11,7 @@ use App\Campus;
 use App\Certification;
 use App\Teacher;
 use App\Coursesubject;
+use App\Election;
 use App\Priority;
 use Notification;
 
@@ -109,21 +110,27 @@ class SolicitudesController extends Controller
         return response()->json($solicitud);
     }
 
-    public function getCreate() 
+    public function getCreateCourse() 
     {
-        $courseObj = Course::all()->last();
-        $course = $courseObj->course;
-        $teacher = Auth()->user()->name;
+        $arrayCursos = Course::all();
+
+        return view('solicitudes.election', ['arrayCursos' => $arrayCursos]);
+
+    }
+
+    public function getCreate($course) 
+    {
+        $usuario = Auth()->user()->name;
         $arrayAsignaturas = Subject::all();
         $arrayCampus = Campus::all();
         $arrayTitulaciones = Certification::all();
         $arrayCursoAsignaturas = Coursesubject::all();
-        $prioridadProfesor = Priority::where('teacher', '=', $teacher)
-                                     ->where('course', '=', $course)
-                                     ->get();
+        $eleccionProfesor = Election::where('teacher', '=', $usuario)
+                                    ->where('course', '=', $course)
+                                    ->get();
 
-        foreach ($prioridadProfesor as $prioridad) {
-            $cAvailable = $prioridad->cAvailable;
+        foreach ($eleccionProfesor as $eleccion) {
+            $cAvailable = $eleccion->cAvailable;
         }
 
         return view('solicitudes.create')->with('course',$course)
@@ -134,31 +141,31 @@ class SolicitudesController extends Controller
                                           ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas);
     }
 
-    public function postCreate(Request $request) 
+    public function postCreate($course, Request $request) 
     {
-        $course = Course::all()->last();
+        $usuario = Auth()->user()->name;
 
         $a = new Solicitude;
         $a->subject_id = $request->input('subject');
-        $a->teacher = Auth()->user()->name;
-        $a->course = $course->course;
+        $a->teacher = $usuario;
+        $a->course = $course;
         $a->cTheory = $request->input('cTheory');
         $a->cPractice = $request->input('cPractice');
         $a->cSeminar = $request->input('cSeminar');
         $a->save();
         Notification::success('La solicitud se ha guardado exitosamente!');
 
-        $prioridad = Priority::where('teacher', $a->teacher)
+        $eleccion = Election::where('teacher', $a->teacher)
                              ->where('course', $a->course)
                              ->get();
 
-        foreach ($prioridad as $p) {
+        foreach ($eleccion as $p) {
             $p->cAvailable = $p->cAvailable - $a->cTheory - $a->cPractice - $a->cSeminar;
             $p->save();
         }
 
 
-        return redirect('/solicitudes/create');
+        return redirect('/solicitudes/create/'.$course);
     }
 
     public function getEdit($id) 
@@ -167,7 +174,7 @@ class SolicitudesController extends Controller
         $course = $solicitud->course;
                 
         return view('solicitudes.edit')->with('solicitud', $solicitud)
-                                        ->with('course', $course);
+                                       ->with('course', $course);
     }
 
     public function getCoordinatorEdit($id) 
@@ -200,19 +207,19 @@ class SolicitudesController extends Controller
         $a = Solicitude::findOrFail($id);
         $c = $a->course;
 
-        $prioridad = Priority::where('teacher', $a->teacher)
-                             ->where('course', $c)
-                             ->get();
+        $eleccion = Election::where('teacher', $a->teacher)
+                            ->where('course', $c)
+                            ->get();
 
         if ($a->cTheory < $cTnew) {
             $diferencia = $cTnew - $a->cTheory;
-            foreach ($prioridad as $p) {
+            foreach ($eleccion as $p) {
                 $p->cAvailable = $p->cAvailable - $diferencia;
                 $p->save();
             }
         }elseif($a->cTheory > $cTnew){
             $diferencia = $a->cTheory - $cTnew;
-            foreach ($prioridad as $p) {
+            foreach ($eleccion as $p) {
                 $p->cAvailable = $p->cAvailable + $diferencia;
                 $p->save();
             }
@@ -220,13 +227,13 @@ class SolicitudesController extends Controller
 
         if ($a->cPractice < $cPnew) {
             $diferencia = $cPnew - $a->cPractice;
-            foreach ($prioridad as $p) {
+            foreach ($eleccion as $p) {
                 $p->cAvailable = $p->cAvailable - $diferencia;
                 $p->save();
             }
         }elseif($a->cPractice > $cPnew){
             $diferencia = $a->cPractice - $cPnew;
-            foreach ($prioridad as $p) {
+            foreach ($eleccion as $p) {
                 $p->cAvailable = $p->cAvailable + $diferencia;
                 $p->save();
             }
@@ -234,13 +241,13 @@ class SolicitudesController extends Controller
 
         if ($a->cSeminar < $cSnew) {
             $diferencia = $cSnew - $a->cSeminar;
-            foreach ($prioridad as $p) {
+            foreach ($eleccion as $p) {
                 $p->cAvailable = $p->cAvailable - $diferencia;
                 $p->save();
             }
         }elseif($a->cSeminar > $cSnew){
             $diferencia = $a->cSeminar - $cSnew;
-            foreach ($prioridad as $p) {
+            foreach ($eleccion as $p) {
                 $p->cAvailable = $p->cAvailable + $diferencia;
                 $p->save();
             }
@@ -272,11 +279,11 @@ class SolicitudesController extends Controller
         $c = $a->course;
         $a->delete();
 
-        $prioridad = Priority::where('teacher', $a->teacher)
+        $eleccion = Election::where('teacher', $a->teacher)
                              ->where('course', $c)
                              ->get();
 
-        foreach ($prioridad as $p) {
+        foreach ($eleccion as $p) {
             $p->cAvailable = $p->cAvailable + $a->cTheory + $a->cPractice + $a->cSeminar;
             $p->save();
         }
