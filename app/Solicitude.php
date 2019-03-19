@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Application extends Model
+class Solicitude extends Model
 {
-    protected $table = 'applications';
+    protected $table = 'solicitudes';
 
     public function scopeSubjectId($query, $subject_id){
 

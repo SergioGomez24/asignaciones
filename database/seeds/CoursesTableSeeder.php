@@ -9,11 +9,7 @@ class CoursesTableSeeder extends Seeder
 		DB::table('courses')->delete();
 
 		$c = new Course;
-		$c->course = '2017-18';
-		$c->save();
-
-		$c = new Course;
-		$c->course = '2018-19';
+		$c->name = '2018-19';
 		$c->save();
 	}
 

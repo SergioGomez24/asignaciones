@@ -8,7 +8,7 @@
         <div class="card">
           <div class="card-header">
             <h4 class="text-center"> Selección de asignaturas </h4>
-            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
+            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
             
             <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold;float: right;">Filtrar por</button>
 
@@ -258,7 +258,7 @@
             $('#typeSubject').append('<p>'+ typeSubjectObj.name +'</p>');
           })
         });
-        $.get('/asignaciones/public/json-application?subject_id='+ subject_id + '&teacher='+ teacher + '&course='+ course, function(d) {
+        $.get('/asignaciones/public/json-solicitude?subject_id='+ subject_id + '&teacher='+ teacher + '&course='+ course, function(d) {
             numAplication = d.length;
         });
       })

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePrioritiesTable extends Migration
+class CreateSolicitudeteachersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreatePrioritiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('priorities', function (Blueprint $table) {
+        Schema::create('solicitudeteachers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('priority')->unsigned();
-            $table->foreign('priority')->references('rank')->on('categories');
             $table->string('teacher');
             $table->foreign('teacher')->references('name')->on('teachers')->onDelete('cascade');
             $table->string('course');
             $table->foreign('course')->references('name')->on('courses');
             $table->decimal('cAvailable',4,1)->unsigned();
-            $table->date('dateCategory');
             $table->timestamps();
         });
     }
@@ -34,6 +31,6 @@ class CreatePrioritiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('priorities');
+        Schema::dropIfExists('solicitudeteachers');
     }
 }

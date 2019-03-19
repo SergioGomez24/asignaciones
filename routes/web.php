@@ -61,8 +61,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('teachers/create', 'TeachersController@getCreate')->middleware('role');
 	Route::post('teachers/create', 'TeachersController@postCreate')->middleware('role');
 
-	Route::get('teachers/edit/{id}', 'TeachersController@getEdit')->middleware('role');
-	Route::put('teachers/edit/{id}', 'TeachersController@putEdit')->middleware('role');
+	Route::get('teachers/edit/{id}', 'TeachersController@getEdit');
+	Route::put('teachers/edit/{id}', 'TeachersController@putEdit');
 
 	Route::delete('/teachers/delete/{id}', 'TeachersController@deleteTeacher')->middleware('role');
 
@@ -71,26 +71,26 @@ Route::group(['middleware' => 'auth'], function() {
 /* Rutas de Solicitudes */
 Route::group(['middleware' => 'auth'], function() {
 
-	Route::get('applications', 'ApplicationsController@getIndex');
-	Route::get('applications/coordinator', 'ApplicationsController@getCoordinatorIndex');
+	Route::get('solicitudes', 'SolicitudesController@getIndex');
+	Route::get('solicitudes/coordinator', 'SolicitudesController@getCoordinatorIndex');
 
-	Route::get('applications/course/{course}', 'ApplicationsController@getCourseIndex');
-	Route::get('applications/coordinator/course/{course}', 'ApplicationsController@getCoordinatorCourse');
+	Route::get('solicitudes/course/{course}', 'SolicitudesController@getCourseIndex');
+	Route::get('solicitudes/coordinator/course/{course}', 'SolicitudesController@getCoordinatorCourse');
 
-	Route::get('index-filters', 'ApplicationsController@getCourseIndexFilters');
+	Route::get('index-filters', 'SolicitudesController@getCourseIndexFilters');
 
-	Route::get('applications/create', 'ApplicationsController@getCreate');
+	Route::get('solicitudes/create', 'SolicitudesController@getCreate');
 	
-	Route::get('json-application', 'ApplicationsController@getApplication');
-	Route::post('applications/create', 'ApplicationsController@postCreate');
+	Route::get('json-solicitude', 'SolicitudesController@getSolicitude');
+	Route::post('solicitudes/create', 'SolicitudesController@postCreate');
 
-	Route::get('applications/edit/{id}', 'ApplicationsController@getEdit');
-	Route::put('applications/edit/{id}', 'ApplicationsController@putEdit');
+	Route::get('solicitudes/edit/{id}', 'SolicitudesController@getEdit');
+	Route::put('solicitudes/edit/{id}', 'SolicitudesController@putEdit');
 
-	Route::get('applications/coordinator/edit/{id}', 'ApplicationsController@getCoordinatorEdit');
-	Route::put('applications/coordinator/edit/{id}', 'ApplicationsController@putCoordinatorEdit');
+	Route::get('solicitudes/coordinator/edit/{id}', 'SolicitudesController@getCoordinatorEdit');
+	Route::put('solicitudes/coordinator/edit/{id}', 'SolicitudesController@putCoordinatorEdit');
 
-	Route::delete('/applications/delete/{id}', 'ApplicationsController@deleteApplication');
+	Route::delete('/solicitudes/delete/{id}', 'SolicitudesController@deleteSolicitude');
 
 });
 

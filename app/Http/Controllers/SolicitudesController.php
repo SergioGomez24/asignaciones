@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Course;
-use App\Application;
+use App\Solicitude;
 use App\Subject;
 use App\Campus;
 use App\Certification;
@@ -14,20 +14,21 @@ use App\Coursesubject;
 use App\Priority;
 use Notification;
 
-class ApplicationsController extends Controller
+class SolicitudesController extends Controller
 {
+
 	public function getIndex() 
     {
     	$arrayCursos = Course::all();
 
-    	return view('applications.index', ['arrayCursos' => $arrayCursos]);
+    	return view('solicitudes.index', ['arrayCursos' => $arrayCursos]);
     }
 
     public function getCoordinatorIndex() 
     {
         $arrayCursos = Course::all();
 
-        return view('applications.coordinator.index', ['arrayCursos' => $arrayCursos]);
+        return view('solicitudes.coordinator.index', ['arrayCursos' => $arrayCursos]);
     }
 
     public function getCourseIndex($course, Request $request)
@@ -39,17 +40,17 @@ class ApplicationsController extends Controller
         $teacher = $request->get('teacher');
         $contCréditosProf = 0;
 
-        $arraySolicitudes = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
-            ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
+        $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
+            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
             ->subjectid($subj_id)
             ->teacher($teacher)
             ->paginate();
 
-        $arraySolicitudesProf = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
-            ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
+        $arraySolicitudesProf = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
+            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
-            ->where('applications.teacher', '=', $usuario)
+            ->where('solicitudes.teacher', '=', $usuario)
             ->subjectid($subj_id)
             ->teacher($teacher)
             ->paginate();
@@ -58,7 +59,7 @@ class ApplicationsController extends Controller
             $contCréditosProf = $contCréditosProf + $solicitud->cTheory + $solicitud->cPractice + $solicitud->cSeminar;
         }
 
-        return view('applications.course')->with('arraySolicitudes', $arraySolicitudes)
+        return view('solicitudes.course')->with('arraySolicitudes', $arraySolicitudes)
                                           ->with('arraySolicitudesProf', $arraySolicitudesProf)
                                           ->with('arrayAsignaturas', $arrayAsignaturas)
                                           ->with('arrayProfesores', $arrayProfesores)
@@ -77,16 +78,16 @@ class ApplicationsController extends Controller
         $subj_id = $request->get('subject_id');
         $teacher = $request->get('teacher');
 
-        $arraySolicitudesCoor = Application::join('subjects','subjects.id', '=', 'applications.subject_id')
-            ->select('subjects.name', 'applications.teacher', 'applications.cTheory', 'applications.cPractice', 'applications.cSeminar', 'applications.id')
+        $arraySolicitudesCoor = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
+            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
             ->where('subjects.coordinator', '=', $usuario)
-            ->where('applications.teacher', '!=', $usuario)
+            ->where('solicitudes.teacher', '!=', $usuario)
             ->subjectid($subj_id)
             ->teacher($teacher)
             ->paginate();
 
-        return view('applications.coordinator.course')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
+        return view('solicitudes.coordinator.course')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
                                                       ->with('arrayAsignaturas', $arrayAsignaturas)
                                                       ->with('arrayProfesores', $arrayProfesores)
                                                       ->with('subj_id', $subj_id)
@@ -95,16 +96,17 @@ class ApplicationsController extends Controller
 
     }
 
-    public function getApplication() {
+    public function getSolicitude() {
         $subject_id = Input::get('subject_id');
         $teacher = Input::get('teacher');
         $course = Input::get('course');
 
-        $application = Application::where('subject_id', '=', $subject_id)
-                                    ->where('teacher', '=', $teacher)
-                                    ->where('course', '=', $course)->get();
+        $solicitud = Solicitude::where('subject_id', '=', $subject_id)
+                                ->where('teacher', '=', $teacher)
+                                ->where('course', '=', $course)
+                                ->get();
 
-        return response()->json($application);
+        return response()->json($solicitud);
     }
 
     public function getCreate() 
@@ -124,7 +126,7 @@ class ApplicationsController extends Controller
             $cAvailable = $prioridad->cAvailable;
         }
 
-        return view('applications.create')->with('course',$course)
+        return view('solicitudes.create')->with('course',$course)
                                           ->with('arrayAsignaturas',$arrayAsignaturas)
                                           ->with('arrayCampus',$arrayCampus)
                                           ->with('arrayTitulaciones',$arrayTitulaciones)
@@ -136,7 +138,7 @@ class ApplicationsController extends Controller
     {
         $course = Course::all()->last();
 
-        $a = new Application;
+        $a = new Solicitude;
         $a->subject_id = $request->input('subject');
         $a->teacher = Auth()->user()->name;
         $a->course = $course->course;
@@ -156,25 +158,25 @@ class ApplicationsController extends Controller
         }
 
 
-        return redirect('/applications/create');
+        return redirect('/solicitudes/create');
     }
 
     public function getEdit($id) 
     {
-        $application = Application::findOrFail($id);
-        $course = $application->course;
+        $solicitud = Solicitude::findOrFail($id);
+        $course = $solicitud->course;
                 
-        return view('applications.edit')->with('application', $application)
+        return view('solicitudes.edit')->with('solicitud', $solicitud)
                                         ->with('course', $course);
     }
 
     public function getCoordinatorEdit($id) 
     {
-        $application = Application::findOrFail($id);
-        $course = $application->course;
+        $solicitud = Solicitude::findOrFail($id);
+        $course = $solicitud->course;
                 
-        return view('applications.coordinator.edit')->with('application', $application)
-                                                    ->with('course', $course);
+        return view('solicitudes.coordinator.edit')->with('solicitud', $solicitud)
+                                                   ->with('course', $course);
     }
 
     public function putEdit(Request $request, $id)
@@ -195,7 +197,7 @@ class ApplicationsController extends Controller
             $cSnew = 0;
         }
 
-        $a = Application::findOrFail($id);
+        $a = Solicitude::findOrFail($id);
         $c = $a->course;
 
         $prioridad = Priority::where('teacher', $a->teacher)
@@ -249,24 +251,24 @@ class ApplicationsController extends Controller
         $a->cPractice = $cPnew;
         $a->save();
         Notification::success('La solicitud ha sido modificada exitosamente!');
-        return redirect('/applications/course/'. $c);
+        return redirect('/solicitudes/course/'. $c);
     }
 
     public function putCoordinatorEdit(Request $request, $id)
     {
-        $a = Application::findOrFail($id);
+        $a = Solicitude::findOrFail($id);
         $c = $a->course;
         $a->cTheory = $request->input('cTheory');
         $a->cSeminar = $request->input('cSeminar');
         $a->cPractice = $request->input('cPractice');
         $a->save();
         Notification::success('La solicitud ha sido modificada exitosamente!');
-        return redirect('/applications/coordinator/course/'. $c);
+        return redirect('/solicitudes/coordinator/course/'. $c);
     }
 
-    public function deleteApplication(Request $request, $id)
+    public function deleteSolicitude(Request $request, $id)
     {
-        $a = Application::findOrFail($id);
+        $a = Solicitude::findOrFail($id);
         $c = $a->course;
         $a->delete();
 
@@ -280,6 +282,6 @@ class ApplicationsController extends Controller
         }
 
         Notification::success('La solicitud fue eliminada exitosamente!');
-        return redirect('/applications/course/'. $c);
+        return redirect('/solicitudes/course/'. $c);
     }
 }
