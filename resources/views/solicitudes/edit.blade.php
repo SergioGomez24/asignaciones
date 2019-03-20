@@ -62,7 +62,7 @@
    var subObj_credS;
    var subObj_credP;
 
-   window.onload = function() {
+   
       $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
          $('#cT').empty();
          $('#cP').empty();
@@ -76,13 +76,19 @@
             subObj_credS = subjectObj.cSeminar;
          })
       });
-   }
+   
 
 function validacion(){
    var vCredT = document.getElementById("cTheory").value;
    var vCredP = document.getElementById("cPractice").value;
    var vCredS = document.getElementById("cSeminar").value;
    var enviar = false;
+
+   subObj_credT = subObj_credT + 0.1;
+   subObj_credP = subObj_credP + 0.1;
+   subObj_credS = subObj_credS + 0.1;
+   console.log(subObj_credT);
+
 
    if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
       alert("Introduce un valor mayor que 0");

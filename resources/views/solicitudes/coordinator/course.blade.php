@@ -56,10 +56,10 @@
                 <tr>
                   <td>{{$solicitud->name}}</td>
                   <td>{{$solicitud->teacher}}</td>
-                  <td>{{$solicitud->cTheory}}</td>
-                  <td>{{$solicitud->cPractice}}</td>
-                  <td>{{$solicitud->cSeminar}}</td>
-                  <td> </td>
+                  <td id="cT">{{$solicitud->cTheory}}</td>
+                  <td id="cP">{{$solicitud->cPractice}}</td>
+                  <td id="cS">{{$solicitud->cSeminar}}</td>
+                  <td id="sumaCreditos"> </td>
                   <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/coordinator/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitudeCoor', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
@@ -88,6 +88,17 @@
       sortList: [[1,0]]
     });
   }
+
+  $('#sumaCreditos').on('load', function(e) {
+
+    var cT = parseFloat("{{$solicitud->cTheory}}");
+    var cP = parseFloat("{{$solicitud->cPractice}}");
+    var cS = parseFloat("{{$solicitud->cSeminar}}");
+
+    sumCred = cT+cP+cS;
+
+    $('#sumaCreditos').append('<td>'+ sumCred +'</td>');
+  });
 
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');
