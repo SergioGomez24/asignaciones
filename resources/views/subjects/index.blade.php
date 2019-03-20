@@ -7,7 +7,7 @@
         <div class="text-center">
           <h4> Lista de asignaturas </h4>
         </div>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
+        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
         @if (Auth()->user()->role == 'Director')
           <a class="btn btn-primary btn-sm" href="{{ url('/subjects/create') }}" style="float: right;">Añadir asignatura</a>
         @endif

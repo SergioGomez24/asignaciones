@@ -68,9 +68,12 @@ Route::group(['middleware' => 'auth'], function() {
 
 });
 
+/* Rutas de elecciones */
 Route::group(['middleware' => 'auth'], function() {
 	Route::get('elections/create', 'ElectionsController@getCreate')->middleware('role');
 	Route::post('elections/create', 'ElectionsController@postCreate')->middleware('role');
+
+	Route::get('json-election', 'ElectionsController@getElection');
 });
 
 
@@ -98,6 +101,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::put('solicitudes/coordinator/edit/{id}', 'SolicitudesController@putCoordinatorEdit');
 
 	Route::delete('/solicitudes/delete/{id}', 'SolicitudesController@deleteSolicitude');
+	Route::delete('/solicitudes/coordinator/delete/{id}', 'SolicitudesController@deleteSolicitudeCoor');
 
 });
 

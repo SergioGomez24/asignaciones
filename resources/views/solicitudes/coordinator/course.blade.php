@@ -46,6 +46,7 @@
               <th scope="col">Créditos Teoría</th>
               <th scope="col">Créditos Prácticas</th>
               <th scope="col">Créditos Seminarios</th>
+              <th scope="col">Total Créditos</th>
               <th scope="col">Editar</th>
               <th scope="col">Eliminar</th>
             </tr>
@@ -58,8 +59,9 @@
                   <td>{{$solicitud->cTheory}}</td>
                   <td>{{$solicitud->cPractice}}</td>
                   <td>{{$solicitud->cSeminar}}</td>
+                  <td> </td>
                   <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/coordinator/edit/'.$solicitud->id) }}">Editar</a></td>
-                  <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
+                  <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitudeCoor', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
                   {{ csrf_field() }}
                   <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
@@ -68,6 +70,7 @@
               @endforeach
               {!! $arraySolicitudesCoor->render() !!}
           </tbody>
+          
         </table>
       </div>
 	  </div>

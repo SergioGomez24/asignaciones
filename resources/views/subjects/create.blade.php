@@ -5,7 +5,7 @@
       <div class="card">
          <div class="card-header">
             <h5 class="text-center"> Añadir asignatura </h5>
-            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/subjects') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
+            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/subjects') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST" onsubmit="return validar()">

@@ -12,6 +12,23 @@
          		{{ method_field('PUT') }}
          		{{ csrf_field() }}
 
+            <div class="group row text-center" style="align-content: center;">
+               <div class="col-md-4">
+            <h6>Créditos Teoria</h6>
+            <p id="cT"></p>
+            </div>
+
+            <div class="col-md-4">
+            <h6>Créditos Práctica</h6>
+            <p id="cP"></p>
+            </div>
+
+            <div class="col-md-4">
+            <h6>Créditos Seminario</h6>
+            <p id="cS"></p>
+            </div>
+            </div>
+
             <div class="form-group">
                <label for="cTheory" style="font-weight: bold;">Créditos Teoria</label>
                <input type="number" name="cTheory" id="cTheory" value="{{$solicitud->cTheory}}" step="0.1" class="form-control">
@@ -47,7 +64,13 @@
 
    window.onload = function() {
       $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
+         $('#cT').empty();
+         $('#cP').empty();
+         $('#cS').empty();
          $.each(data, function(index, subjectObj) {
+            $('#cT').append('<p>'+subjectObj.cTheory+'</p>');
+            $('#cP').append('<p>'+subjectObj.cPractice+'</p>');
+            $('#cS').append('<p>'+subjectObj.cSeminar+'</p>');
             subObj_credT = subjectObj.cTheory;
             subObj_credP = subjectObj.cPractice;
             subObj_credS = subjectObj.cSeminar;
