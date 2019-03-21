@@ -38,7 +38,7 @@
       </div>
 
       <div class="card-body">
-        <table class="table table-striped">
+        <table class="table table-striped" id="miTabla">
           <thead>
             <tr>
               <th scope="col">Asignatura</th>
@@ -46,32 +46,43 @@
               <th scope="col">Créditos Teoría</th>
               <th scope="col">Créditos Prácticas</th>
               <th scope="col">Créditos Seminarios</th>
-              <th scope="col">Total Créditos</th>
+              <th scope="col">Total</th>
               <th scope="col">Editar</th>
               <th scope="col">Eliminar</th>
             </tr>
           </thead>
           <tbody>
-              @foreach( $arraySolicitudesCoor as $key => $solicitud )
-                <tr>
-                  <td>{{$solicitud->name}}</td>
-                  <td>{{$solicitud->teacher}}</td>
-                  <td id="cT">{{$solicitud->cTheory}}</td>
-                  <td id="cP">{{$solicitud->cPractice}}</td>
-                  <td id="cS">{{$solicitud->cSeminar}}</td>
-                  <td id="sumaCreditos"> </td>
-                  <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/coordinator/edit/'.$solicitud->id) }}">Editar</a></td>
-                  <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitudeCoor', $solicitud->id)}}" method="POST" style="display:inline">
-                  {{ method_field('DELETE') }}
-                  {{ csrf_field() }}
-                  <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
-                  </form></td>
-                </tr>
-              @endforeach
-              {!! $arraySolicitudesCoor->render() !!}
+            @foreach( $arraySolicitudesCoor as $key => $solicitud )
+              <tr>
+                <td>{{$solicitud->name}}</td>
+                <td>{{$solicitud->teacher}}</td>
+                <td>{{$solicitud->cTheory}}</td>
+                <td>{{$solicitud->cPractice}}</td>
+                <td>{{$solicitud->cSeminar}}</td>
+                <td></td>
+                <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/coordinator/edit/'.$solicitud->id) }}">Editar</a></td>
+                <td>
+                  <form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitudeCoor', $solicitud->id)}}" method="POST" style="display:inline">
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+                    <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
+                  </form>
+                </td>
+              </tr>
+            @endforeach
+            {!! $arraySolicitudesCoor->render() !!}
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan=5>Total</td>
+              <td></td>
+            </tr>
+          </tfoot>
           
         </table>
+        <p>
+          <button id="calcular">Calcular</button>
+        </p>
       </div>
 	  </div>
 	</div>
@@ -89,16 +100,53 @@
     });
   }
 
-  $('#sumaCreditos').on('load', function(e) {
+  $('#calcular').on('click', calcular);
 
-    var cT = parseFloat("{{$solicitud->cTheory}}");
-    var cP = parseFloat("{{$solicitud->cPractice}}");
-    var cS = parseFloat("{{$solicitud->cSeminar}}");
+  function calcular() {
+    // obtenemos todas las filas del tbody
+    var filas=document.querySelectorAll("#miTabla tbody tr");
+ 
+    var total=0;
+ 
+    // recorremos cada una de las filas
+    filas.forEach(function(e) {
+ 
+        // obtenemos las columnas de cada fila
+        var columnas=e.querySelectorAll("td");
+ 
+        // obtenemos los valores de la cantidad y importe
+        var cT = parseFloat(columnas[2].textContent);
+        var cP = parseFloat(columnas[3].textContent);
+        var cS = parseFloat(columnas[4].textContent);
 
-    sumCred = cT+cP+cS;
+        console.log(cT);
+        console.log(cP);
+        console.log(cS);
 
-    $('#sumaCreditos').append('<td>'+ sumCred +'</td>');
-  });
+        if(cT == 'NaN'){
+          cT = 0;
+        }
+
+        if(cP == 'NaN'){
+          cP = 0;
+        }
+
+        if(cS == 'NaN'){
+          cS = 0;
+        }
+ 
+        // mostramos el total por fila
+        columnas[5].textContent=(cT+cP+cS).toFixed(1);
+ 
+        total += cT+cP+cS;
+    });
+ 
+    // mostramos la suma total
+    var filas=document.querySelectorAll("#miTabla tfoot tr td");
+    filas[1].textContent = total.toFixed(1);
+  }
+
+
 
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');

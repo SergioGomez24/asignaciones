@@ -84,11 +84,9 @@ function validacion(){
    var vCredS = document.getElementById("cSeminar").value;
    var enviar = false;
 
-   subObj_credT = subObj_credT + 0.1;
-   subObj_credP = subObj_credP + 0.1;
-   subObj_credS = subObj_credS + 0.1;
-   console.log(subObj_credT);
-
+   subObj_credT = parseFloat(subObj_credT);
+   subObj_credP = parseFloat(subObj_credP);
+   subObj_credS = parseFloat(subObj_credS);
 
    if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
       alert("Introduce un valor mayor que 0");

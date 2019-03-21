@@ -86,7 +86,7 @@ class SolicitudesController extends Controller
             ->where('solicitudes.teacher', '!=', $usuario)
             ->subjectid($subj_id)
             ->teacher($teacher)
-            ->orderBy('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->orderBy('solicitudes.subject_id', 'DESC')
             ->paginate();
 
         return view('solicitudes.coordinator.course')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
