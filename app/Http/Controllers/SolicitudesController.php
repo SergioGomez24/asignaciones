@@ -46,7 +46,7 @@ class SolicitudesController extends Controller
             ->where('course', '=', $course)
             ->subjectid($subj_id)
             ->teacher($teacher)
-            ->paginate();
+            ->simplePaginate(6);
 
         $arraySolicitudesProf = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
             ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
@@ -54,7 +54,7 @@ class SolicitudesController extends Controller
             ->where('solicitudes.teacher', '=', $usuario)
             ->subjectid($subj_id)
             ->teacher($teacher)
-            ->paginate();
+            ->simplePaginate(6);
 
         foreach ($arraySolicitudesProf as $key => $solicitud) {
             $contCréditosProf = $contCréditosProf + $solicitud->cTheory + $solicitud->cPractice + $solicitud->cSeminar;
@@ -87,7 +87,7 @@ class SolicitudesController extends Controller
             ->subjectid($subj_id)
             ->teacher($teacher)
             ->orderBy('solicitudes.subject_id', 'DESC')
-            ->paginate();
+            ->simplePaginate(6);
 
         return view('solicitudes.coordinator.course')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
                                                       ->with('arrayAsignaturas', $arrayAsignaturas)

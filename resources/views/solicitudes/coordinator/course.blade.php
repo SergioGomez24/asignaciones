@@ -74,15 +74,11 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan=5>Total</td>
+              <td colspan=5 style="font-weight: bold;">Total</td>
               <td></td>
             </tr>
           </tfoot>
-          
         </table>
-        <p>
-          <button id="calcular">Calcular</button>
-        </p>
       </div>
 	  </div>
 	</div>
@@ -90,7 +86,10 @@
 
 <script language="JavaScript">
 
-  $(document).ready(initTableSorter);
+  $(document).ready(function(){
+    initTableSorter();
+    calcular();
+  });
   
   function initTableSorter() {
   // call the tablesorter plugin
@@ -99,8 +98,6 @@
       sortList: [[1,0]]
     });
   }
-
-  $('#calcular').on('click', calcular);
 
   function calcular() {
     // obtenemos todas las filas del tbody
@@ -115,25 +112,25 @@
         var columnas=e.querySelectorAll("td");
  
         // obtenemos los valores de la cantidad y importe
-        var cT = parseFloat(columnas[2].textContent);
-        var cP = parseFloat(columnas[3].textContent);
-        var cS = parseFloat(columnas[4].textContent);
+        var cT = (columnas[2].textContent);
+        var cP = (columnas[3].textContent);
+        var cS = (columnas[4].textContent);
 
-        console.log(cT);
-        console.log(cP);
-        console.log(cS);
-
-        if(cT == 'NaN'){
+        if(cT == ""){
           cT = 0;
         }
 
-        if(cP == 'NaN'){
+        if(cP == ""){
           cP = 0;
         }
 
-        if(cS == 'NaN'){
+        if(cS == ""){
           cS = 0;
         }
+
+        cT = parseFloat(cT);
+        cS = parseFloat(cS);
+        cP = parseFloat(cP);
  
         // mostramos el total por fila
         columnas[5].textContent=(cT+cP+cS).toFixed(1);

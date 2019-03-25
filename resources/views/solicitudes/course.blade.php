@@ -41,7 +41,7 @@
         @if(Auth()->user()->role == "Profesor")
           <h6 style="float: right; font-weight: bold;">Créditos acumulados: {{$contCréditosProf}}</h6>
         @endif
-        <table class="table table-striped">
+        <table class="table table-striped" id="miTabla">
           <thead>
             <tr>
               <th scope="col">Asignatura</th>
@@ -49,6 +49,7 @@
               <th scope="col">Créditos Teoría</th>
               <th scope="col">Créditos Prácticas</th>
               <th scope="col">Créditos Seminarios</th>
+              <th scope="col">Total</th>
               <th scope="col">Editar</th>
               <th scope="col">Eliminar</th>
             </tr>
@@ -62,6 +63,7 @@
                   <td>{{$solicitud->cTheory}}</td>
                   <td>{{$solicitud->cPractice}}</td>
                   <td>{{$solicitud->cSeminar}}</td>
+                  <td></td>
                   <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
@@ -79,6 +81,7 @@
                   <td>{{$solicitud->cTheory}}</td>
                   <td>{{$solicitud->cPractice}}</td>
                   <td>{{$solicitud->cSeminar}}</td>
+                  <td></td>
                   <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
@@ -98,13 +101,52 @@
 
 <script language="JavaScript">
 
-  $(document).ready(initTableSorter);
+  $(document).ready(function() {
+    initTableSorter();
+    calcular();
+  });
   
   function initTableSorter() {
   // call the tablesorter plugin
     $('table').tablesorter({
     // Sort on the second column, in ascending order
       sortList: [[1,0]]
+    });
+  }
+
+  function calcular() {
+    // obtenemos todas las filas del tbody
+    var filas=document.querySelectorAll("#miTabla tbody tr");
+ 
+    // recorremos cada una de las filas
+    filas.forEach(function(e) {
+ 
+        // obtenemos las columnas de cada fila
+        var columnas=e.querySelectorAll("td");
+ 
+        // obtenemos los valores de la cantidad y importe
+        var cT = (columnas[2].textContent);
+        var cP = (columnas[3].textContent);
+        var cS = (columnas[4].textContent);
+
+        if(cT == ""){
+          cT = 0;
+        }
+
+        if(cP == ""){
+          cP = 0;
+        }
+
+        if(cS == ""){
+          cS = 0;
+        }
+
+        cT = parseFloat(cT);
+        cS = parseFloat(cS);
+        cP = parseFloat(cP);
+ 
+        // mostramos el total por fila
+        columnas[5].textContent=(cT+cP+cS).toFixed(1);
     });
   }
 
