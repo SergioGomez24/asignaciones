@@ -113,9 +113,10 @@ class SolicitudesController extends Controller
 
     public function getCreateCourse() 
     {
-        $arrayCursos = Course::all();
 
-        return view('solicitudes.election',compact('arrayCursos'));
+        $arrayElecciones = Election::select('course')->distinct()->get();
+
+        return view('solicitudes.election',compact('arrayElecciones'));
 
     }
 

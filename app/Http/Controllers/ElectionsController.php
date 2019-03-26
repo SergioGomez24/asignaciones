@@ -35,4 +35,14 @@ class ElectionsController extends Controller
 		return redirect('/');
     }
 
+    public function getElection() {
+
+        $course = Input::get('course');
+
+        $elección = Election::where('course', '=', $course)
+                               ->get();
+
+        return response()->json($elección);
+    }
+
 }
