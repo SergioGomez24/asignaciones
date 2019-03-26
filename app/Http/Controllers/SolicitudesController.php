@@ -46,6 +46,7 @@ class SolicitudesController extends Controller
             ->where('course', '=', $course)
             ->subjectid($subj_id)
             ->teacher($teacher)
+            ->orderBy('subjects.name')
             ->simplePaginate(6);
 
         $arraySolicitudesProf = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
@@ -54,6 +55,7 @@ class SolicitudesController extends Controller
             ->where('solicitudes.teacher', '=', $usuario)
             ->subjectid($subj_id)
             ->teacher($teacher)
+            ->orderBy('subjects.name')
             ->simplePaginate(6);
 
         foreach ($arraySolicitudesProf as $key => $solicitud) {
@@ -86,7 +88,7 @@ class SolicitudesController extends Controller
             ->where('solicitudes.teacher', '!=', $usuario)
             ->subjectid($subj_id)
             ->teacher($teacher)
-            ->orderBy('solicitudes.subject_id', 'DESC')
+            ->orderBy('subjects.name')
             ->simplePaginate(6);
 
         return view('solicitudes.coordinator.course')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
@@ -135,12 +137,17 @@ class SolicitudesController extends Controller
             $cAvailable = $eleccion->cAvailable;
         }
 
+        if($cAvailable == 0){
+            return view('home');
+        }else{
+
         return view('solicitudes.create')->with('course',$course)
                                           ->with('arrayAsignaturas',$arrayAsignaturas)
                                           ->with('arrayCampus',$arrayCampus)
                                           ->with('arrayTitulaciones',$arrayTitulaciones)
                                           ->with('cAvailable', $cAvailable)
                                           ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas);
+        }
     }
 
     public function postCreate($course, Request $request) 
