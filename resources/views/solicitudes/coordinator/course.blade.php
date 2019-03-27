@@ -52,6 +52,7 @@
             </tr>
           </thead>
           <tbody>
+            @if($coorPermission == 1)
             @foreach( $arraySolicitudesCoor as $key => $solicitud )
               <tr>
                 <td>{{$solicitud->name}}</td>
@@ -70,6 +71,7 @@
                 </td>
               </tr>
             @endforeach
+            @endif
             {!! $arraySolicitudesCoor->render() !!}
           </tbody>
           <tfoot>

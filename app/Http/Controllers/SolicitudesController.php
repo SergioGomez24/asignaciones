@@ -62,6 +62,17 @@ class SolicitudesController extends Controller
             $contCréditosProf = $contCréditosProf + $solicitud->cTheory + $solicitud->cPractice + $solicitud->cSeminar;
         }
 
+        $eleccionProfesor = Election::where('teacher', '=', $usuario)
+                             ->where('course', '=', $course)
+                             ->get();
+
+        foreach ($eleccionProfesor as $eleccion) {
+            $dirPermission = $eleccion->dirPermission;
+            $profPermission = $eleccion->profPermission;
+            $coorPermission = $eleccion->coorPermission;
+        }
+
+
         return view('solicitudes.course')->with('arraySolicitudes', $arraySolicitudes)
                                           ->with('arraySolicitudesProf', $arraySolicitudesProf)
                                           ->with('arrayAsignaturas', $arrayAsignaturas)
@@ -69,7 +80,10 @@ class SolicitudesController extends Controller
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher', $teacher)
                                           ->with('contCréditosProf', $contCréditosProf)
-                                          ->with('course', $course);
+                                          ->with('course', $course)
+                                          ->with('dirPermission', $dirPermission)
+                                          ->with('profPermission', $profPermission)
+                                          ->with('coorPermission', $coorPermission);
 
     }
 
@@ -91,12 +105,25 @@ class SolicitudesController extends Controller
             ->orderBy('subjects.name')
             ->simplePaginate(6);
 
+        $eleccionProfesor = Election::where('teacher', '=', $usuario)
+                             ->where('course', '=', $course)
+                             ->get();
+
+        foreach ($eleccionProfesor as $eleccion) {
+            $dirPermission = $eleccion->dirPermission;
+            $profPermission = $eleccion->profPermission;
+            $coorPermission = $eleccion->coorPermission;
+        }
+
         return view('solicitudes.coordinator.course')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
                                                       ->with('arrayAsignaturas', $arrayAsignaturas)
                                                       ->with('arrayProfesores', $arrayProfesores)
                                                       ->with('subj_id', $subj_id)
                                                       ->with('teacher', $teacher)
-                                                      ->with('course', $course);
+                                                      ->with('course', $course)
+                                                      ->with('dirPermission', $dirPermission)
+                                                      ->with('profPermission', $profPermission)
+                                                      ->with('coorPermission', $coorPermission);
 
     }
 
@@ -381,5 +408,49 @@ class SolicitudesController extends Controller
 
         Notification::success('La solicitud fue eliminada exitosamente!');
         return redirect('/solicitudes/coordinator/course/'. $c);
+    }
+
+    public function editPermissionProf(Request $request, $course)
+    {
+        $usuario = Auth()->user()->name;
+        $coorPermission = true;
+
+        $eleccionDir = Election::where('teacher', 'Jose Garcia')
+                             ->where('course', $course)
+                             ->get();
+
+        foreach ($eleccionDir as $d){
+            $d->profPermission = false;
+            $d->save();
+        }
+
+
+        $eleccion = Election::where('teacher', $usuario)
+                             ->where('course', $course)
+                             ->get();
+
+        foreach ($eleccion as $p) {
+            $p->profPermission = false;
+            $p->save();
+        }
+
+        $elecciones = Election::where('course', $course)
+                                ->get();
+
+        foreach ($elecciones as $key => $c) {
+            if($c->profPermission == true)
+                $coorPermission = false;
+        }
+
+        if($coorPermission == true) {
+            foreach ($elecciones as $key => $c) {
+                $c->coorPermission = true;
+                $c->save();
+            }
+        }
+
+        Notification::success('Las solicitudes fue enviadas exitosamente!');
+        return redirect('/');
+
     }
 }

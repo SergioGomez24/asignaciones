@@ -28,6 +28,9 @@ class ElectionsController extends Controller
 			$e->teacher = $profesor->name;
 			$e->course = $request->input('course');
 			$e->cAvailable = $profesor->cInitial;
+            $e->dirPermission = false;
+            $e->profPermission = true;
+            $e->coorPermission = false;
 			$e->save();
 		}
 

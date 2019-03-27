@@ -20,6 +20,9 @@ class CreateElectionsTable extends Migration
             $table->string('course');
             $table->foreign('course')->references('name')->on('courses');
             $table->decimal('cAvailable',4,1)->unsigned();
+            $table->boolean('dirPermission');
+            $table->boolean('profPermission');
+            $table->boolean('coorPermission');
             $table->timestamps();
         });
     }

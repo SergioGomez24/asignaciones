@@ -55,7 +55,8 @@
             </tr>
           </thead>
           <tbody>
-            @if (Auth()->user()->role == "Director")  
+            @if (Auth()->user()->role == "Director")
+              @if($dirPermission == 1)  
               @foreach( $arraySolicitudes as $key => $solicitud )
                 <tr>
                   <td>{{$solicitud->name}}</td>
@@ -72,8 +73,15 @@
                   </form></td>
                 </tr>
               @endforeach
+              <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir')}}" method="POST" style="display:inline">
+                  {{ method_field('POST') }}
+                  {{ csrf_field() }}
+                  <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()">Enviar definitivamente</button>
+              </form>
+              @endif
               {!! $arraySolicitudes->render() !!}
             @else
+              @if($profPermission == 1)
               @foreach( $arraySolicitudesProf as $key => $solicitud )
                 <tr>
                   <td>{{$solicitud->name}}</td>
@@ -90,6 +98,12 @@
                   </form></td>
                 </tr>
               @endforeach
+              <form name="formPermission" action="{{action('SolicitudesController@editPermissionProf', $course)}}" method="POST" style="display:inline">
+                  {{ method_field('POST') }}
+                  {{ csrf_field() }}
+                  <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()">Enviar definitivamente</button>
+              </form>
+              @endif
               {!! $arraySolicitudesProf->render() !!}
             @endif
           </tbody>
@@ -156,6 +170,17 @@
 
     if(mensaje) {
       document.formBorrar.submit();
+      enviar = true; 
+    }
+    return enviar;
+  }
+
+  function validar(){ 
+    var mensaje = confirm('¿Estas seguro de que quieres enviar las solicitudes definitivamente?');
+    var enviar = false;
+
+    if(mensaje) {
+      document.formPermission.submit();
       enviar = true; 
     }
     return enviar;

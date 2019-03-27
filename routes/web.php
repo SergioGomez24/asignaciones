@@ -103,6 +103,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::delete('/solicitudes/delete/{id}', 'SolicitudesController@deleteSolicitude');
 	Route::delete('/solicitudes/coordinator/delete/{id}', 'SolicitudesController@deleteSolicitudeCoor');
 
+	Route::post('/solicitudes/edit/profPermission/{course}', 'SolicitudesController@editPermissionProf');
+
 });
 
 /* Ajustes */
