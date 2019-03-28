@@ -453,4 +453,64 @@ class SolicitudesController extends Controller
         return redirect('/');
 
     }
+
+    public function editPermissionCoor(Request $request, $course)
+    {
+        $usuario = Auth()->user()->name;
+        $coorPermission = true;
+
+        $eleccionDir = Election::where('teacher', 'Jose Garcia')
+                             ->where('course', $course)
+                             ->get();
+
+        foreach ($eleccionDir as $d){
+            $d->coorPermission = false;
+            $d->save();
+        }
+
+
+        $eleccion = Election::where('teacher', $usuario)
+                             ->where('course', $course)
+                             ->get();
+
+        foreach ($eleccion as $p) {
+            $p->coorPermission = false;
+            $p->save();
+        }
+
+        $elecciones = Election::where('course', $course)
+                                ->get();
+
+        foreach ($elecciones as $key => $c) {
+            if($c->coorPermission == true)
+                $coorPermission = false;
+        }
+
+        if($coorPermission == true) {
+            foreach ($elecciones as $key => $c) {
+                $c->dirPermission = true;
+                $c->save();
+            }
+        }
+
+        Notification::success('Las solicitudes fue enviadas exitosamente!');
+        return redirect('/');
+    }
+
+    public function editPermissionDir(Request $request, $course)
+    {
+        $usuario = Auth()->user()->name;
+
+        $eleccion = Election::where('teacher', $usuario)
+                             ->where('course', $course)
+                             ->get();
+
+        foreach ($eleccion as $p) {
+            $p->dirPermission = false;
+            $p->save();
+        }
+
+        Notification::success('Las solicitudes fue enviadas exitosamente!');
+        return redirect('/');
+    }
 }

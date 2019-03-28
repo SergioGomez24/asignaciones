@@ -9,9 +9,6 @@
         @if( Auth::check() )
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/')}}" style="color: black; font-weight: bold;">Inicio</a>
-                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/subjects')}}" style="color: black; font-weight: bold;">Asignaturas</a>
@@ -22,7 +19,19 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/solicitudes')}}" style="color: black; font-weight: bold;">Solicitudes</a>
+                    <a class="nav-link" href="{{url('/elections')}}" style="color: black; font-weight: bold;">Elecciones</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black; font-weight: bold;">Solicitudes</a>
+                    <div class="dropdown-menu">
+                        @if (Auth()->user()->role == 'Director')
+                        <a class="dropdown-item"  href="{{url('/solicitudes')}}" style="color: black; font-weight: bold;">Director</a>
+                        @else
+                        <a class="dropdown-item"  href="{{url('/solicitudes')}}" style="color: black; font-weight: bold;">Profesor</a>
+                        <a class="dropdown-item" href="{{url('/solicitudes/coordinator')}}" style="color: black; font-weight: bold;">Coordinador</a>
+                        @endif
+                    </div>
                 </li>
 
                 @if (Auth()->user()->role == 'Director')
@@ -31,11 +40,6 @@
                 </li>
                 @endif
 
-                @if (Auth()->user()->role == 'Profesor')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/solicitudes/coordinator')}}" style="color: black; font-weight: bold;">Coordinación</a>
-                </li>
-                @endif
             </ul>
 
             <ul class="navbar-nav navbar-right">

@@ -70,8 +70,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 /* Rutas de elecciones */
 Route::group(['middleware' => 'auth'], function() {
-	Route::get('elections/create', 'ElectionsController@getCreate')->middleware('role');
-	Route::post('elections/create', 'ElectionsController@postCreate')->middleware('role');
+	Route::get('elections', 'ElectionsController@getIndex');
+	Route::get('elections/course/{course}', 'ElectionsController@getCourseIndex');
 
 	Route::get('json-election', 'ElectionsController@getElection');
 });
@@ -104,6 +104,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::delete('/solicitudes/coordinator/delete/{id}', 'SolicitudesController@deleteSolicitudeCoor');
 
 	Route::post('/solicitudes/edit/profPermission/{course}', 'SolicitudesController@editPermissionProf');
+	Route::post('/solicitudes/edit/coorPermission/{course}', 'SolicitudesController@editPermissionCoor');
+	Route::post('/solicitudes/edit/dirPermission/{course}', 'SolicitudesController@editPermissionDir');
 
 });
 
@@ -179,6 +181,47 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 	Route::put('settings/centers/edit/{id}', 'CentersController@putEdit');
 
 	Route::delete('/settings/centers/delete/{id}', 'CentersController@deleteCenter');
+
+	/*Ajustes duraciones*/
+	Route::get('settings/duration', 'DurationsController@getIndex');
+
+	Route::get('settings/duration/create', 'DurationsController@getCreate');
+	Route::post('settings/duration/create', 'DurationsController@postCreate');
+
+	Route::get('settings/duration/edit/{id}', 'DurationsController@getEdit');
+	Route::put('settings/duration/edit/{id}', 'DurationsController@putEdit');
+
+	Route::delete('/settings/duration/delete/{id}', 'DurationsController@deleteDuration');
+
+	/*Ajustes cursos asignaturas*/
+	Route::get('settings/coursesSubjects', 'CoursesSubjectsController@getIndex');
+
+	Route::get('settings/coursesSubjects/create', 'CoursesSubjectsController@getCreate');
+	Route::post('settings/coursesSubjects/create', 'CoursesSubjectsController@postCreate');
+
+	Route::get('settings/coursesSubjects/edit/{id}', 'CoursesSubjectsController@getEdit');
+	Route::put('settings/coursesSubjects/edit/{id}', 'CoursesSubjectsController@putEdit');
+
+	Route::delete('/settings/CoursesSubjects/delete/{id}', 'CoursesSubjectsController@deleteCourseSubject');
+
+	/*Ajustes tipos asignaturas*/
+	Route::get('settings/typesSubjects', 'TypesSubjectsController@getIndex');
+
+	Route::get('settings/typesSubjects/create', 'TypesSubjectsController@getCreate');
+	Route::post('settings/typesSubjects/create', 'TypesSubjectsController@postCreate');
+
+	Route::get('settings/typesSubjects/edit/{id}', 'TypesSubjectsController@getEdit');
+	Route::put('settings/typesSubjects/edit/{id}', 'TypesSubjectsController@putEdit');
+
+	Route::delete('/settings/TypesSubjects/delete/{id}', 'TypesSubjectsController@deleteTypeSubject');
+
+	/*Ajustes elecciones*/
+	Route::get('settings/elections', 'ElectionsController@getIndexSettings');
+
+	Route::get('settings/elections/create', 'ElectionsController@getCreate');
+	Route::post('settings/elections/create', 'ElectionsController@postCreate');
+
+	Route::delete('/settings/elections/delete/{course}', 'ElectionsController@deleteElection');
 
 });
 

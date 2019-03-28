@@ -73,7 +73,7 @@
                   </form></td>
                 </tr>
               @endforeach
-              <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir')}}" method="POST" style="display:inline">
+              <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir', $course)}}" method="POST" style="display:inline">
                   {{ method_field('POST') }}
                   {{ csrf_field() }}
                   <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()">Enviar definitivamente</button>
