@@ -8,8 +8,8 @@
         <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
       </div>
       <div class="card-body">	
-		  @foreach( $arrayCursos as $key => $curso )
-			<h5><a href="{{ url('/solicitudes/course/' . $curso->name ) }}" style="color: #000000;">Curso {{$curso->name}}</a></h5>
+		  @foreach( $arrayElecciones as $key => $eleccion )
+			<h5><a href="{{ url('/solicitudes/course/' . $eleccion->course ) }}" style="color: #000000;">Curso {{$eleccion->course}}</a></h5>
 		    </br>
 		  @endforeach
 	  </div>

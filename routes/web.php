@@ -82,10 +82,8 @@ Route::group(['middleware' => 'auth'], function() {
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('solicitudes', 'SolicitudesController@getIndex');
-	Route::get('solicitudes/coordinator', 'SolicitudesController@getCoordinatorIndex');
 
 	Route::get('solicitudes/course/{course}', 'SolicitudesController@getCourseIndex');
-	Route::get('solicitudes/coordinator/course/{course}', 'SolicitudesController@getCoordinatorCourse');
 
 	Route::get('index-filters', 'SolicitudesController@getCourseIndexFilters');
 
@@ -97,16 +95,24 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('solicitudes/edit/{id}', 'SolicitudesController@getEdit');
 	Route::put('solicitudes/edit/{id}', 'SolicitudesController@putEdit');
 
-	Route::get('solicitudes/coordinator/edit/{id}', 'SolicitudesController@getCoordinatorEdit');
-	Route::put('solicitudes/coordinator/edit/{id}', 'SolicitudesController@putCoordinatorEdit');
-
 	Route::delete('/solicitudes/delete/{id}', 'SolicitudesController@deleteSolicitude');
-	Route::delete('/solicitudes/coordinator/delete/{id}', 'SolicitudesController@deleteSolicitudeCoor');
 
 	Route::post('/solicitudes/edit/profPermission/{course}', 'SolicitudesController@editPermissionProf');
 	Route::post('/solicitudes/edit/coorPermission/{course}', 'SolicitudesController@editPermissionCoor');
 	Route::post('/solicitudes/edit/dirPermission/{course}', 'SolicitudesController@editPermissionDir');
 
+});
+
+/* Rutas de Coordinadores */
+Route::group(['middleware' => 'auth'], function() {
+
+	Route::get('coordinators', 'CoordinatorsController@getIndex');
+	Route::get('coordinators/course/{course}', 'CoordinatorsController@getCourse');
+
+	Route::get('coordinators/edit/{id}', 'CoordinatorsController@getEdit');
+	Route::put('coordinators/edit/{id}', 'CoordinatorsController@putEdit');
+
+	Route::delete('/coordinators/delete/{id}', 'CoordinatorsController@deleteSolicitudeCoor');
 });
 
 /* Ajustes */

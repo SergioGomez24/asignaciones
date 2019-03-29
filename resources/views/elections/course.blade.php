@@ -48,7 +48,7 @@
             </tr>
           </thead>
           <tbody>
-            @if($dirPermission == 0 && $profPermission == 0 && $coorPermission == 0)
+            @if($elecPermission == 1)
             @foreach( $arraySolicitudes as $key => $solicitud )
               <tr>
                 <td>{{$solicitud->name}}</td>

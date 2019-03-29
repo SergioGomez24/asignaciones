@@ -42,17 +42,13 @@ class ElectionsController extends Controller
                                     ->get();
 
         foreach ($eleccionDir as $eleccion) {
-            $dirPermission = $eleccion->dirPermission;
-            $profPermission = $eleccion->profPermission;
-            $coorPermission = $eleccion->coorPermission;
+            $elecPermission = $eleccion->elecPermission;
         }
 
         return view('elections.course')->with('arraySolicitudes', $arraySolicitudes)
                                         ->with('arrayAsignaturas', $arrayAsignaturas)
                                           ->with('arrayProfesores', $arrayProfesores)
-                                          ->with('dirPermission', $dirPermission)
-                                          ->with('profPermission', $profPermission)
-                                          ->with('coorPermission', $coorPermission)
+                                          ->with('elecPermission', $elecPermission)
                                           ->with('course', $course);
     }
 
@@ -75,6 +71,7 @@ class ElectionsController extends Controller
             $e->dirPermission = false;
             $e->profPermission = true;
             $e->coorPermission = false;
+            $e->elecPermission = false;
 			$e->save();
 		}
 
@@ -107,6 +104,13 @@ class ElectionsController extends Controller
 
         foreach ($elecciones as $eleccion) {
             $eleccion->delete();
+        }
+
+        $solicitudes = Solicitude::where('course', '=', $course)
+                               ->get();
+
+        foreach($solicitudes as $solicitud) {
+            $solicitud->delete();
         }
 
         Notification::success('La elección fue eliminada exitosamente!');

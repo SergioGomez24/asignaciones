@@ -29,7 +29,7 @@
                         <a class="dropdown-item"  href="{{url('/solicitudes')}}" style="color: black; font-weight: bold;">Director</a>
                         @else
                         <a class="dropdown-item"  href="{{url('/solicitudes')}}" style="color: black; font-weight: bold;">Profesor</a>
-                        <a class="dropdown-item" href="{{url('/solicitudes/coordinator')}}" style="color: black; font-weight: bold;">Coordinador</a>
+                        <a class="dropdown-item" href="{{url('/coordinators')}}" style="color: black; font-weight: bold;">Coordinador</a>
                         @endif
                     </div>
                 </li>
