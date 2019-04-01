@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url('/assets/bootstrap/css/bootstrap.min.css') }}">
     <style type="text/css">
     body{
-        font-size: 16px;
+        font-size: 14px;
         font-family: "Times New Roman";
     }
     </style>
@@ -14,8 +14,9 @@
     
   </head>
   <body>
-    <h1 class="text-center">Elecciones Curso {{ $course }}</h1>
-    <h5 class="text-center">Universidad de Cádiz</h5>
+    <img src="{{ asset('img/logoUCA.png') }}"/>
+    <h6 style="float: right; margin-right: 210px;">ESCUELA SUPERIOR DE INGENIERÍA</h6>
+    <h6 class="text-center">Elecciones Curso {{ $course }}</h6>
        
     <table class="table table-bordered">
       <thead class="thead-light">

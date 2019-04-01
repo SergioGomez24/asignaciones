@@ -157,6 +157,6 @@ class CoordinatorsController extends Controller
         }
 
         Notification::success('La solicitud fue eliminada exitosamente!');
-        return redirect('/solicitudes/coordinator/course/'. $c);
+        return redirect('/coordinators/course/'. $c);
     }
 }
