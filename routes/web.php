@@ -74,6 +74,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('elections/course/{course}', 'ElectionsController@getCourseIndex');
 
 	Route::get('json-election', 'ElectionsController@getElection');
+
+	Route::get('elections/pdf/{course}', 'ElectionsController@elections');
 });
 
 

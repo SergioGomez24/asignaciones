@@ -9,6 +9,7 @@ use App\Teacher;
 use App\Election;
 use App\Subject;
 use App\Solicitude;
+use \PDF;
 
 use Notification;
 
@@ -26,16 +27,8 @@ class ElectionsController extends Controller
     {
         $arrayAsignaturas = Subject::all();
         $arrayProfesores = Teacher::all();
-        $subj_id = $request->get('subject_id');
-        $teacher = $request->get('teacher');
-
-        $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
-            ->where('course', '=', $course)
-            ->subjectid($subj_id)
-            ->teacher($teacher)
-            ->orderBy('subjects.name')
-            ->get();
+        
+        $arraySolicitudes = $this->getArraySolicitudes($course, $request);
 
         $eleccionDir = Election::where('teacher', 'Jose Garcia')
                                     ->where('course', $course)
@@ -50,6 +43,66 @@ class ElectionsController extends Controller
                                           ->with('arrayProfesores', $arrayProfesores)
                                           ->with('elecPermission', $elecPermission)
                                           ->with('course', $course);
+    }
+
+    public function elections($course) 
+    {
+        $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
+            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->where('course', '=', $course)
+            ->orderBy('solicitudes.teacher')
+            ->get();
+
+        foreach ($arraySolicitudes as $key => $solicitud) {
+            if($solicitud->cTheory == 0){
+                $solicitud->cTheory = "";
+            }
+
+            if($solicitud->cPractice == 0){
+                $solicitud->cPractice = "";
+            }
+
+            if($solicitud->cSeminar == 0){
+                $solicitud->cSeminar = "";
+            }    
+        }
+
+        $date = date('d-m-Y');
+        $course = "$course";
+        $view =  \View::make('pdf.elections', compact('arraySolicitudes', 'date', 'course'))->render();
+        $pdf = PDF::loadHTML($view);
+        return $pdf->stream('elections');
+    }
+
+
+    public function getArraySolicitudes($course,Request $request) {
+
+        $subj_id = $request->get('subject_id');
+        $teacher = $request->get('teacher');
+
+        $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
+            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->where('course', '=', $course)
+            ->subjectid($subj_id)
+            ->teacher($teacher)
+            ->orderBy('subjects.name')
+            ->get();
+
+        foreach ($arraySolicitudes as $key => $solicitud) {
+            if($solicitud->cTheory == 0){
+                $solicitud->cTheory = "";
+            }
+
+            if($solicitud->cPractice == 0){
+                $solicitud->cPractice = "";
+            }
+
+            if($solicitud->cSeminar == 0){
+                $solicitud->cSeminar = "";
+            }    
+        }
+
+        return $arraySolicitudes;
     }
 
     public function getCreate() 

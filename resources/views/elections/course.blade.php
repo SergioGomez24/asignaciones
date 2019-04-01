@@ -6,6 +6,8 @@
       <div class="card-header">
         <h4 class="text-center"> Elecciones Curso {{$course}} </h4>
         <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/elections') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
+        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/elections/pdf/'.$course) }}"><img src="{{ asset('img/descarga.png') }}" height="15" width="15"/></a></button>
+
 
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>
         <div class="collapse" id="collapseExample">
