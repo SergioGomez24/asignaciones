@@ -38,6 +38,7 @@
       </div>
 
       <div class="card-body">
+        @if($coorPermission == 1)
         <table class="table table-striped" id="miTabla">
           <thead>
             <tr>
@@ -52,7 +53,6 @@
             </tr>
           </thead>
           <tbody>
-            @if($coorPermission == 1)
             @foreach( $arraySolicitudesCoor as $key => $solicitud )
               <tr>
                 <td>{{$solicitud->name}}</td>
@@ -76,7 +76,7 @@
               {{ csrf_field() }}
               <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()">Enviar definitivamente</button>
             </form>
-            @endif
+            
             {!! $arraySolicitudesCoor->render() !!}
           </tbody>
           <tfoot>
@@ -86,6 +86,9 @@
             </tr>
           </tfoot>
         </table>
+        @else
+          <h6>Las solicitudes del coordinador no está disponible</h6>
+        @endif
       </div>
 	  </div>
 	</div>

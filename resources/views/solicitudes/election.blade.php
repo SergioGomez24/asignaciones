@@ -8,10 +8,15 @@
         <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
       </div>
       <div class="card-body">	
+      @if($cont == 0)
+        <h5>No hay elecciones creadas</h5>
+      @else 
 		  @foreach( $arrayElecciones as $key => $cursoEleccion )
 			<h5><a href="{{ url('/solicitudes/create/' . $cursoEleccion->course ) }}" style="color: #000000;">Curso {{$cursoEleccion->course}}</a></h5>
 		    </br>
 		  @endforeach
+      @endif
+      </div>
 	  </div>
   </div>
 </div>

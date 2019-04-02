@@ -6,8 +6,9 @@
       <div class="card-header">
         <h4 class="text-center"> Elecciones Curso {{$course}} </h4>
         <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/elections') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
+        @if($elecPermission == 1)
         <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/elections/pdf/'.$course) }}"><img src="{{ asset('img/descarga.png') }}" height="15" width="15"/></a></button>
-
+        @endif
 
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>
         <div class="collapse" id="collapseExample">
@@ -39,6 +40,7 @@
         </div>
       </div>
       <div class="card-body">
+        @if($elecPermission == 1)
         <table class="table table-striped" id="miTabla">
           <thead>
             <tr>
@@ -50,7 +52,6 @@
             </tr>
           </thead>
           <tbody>
-            @if($elecPermission == 1)
             @foreach( $arraySolicitudes as $key => $solicitud )
               <tr>
                 <td>{{$solicitud->name}}</td>
@@ -60,9 +61,11 @@
                 <td class="text-center">{{$solicitud->cSeminar}}</td>
               </tr>
             @endforeach
-            @endif
           </tbody>
         </table>
+        @else
+        <h6>La elección seleccionada no está disponible</h6>
+        @endif
       </div>
     </div>
   </div>

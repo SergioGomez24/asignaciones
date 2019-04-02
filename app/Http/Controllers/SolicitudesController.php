@@ -19,8 +19,13 @@ class SolicitudesController extends Controller
 	public function getIndex() 
     {
     	$arrayElecciones = Election::select('course')->distinct()->get();
+        $cont = 0;
 
-    	return view('solicitudes.index', compact('arrayElecciones'));
+        foreach ($arrayElecciones as $key => $e) {
+            $cont = $cont + 1;
+        }
+
+    	return view('solicitudes.index', compact('arrayElecciones', 'cont'));
     }
 
     public function getCourseIndex($course, Request $request)
@@ -94,8 +99,13 @@ class SolicitudesController extends Controller
     public function getCreateCourse() 
     {
         $arrayElecciones = Election::select('course')->distinct()->get();
+        $cont = 0;
 
-        return view('solicitudes.election',compact('arrayElecciones'));
+        foreach ($arrayElecciones as $key => $e) {
+            $cont = $cont + 1;
+        }
+
+        return view('solicitudes.election',compact('arrayElecciones', 'cont'));
     }
 
     public function getCreate($course) 
@@ -116,19 +126,18 @@ class SolicitudesController extends Controller
         foreach ($array as $key => $s) {
             foreach ($arrayAsignaturas as $key => $a) {
                 if($s->subject_id == $a->id){
-                    $arrayAsignaturas->pull($a->id);
-
+                   // $arrayAsignaturas->pull($a->id);
                 } 
             }
         }
-
-        dd($arrayA);
+        
 
         foreach ($eleccionProfesor as $eleccion) {
             $cAvailable = $eleccion->cAvailable;
+            $profPermission = $eleccion->profPermission;
         }
 
-        if($cAvailable == 0){
+        if($cAvailable == 0 || $profPermission == 0){
             return view('home');
         }else{
 

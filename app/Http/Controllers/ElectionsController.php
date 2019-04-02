@@ -18,8 +18,13 @@ class ElectionsController extends Controller
     public function getIndex()
     {
         $arrayElecciones = Election::select('course')->distinct()->get();
+        $cont = 0;
 
-        return view('elections.index',compact('arrayElecciones'));
+        foreach ($arrayElecciones as $key => $e) {
+            $cont = $cont + 1;
+        }
+
+        return view('elections.index',compact('arrayElecciones', 'cont'));
 
     }
 
