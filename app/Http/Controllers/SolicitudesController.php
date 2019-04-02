@@ -109,6 +109,21 @@ class SolicitudesController extends Controller
                                     ->where('course', '=', $course)
                                     ->get();
 
+        $array = Solicitude::where('teacher', '=', $usuario)
+                            ->where('course', '=', $course)
+                            ->get();
+
+        foreach ($array as $key => $s) {
+            foreach ($arrayAsignaturas as $key => $a) {
+                if($s->subject_id == $a->id){
+                    $arrayAsignaturas->pull($a->id);
+
+                } 
+            }
+        }
+
+        dd($arrayA);
+
         foreach ($eleccionProfesor as $eleccion) {
             $cAvailable = $eleccion->cAvailable;
         }

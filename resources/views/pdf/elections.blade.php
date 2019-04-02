@@ -10,15 +10,15 @@
         font-family: "Times New Roman";
     }
     </style>
-
     
   </head>
   <body>
-    <img src="{{ asset('img/logoUCA.png') }}"/>
-    <h6 style="float: right; margin-right: 210px;">ESCUELA SUPERIOR DE INGENIERÍA</h6>
-    <h6 class="text-center">Elecciones Curso {{ $course }}</h6>
+    <img src="{{ asset('img/logoUCA.png') }}" align="left"  />
+    <h6 style="text-align: center; margin-right: 100px;">ESCUELA SUPERIOR DE INGENIERÍA</h6>
+    <h6 style="text-align: center; margin-right: 100px;">Grado en Ingeniería Informática</h6>
+    <h6 style="text-align: center; margin-right: 100px;">Elecciones Curso {{ $course }}</h6>
        
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="margin-top: 40px;">
       <thead class="thead-light">
         <tr>
           <th scope="col">Asignatura</th>
