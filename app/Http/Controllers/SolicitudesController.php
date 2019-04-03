@@ -16,7 +16,8 @@ use Notification;
 
 class SolicitudesController extends Controller
 {
-	public function getIndex() 
+    /* Funciones para solicitudes Profesor */
+	public function getCourseTeacher() 
     {
     	$arrayElecciones = Election::select('course')->distinct()->get();
         $cont = 0;
@@ -25,10 +26,10 @@ class SolicitudesController extends Controller
             $cont = $cont + 1;
         }
 
-    	return view('solicitudes.index', compact('arrayElecciones', 'cont'));
+    	return view('solicitudes.teacher.course', compact('arrayElecciones', 'cont'));
     }
 
-    public function getCourseIndex($course, Request $request)
+    public function getTeacherIndex($course, Request $request)
     {
         $usuario = Auth()->user()->name;
         $arrayAsignaturas = Subject::all();
@@ -36,14 +37,6 @@ class SolicitudesController extends Controller
         $subj_id = $request->get('subject_id');
         $teacher = $request->get('teacher');
         $contCréditosProf = 0;
-
-        $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
-            ->where('course', '=', $course)
-            ->subjectid($subj_id)
-            ->teacher($teacher)
-            ->orderBy('subjects.name')
-            ->simplePaginate(7);
 
         $arraySolicitudesProf = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
             ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
@@ -69,13 +62,63 @@ class SolicitudesController extends Controller
         }
 
 
-        return view('solicitudes.course')->with('arraySolicitudes', $arraySolicitudes)
-                                          ->with('arraySolicitudesProf', $arraySolicitudesProf)
+        return view('solicitudes.teacher.index')->with('arraySolicitudesProf', $arraySolicitudesProf)
                                           ->with('arrayAsignaturas', $arrayAsignaturas)
                                           ->with('arrayProfesores', $arrayProfesores)
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher', $teacher)
                                           ->with('contCréditosProf', $contCréditosProf)
+                                          ->with('course', $course)
+                                          ->with('dirPermission', $dirPermission)
+                                          ->with('profPermission', $profPermission)
+                                          ->with('coorPermission', $coorPermission);
+
+    }
+
+    /* Funciones para solicitudes Director */
+    public function getCourseDirector() 
+    {
+        $arrayElecciones = Election::select('course')->distinct()->get();
+        $cont = 0;
+
+        foreach ($arrayElecciones as $key => $e) {
+            $cont = $cont + 1;
+        }
+
+        return view('solicitudes.director.course', compact('arrayElecciones', 'cont'));
+    }
+
+    public function getDirectorIndex($course, Request $request) {
+
+        $usuario = Auth()->user()->name;
+        $arrayAsignaturas = Subject::all();
+        $arrayProfesores = Teacher::all();
+        $subj_id = $request->get('subject_id');
+        $teacher = $request->get('teacher');
+
+        $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
+            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->where('course', '=', $course)
+            ->subjectid($subj_id)
+            ->teacher($teacher)
+            ->orderBy('subjects.name')
+            ->simplePaginate(7);
+
+        $eleccionProfesor = Election::where('teacher', '=', $usuario)
+                             ->where('course', '=', $course)
+                             ->get();
+
+        foreach ($eleccionProfesor as $eleccion) {
+            $dirPermission = $eleccion->dirPermission;
+            $profPermission = $eleccion->profPermission;
+            $coorPermission = $eleccion->coorPermission;
+        }
+
+        return view('solicitudes.director.index')->with('arraySolicitudes', $arraySolicitudes)
+                                          ->with('arrayAsignaturas', $arrayAsignaturas)
+                                          ->with('arrayProfesores', $arrayProfesores)
+                                          ->with('subj_id', $subj_id)
+                                          ->with('teacher', $teacher)
                                           ->with('course', $course)
                                           ->with('dirPermission', $dirPermission)
                                           ->with('profPermission', $profPermission)
@@ -96,7 +139,7 @@ class SolicitudesController extends Controller
         return response()->json($solicitud);
     }
 
-    public function getCreateCourse() 
+    public function getCourse() 
     {
         $arrayElecciones = Election::select('course')->distinct()->get();
         $cont = 0;
@@ -105,7 +148,7 @@ class SolicitudesController extends Controller
             $cont = $cont + 1;
         }
 
-        return view('solicitudes.election',compact('arrayElecciones', 'cont'));
+        return view('solicitudes.course',compact('arrayElecciones', 'cont'));
     }
 
     public function getCreate($course) 
@@ -187,6 +230,8 @@ class SolicitudesController extends Controller
 
     public function putEdit(Request $request, $id)
     {
+        $role = Auth()->user()->role;
+
         $cTnew = $request->input('cTheory');
         $cPnew = $request->input('cPractice');
         $cSnew = $request->input('cSeminar');
@@ -257,7 +302,13 @@ class SolicitudesController extends Controller
         $a->cPractice = $cPnew;
         $a->save();
         Notification::success('La solicitud ha sido modificada exitosamente!');
-        return redirect('/solicitudes/course/'. $c);
+
+        if ($role == "Profesor") {
+            return redirect('/solicitudes/teacher/index/'. $c);
+        }else{
+            return redirect('/solicitudes/director/index/'. $c);
+        }
+        
     }
 
     public function deleteSolicitude(Request $request, $id)
@@ -265,6 +316,8 @@ class SolicitudesController extends Controller
         $a = Solicitude::findOrFail($id);
         $c = $a->course;
         $a->delete();
+
+        $role = Auth()->user()->role;
 
         $eleccion = Election::where('teacher', $a->teacher)
                              ->where('course', $c)
@@ -276,7 +329,12 @@ class SolicitudesController extends Controller
         }
 
         Notification::success('La solicitud fue eliminada exitosamente!');
-        return redirect('/solicitudes/course/'. $c);
+
+        if ($role == "Profesor") {
+            return redirect('/solicitudes/teacher/index/'. $c);
+        }else{
+            return redirect('/solicitudes/director/index/'. $c);
+        }
     }
 
     public function editPermissionProf(Request $request, $course)

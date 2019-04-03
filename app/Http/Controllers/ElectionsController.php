@@ -15,7 +15,7 @@ use Notification;
 
 class ElectionsController extends Controller
 {
-    public function getIndex()
+    public function getCourse()
     {
         $arrayElecciones = Election::select('course')->distinct()->get();
         $cont = 0;
@@ -24,11 +24,11 @@ class ElectionsController extends Controller
             $cont = $cont + 1;
         }
 
-        return view('elections.index',compact('arrayElecciones', 'cont'));
+        return view('elections.course',compact('arrayElecciones', 'cont'));
 
     }
 
-    public function getCourseIndex($course, Request $request)
+    public function getIndex($course, Request $request)
     {
         $arrayAsignaturas = Subject::all();
         $arrayProfesores = Teacher::all();
@@ -43,7 +43,7 @@ class ElectionsController extends Controller
             $elecPermission = $eleccion->elecPermission;
         }
 
-        return view('elections.course')->with('arraySolicitudes', $arraySolicitudes)
+        return view('elections.index')->with('arraySolicitudes', $arraySolicitudes)
                                         ->with('arrayAsignaturas', $arrayAsignaturas)
                                           ->with('arrayProfesores', $arrayProfesores)
                                           ->with('elecPermission', $elecPermission)

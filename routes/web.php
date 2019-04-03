@@ -70,8 +70,9 @@ Route::group(['middleware' => 'auth'], function() {
 
 /* Rutas de elecciones */
 Route::group(['middleware' => 'auth'], function() {
-	Route::get('elections', 'ElectionsController@getIndex');
-	Route::get('elections/course/{course}', 'ElectionsController@getCourseIndex');
+
+	Route::get('elections', 'ElectionsController@getCourse');
+	Route::get('elections/index/{course}', 'ElectionsController@getIndex');
 
 	Route::get('json-election', 'ElectionsController@getElection');
 
@@ -83,15 +84,20 @@ Route::group(['middleware' => 'auth'], function() {
 /* Rutas de Solicitudes */
 Route::group(['middleware' => 'auth'], function() {
 
-	Route::get('solicitudes', 'SolicitudesController@getIndex');
+	/* Rutas de Solicitudes de Profesores */
 
-	Route::get('solicitudes/course/{course}', 'SolicitudesController@getCourseIndex');
+	Route::get('solicitudes/teacher', 'SolicitudesController@getCourseTeacher');
+	Route::get('solicitudes/teacher/index/{course}', 'SolicitudesController@getTeacherIndex');
+
+	/* Rutas de Solicitudes de Director */
+	Route::get('solicitudes/director', 'SolicitudesController@getCourseDirector');
+	Route::get('solicitudes/director/index/{course}', 'SolicitudesController@getDirectorIndex');
 
 	Route::get('index-filters', 'SolicitudesController@getCourseIndexFilters');
-
-	Route::get('solicitudes/election', 'SolicitudesController@getCreateCourse');
-	Route::get('solicitudes/create/{course}', 'SolicitudesController@getCreate');
 	Route::get('json-solicitude', 'SolicitudesController@getSolicitude');
+
+	Route::get('solicitudes/course', 'SolicitudesController@getCourse');
+	Route::get('solicitudes/create/{course}', 'SolicitudesController@getCreate');
 	Route::post('solicitudes/create/{course}', 'SolicitudesController@postCreate');
 
 	Route::get('solicitudes/edit/{id}', 'SolicitudesController@getEdit');
@@ -108,8 +114,8 @@ Route::group(['middleware' => 'auth'], function() {
 /* Rutas de Coordinadores */
 Route::group(['middleware' => 'auth'], function() {
 
-	Route::get('coordinators', 'CoordinatorsController@getIndex');
-	Route::get('coordinators/course/{course}', 'CoordinatorsController@getCourse');
+	Route::get('coordinators', 'CoordinatorsController@getCourse');
+	Route::get('coordinators/index/{course}', 'CoordinatorsController@getIndex');
 
 	Route::get('coordinators/edit/{id}', 'CoordinatorsController@getEdit');
 	Route::put('coordinators/edit/{id}', 'CoordinatorsController@putEdit');

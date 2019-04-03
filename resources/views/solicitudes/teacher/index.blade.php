@@ -5,20 +5,20 @@
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Selecciones Curso {{$course}} </h4>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/coordinators') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
+        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/solicitudes/teacher') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
 
-        @if($coorPermission == 1)
-        <form name="formPermission" action="{{action('SolicitudesController@editPermissionCoor', $course)}}" method="POST" style="display:inline">
+        @if($profPermission == 1)
+        <form name="formPermission" action="{{action('SolicitudesController@editPermissionProf', $course)}}" method="POST">
           {{ method_field('POST') }}
           {{ csrf_field() }}
           <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Enviar</button>
         </form>
-        
+
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>
         @endif
         <div class="collapse" id="collapseExample">
           <div class="card card-body">
-            <form href = "coordinators/course/{$course}" method="GET">
+            <form href = "solicitudes/course/{$course}" method="GET">
               <div class="group row">
 
                 <div class="col-md-3">
@@ -46,50 +46,43 @@
       </div>
 
       <div class="card-body">
-        @if($coorPermission == 1)
-        <table class="table table-striped" id="miTabla">
-          <thead>
-            <tr>
-              <th scope="col">Asignatura</th>
-              <th scope="col">Profesor</th>
-              <th scope="col">Créditos Teoría</th>
-              <th scope="col">Créditos Prácticas</th>
-              <th scope="col">Créditos Seminarios</th>
-              <th scope="col">Total</th>
-              <th scope="col">Editar</th>
-              <th scope="col">Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach( $arraySolicitudesCoor as $key => $solicitud )
+        @if($profPermission == 1)
+          <h6 style="float: right; font-weight: bold;">Créditos acumulados: {{$contCréditosProf}}</h6>
+          <table class="table table-striped" id="miTabla">
+            <thead>
               <tr>
-                <td>{{$solicitud->name}}</td>
-                <td>{{$solicitud->teacher}}</td>
-                <td>{{$solicitud->cTheory}}</td>
-                <td>{{$solicitud->cPractice}}</td>
-                <td>{{$solicitud->cSeminar}}</td>
-                <td></td>
-                <td><a class="btn btn-secondary btn-sm" href="{{ url('/coordinators/edit/'.$solicitud->id) }}">Editar</a></td>
-                <td>
-                  <form name="formBorrar" action="{{action('CoordinatorsController@deleteSolicitudeCoor', $solicitud->id)}}" method="POST" style="display:inline">
-                    {{ method_field('DELETE') }}
-                    {{ csrf_field() }}
-                    <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
-                  </form>
-                </td>
+                <th scope="col">Asignatura</th>
+                <th scope="col">Profesor</th>
+                <th scope="col">Créditos Teoría</th>
+                <th scope="col">Créditos Prácticas</th>
+                <th scope="col">Créditos Seminarios</th>
+                <th scope="col">Total</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
               </tr>
-            @endforeach
-            {!! $arraySolicitudesCoor->render() !!}
+            </thead>
+            <tbody>
+              @foreach( $arraySolicitudesProf as $key => $solicitud )
+                <tr>
+                  <td>{{$solicitud->name}}</td>
+                  <td>{{$solicitud->teacher}}</td>
+                  <td>{{$solicitud->cTheory}}</td>
+                  <td>{{$solicitud->cPractice}}</td>
+                  <td>{{$solicitud->cSeminar}}</td>
+                  <td></td>
+                  <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/edit/'.$solicitud->id) }}">Editar</a></td>
+                  <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
+                  {{ method_field('DELETE') }}
+                  {{ csrf_field() }}
+                  <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
+                  </form></td>
+                </tr>
+              @endforeach
+            {!! $arraySolicitudesProf->render() !!}
           </tbody>
-          <tfoot>
-            <tr>
-              <td colspan=5 style="font-weight: bold;">Total</td>
-              <td></td>
-            </tr>
-          </tfoot>
         </table>
         @else
-          <h6>Las solicitudes del coordinador no está disponible</h6>
+          <h6>Las solicitudes no están disponibles</h6>
         @endif
       </div>
     </div>
@@ -98,7 +91,7 @@
 
 <script language="JavaScript">
 
-  $(document).ready(function(){
+  $(document).ready(function() {
     initTableSorter();
     calcular();
   });
@@ -114,8 +107,6 @@
   function calcular() {
     // obtenemos todas las filas del tbody
     var filas=document.querySelectorAll("#miTabla tbody tr");
- 
-    var total=0;
  
     // recorremos cada una de las filas
     filas.forEach(function(e) {
@@ -146,16 +137,8 @@
  
         // mostramos el total por fila
         columnas[5].textContent=(cT+cP+cS).toFixed(1);
- 
-        total += cT+cP+cS;
     });
- 
-    // mostramos la suma total
-    var filas=document.querySelectorAll("#miTabla tfoot tr td");
-    filas[1].textContent = total.toFixed(1);
   }
-
-
 
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');
@@ -169,8 +152,8 @@
   }
 
   function validar(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres enviar las solicitudes definitivamente?'
-      + ' Una vez enviadas ya no podras modificarlas');
+    var mensaje = confirm('¿Estas seguro de que quieres enviar las solicitudes definitivamente?'+
+                          ' Una vez enviadas ya no podras modificarlas');
     var enviar = false;
 
     if(mensaje) {

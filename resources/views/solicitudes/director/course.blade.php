@@ -10,14 +10,14 @@
       <div class="card-body">
       @if($cont == 0)
         <h5>No hay elecciones creadas</h5>
-      @else 	
-		  @foreach( $arrayElecciones as $key => $eleccion )
-			<h5><a href="{{ url('/solicitudes/course/' . $eleccion->course ) }}" style="color: #000000;">Curso {{$eleccion->course}}</a></h5>
-		    </br>
-		  @endforeach
+      @else   
+      @foreach( $arrayElecciones as $key => $eleccion )
+      <h5><a href="{{ url('/solicitudes/director/index/' . $eleccion->course ) }}" style="color: #000000;">Curso {{$eleccion->course}}</a></h5>
+        </br>
+      @endforeach
       @endif
     </div>
-	  </div>
+    </div>
   </div>
 </div>
 @stop

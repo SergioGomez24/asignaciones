@@ -11,14 +11,19 @@ use Notification;
 
 class CoordinatorsController extends Controller
 {
-    public function getIndex() 
+    public function getCourse() 
     {
         $arrayElecciones = Election::select('course')->distinct()->get();
+        $cont = 0;
 
-        return view('solicitudes.coordinator.index', compact('arrayElecciones'));
+        foreach ($arrayElecciones as $key => $e) {
+            $cont = $cont + 1;
+        }
+
+        return view('solicitudes.coordinator.course', compact('arrayElecciones', 'cont'));
     }
 
-    public function getCourse($course, Request $request)
+    public function getIndex($course, Request $request)
     {
         $usuario = Auth()->user()->name;
         $arrayAsignaturas = Subject::all();
@@ -45,7 +50,7 @@ class CoordinatorsController extends Controller
             $coorPermission = $eleccion->coorPermission;
         }
 
-        return view('solicitudes.coordinator.course')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
+        return view('solicitudes.coordinator.index')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
                                                       ->with('arrayAsignaturas', $arrayAsignaturas)
                                                       ->with('arrayProfesores', $arrayProfesores)
                                                       ->with('subj_id', $subj_id)
