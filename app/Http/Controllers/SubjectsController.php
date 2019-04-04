@@ -61,68 +61,76 @@ class SubjectsController extends Controller
         return response()->json($subjects);
     }
 
-    public function getSubject() {
-        $subject_id = Input::get('id');
-
-        $subject = Subject::where('id', '=', $subject_id)->get();
-
-        return response()->json($subject);
+    public function getSubject(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Subject::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
     }
 
-    public function getCertification() {
-        $certification_id = Input::get('id');
-
-        $certification = Certification::where('id', '=', $certification_id)->get();
-
-        return response()->json($certification);
+    public function getCertification(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Certification::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
     }
 
-    public function getArea() {
-        $area_id = Input::get('id');
-
-        $area = Area::where('id', '=', $area_id)->get();
-
-        return response()->json($area);
+    public function getArea(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Area::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
     }
 
-    public function getCampus() {
-        $campus_id = Input::get('id');
-
-        $campus = Campus::where('id', '=', $campus_id)->get();
-
-        return response()->json($campus);
+    public function getCampus(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Campus::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
     }
 
-    public function getCenter() {
-        $center_id = Input::get('id');
-
-        $center = Center::where('id', '=', $center_id)->get();
-
-        return response()->json($center);
+    public function getCenter(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Center::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
     }
 
-    public function getDuration() {
-        $duration_id = Input::get('id');
-
-        $duration = Durationsubject::where('id', '=', $duration_id)->get();
-
-        return response()->json($duration);
+    public function getDuration(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Durationsubject::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
     }
 
-    public function getImparted() {
-        $imparted_id = Input::get('id');
-
-        $imparted = Coursesubject::where('id', '=', $imparted_id)->get();
-
-        return response()->json($imparted);
+    public function getImparted(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Coursesubject::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
     }
 
-    public function getTypeSubject() {
-        $typeSubject_id = Input::get('id');
-
-        $typeSubject = Typesubject::where('id', '=', $typeSubject_id)->get();
-
-        return response()->json($typeSubject);
+    public function getTypeSubject(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Typesubject::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
     }
 
     public function getCreate() 
