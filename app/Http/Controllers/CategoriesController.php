@@ -15,6 +15,14 @@ class CategoriesController extends Controller
     	return view('settings.categories.index', ['arrayCategorias' => $arrayCategorias]);
     }
 
+    public function getCategory() {
+        $category_id = Input::get('id');
+
+        $category = Category::where('id', '=', $category_id)->get();
+
+        return response()->json($category);
+    }
+
 	public function getCreate() 
     {
     	return view('settings.categories.create');

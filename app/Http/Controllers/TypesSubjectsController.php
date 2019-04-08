@@ -15,6 +15,15 @@ class TypesSubjectsController extends Controller
     	return view('settings.typesSubjects.index', ['arrayTiposAsignatura' => $arrayTiposAsignatura]);
     }
 
+    public function getTypeSubject(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Typesubject::find($id);
+            
+            return response()->json($info);
+        }
+    }
+
 	public function getCreate() 
     {
     	return view('settings.typesSubjects.create');

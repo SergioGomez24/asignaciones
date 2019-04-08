@@ -35,7 +35,7 @@ class ElectionsController extends Controller
         
         $arraySolicitudes = $this->getArraySolicitudes($course, $request);
 
-        $eleccionDir = Election::where('teacher', 'Jose Garcia')
+        $eleccionDir = Election::where('teacher_id', '1')
                                     ->where('course', $course)
                                     ->get();
 
@@ -45,17 +45,17 @@ class ElectionsController extends Controller
 
         return view('elections.index')->with('arraySolicitudes', $arraySolicitudes)
                                         ->with('arrayAsignaturas', $arrayAsignaturas)
-                                          ->with('arrayProfesores', $arrayProfesores)
-                                          ->with('elecPermission', $elecPermission)
-                                          ->with('course', $course);
+                                        ->with('arrayProfesores', $arrayProfesores)
+                                        ->with('elecPermission', $elecPermission)
+                                        ->with('course', $course);
     }
 
     public function elections($course) 
     {
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
-            ->orderBy('solicitudes.teacher')
+            ->orderBy('solicitudes.teacher_id')
             ->get();
 
         foreach ($arraySolicitudes as $key => $solicitud) {
@@ -83,13 +83,13 @@ class ElectionsController extends Controller
     public function getArraySolicitudes($course,Request $request) {
 
         $subj_id = $request->get('subject_id');
-        $teacher = $request->get('teacher');
+        $teacher_id = $request->get('teacher_id');
 
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
             ->subjectid($subj_id)
-            ->teacher($teacher)
+            ->teacherid($teacher_id)
             ->orderBy('subjects.name')
             ->get();
 
@@ -123,7 +123,7 @@ class ElectionsController extends Controller
 
     	foreach ($arrayProfesores as $key => $profesor) {
 			$e = new Election;
-			$e->teacher = $profesor->name;
+			$e->teacher_id = $profesor->id;
 			$e->course = $request->input('course');
 			$e->cAvailable = $profesor->cInitial;
             $e->dirPermission = false;
@@ -174,7 +174,4 @@ class ElectionsController extends Controller
         Notification::success('La elección fue eliminada exitosamente!');
         return redirect('/settings/elections');
     }
-
-
-
 }

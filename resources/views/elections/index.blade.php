@@ -30,7 +30,7 @@
                   <select name="teacher" id="teacher" class="form-control">
                     <option value="">Profesores</option>
                     @foreach($arrayProfesores as $p)
-                      <option value="{{$p->name}}">{{$p->name}}</option>
+                      <option value="{{$p->id}}">{{$p->name}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -56,7 +56,7 @@
             @foreach( $arraySolicitudes as $key => $solicitud )
               <tr>
                 <td>{{$solicitud->name}}</td>
-                <td>{{$solicitud->teacher}}</td>
+                <td>{{$solicitud->teacher_id}}</td>
                 <td class="text-center">{{$solicitud->cTheory}}</td>
                 <td class="text-center">{{$solicitud->cPractice}}</td>
                 <td class="text-center">{{$solicitud->cSeminar}}</td>
@@ -82,7 +82,7 @@
   // call the tablesorter plugin
     $('table').tablesorter({
     // Sort on the second column, in ascending order
-      sortList: [[1,0]]
+     // sortList: [[1,0]]
     });
   }
 

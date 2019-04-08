@@ -15,6 +15,15 @@ class AreasController extends Controller
     	return view('settings.areas.index', ['arrayAreas' => $arrayAreas]);
     }
 
+    public function getArea(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Area::find($id);
+            
+            return response()->json($info);
+        }
+    }
+
 	public function getCreate() 
     {
     	return view('settings.areas.create');

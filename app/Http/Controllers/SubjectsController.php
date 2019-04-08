@@ -65,70 +65,7 @@ class SubjectsController extends Controller
         if($request->ajax()){
             $id = $request->id;
             $info = Subject::find($id);
-            //echo json_decode($info);
-            return response()->json($info);
-        }
-    }
 
-    public function getCertification(Request $request) {
-        if($request->ajax()){
-            $id = $request->id;
-            $info = Certification::find($id);
-            //echo json_decode($info);
-            return response()->json($info);
-        }
-    }
-
-    public function getArea(Request $request) {
-        if($request->ajax()){
-            $id = $request->id;
-            $info = Area::find($id);
-            //echo json_decode($info);
-            return response()->json($info);
-        }
-    }
-
-    public function getCampus(Request $request) {
-        if($request->ajax()){
-            $id = $request->id;
-            $info = Campus::find($id);
-            //echo json_decode($info);
-            return response()->json($info);
-        }
-    }
-
-    public function getCenter(Request $request) {
-        if($request->ajax()){
-            $id = $request->id;
-            $info = Center::find($id);
-            //echo json_decode($info);
-            return response()->json($info);
-        }
-    }
-
-    public function getDuration(Request $request) {
-        if($request->ajax()){
-            $id = $request->id;
-            $info = Durationsubject::find($id);
-            //echo json_decode($info);
-            return response()->json($info);
-        }
-    }
-
-    public function getImparted(Request $request) {
-        if($request->ajax()){
-            $id = $request->id;
-            $info = Coursesubject::find($id);
-            //echo json_decode($info);
-            return response()->json($info);
-        }
-    }
-
-    public function getTypeSubject(Request $request) {
-        if($request->ajax()){
-            $id = $request->id;
-            $info = Typesubject::find($id);
-            //echo json_decode($info);
             return response()->json($info);
         }
     }
@@ -169,7 +106,7 @@ class SubjectsController extends Controller
         $a->duration_id = $request->input('duration_id');
         $a->imparted_id = $request->input('imparted_id');
         $a->typeSubject_id = $request->input('typeSubject_id');
-        $a->coordinator = $request->input('coordinator');
+        $a->coordinator_id = $request->input('coordinator_id');
         $a->save();
         Notification::success('La asignatura se ha guardado exitosamente!');
         return redirect('/subjects');
@@ -199,6 +136,9 @@ class SubjectsController extends Controller
 
         $type_id = $asignatura->typeSubject_id;
         $typeSubject = Typesubject::findOrFail($type_id);
+
+        $coor_id = $asignatura->coordinator_id;
+        $teacher = Teacher::findOrFail($coor_id);
  
         $arrayTitulaciones = Certification::all();
         $arrayAreas = Area::all();
@@ -224,6 +164,7 @@ class SubjectsController extends Controller
                                     ->with('duration',$duration)
                                     ->with('imparted',$imparted)
                                     ->with('typeSubject',$typeSubject)
+                                    ->with('teacher', $teacher)
                                     ->with('arrayProfesores',$arrayProfesores);
     }
 
@@ -242,7 +183,7 @@ class SubjectsController extends Controller
         $a->duration_id = $request->input('duration_id');
         $a->imparted_id = $request->input('imparted_id');
         $a->typeSubject_id = $request->input('typeSubject_id');
-        $a->coordinator = $request->input('coordinator');
+        $a->coordinator_id = $request->input('coordinator_id');
         $a->save();
         Notification::success('La asignatura ha sido modificada exitosamente!');
         return redirect('/subjects');

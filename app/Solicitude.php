@@ -14,9 +14,9 @@ class Solicitude extends Model
     		return $query->where('subject_id', '=', $subject_id);
     }
 
-    public function scopeTeacher($query, $teacher){
+    public function scopeTeacherId($query, $teacher_id){
 
-    	if($teacher)
-    		return $query->where('teacher', '=', $teacher);
+    	if($teacher_id)
+    		return $query->where('teacher_id', '=', $teacher_id);
     }
 }

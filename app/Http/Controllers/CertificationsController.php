@@ -15,6 +15,15 @@ class CertificationsController extends Controller
     	return view('settings.certifications.index', ['arrayTitulaciones' => $arrayTitulaciones]);
     }
 
+    public function getCertification(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Certification::find($id);
+            
+            return response()->json($info);
+        }
+    }
+
 	public function getCreate() 
     {
     	return view('settings.certifications.create');
