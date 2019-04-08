@@ -107,7 +107,8 @@ Route::group(['middleware' => 'auth'], function() {
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('coordinators', 'CoordinatorsController@getCourse');
-	Route::get('coordinators/index/{course}', 'CoordinatorsController@getIndex');
+	Route::get('coordinators/subjects/{course}', 'CoordinatorsController@getSubjectsCoor');
+	Route::get('coordinators/index/{course}/{subject}', 'CoordinatorsController@getIndex');
 
 	Route::get('coordinators/edit/{id}', 'CoordinatorsController@getEdit');
 	Route::put('coordinators/edit/{id}', 'CoordinatorsController@putEdit');

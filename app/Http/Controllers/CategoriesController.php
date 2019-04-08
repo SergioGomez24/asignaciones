@@ -15,12 +15,13 @@ class CategoriesController extends Controller
     	return view('settings.categories.index', ['arrayCategorias' => $arrayCategorias]);
     }
 
-    public function getCategory() {
-        $category_id = Input::get('id');
+    public function getCategory(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Category::find($id);
 
-        $category = Category::where('id', '=', $category_id)->get();
-
-        return response()->json($category);
+            return response()->json($info);
+        }
     }
 
 	public function getCreate() 

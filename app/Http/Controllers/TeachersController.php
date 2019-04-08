@@ -38,20 +38,22 @@ class TeachersController extends Controller
                                     ->with('area',$area);
     }
 
-    public function getTeacher() {
-        $teacher_id = Input::get('id');
+    public function getTeacher(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Teacher::find($id);
 
-        $teacher = Teacher::where('id', '=', $teacher_id)->get();
-
-        return response()->json($teacher);
+            return response()->json($info);
+        }
     }
 
-    public function getUser() {
-        $user_id = Input::get('id');
+    public function getUser(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = User::find($id);
 
-        $user = User::where('id', '=', $user_id)->get();
-
-        return response()->json($user);
+            return response()->json($info);
+        }
     }
 
     public function getCreate() 

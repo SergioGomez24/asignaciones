@@ -13,6 +13,7 @@ use App\Coursesubject;
 use App\Durationsubject;
 use App\Typesubject;
 use App\User;
+use App\Teacher;
 use Notification;
 
 class SubjectsController extends Controller

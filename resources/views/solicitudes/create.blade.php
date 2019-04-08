@@ -201,67 +201,80 @@
 
   $('#subject').on('change', function(e) {
     subject_id = e.target.value;
-    $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
-      $('#code').empty();
-      $('#coordinator').empty();
-      $('#cT').empty();
-      $('#cP').empty();
-      $('#cS').empty();
-      $.each(data, function(index, subjectObj) {
-        $('#code').append('<p>'+ subjectObj.code +'</p>');
-        $('#coordinator').append('<p>'+ subjectObj.coordinator +'</p>');
-        $('#cT').append('<p>'+subjectObj.cTheory+'</p>');
-        $('#cP').append('<p>'+subjectObj.cPractice+'</p>');
-        $('#cS').append('<p>'+subjectObj.cSeminar+'</p>');
-        subObj_credT = subjectObj.cTheory;
-        subObj_credP = subjectObj.cPractice;
-        subObj_credS = subjectObj.cSeminar;
-        $.get('/asignaciones/public/json-certification?id='+ subjectObj.certification_id, function(d) {
-          $('#cert').empty();
-          $.each(d, function(index, certificationObj) {
-            $('#cert').append('<p>'+ certificationObj.name +'</p>');
-          })
+
+    $.ajax({
+      url: "{{url('json-subject')}}",
+      type:"GET", 
+      data: {"id":subject_id}, 
+      success: function(result){
+        $("#code").text(result.code);
+        $("#coordinator").text(result.coordinator_id);
+        $("#cT").text(result.cTheory);  
+        $("#cP").text(result.cPractice);
+        $("#cS").text(result.cSeminar);
+        subObj_credT = result.cTheory;
+        subObj_credP = result.cPractice;
+        subObj_credS = result.cSeminar;
+        $.ajax({
+          url: "{{url('json-certification')}}",
+          type:"GET", 
+          data: {"id":result.certification_id}, 
+          success: function(result){
+            $("#cert").text(result.name);
+          }
         });
-        $.get('/asignaciones/public/json-area?id='+ subjectObj.area_id, function(d) {
-          $('#area').empty();
-          $.each(d, function(index, areaObj) {
-            $('#area').append('<p>'+ areaObj.name +'</p>');
-          })
+        $.ajax({
+          url: "{{url('json-area')}}",
+          type:"GET", 
+          data: {"id":result.area_id}, 
+          success: function(result){
+            $("#area").text(result.name);
+          }
         });
-        $.get('/asignaciones/public/json-campus?id='+ subjectObj.campus_id, function(d) {
-          $('#cam').empty();
-          $.each(d, function(index, campusObj) {
-            $('#cam').append('<p>'+ campusObj.name +'</p>');
-          })
+        $.ajax({
+          url: "{{url('json-campus')}}",
+          type:"GET", 
+          data: {"id":result.campus_id}, 
+          success: function(result){
+            $("#cam").text(result.name);
+          }
         });
-        $.get('/asignaciones/public/json-center?id='+ subjectObj.center_id, function(d) {
-          $('#center').empty();
-          $.each(d, function(index, centerObj) {
-            $('#center').append('<p>'+ centerObj.name +'</p>');
-          })
+        $.ajax({
+          url: "{{url('json-center')}}",
+          type:"GET", 
+          data: {"id":result.center_id}, 
+          success: function(result){
+            $("#center").text(result.name);
+          }
         });
-        $.get('/asignaciones/public/json-duration?id='+ subjectObj.duration_id, function(da) {
-          $('#duration').empty();
-          $.each(da, function(index, durationObj) {
-            $('#duration').append('<p>'+ durationObj.name +'</p>');
-          })
+        $.ajax({
+          url: "{{url('json-duration')}}",
+          type:"GET", 
+          data: {"id":result.duration_id}, 
+          success: function(result){
+            $("#duration").text(result.name);
+          }
         });
-        $.get('/asignaciones/public/json-imparted?id='+ subjectObj.imparted_id, function(da) {
-          $('#imp').empty();
-          $.each(da, function(index, impartedObj) {
-            $('#imp').append('<p>'+ impartedObj.name +'</p>');
-          })
+        $.ajax({
+          url: "{{url('json-imparted')}}",
+          type:"GET", 
+          data: {"id":result.imparted_id}, 
+          success: function(result){
+            $("#imp").text(result.name);
+          }
         });
-        $.get('/asignaciones/public/json-typeSubject?id='+ subjectObj.typeSubject_id, function(dat) {
-          $('#typeSubject').empty();
-          $.each(dat, function(index, typeSubjectObj) {
-            $('#typeSubject').append('<p>'+ typeSubjectObj.name +'</p>');
-          })
+        $.ajax({
+          url: "{{url('json-typeSubject')}}",
+          type:"GET", 
+          data: {"id":result.typeSubject_id}, 
+          success: function(result){
+            $("#typeSubject").text(result.name);
+          }
         });
-        $.get('/asignaciones/public/json-solicitude?subject_id='+ subject_id + '&teacher_id='+ teacher_id + '&course='+ course, function(d) {
+      }
+    });
+    $.get('/asignaciones/public/json-solicitude?subject_id='+ subject_id + '&teacher_id='+ teacher_id + '&course='+ course, function(d) {
             numAplication = d.length;
-        });
-      })
     });
   });
 

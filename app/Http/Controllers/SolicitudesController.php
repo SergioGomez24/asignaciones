@@ -141,7 +141,9 @@ class SolicitudesController extends Controller
 
     public function getCourse() 
     {
-        $arrayElecciones = Election::select('course')->distinct()->get();
+        $arrayElecciones = Election::select('course')->distinct()
+                                    ->where('state', true)
+                                    ->get();
         $cont = 0;
 
         foreach ($arrayElecciones as $key => $e) {
@@ -442,6 +444,7 @@ class SolicitudesController extends Controller
 
         foreach($elecciones as $eleccion) {
             $eleccion->elecPermission = true;
+            $eleccion->state = false;
             $eleccion->save();
         }
 

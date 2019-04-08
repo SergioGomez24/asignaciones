@@ -130,6 +130,7 @@ class ElectionsController extends Controller
             $e->profPermission = true;
             $e->coorPermission = false;
             $e->elecPermission = false;
+            $e->state = true;
 			$e->save();
 		}
 

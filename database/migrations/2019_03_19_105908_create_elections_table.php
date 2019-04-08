@@ -24,6 +24,7 @@ class CreateElectionsTable extends Migration
             $table->boolean('profPermission');
             $table->boolean('coorPermission');
             $table->boolean('elecPermission');
+            $table->boolean('state');
             $table->timestamps();
         });
     }

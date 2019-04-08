@@ -23,7 +23,58 @@ class CoordinatorsController extends Controller
         return view('solicitudes.coordinator.course', compact('arrayElecciones', 'cont'));
     }
 
-    public function getIndex($course, Request $request)
+    public function getSubjectsCoor($course)
+    {
+        $usuario = Auth()->user()->id;
+
+        $arrayAsignaturasCoor = Subject::join('teachers', 'teachers.id', '=', 'subjects.coordinator_id')
+            ->join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
+            ->select('subjects.name')
+            ->distinct()
+            ->where('subjects.coordinator_id', '=', $usuario)
+            ->where('solicitudes.course', $course)
+            ->get();
+
+        return view('solicitudes.coordinator.subjects', compact('arrayAsignaturasCoor', 'course'));
+    }
+
+    public function getIndex($course, $subject, Request $request)
+    {
+        $usuario = Auth()->user()->id;
+        $arrayAsignaturas = Subject::all();
+        $arrayProfesores = Teacher::all();
+        $teacher_id = $request->get('teacher_id');
+
+        $arraySolicitudesCoor = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
+            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->where('course', '=', $course)
+            ->where('solicitudes.subject_id', $subject)
+            ->teacherid($teacher_id)
+            ->orderBy('subjects.name')
+            ->simplePaginate(7);
+
+        $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
+                             ->where('course', '=', $course)
+                             ->get();
+
+        foreach ($eleccionProfesor as $eleccion) {
+            $dirPermission = $eleccion->dirPermission;
+            $profPermission = $eleccion->profPermission;
+            $coorPermission = $eleccion->coorPermission;
+        }
+
+        return view('solicitudes.coordinator.index')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
+                                                      ->with('arrayAsignaturas', $arrayAsignaturas)
+                                                      ->with('arrayProfesores', $arrayProfesores)
+                                                      ->with('teacher_id', $teacher_id)
+                                                      ->with('course', $course)
+                                                      ->with('dirPermission', $dirPermission)
+                                                      ->with('profPermission', $profPermission)
+                                                      ->with('coorPermission', $coorPermission);
+
+    }
+
+    /*public function getIndex($course, Request $request)
     {
         $usuario = Auth()->user()->id;
         $arrayAsignaturas = Subject::all();
@@ -60,7 +111,7 @@ class CoordinatorsController extends Controller
                                                       ->with('profPermission', $profPermission)
                                                       ->with('coorPermission', $coorPermission);
 
-    }
+    }*/
 
     public function getEdit($id) 
     {
