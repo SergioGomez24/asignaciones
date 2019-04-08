@@ -29,13 +29,6 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('json-subjects', 'SubjectsController@getSubjects');
 	Route::get('json-subject', 'SubjectsController@getSubject');
-	Route::get('json-certification', 'SubjectsController@getCertification');
-	Route::get('json-area', 'SubjectsController@getArea');
-	Route::get('json-campus', 'SubjectsController@getCampus');
-	Route::get('json-center', 'SubjectsController@getCenter');
-	Route::get('json-duration', 'SubjectsController@getDuration');
-	Route::get('json-imparted', 'SubjectsController@getImparted');
-	Route::get('json-typeSubject', 'SubjectsController@getTypeSubject');
 
 	Route::get('subjects/create', 'SubjectsController@getCreate')->middleware('role');
 	Route::post('subjects/create', 'SubjectsController@postCreate')->middleware('role');
@@ -53,7 +46,6 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('teachers', 'TeachersController@getIndex');
 
 	Route::get('json-teacher', 'TeachersController@getTeacher');
-	Route::get('json-category', 'TeachersController@getCategory');
 	Route::get('json-user', 'TeachersController@getUser');
 
 	Route::get('teachers/show/{id}', 'TeachersController@getShow');
@@ -133,6 +125,8 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 	/* Ajustes categoria */
 	Route::get('settings/categories', 'CategoriesController@getIndex');
 
+	Route::get('json-category', 'CategoriesController@getCategory');
+
 	Route::get('settings/categories/create', 'CategoriesController@getCreate');
 	Route::post('settings/categories/create', 'CategoriesController@postCreate');
 
@@ -143,6 +137,8 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 
 	/* Ajustes area */
 	Route::get('settings/areas', 'AreasController@getIndex');
+
+	Route::get('json-area', 'AreasController@getArea');
 
 	Route::get('settings/areas/create', 'AreasController@getCreate');
 	Route::post('settings/areas/create', 'AreasController@postCreate');
@@ -155,6 +151,8 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 	/* Ajustes titulacion */
 	Route::get('settings/certifications', 'CertificationsController@getIndex');
 
+	Route::get('json-certification', 'CertificationsController@getCertification');
+
 	Route::get('settings/certifications/create', 'CertificationsController@getCreate');
 	Route::post('settings/certifications/create', 'CertificationsController@postCreate');
 
@@ -165,6 +163,8 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 
 	/* Ajustes campus */
 	Route::get('settings/campus', 'CampusController@getIndex');
+
+	Route::get('json-campus', 'CampusController@getCampus');
 
 	Route::get('settings/campus/create', 'CampusController@getCreate');
 	Route::post('settings/campus/create', 'CampusController@postCreate');
@@ -188,6 +188,8 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 	/* Ajustes centros */
 	Route::get('settings/centers', 'CentersController@getIndex');
 
+	Route::get('json-center', 'CentersController@getCenter');
+
 	Route::get('settings/centers/create', 'CentersController@getCreate');
 	Route::post('settings/centers/create', 'CentersController@postCreate');
 
@@ -198,6 +200,8 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 
 	/*Ajustes duraciones*/
 	Route::get('settings/duration', 'DurationsController@getIndex');
+
+	Route::get('json-duration', 'DurationsController@getDuration');
 
 	Route::get('settings/duration/create', 'DurationsController@getCreate');
 	Route::post('settings/duration/create', 'DurationsController@postCreate');
@@ -210,6 +214,8 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 	/*Ajustes cursos asignaturas*/
 	Route::get('settings/coursesSubjects', 'CoursesSubjectsController@getIndex');
 
+	Route::get('json-imparted', 'CoursesSubjectsController@getImparted');
+
 	Route::get('settings/coursesSubjects/create', 'CoursesSubjectsController@getCreate');
 	Route::post('settings/coursesSubjects/create', 'CoursesSubjectsController@postCreate');
 
@@ -220,6 +226,8 @@ Route::group(['middleware' => ['auth', 'role']], function() {
 
 	/*Ajustes tipos asignaturas*/
 	Route::get('settings/typesSubjects', 'TypesSubjectsController@getIndex');
+
+	Route::get('json-typeSubject', 'TypesSubjectsController@getTypeSubject');
 
 	Route::get('settings/typesSubjects/create', 'TypesSubjectsController@getCreate');
 	Route::post('settings/typesSubjects/create', 'TypesSubjectsController@postCreate');

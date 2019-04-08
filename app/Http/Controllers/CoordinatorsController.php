@@ -25,22 +25,22 @@ class CoordinatorsController extends Controller
 
     public function getIndex($course, Request $request)
     {
-        $usuario = Auth()->user()->name;
+        $usuario = Auth()->user()->id;
         $arrayAsignaturas = Subject::all();
         $arrayProfesores = Teacher::all();
         $subj_id = $request->get('subject_id');
-        $teacher = $request->get('teacher');
+        $teacher_id = $request->get('teacher_id');
 
         $arraySolicitudesCoor = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
-            ->where('subjects.coordinator', '=', $usuario)
+            ->where('subjects.coordinator_id', '=', $usuario)
             ->subjectid($subj_id)
-            ->teacher($teacher)
+            ->teacherid($teacher_id)
             ->orderBy('subjects.name')
             ->simplePaginate(7);
 
-        $eleccionProfesor = Election::where('teacher', '=', $usuario)
+        $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
                              ->where('course', '=', $course)
                              ->get();
 
@@ -54,7 +54,7 @@ class CoordinatorsController extends Controller
                                                       ->with('arrayAsignaturas', $arrayAsignaturas)
                                                       ->with('arrayProfesores', $arrayProfesores)
                                                       ->with('subj_id', $subj_id)
-                                                      ->with('teacher', $teacher)
+                                                      ->with('teacher_id', $teacher_id)
                                                       ->with('course', $course)
                                                       ->with('dirPermission', $dirPermission)
                                                       ->with('profPermission', $profPermission)
@@ -92,7 +92,7 @@ class CoordinatorsController extends Controller
         $a = Solicitude::findOrFail($id);
         $c = $a->course;
 
-        $eleccion = Election::where('teacher', $a->teacher)
+        $eleccion = Election::where('teacher_id', $a->teacher_id)
                             ->where('course', $c)
                             ->get();
 
@@ -152,7 +152,7 @@ class CoordinatorsController extends Controller
         $c = $a->course;
         $a->delete();
 
-        $eleccion = Election::where('teacher', $a->teacher)
+        $eleccion = Election::where('teacher_id', $a->teacher_id)
                              ->where('course', $c)
                              ->get();
 

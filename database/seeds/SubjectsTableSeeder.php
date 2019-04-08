@@ -21,7 +21,7 @@ class SubjectsTableSeeder extends Seeder
 		$subject->duration_id = 1;
 		$subject->imparted_id = 1;
 		$subject->typeSubject_id = 1;
-		$subject->coordinator = 'Sergio Gomez';
+		$subject->coordinator_id = 2;
 		$subject->save();
 
 		$subject = new Subject;
@@ -37,7 +37,7 @@ class SubjectsTableSeeder extends Seeder
 		$subject->duration_id = 1;
 		$subject->imparted_id = 2;
 		$subject->typeSubject_id = 2;
-		$subject->coordinator = 'Juan Gomez';
+		$subject->coordinator_id = 3;
 		$subject->save();
 
 		$subject = new Subject;
@@ -53,7 +53,7 @@ class SubjectsTableSeeder extends Seeder
 		$subject->duration_id = 2;
 		$subject->imparted_id = 2;
 		$subject->typeSubject_id = 2;
-		$subject->coordinator = 'Juan Gomez';
+		$subject->coordinator_id = 3;
 		$subject->save();
 
 		$subject = new Subject;
@@ -69,7 +69,7 @@ class SubjectsTableSeeder extends Seeder
 		$subject->duration_id = 1;
 		$subject->imparted_id = 1;
 		$subject->typeSubject_id = 1;
-		$subject->coordinator = 'Sergio Gomez';
+		$subject->coordinator_id = 2;
 		$subject->save();
 
 		$subject = new Subject;
@@ -85,7 +85,7 @@ class SubjectsTableSeeder extends Seeder
 		$subject->duration_id = 2;
 		$subject->imparted_id = 1;
 		$subject->typeSubject_id = 1;
-		$subject->coordinator = 'Juan Gomez';
+		$subject->coordinator_id = 3;
 		$subject->save();
 
 		$subject = new Subject;
@@ -101,7 +101,7 @@ class SubjectsTableSeeder extends Seeder
 		$subject->duration_id = 2;
 		$subject->imparted_id = 2;
 		$subject->typeSubject_id = 2;
-		$subject->coordinator = 'Sergio Gomez';
+		$subject->coordinator_id = 2;
 		$subject->save();
 
 	}

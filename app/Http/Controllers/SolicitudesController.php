@@ -31,19 +31,19 @@ class SolicitudesController extends Controller
 
     public function getTeacherIndex($course, Request $request)
     {
-        $usuario = Auth()->user()->name;
+        $usuario = Auth()->user()->id;
         $arrayAsignaturas = Subject::all();
         $arrayProfesores = Teacher::all();
         $subj_id = $request->get('subject_id');
-        $teacher = $request->get('teacher');
+        $teacher_id = $request->get('teacher_id');
         $contCréditosProf = 0;
 
         $arraySolicitudesProf = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
-            ->where('solicitudes.teacher', '=', $usuario)
+            ->where('solicitudes.teacher_id', '=', $usuario)
             ->subjectid($subj_id)
-            ->teacher($teacher)
+            ->teacherid($teacher_id)
             ->orderBy('subjects.name')
             ->simplePaginate(7);
 
@@ -51,7 +51,7 @@ class SolicitudesController extends Controller
             $contCréditosProf = $contCréditosProf + $solicitud->cTheory + $solicitud->cPractice + $solicitud->cSeminar;
         }
 
-        $eleccionProfesor = Election::where('teacher', '=', $usuario)
+        $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
                              ->where('course', '=', $course)
                              ->get();
 
@@ -66,7 +66,7 @@ class SolicitudesController extends Controller
                                           ->with('arrayAsignaturas', $arrayAsignaturas)
                                           ->with('arrayProfesores', $arrayProfesores)
                                           ->with('subj_id', $subj_id)
-                                          ->with('teacher', $teacher)
+                                          ->with('teacher_id', $teacher_id)
                                           ->with('contCréditosProf', $contCréditosProf)
                                           ->with('course', $course)
                                           ->with('dirPermission', $dirPermission)
@@ -90,21 +90,21 @@ class SolicitudesController extends Controller
 
     public function getDirectorIndex($course, Request $request) {
 
-        $usuario = Auth()->user()->name;
+        $usuario = Auth()->user()->id;
         $arrayAsignaturas = Subject::all();
         $arrayProfesores = Teacher::all();
         $subj_id = $request->get('subject_id');
-        $teacher = $request->get('teacher');
+        $teacher_id = $request->get('teacher_id');
 
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
             ->subjectid($subj_id)
-            ->teacher($teacher)
+            ->teacherid($teacher_id)
             ->orderBy('subjects.name')
             ->simplePaginate(7);
 
-        $eleccionProfesor = Election::where('teacher', '=', $usuario)
+        $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
                              ->where('course', '=', $course)
                              ->get();
 
@@ -118,7 +118,7 @@ class SolicitudesController extends Controller
                                           ->with('arrayAsignaturas', $arrayAsignaturas)
                                           ->with('arrayProfesores', $arrayProfesores)
                                           ->with('subj_id', $subj_id)
-                                          ->with('teacher', $teacher)
+                                          ->with('teacher_id', $teacher_id)
                                           ->with('course', $course)
                                           ->with('dirPermission', $dirPermission)
                                           ->with('profPermission', $profPermission)
@@ -128,11 +128,11 @@ class SolicitudesController extends Controller
 
     public function getSolicitude() {
         $subject_id = Input::get('subject_id');
-        $teacher = Input::get('teacher');
+        $teacher_id = Input::get('teacher_id');
         $course = Input::get('course');
 
         $solicitud = Solicitude::where('subject_id', '=', $subject_id)
-                                ->where('teacher', '=', $teacher)
+                                ->where('teacher_id', '=', $teacher_id)
                                 ->where('course', '=', $course)
                                 ->get();
 
@@ -153,16 +153,16 @@ class SolicitudesController extends Controller
 
     public function getCreate($course) 
     {
-        $usuario = Auth()->user()->name;
+        $usuario = Auth()->user()->id;
         $arrayAsignaturas = Subject::all();
         $arrayCampus = Campus::all();
         $arrayTitulaciones = Certification::all();
         $arrayCursoAsignaturas = Coursesubject::all();
-        $eleccionProfesor = Election::where('teacher', '=', $usuario)
+        $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
                                     ->where('course', '=', $course)
                                     ->get();
 
-        $array = Solicitude::where('teacher', '=', $usuario)
+        /*$array = Solicitude::where('teacher_id', '=', $usuario)
                             ->where('course', '=', $course)
                             ->get();
 
@@ -172,7 +172,7 @@ class SolicitudesController extends Controller
                    // $arrayAsignaturas->pull($a->id);
                 } 
             }
-        }
+        }*/
         
 
         foreach ($eleccionProfesor as $eleccion) {
@@ -195,11 +195,11 @@ class SolicitudesController extends Controller
 
     public function postCreate($course, Request $request) 
     {
-        $usuario = Auth()->user()->name;
+        $usuario = Auth()->user()->id;
 
         $a = new Solicitude;
         $a->subject_id = $request->input('subject');
-        $a->teacher = $usuario;
+        $a->teacher_id = $usuario;
         $a->course = $course;
         $a->cTheory = $request->input('cTheory');
         $a->cPractice = $request->input('cPractice');
@@ -207,7 +207,7 @@ class SolicitudesController extends Controller
         $a->save();
         Notification::success('La solicitud se ha guardado exitosamente!');
 
-        $eleccion = Election::where('teacher', $a->teacher)
+        $eleccion = Election::where('teacher_id', $a->teacher_id)
                              ->where('course', $a->course)
                              ->get();
 
@@ -251,7 +251,7 @@ class SolicitudesController extends Controller
         $a = Solicitude::findOrFail($id);
         $c = $a->course;
 
-        $eleccion = Election::where('teacher', $a->teacher)
+        $eleccion = Election::where('teacher_id', $a->teacher_id)
                             ->where('course', $c)
                             ->get();
 
@@ -319,7 +319,7 @@ class SolicitudesController extends Controller
 
         $role = Auth()->user()->role;
 
-        $eleccion = Election::where('teacher', $a->teacher)
+        $eleccion = Election::where('teacher_id', $a->teacher_id)
                              ->where('course', $c)
                              ->get();
 
@@ -339,10 +339,10 @@ class SolicitudesController extends Controller
 
     public function editPermissionProf(Request $request, $course)
     {
-        $usuario = Auth()->user()->name;
+        $usuario = Auth()->user()->id;
         $coorPermission = true;
 
-        $eleccionDir = Election::where('teacher', 'Jose Garcia')
+        $eleccionDir = Election::where('teacher_id', '1')
                              ->where('course', $course)
                              ->get();
 
@@ -352,7 +352,7 @@ class SolicitudesController extends Controller
         }
 
 
-        $eleccion = Election::where('teacher', $usuario)
+        $eleccion = Election::where('teacher_id', $usuario)
                              ->where('course', $course)
                              ->get();
 
@@ -383,10 +383,10 @@ class SolicitudesController extends Controller
 
     public function editPermissionCoor(Request $request, $course)
     {
-        $usuario = Auth()->user()->name;
+        $usuario = Auth()->user()->id;
         $coorPermission = true;
 
-        $eleccionDir = Election::where('teacher', 'Jose Garcia')
+        $eleccionDir = Election::where('teacher_id', '1')
                              ->where('course', $course)
                              ->get();
 
@@ -396,7 +396,7 @@ class SolicitudesController extends Controller
         }
 
 
-        $eleccion = Election::where('teacher', $usuario)
+        $eleccion = Election::where('teacher_id', $usuario)
                              ->where('course', $course)
                              ->get();
 
@@ -426,9 +426,9 @@ class SolicitudesController extends Controller
 
     public function editPermissionDir(Request $request, $course)
     {
-        $usuario = Auth()->user()->name;
+        $usuario = Auth()->user()->id;
 
-        $eleccion = Election::where('teacher', $usuario)
+        $eleccion = Election::where('teacher_id', $usuario)
                              ->where('course', $course)
                              ->get();
 

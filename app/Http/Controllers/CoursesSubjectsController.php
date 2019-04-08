@@ -15,6 +15,15 @@ class CoursesSubjectsController extends Controller
     	return view('settings.coursesSubjects.index', ['arrayCursosAsignatura' => $arrayCursosAsignatura]);
     }
 
+    public function getImparted(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Coursesubject::find($id);
+            
+            return response()->json($info);
+        }
+    }
+
 	public function getCreate() 
     {
     	return view('settings.coursesSubjects.create');

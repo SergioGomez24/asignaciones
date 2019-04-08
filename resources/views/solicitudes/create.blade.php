@@ -165,7 +165,7 @@
   var campus_id = document.getElementById("campus").value;
   var imparted_id = document.getElementById("imparted").value;
   var subject_id = document.getElementById("subject").value;
-  var teacher = "{{ auth()->user()->name }}";
+  var teacher_id = "{{ auth()->user()->id }}";
   var course = "{{$course}}";
   var subObj_credT;
   var subObj_credS;
@@ -258,7 +258,7 @@
             $('#typeSubject').append('<p>'+ typeSubjectObj.name +'</p>');
           })
         });
-        $.get('/asignaciones/public/json-solicitude?subject_id='+ subject_id + '&teacher='+ teacher + '&course='+ course, function(d) {
+        $.get('/asignaciones/public/json-solicitude?subject_id='+ subject_id + '&teacher_id='+ teacher_id + '&course='+ course, function(d) {
             numAplication = d.length;
         });
       })

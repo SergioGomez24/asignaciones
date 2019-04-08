@@ -46,14 +46,6 @@ class TeachersController extends Controller
         return response()->json($teacher);
     }
 
-    public function getCategory() {
-        $category_id = Input::get('id');
-
-        $category = Category::where('id', '=', $category_id)->get();
-
-        return response()->json($category);
-    }
-
     public function getUser() {
         $user_id = Input::get('id');
 

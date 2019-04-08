@@ -108,11 +108,11 @@
             </div>
 
             <div class="form-group">
-               <label for="coordinator" style="font-weight: bold;">Coordinador</label>
-               <select name="coordinator" id="coordinator" class="form-control" required>
-                  <option value="{{$asignatura->coordinator}}">{{$asignatura->coordinator}}</option>
+               <label for="coordinator_id" style="font-weight: bold;">Coordinador</label>
+               <select name="coordinator_id" id="coordinator_id" class="form-control" required>
+                  <option value="{{$asignatura->coordinator_id}}">{{$teacher->name}}</option>
                   @foreach($arrayProfesores as $profesor)
-                  <option value="{{$profesor->name}}">{{$profesor->name}}</option>
+                  <option value="{{$profesor->id}}">{{$profesor->name}}</option>
                   @endforeach
                </select>
             </div>

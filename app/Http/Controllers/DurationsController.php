@@ -15,6 +15,15 @@ class DurationsController extends Controller
     	return view('settings.duration.index', ['arrayDuraciones' => $arrayDuraciones]);
     }
 
+    public function getDuration(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Durationsubject::find($id);
+            
+            return response()->json($info);
+        }
+    }
+
 	public function getCreate() 
     {
     	return view('settings.duration.create');

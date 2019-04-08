@@ -34,7 +34,8 @@ class CreateSubjectsTable extends Migration
             $table->foreign('imparted_id')->references('id')->on('coursesubjects');
             $table->integer('typeSubject_id')->unsigned();
             $table->foreign('typeSubject_id')->references('id')->on('typesubjects');
-            $table->string('coordinator');
+            $table->integer('coordinator_id')->unsigned();
+            $table->foreign('coordinator_id')->references('id')->on('teachers');
             $table->timestamps();
         });
     }

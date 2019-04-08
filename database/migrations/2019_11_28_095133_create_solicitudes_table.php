@@ -17,8 +17,8 @@ class CreateSolicitudesTable extends Migration
             $table->increments('id');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->string('teacher');
-            $table->foreign('teacher')->references('name')->on('teachers');
+            $table->integer('teacher_id')->unsigned();
+            $table->foreign('teacher_id')->references('id')->on('teachers');
             $table->string('course');
             $table->foreign('course')->references('name')->on('courses');
             $table->decimal('cTheory',3,1)->unsigned()->nullable();

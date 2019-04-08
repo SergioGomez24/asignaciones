@@ -34,7 +34,7 @@
                   <select name="teacher" id="teacher" class="form-control">
                     <option value="">Profesores</option>
                     @foreach($arrayProfesores as $p)
-                      <option value="{{$p->name}}">{{$p->name}}</option>
+                      <option value="{{$p->id}}">{{$p->name}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -64,7 +64,7 @@
             @foreach( $arraySolicitudesCoor as $key => $solicitud )
               <tr>
                 <td>{{$solicitud->name}}</td>
-                <td>{{$solicitud->teacher}}</td>
+                <td>{{$solicitud->teacher_id}}</td>
                 <td>{{$solicitud->cTheory}}</td>
                 <td>{{$solicitud->cPractice}}</td>
                 <td>{{$solicitud->cSeminar}}</td>

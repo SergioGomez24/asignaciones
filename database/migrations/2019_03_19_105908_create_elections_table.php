@@ -15,8 +15,8 @@ class CreateElectionsTable extends Migration
     {
         Schema::create('elections', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('teacher');
-            $table->foreign('teacher')->references('name')->on('teachers')->onDelete('cascade');
+            $table->integer('teacher_id')->unsigned();
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->string('course');
             $table->foreign('course')->references('name')->on('courses');
             $table->decimal('cAvailable',4,1)->unsigned();
