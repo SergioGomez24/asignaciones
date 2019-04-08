@@ -26,7 +26,7 @@
           <tbody>	
 		        @foreach( $arrayAsignaturas as $key => $asignatura )
               <tr>
-                <td><button class="btn btn-light btn-sm" data-toggle="modal" data-target="#showSubject" onclick="fun_view('{{$asignatura->id}}')" style="font-weight: bold;">{{$asignatura->name}}</button>
+                <td><button class="btn btn-light btn-sm" data-toggle="modal" data-target="#showSubject" value="{{$asignatura->id}}" style="font-weight: bold;">{{$asignatura->name}}</button>
                 </td>
 
                 @if (Auth()->user()->role == 'Director')
@@ -52,7 +52,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="showSubjectTitle"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="bntCerrar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -114,16 +114,9 @@
 
 <script language="JavaScript"> 
 
-  var titulacion;
-  var area;
-  var campus;
-  var centro;
-  var duracion;
-  var impartido;
-  var tipo;
-
-
-  $(document).ready(initTableSorter);
+  $(document).ready(function() {
+    initTableSorter();
+  });
   
   function initTableSorter() {
   // call the tablesorter plugin
@@ -133,8 +126,10 @@
     });
   }
 
-  function fun_view(id)
-    {
+  $('#showSubject').on('show.bs.modal', function(e) {
+      var button = $(e.relatedTarget)
+      var id = button.val();
+
       $.ajax({
         url: "{{url('json-subject')}}",
         type:"GET", 
@@ -204,12 +199,12 @@
           });
         }
       });
-    }
+    });
 
-  $('.modal').on('hidden.bs.modal', function(e)
-  { 
-     $(this).removeData();
-  });
+  $('#bntCerrar').on('hidden.bs.modal', function(e)
+    { 
+      $(this).removeData('bs.modal');
+    });  
 
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta asignatura?');

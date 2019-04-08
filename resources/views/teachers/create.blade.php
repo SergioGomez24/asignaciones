@@ -62,9 +62,7 @@
 
             <div class="form-group">
                <label for="cInitial" style="font-weight: bold;">Créditos iniciales</label>
-               <select name="cInitial" id="cInitial" class="form-control" required>
-                  <option>24</option>
-               </select>
+               <input type="number" name="cInitial" id="cInitial" class="form-control" required>
             </div>
 
             <div class="form-group">
@@ -78,9 +76,10 @@
             </div>
 
             <div class="form-group text-center">
-               <button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">
-                   Añadir profesor
+               <button type="submit" class="btn btn-primary">
+                   Añadir
                </button>
+               <a class="btn btn-secondary" href="{{ url('/teachers') }}" role="button">Cancelar</a>
             </div>
             </form>
          </div>

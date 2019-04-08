@@ -17,9 +17,10 @@
             </div>
 
             <div class="form-group text-center">
-               <button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">
-                   Añadir duración
+               <button type="submit" class="btn btn-primary">
+                  Añadir
                </button>
+               <a class="btn btn-secondary" href="{{ url('/settings/duration') }}" role="button">Cancelar</a>
             </div>
             </form>
          </div>
