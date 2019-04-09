@@ -14,47 +14,47 @@
 
             <div class="collapse" id="collapseExample">
               <div class="card card-body">
-                  <div class="group row">
-                    <div class="col-md-3">
-                      <select name="certification" id="certification" class="form-control">
-                        <option value="">Titulaciones</option>
-                        @foreach($arrayTitulaciones as $t)
-                          <option value="{{$t->id}}">{{$t->name}}</option>
-                        @endforeach
-                      </select>
-                    </div>
-
-                    <div class="col-md-3">
-                      <select name="campus" id="campus" class="form-control">
-                        <option value="">Campus</option>
-                        @foreach($arrayCampus as $c)
-                          <option value="{{$c->id}}">{{$c->name}}</option>
-                        @endforeach
-                      </select>
-                    </div>
-
-                    <div class="col-md-3">
-                      <select name="imparted" id="imparted" class="form-control">
-                        <option value="">Cursos</option>
-                        @foreach($arrayCursoAsignaturas as $c)
-                          <option value="{{$c->id}}">{{$c->name}}</option>
-                        @endforeach
-                      </select>
-                    </div>
-
-                    <button class="btn-primary btn-sm" id="filters" type="button">Aplicar</button>
-
+                <div class="group row">
+                  <div class="col-md-3">
+                    <select name="certification" id="certification" class="form-control">
+                      <option value="">Titulaciones</option>
+                      @foreach($arrayTitulaciones as $t)
+                        <option value="{{$t->id}}">{{$t->name}}</option>
+                      @endforeach
+                    </select>
                   </div>
+
+                  <div class="col-md-3">
+                    <select name="campus" id="campus" class="form-control">
+                      <option value="">Campus</option>
+                      @foreach($arrayCampus as $c)
+                        <option value="{{$c->id}}">{{$c->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <div class="col-md-3">
+                    <select name="imparted" id="imparted" class="form-control">
+                      <option value="">Cursos</option>
+                      @foreach($arrayCursoAsignaturas as $c)
+                        <option value="{{$c->id}}">{{$c->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <button class="btn-primary btn-sm" id="filters" type="button">Aplicar</button>
+                </div>
               </div>
             </div>
           </div>
+
           <div class="card-body" style="padding:30px">
             <form method="POST" onsubmit="return validacion()">
               {{ csrf_field() }}
 
          			<h5 class="text-center" id="teacher">Profesor: {{ auth()->user()->name }}</h5>
               <h6 class="text-center" id="course"> Curso: {{$course}} </h6>
-              <h6 class="text-right" id="cAvailable"> Créditos Disponibles: {{$cAvailable}} </h6>
+              <h6 class="text-right" id="cAvailable"> Créditos Disponibles: {{$cAvailable}}</h6>
 
               <div class="form-group">
                <h6><label for="subject">Selecciona una asignatura</label></h6>
@@ -208,13 +208,12 @@
       data: {"id":subject_id}, 
       success: function(result){
         $("#code").text(result.code);
-        $("#coordinator").text(result.coordinator_id);
         $("#cT").text(result.cTheory);  
         $("#cP").text(result.cPractice);
         $("#cS").text(result.cSeminar);
         subObj_credT = result.cTheory;
-        subObj_credP = result.cPractice;
         subObj_credS = result.cSeminar;
+        subObj_credP = result.cPractice;
         $.ajax({
           url: "{{url('json-certification')}}",
           type:"GET", 
@@ -269,6 +268,14 @@
           data: {"id":result.typeSubject_id}, 
           success: function(result){
             $("#typeSubject").text(result.name);
+          }
+        });
+        $.ajax({
+          url: "{{url('json-coordinator')}}",
+          type:"GET", 
+          data: {"id":result.coordinator_id}, 
+          success: function(result){
+            $("#coordinator").text(result.name);
           }
         });
       }

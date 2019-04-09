@@ -66,7 +66,15 @@ class CoordinatorsController extends Controller
                                                       ->with('dirPermission', $dirPermission)
                                                       ->with('profPermission', $profPermission)
                                                       ->with('coorPermission', $coorPermission);
+    }
 
+    public function getCoordinator(Request $request) {
+        if($request->ajax()){
+            $id = $request->id;
+            $info = Teacher::find($id);
+            
+            return response()->json($info);
+        }
     }
 
     public function getEdit($id) 

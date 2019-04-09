@@ -110,6 +110,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('coordinators/subjects/{course}', 'CoordinatorsController@getSubjectsCoor');
 	Route::get('coordinators/index/{course}', 'CoordinatorsController@getIndex');
 
+	Route::get('json-coordinator', 'CoordinatorsController@getCoordinator');
+
 	Route::get('coordinators/edit/{id}', 'CoordinatorsController@getEdit');
 	Route::put('coordinators/edit/{id}', 'CoordinatorsController@putEdit');
 
@@ -117,7 +119,7 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 /* Ajustes */
-Route::group(['middleware' => ['auth', 'role']], function() {
+Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('settings', function() {
 	return view('settings.index');

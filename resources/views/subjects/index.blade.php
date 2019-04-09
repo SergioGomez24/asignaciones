@@ -127,79 +127,86 @@
   }
 
   $('#showSubject').on('show.bs.modal', function(e) {
-      var button = $(e.relatedTarget)
-      var id = button.val();
+    var button = $(e.relatedTarget)
+    var id = button.val();
 
-      $.ajax({
-        url: "{{url('json-subject')}}",
-        type:"GET", 
-        data: {"id":id}, 
-        success: function(result){
-          $("#showSubjectTitle").text(result.name);
-          $("#code").text(result.code);
-          $("#coordinator").text(result.coordinator);
-          $("#cT").text(result.cTheory);  
-          $("#cP").text(result.cPractice);
-          $("#cS").text(result.cSeminar);
-          $.ajax({
-            url: "{{url('json-certification')}}",
-            type:"GET", 
-            data: {"id":result.certification_id}, 
-            success: function(result){
-              $("#cert").text(result.name);
-            }
-          });
-          $.ajax({
-            url: "{{url('json-area')}}",
-            type:"GET", 
-            data: {"id":result.area_id}, 
-            success: function(result){
-              $("#area").text(result.name);
-            }
-          });
-          $.ajax({
-            url: "{{url('json-campus')}}",
-            type:"GET", 
-            data: {"id":result.campus_id}, 
-            success: function(result){
-              $("#cam").text(result.name);
-            }
-          });
-          $.ajax({
-            url: "{{url('json-center')}}",
-            type:"GET", 
-            data: {"id":result.center_id}, 
-            success: function(result){
-              $("#center").text(result.name);
-            }
-          });
-          $.ajax({
-            url: "{{url('json-duration')}}",
-            type:"GET", 
-            data: {"id":result.duration_id}, 
-            success: function(result){
-              $("#duration").text(result.name);
-            }
-          });
-          $.ajax({
-            url: "{{url('json-imparted')}}",
-            type:"GET", 
-            data: {"id":result.imparted_id}, 
-            success: function(result){
-              $("#imp").text(result.name);
-            }
-          });
-          $.ajax({
-            url: "{{url('json-typeSubject')}}",
-            type:"GET", 
-            data: {"id":result.typeSubject_id}, 
-            success: function(result){
-              $("#typeSubject").text(result.name);
-            }
-          });
-        }
-      });
+    $.ajax({
+      url: "{{url('json-subject')}}",
+      type:"GET", 
+      data: {"id":id}, 
+      success: function(result){
+        $("#showSubjectTitle").text(result.name);
+        $("#code").text(result.code);
+        $("#cT").text(result.cTheory);  
+        $("#cP").text(result.cPractice);
+        $("#cS").text(result.cSeminar);
+        $.ajax({
+          url: "{{url('json-certification')}}",
+          type:"GET", 
+          data: {"id":result.certification_id}, 
+          success: function(result){
+            $("#cert").text(result.name);
+          }
+        });
+        $.ajax({
+          url: "{{url('json-area')}}",
+          type:"GET", 
+          data: {"id":result.area_id}, 
+          success: function(result){
+            $("#area").text(result.name);
+          }
+        });
+        $.ajax({
+          url: "{{url('json-campus')}}",
+          type:"GET", 
+          data: {"id":result.campus_id}, 
+          success: function(result){
+            $("#cam").text(result.name);
+          }
+        });
+        $.ajax({
+          url: "{{url('json-center')}}",
+          type:"GET", 
+          data: {"id":result.center_id}, 
+          success: function(result){
+            $("#center").text(result.name);
+          }
+        });
+        $.ajax({
+          url: "{{url('json-duration')}}",
+          type:"GET", 
+          data: {"id":result.duration_id}, 
+          success: function(result){
+            $("#duration").text(result.name);
+          }
+        });
+        $.ajax({
+          url: "{{url('json-imparted')}}",
+          type:"GET", 
+          data: {"id":result.imparted_id}, 
+          success: function(result){
+            $("#imp").text(result.name);
+          }
+        });
+        $.ajax({
+          url: "{{url('json-typeSubject')}}",
+          type:"GET", 
+          data: {"id":result.typeSubject_id}, 
+          success: function(result){
+            $("#typeSubject").text(result.name);
+          }
+        });
+        $.ajax({
+          url: "{{url('json-coordinator')}}",
+          type:"GET", 
+          data: {"id":result.coordinator_id}, 
+          success: function(result){
+            $("#coordinator").text(result.name);
+          }
+        });
+      }
     });
+  });
 
   $('#bntCerrar').on('hidden.bs.modal', function(e)
     { 
