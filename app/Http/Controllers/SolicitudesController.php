@@ -39,7 +39,8 @@ class SolicitudesController extends Controller
         $contCréditosProf = 0;
 
         $arraySolicitudesProf = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
+            ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
             ->where('solicitudes.teacher_id', '=', $usuario)
             ->subjectid($subj_id)
@@ -97,7 +98,8 @@ class SolicitudesController extends Controller
         $teacher_id = $request->get('teacher_id');
 
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
+            ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
             ->subjectid($subj_id)
             ->teacherid($teacher_id)

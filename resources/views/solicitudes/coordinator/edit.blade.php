@@ -4,8 +4,8 @@
    <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header"> 
-            <h5 class="text-center"> Modificar solicitud </h5>
-            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/coordinators/course/'.$course) }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>  
+            <h5 class="text-center"> Editar solicitud </h5>
+            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/coordinators/index/'.$course) }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>  
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST" onsubmit="return validacion()">
@@ -13,7 +13,7 @@
          		{{ csrf_field() }}
 
             <div class="group row text-center" style="align-content: center;">
-               <div class="col-md-4">
+            <div class="col-md-4">
             <h6>Créditos Teoria</h6>
             <p id="cT"></p>
             </div>
@@ -45,9 +45,10 @@
             </div>
 
             <div class="form-group text-center">
-               <button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">
-                   Modificar solicitud
+               <button type="submit" class="btn btn-primary">
+                  Editar
                </button>
+               <a class="btn btn-secondary" href="{{ url('/coordinators/index/'.$course) }}" role="button">Cancelar</a>
             </div>
             </form>
          </div>
@@ -62,21 +63,19 @@
    var subObj_credS;
    var subObj_credP;
 
-   window.onload = function() {
-      $.get('/asignaciones/public/json-subject?id='+ subject_id, function(data) {
-         $('#cT').empty();
-         $('#cP').empty();
-         $('#cS').empty();
-         $.each(data, function(index, subjectObj) {
-            $('#cT').append('<p>'+subjectObj.cTheory+'</p>');
-            $('#cP').append('<p>'+subjectObj.cPractice+'</p>');
-            $('#cS').append('<p>'+subjectObj.cSeminar+'</p>');
-            subObj_credT = subjectObj.cTheory;
-            subObj_credP = subjectObj.cPractice;
-            subObj_credS = subjectObj.cSeminar;
-         })
-      });
-   }
+   $.ajax({
+      url: "{{url('json-subject')}}",
+      type:"GET", 
+      data: {"id":subject_id}, 
+      success: function(result){
+        $("#cT").text(result.cTheory);  
+        $("#cP").text(result.cPractice);
+        $("#cS").text(result.cSeminar);
+        subObj_credT = result.cTheory;
+        subObj_credP = result.cPractice;
+        subObj_credS = result.cSeminar;
+      }
+   });
 
 function validacion(){
    var vCredT = document.getElementById("cTheory").value;

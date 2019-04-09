@@ -64,8 +64,8 @@
             <tbody>
               @foreach( $arraySolicitudesProf as $key => $solicitud )
                 <tr>
-                  <td>{{$solicitud->name}}</td>
-                  <td>{{$solicitud->teacher_id}}</td>
+                  <td>{{$solicitud->asig}}</td>
+                  <td>{{$solicitud->prof}}</td>
                   <td>{{$solicitud->cTheory}}</td>
                   <td>{{$solicitud->cPractice}}</td>
                   <td>{{$solicitud->cSeminar}}</td>

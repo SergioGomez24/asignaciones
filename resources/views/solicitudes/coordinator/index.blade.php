@@ -18,17 +18,8 @@
         @endif
         <div class="collapse" id="collapseExample">
           <div class="card card-body">
-            <form href = "coordinators/course/{$course}" method="GET">
+            <form href = "coordinators/index/{$course}" method="GET">
               <div class="group row">
-
-                <div class="col-md-3">
-                  <select name="subject_id" id="subject_id" class="form-control">
-                    <option value="">Asignaturas</option>
-                    @foreach($arrayAsignaturas as $a)
-                      <option value="{{$a->id}}">{{$a->name}}</option>
-                    @endforeach
-                  </select>
-                </div>
 
                 <div class="col-md-3">
                   <select name="teacher" id="teacher" class="form-control">
@@ -47,7 +38,37 @@
 
       <div class="card-body">
         @if($coorPermission == 1)
-        <table class="table table-striped" id="miTabla">
+        <div class="group row text-center" style="align-content: center;">
+          <div class="col-md-3">
+            <form href = "coordinators/index/{$course}" method="GET">
+              <h6><label for="subject">Selecciona una asignatura</label></h6>
+              <select name="subject" id="subject" class="form-control" required>
+                <option value="">Elige una asignatura</option>
+                @foreach($arrayAsignaturasCoor as $a)
+                  <option value="{{$a->id}}">{{$a->name}}</option>
+                @endforeach
+              </select>
+            </form>
+          </div>
+
+          @if($subject_id != "")
+          <div class="col-md-3">
+            <h6>Créditos Teoria</h6>
+            <p id="cT"></p>
+          </div>
+
+          <div class="col-md-3">
+            <h6>Créditos Práctica</h6>
+            <p id="cP"></p>
+          </div>
+
+          <div class="col-md-3">
+            <h6>Créditos Seminario</h6>
+            <p id="cS"></p>
+          </div>
+        </div>
+
+        <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
           <thead>
             <tr>
               <th scope="col">Asignatura</th>
@@ -63,8 +84,8 @@
           <tbody>
             @foreach( $arraySolicitudesCoor as $key => $solicitud )
               <tr>
-                <td>{{$solicitud->name}}</td>
-                <td>{{$solicitud->teacher_id}}</td>
+                <td>{{$solicitud->asig}}</td>
+                <td>{{$solicitud->prof}}</td>
                 <td>{{$solicitud->cTheory}}</td>
                 <td>{{$solicitud->cPractice}}</td>
                 <td>{{$solicitud->cSeminar}}</td>
@@ -83,11 +104,15 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan=5 style="font-weight: bold;">Total</td>
+              <td colspan=2 style="font-weight: bold;">Total</td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
             </tr>
           </tfoot>
         </table>
+        @endif
         @else
           <h6>Las solicitudes del coordinador no está disponible</h6>
         @endif
@@ -102,6 +127,26 @@
     initTableSorter();
     calcular();
   });
+
+  var select = document.getElementById('subject');
+  var asig = "{{$subject_id}}";
+
+  select.addEventListener('change', function(){
+    this.form.submit();
+  }, false);
+
+
+  $.ajax({
+    url: "{{url('json-subject')}}",
+    type:"GET", 
+    data: {"id":asig}, 
+    success: function(result){
+      $("#cT").text(result.cTheory);  
+      $("#cP").text(result.cPractice);
+      $("#cS").text(result.cSeminar);
+    }
+  });
+
   
   function initTableSorter() {
   // call the tablesorter plugin
@@ -113,17 +158,20 @@
 
   function calcular() {
     // obtenemos todas las filas del tbody
-    var filas=document.querySelectorAll("#miTabla tbody tr");
- 
-    var total=0;
+    var filas = document.querySelectorAll("#miTabla tbody tr");
+    
+    var totalT = 0;
+    var totalP = 0;
+    var totalS = 0;
+    var total = 0;
  
     // recorremos cada una de las filas
     filas.forEach(function(e) {
  
         // obtenemos las columnas de cada fila
-        var columnas=e.querySelectorAll("td");
+        var columnas = e.querySelectorAll("td");
  
-        // obtenemos los valores de la cantidad y importe
+        // obtenemos los valores
         var cT = (columnas[2].textContent);
         var cP = (columnas[3].textContent);
         var cS = (columnas[4].textContent);
@@ -145,17 +193,21 @@
         cP = parseFloat(cP);
  
         // mostramos el total por fila
-        columnas[5].textContent=(cT+cP+cS).toFixed(1);
- 
+        columnas[5].textContent = (cT+cP+cS).toFixed(1);
+        
+        totalT += cT;
+        totalP += cP;
+        totalS += cS;
         total += cT+cP+cS;
     });
  
     // mostramos la suma total
-    var filas=document.querySelectorAll("#miTabla tfoot tr td");
-    filas[1].textContent = total.toFixed(1);
+    var filas = document.querySelectorAll("#miTabla tfoot tr td");
+    filas[4].textContent = total.toFixed(1);
+    filas[1].textContent = totalT.toFixed(1);
+    filas[2].textContent = totalP.toFixed(1);
+    filas[3].textContent = totalS.toFixed(1);
   }
-
-
 
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');

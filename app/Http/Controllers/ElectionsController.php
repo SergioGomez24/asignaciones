@@ -53,9 +53,10 @@ class ElectionsController extends Controller
     public function elections($course) 
     {
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
+            ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
-            ->orderBy('solicitudes.teacher_id')
+            ->orderBy('teachers.name')
             ->get();
 
         foreach ($arraySolicitudes as $key => $solicitud) {
@@ -86,11 +87,12 @@ class ElectionsController extends Controller
         $teacher_id = $request->get('teacher_id');
 
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->select('subjects.name', 'solicitudes.teacher_id', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
+            ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
             ->subjectid($subj_id)
             ->teacherid($teacher_id)
-            ->orderBy('subjects.name')
+            ->orderBy('teachers.name')
             ->get();
 
         foreach ($arraySolicitudes as $key => $solicitud) {

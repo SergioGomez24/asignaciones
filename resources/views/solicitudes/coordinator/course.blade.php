@@ -12,7 +12,7 @@
         <h5>No hay elecciones creadas</h5>
       @else 
       @foreach( $arrayElecciones as $key => $eleccion )
-      <h5><a href="{{ url('/coordinators/subjects/' . $eleccion->course ) }}" style="color: #000000;">Curso {{$eleccion->course}}</a></h5>
+      <h5><a href="{{ url('/coordinators/index/' . $eleccion->course ) }}" style="color: #000000;">Curso {{$eleccion->course}}</a></h5>
         </br>
       @endforeach
       @endif
