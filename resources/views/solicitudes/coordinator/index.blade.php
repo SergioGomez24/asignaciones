@@ -52,19 +52,24 @@
           </div>
 
           @if($subject_id != "")
-          <div class="col-md-3">
+          <div class="col-md-2">
             <h6>Créditos Teoria</h6>
             <p id="cT"></p>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-md-2">
             <h6>Créditos Práctica</h6>
             <p id="cP"></p>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-md-2">
             <h6>Créditos Seminario</h6>
             <p id="cS"></p>
+          </div>
+
+          <div class="col-md-2">
+            <h6>Total</h6>
+            <p id="cTotal"></p>
           </div>
         </div>
 
@@ -130,6 +135,10 @@
 
   var select = document.getElementById('subject');
   var asig = "{{$subject_id}}";
+  var cTotal = 0;
+  var ct = 0;
+  var cp = 0;
+  var cs = 0;
 
   select.addEventListener('change', function(){
     this.form.submit();
@@ -144,6 +153,14 @@
       $("#cT").text(result.cTheory);  
       $("#cP").text(result.cPractice);
       $("#cS").text(result.cSeminar);
+      ct = result.cTheory;
+      cp = result.cPractice;
+      cs = result.cSeminar;
+      ct = parseFloat(ct);
+      cp = parseFloat(cp);
+      cs = parseFloat(cs);
+      cTotal = ct + cp + cs;
+      $("#cTotal").text(cTotal);
     }
   });
 

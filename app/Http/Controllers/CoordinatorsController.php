@@ -158,7 +158,7 @@ class CoordinatorsController extends Controller
         $a->cPractice = $cPnew;
         $a->save();
         Notification::success('La solicitud ha sido modificada exitosamente!');
-        return redirect('/coordinators/course/'. $c);
+        return redirect('/coordinators/index/'. $c);
     }
 
     public function deleteSolicitudeCoor(Request $request, $id)
@@ -177,6 +177,6 @@ class CoordinatorsController extends Controller
         }
 
         Notification::success('La solicitud fue eliminada exitosamente!');
-        return redirect('/coordinators/course/'. $c);
+        return redirect('/coordinators/index/'. $c);
     }
 }

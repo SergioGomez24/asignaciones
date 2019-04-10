@@ -13,7 +13,7 @@
 
             <div class="form-group">
                <label for="name" style="font-weight: bold;">Nombre</label>
-               <input type="text" name="name" id="name" class="form-control" placeholder="formato: yyyy-yy" required>
+               <input type="text" name="name" id="name" class="form-control" placeholder="formato: yyyy-yy" required pattern="[0-9]{4}-[0-9]{2}">
             </div>
 
             <div class="form-group text-center">
