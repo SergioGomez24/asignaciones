@@ -19,7 +19,10 @@ class SolicitudesController extends Controller
     /* Funciones para solicitudes Profesor */
 	public function getCourseTeacher() 
     {
-    	$arrayElecciones = Election::select('course')->distinct()->get();
+    	$arrayElecciones = Election::select('course')
+                            ->distinct()
+                            ->where('state', true)
+                            ->get();
         $cont = 0;
 
         foreach ($arrayElecciones as $key => $e) {
@@ -32,11 +35,17 @@ class SolicitudesController extends Controller
     public function getTeacherIndex($course, Request $request)
     {
         $usuario = Auth()->user()->id;
-        $arrayAsignaturas = Subject::all();
-        $arrayProfesores = Teacher::all();
         $subj_id = $request->get('subject_id');
         $teacher_id = $request->get('teacher_id');
         $contCréditosProf = 0;
+
+        $arrayAsignaturasTeacher = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
+                ->select('subjects.id','subjects.name')
+                ->distinct()
+                ->where('solicitudes.teacher_id', '=', $usuario)
+                ->where('solicitudes.course', $course)
+                ->orderBy('subjects.name')
+                ->get();
 
         $arraySolicitudesProf = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
             ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
@@ -50,6 +59,26 @@ class SolicitudesController extends Controller
 
         foreach ($arraySolicitudesProf as $key => $solicitud) {
             $contCréditosProf = $contCréditosProf + $solicitud->cTheory + $solicitud->cPractice + $solicitud->cSeminar;
+
+            if ($solicitud->cTheory == 0) {
+                $solicitud->cTheory = "";
+            }
+
+            if ($solicitud->cPractice == 0) {
+                $solicitud->cPractice = "";
+            }
+
+            if ($solicitud->cSeminar == 0) {
+                $solicitud->cSeminar = "";
+            }
+        }
+
+        $teacher = Teacher::select('teachers.cInitial')
+                            ->where('teachers.id', $usuario)
+                            ->get();
+
+        foreach ($teacher as $key => $t) {
+            $cInitial = $t->cInitial;
         }
 
         $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
@@ -64,22 +93,24 @@ class SolicitudesController extends Controller
 
 
         return view('solicitudes.teacher.index')->with('arraySolicitudesProf', $arraySolicitudesProf)
-                                          ->with('arrayAsignaturas', $arrayAsignaturas)
-                                          ->with('arrayProfesores', $arrayProfesores)
+                                          ->with('arrayAsignaturasTeacher', $arrayAsignaturasTeacher)
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher_id', $teacher_id)
+                                          ->with('cInitial', $cInitial)
                                           ->with('contCréditosProf', $contCréditosProf)
                                           ->with('course', $course)
                                           ->with('dirPermission', $dirPermission)
                                           ->with('profPermission', $profPermission)
                                           ->with('coorPermission', $coorPermission);
-
     }
 
     /* Funciones para solicitudes Director */
     public function getCourseDirector() 
     {
-        $arrayElecciones = Election::select('course')->distinct()->get();
+        $arrayElecciones = Election::select('course')
+                            ->distinct()
+                            ->where('state', true)
+                            ->get();
         $cont = 0;
 
         foreach ($arrayElecciones as $key => $e) {
@@ -141,6 +172,7 @@ class SolicitudesController extends Controller
         return response()->json($solicitud);
     }
 
+    /* Funciones para crear solicitudes */
     public function getCourse() 
     {
         $arrayElecciones = Election::select('course')->distinct()
@@ -248,7 +280,7 @@ class SolicitudesController extends Controller
             $cPnew = 0;
         }
 
-         if ($cSnew == "") {
+        if ($cSnew == "") {
             $cSnew = 0;
         }
 
@@ -265,7 +297,7 @@ class SolicitudesController extends Controller
                 $p->cAvailable = $p->cAvailable - $diferencia;
                 $p->save();
             }
-        }elseif($a->cTheory > $cTnew){
+        } elseif($a->cTheory > $cTnew){
             $diferencia = $a->cTheory - $cTnew;
             foreach ($eleccion as $p) {
                 $p->cAvailable = $p->cAvailable + $diferencia;
@@ -301,6 +333,18 @@ class SolicitudesController extends Controller
             }
         }
 
+        if ($cTnew == 0) {
+            $cTnew = null;
+        }
+
+        if ($cPnew == 0) {
+            $cPnew = null;
+        }
+
+        if ($cSnew == 0) {
+            $cSnew = null;
+        }
+
         $a->cTheory = $cTnew;
         $a->cSeminar = $cSnew;
         $a->cPractice = $cPnew;
@@ -311,8 +355,7 @@ class SolicitudesController extends Controller
             return redirect('/solicitudes/teacher/index/'. $c);
         }else{
             return redirect('/solicitudes/director/index/'. $c);
-        }
-        
+        }    
     }
 
     public function deleteSolicitude(Request $request, $id)

@@ -11,9 +11,13 @@ use Notification;
 
 class CoordinatorsController extends Controller
 {
+    /* Obtener cursos disponibles para los coordinadores */
     public function getCourse() 
     {
-        $arrayElecciones = Election::select('course')->distinct()->get();
+        $arrayElecciones = Election::select('course')
+                            ->distinct()
+                            ->where('state', true)
+                            ->get();
         $cont = 0;
 
         foreach ($arrayElecciones as $key => $e) {
@@ -23,6 +27,7 @@ class CoordinatorsController extends Controller
         return view('solicitudes.coordinator.course', compact('arrayElecciones', 'cont'));
     }
 
+    /* Mostrar la tabla de solicitudes para los coordinadores */
     public function getIndex($course, Request $request)
     {
         $usuario = Auth()->user()->id;

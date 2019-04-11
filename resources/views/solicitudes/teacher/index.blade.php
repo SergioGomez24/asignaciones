@@ -16,25 +16,17 @@
 
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>
         @endif
-        <div class="collapse" id="collapseExample">
+        <div class="col-md-12">
+        <div class="collapse" id="collapseExample" style="float: right;">
           <div class="card card-body">
             <form href = "solicitudes/course/{$course}" method="GET">
               <div class="group row">
 
-                <div class="col-md-3">
+                <div class="col-md-9">
                   <select name="subject_id" id="subject_id" class="form-control">
                     <option value="">Asignaturas</option>
-                    @foreach($arrayAsignaturas as $a)
+                    @foreach($arrayAsignaturasTeacher as $a)
                       <option value="{{$a->id}}">{{$a->name}}</option>
-                    @endforeach
-                  </select>
-                </div>
-
-                <div class="col-md-3">
-                  <select name="teacher" id="teacher" class="form-control">
-                    <option value="">Profesores</option>
-                    @foreach($arrayProfesores as $p)
-                      <option value="{{$p->id}}">{{$p->name}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -43,11 +35,12 @@
             </form>
           </div>
         </div>
+        </div>
       </div>
 
       <div class="card-body">
         @if($profPermission == 1)
-          <h6 style="float: right; font-weight: bold;">Créditos acumulados: {{$contCréditosProf}}</h6>
+          <h6 style="float: right; font-weight: bold;">Créditos acumulados: {{$contCréditosProf}} de {{$cInitial}}</h6>
           <table class="table table-striped" id="miTabla">
             <thead>
               <tr>

@@ -17,7 +17,7 @@
          		{{ csrf_field() }}
 
             <div class="group row text-center" style="align-content: center;">
-               <div class="col-md-4">
+            <div class="col-md-4">
             <h6>Créditos Teoria</h6>
             <p id="cT"></p>
             </div>
@@ -92,12 +92,20 @@ function validacion(){
    var vCredS = document.getElementById("cSeminar").value;
    var enviar = false;
 
+   console.log(vCredT);
+
    subObj_credT = parseFloat(subObj_credT);
    subObj_credP = parseFloat(subObj_credP);
    subObj_credS = parseFloat(subObj_credS);
 
-   if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
+   if(vCredS == "" && vCredT == "" && vCredP == ""){
+      alert("Introduce los créditos");
+   }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
       alert("Introduce un valor mayor que 0");
+   }else if(vCredT == "0.0" || vCredP == "0.0" || vCredS == "0.0"){
+      alert("Introduce un valor mayor que 0");
+   }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
+      alert("Introduce un valor positivo");
    }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
       alert("Créditos introducidos no validos");
    }else {
