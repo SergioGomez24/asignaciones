@@ -172,6 +172,30 @@ class SolicitudesController extends Controller
         return response()->json($solicitud);
     }
 
+    public function getSolicitudes(Request $request) {
+
+        if($request->ajax()){
+            $subject_id = $request->id;
+            $course = $request->course;
+            $totalT = 0;
+            $totalP = 0;
+            $totalS = 0;
+
+            $solicitudes = Solicitude::where('subject_id', '=', $subject_id)
+                                ->where('course', '=', $course)
+                                ->get();
+
+            foreach ($solicitudes as $key => $s) {
+                $totalT += $s->cTheory;
+                $totalP += $s->cPractice;
+                $totalS += $s->cSeminar;
+            }
+
+            
+            return response()->json(['totalT' => $totalT, 'totalP' => $totalP, 'totalS' => $totalS ]);
+        }
+    }
+
     /* Funciones para crear solicitudes */
     public function getCourse() 
     {
@@ -190,7 +214,6 @@ class SolicitudesController extends Controller
     public function getCreate($course) 
     {
         $usuario = Auth()->user()->id;
-        $arrayAsignaturas = Subject::all();
         $arrayCampus = Campus::all();
         $arrayTitulaciones = Certification::all();
         $arrayCursoAsignaturas = Coursesubject::all();
@@ -198,9 +221,16 @@ class SolicitudesController extends Controller
                                     ->where('course', '=', $course)
                                     ->get();
 
-        /*$array = Solicitude::where('teacher_id', '=', $usuario)
-                            ->where('course', '=', $course)
+        $arraySolicitudesElegidas = Solicitude::select('solicitudes.subject_id')
+                                    ->where('teacher_id', '=', $usuario)
+                                    ->where('course', '=', $course)
+                                    ->get();
+
+        $arrayAsignaturas = Subject::whereNotIn('id', $arraySolicitudesElegidas)
+                            ->orderBy('name')
                             ->get();
+
+        /*
 
         foreach ($array as $key => $s) {
             foreach ($arrayAsignaturas as $key => $a) {

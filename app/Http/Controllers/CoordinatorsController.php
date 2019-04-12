@@ -158,6 +158,18 @@ class CoordinatorsController extends Controller
             }
         }
 
+        if ($cTnew == 0) {
+            $cTnew = null;
+        }
+
+        if ($cPnew == 0) {
+            $cPnew = null;
+        }
+
+        if ($cSnew == 0) {
+            $cSnew = null;
+        }
+
         $a->cTheory = $cTnew;
         $a->cSeminar = $cSnew;
         $a->cPractice = $cPnew;

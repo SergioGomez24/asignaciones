@@ -59,6 +59,7 @@
 <script type="text/javascript">
 
    var subject_id = "{{$solicitud->subject_id}}";
+   var course = "{{$course}}";
    var subObj_credT;
    var subObj_credS;
    var subObj_credP;
@@ -68,12 +69,22 @@
       type:"GET", 
       data: {"id":subject_id}, 
       success: function(result){
-        $("#cT").text(result.cTheory);  
-        $("#cP").text(result.cPractice);
-        $("#cS").text(result.cSeminar);
+        
         subObj_credT = result.cTheory;
         subObj_credP = result.cPractice;
         subObj_credS = result.cSeminar;
+      }
+   });
+
+   $.ajax({
+      url: "{{url('json-solicitudes')}}",
+      type:"GET", 
+      data: {"id":subject_id, "course":course}, 
+      success: function(result){
+        $("#cT").text(result.totalT);
+        console.log(result.totalT);  
+        $("#cP").text(result.totalP);
+        $("#cS").text(result.totalS);
       }
    });
 
@@ -87,8 +98,14 @@ function validacion(){
    subObj_credP = parseFloat(subObj_credP);
    subObj_credS = parseFloat(subObj_credS);
 
-   if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
+   if(vCredS == "" && vCredT == "" && vCredP == ""){
+      alert("Introduce los créditos");
+   }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
       alert("Introduce un valor mayor que 0");
+   }else if(vCredT == "0.0" || vCredP == "0.0" || vCredS == "0.0"){
+      alert("Introduce un valor mayor que 0");
+   }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
+      alert("Introduce un valor positivo");
    }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
       alert("Créditos introducidos no validos");
    }else {

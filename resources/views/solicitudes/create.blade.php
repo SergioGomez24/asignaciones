@@ -280,9 +280,6 @@
         });
       }
     });
-    $.get('/asignaciones/public/json-solicitude?subject_id='+ subject_id + '&teacher_id='+ teacher_id + '&course='+ course, function(d) {
-            numAplication = d.length;
-    });
   });
 
   function validacion(){
@@ -302,8 +299,6 @@
       alert("Introduce un valor positivo");
     }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
       alert("Créditos introducidos no validos");
-    }else if(numAplication > "0") {
-      alert("Asignatura ya elegida");
     }else if(cAvailable < 0) {
       alert("Créditos disponibles insuficientes");
     }else {

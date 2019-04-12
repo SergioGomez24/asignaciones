@@ -88,6 +88,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('index-filters', 'SolicitudesController@getCourseIndexFilters');
 	Route::get('json-solicitude', 'SolicitudesController@getSolicitude');
 
+	Route::get('json-solicitudes', 'SolicitudesController@getSolicitudes');
+
 	Route::get('solicitudes/course', 'SolicitudesController@getCourse');
 	Route::get('solicitudes/create/{course}', 'SolicitudesController@getCreate');
 	Route::post('solicitudes/create/{course}', 'SolicitudesController@postCreate');
@@ -179,6 +181,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 	/* Ajustes cursos */
 	Route::get('settings/courses', 'CoursesController@getIndex');
+
+	Route::get('json-course', 'CoursesController@getCourse');
 
 	Route::get('settings/courses/create', 'CoursesController@getCreate');
 	Route::post('settings/courses/create', 'CoursesController@postCreate');

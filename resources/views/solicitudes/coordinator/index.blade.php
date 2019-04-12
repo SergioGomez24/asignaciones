@@ -220,10 +220,10 @@
  
     // mostramos la suma total
     var filas = document.querySelectorAll("#miTabla tfoot tr td");
-    filas[4].textContent = total.toFixed(1);
     filas[1].textContent = totalT.toFixed(1);
     filas[2].textContent = totalP.toFixed(1);
     filas[3].textContent = totalS.toFixed(1);
+    filas[4].textContent = total.toFixed(1);
   }
 
   function pregunta(){ 

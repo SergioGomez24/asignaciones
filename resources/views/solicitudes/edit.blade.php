@@ -92,8 +92,6 @@ function validacion(){
    var vCredS = document.getElementById("cSeminar").value;
    var enviar = false;
 
-   console.log(vCredT);
-
    subObj_credT = parseFloat(subObj_credT);
    subObj_credP = parseFloat(subObj_credP);
    subObj_credS = parseFloat(subObj_credS);

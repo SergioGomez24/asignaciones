@@ -15,6 +15,15 @@ class CoursesController extends Controller
     	return view('settings.courses.index', ['arrayCursos' => $arrayCursos]);
     }
 
+    public function getCourse(Request $request) {
+        if($request->ajax()){
+            $name = $request->name;
+            $info = Course::where('name', $name)->get();
+            
+            return response()->json($info);
+        }
+    }
+
 	public function getCreate() 
     {
     	return view('settings.courses.create');

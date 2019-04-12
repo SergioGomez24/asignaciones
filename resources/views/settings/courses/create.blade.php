@@ -8,7 +8,7 @@
             <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/settings/courses') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
          </div>
          <div class="card-body" style="padding:30px">
-         	<form method="POST">
+         	<form method="POST" onsubmit="return validacion()">
          		{{ csrf_field() }}
 
             <div class="form-group">
@@ -27,4 +27,35 @@
       </div>
    </div>
 </div>
+
+<script type="text/javascript">
+
+   var course = document.getElementById("name").value;
+   var existe;
+
+   $('#name').on('change', function(e) {
+      course = e.target.value;
+
+      $.ajax({
+         url: "{{url('json-course')}}",
+         type:"GET", 
+         data: {"name":course}, 
+         success: function(result){
+            existe = result.length;
+         }
+      });
+   });
+
+   function validacion(){
+      if(existe > "0") {
+         alert("El curso ya existe");
+         return false;
+      } else {
+         return true;
+      }
+   }
+</script>
 @stop
+
+
+
