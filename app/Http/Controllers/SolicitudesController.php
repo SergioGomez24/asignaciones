@@ -55,7 +55,7 @@ class SolicitudesController extends Controller
             ->subjectid($subj_id)
             ->teacherid($teacher_id)
             ->orderBy('subjects.name')
-            ->simplePaginate(7);
+            ->simplePaginate(8);
 
         foreach ($arraySolicitudesProf as $key => $solicitud) {
             $contCréditosProf = $contCréditosProf + $solicitud->cTheory + $solicitud->cPractice + $solicitud->cSeminar;
@@ -123,10 +123,22 @@ class SolicitudesController extends Controller
     public function getDirectorIndex($course, Request $request) {
 
         $usuario = Auth()->user()->id;
-        $arrayAsignaturas = Subject::all();
-        $arrayProfesores = Teacher::all();
         $subj_id = $request->get('subject_id');
         $teacher_id = $request->get('teacher_id');
+
+        $arrayAsignaturasDirector = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
+                ->select('subjects.id','subjects.name')
+                ->distinct()
+                ->where('solicitudes.course', $course)
+                ->orderBy('subjects.name')
+                ->get();
+
+        $arrayProfesores = Teacher::join('solicitudes', 'solicitudes.teacher_id', '=', 'teachers.id')
+            ->select('teachers.id', 'teachers.name')
+            ->distinct()
+            ->where('solicitudes.course', $course)
+            ->orderBy('teachers.name')
+            ->get();
 
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
             ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
@@ -135,7 +147,7 @@ class SolicitudesController extends Controller
             ->subjectid($subj_id)
             ->teacherid($teacher_id)
             ->orderBy('subjects.name')
-            ->simplePaginate(7);
+            ->simplePaginate(8);
 
         $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
                              ->where('course', '=', $course)
@@ -148,7 +160,7 @@ class SolicitudesController extends Controller
         }
 
         return view('solicitudes.director.index')->with('arraySolicitudes', $arraySolicitudes)
-                                          ->with('arrayAsignaturas', $arrayAsignaturas)
+                                          ->with('arrayAsignaturasDirector', $arrayAsignaturasDirector)
                                           ->with('arrayProfesores', $arrayProfesores)
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher_id', $teacher_id)
@@ -175,13 +187,15 @@ class SolicitudesController extends Controller
     public function getSolicitudes(Request $request) {
 
         if($request->ajax()){
-            $subject_id = $request->id;
+            $subject_id = $request->subject_id;
             $course = $request->course;
+            $id = $request->id;
             $totalT = 0;
             $totalP = 0;
             $totalS = 0;
 
             $solicitudes = Solicitude::where('subject_id', '=', $subject_id)
+                                ->where('id', '!=', $id)
                                 ->where('course', '=', $course)
                                 ->get();
 
@@ -190,6 +204,12 @@ class SolicitudesController extends Controller
                 $totalP += $s->cPractice;
                 $totalS += $s->cSeminar;
             }
+
+            $subject = Subject::findOrFail($subject_id);
+
+            $totalT = $subject->cTheory - $totalT;
+            $totalP = $subject->cPractice - $totalP;
+            $totalS = $subject->cSeminar - $totalS;
 
             
             return response()->json(['totalT' => $totalT, 'totalP' => $totalP, 'totalS' => $totalS ]);

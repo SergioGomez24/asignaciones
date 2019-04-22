@@ -1,4 +1,14 @@
 @extends('layouts.master')
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Asignaturas</li>
+  </ol>
+  </div>
+</nav>
+@stop
 @section('content')
 <div class="row" style="margin-top:40px">
   <div class="offset-md-1 col-md-10">
@@ -7,7 +17,6 @@
         <div class="text-center">
           <h4> Lista de asignaturas </h4>
         </div>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
         @if (Auth()->user()->role == 'Director')
           <a class="btn btn-primary btn-sm" href="{{ url('/subjects/create') }}" style="float: right;">Añadir asignatura</a>
         @endif
@@ -30,12 +39,12 @@
                 </td>
 
                 @if (Auth()->user()->role == 'Director')
-                  <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/subjects/edit/'.$asignatura->id) }}">Editar</a></td>
+                  <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/subjects/edit/'.$asignatura->id) }}"><i class="fas fa-edit"></i> Editar</a></td>
 
                   <td align="right" ><form name="formBorrar" action="{{action('SubjectsController@deleteSubject', $asignatura->id)}}" method="POST">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
-                    <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button> 
+                    <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()"><i class="fas fa-trash"></i> Borrar</button> 
                   </form></td>
                 @endif
               </tr>

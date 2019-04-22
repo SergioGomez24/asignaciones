@@ -1,11 +1,21 @@
 @extends('layouts.master')
 @section('content')
+<div class="container">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/settings') }}">Ajustes</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Elecciones</li>
+  </ol>
+</nav>
+</div>
+
+<div class="container">
 <div class="row" style="margin-top:40px">
   <div class="offset-md-1 col-md-10">
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Lista de elecciones </h4>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/settings') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
         <a class="btn btn-primary btn-sm" href="{{ url('/settings/elections/create') }}" style="float: right;">Añadir elección</a>
       </div>
       <div class="card-body">	
@@ -24,7 +34,7 @@
                 <td align="right" ><form name="formBorrar" action="{{action('ElectionsController@deleteElection', $eleccion->course)}}" method="POST">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
-                  <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button> 
+                  <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()"><i class="fas fa-trash"></i> Borrar</button> 
                 </form></td>
               </tr>
             @endforeach
@@ -33,6 +43,7 @@
 		  </div>
 	  </div>
 	</div>
+</div>
 </div>
 
 <script language="JavaScript"> 

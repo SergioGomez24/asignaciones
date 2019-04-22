@@ -14,17 +14,17 @@
 
             <div class="group row text-center" style="align-content: center;">
             <div class="col-md-4">
-            <h6>Créditos Teoria</h6>
+            <h6>Créditos Teoria Disponibles</h6>
             <p id="cT"></p>
             </div>
 
             <div class="col-md-4">
-            <h6>Créditos Práctica</h6>
+            <h6>Créditos Práctica Disponibles</h6>
             <p id="cP"></p>
             </div>
 
             <div class="col-md-4">
-            <h6>Créditos Seminario</h6>
+            <h6>Créditos Seminario Disponibles</h6>
             <p id="cS"></p>
             </div>
             </div>
@@ -60,31 +60,36 @@
 
    var subject_id = "{{$solicitud->subject_id}}";
    var course = "{{$course}}";
-   var subObj_credT;
-   var subObj_credS;
-   var subObj_credP;
+   var id = "{{$solicitud->id}}";
+   var credTsubject;
+   var credSsubject;
+   var credPsubject;
+   var credTavailable;
+   var credPavailable;
+   var credSavailable;
 
    $.ajax({
       url: "{{url('json-subject')}}",
       type:"GET", 
       data: {"id":subject_id}, 
       success: function(result){
-        
-        subObj_credT = result.cTheory;
-        subObj_credP = result.cPractice;
-        subObj_credS = result.cSeminar;
+        credTsubject = result.cTheory;
+        credPsubject = result.cPractice;
+        credSsubject = result.cSeminar;
       }
    });
 
    $.ajax({
       url: "{{url('json-solicitudes')}}",
       type:"GET", 
-      data: {"id":subject_id, "course":course}, 
+      data: {"subject_id":subject_id, "course":course, "id":id}, 
       success: function(result){
-        $("#cT").text(result.totalT);
-        console.log(result.totalT);  
+        $("#cT").text(result.totalT);  
         $("#cP").text(result.totalP);
         $("#cS").text(result.totalS);
+        credTavailable = result.totalT;
+        credPavailable = result.totalP;
+        credSavailable = result.totalS;
       }
    });
 
@@ -94,9 +99,13 @@ function validacion(){
    var vCredS = document.getElementById("cSeminar").value;
    var enviar = false;
 
-   subObj_credT = parseFloat(subObj_credT);
-   subObj_credP = parseFloat(subObj_credP);
-   subObj_credS = parseFloat(subObj_credS);
+   credTavailable = parseFloat(credTavailable);
+   credPavailable = parseFloat(credPavailable);
+   credSavailable = parseFloat(credSavailable);
+
+   credTsubject = parseFloat(credTsubject);
+   credPsubject = parseFloat(credPsubject);
+   credSsubject = parseFloat(credSsubject);
 
    if(vCredS == "" && vCredT == "" && vCredP == ""){
       alert("Introduce los créditos");
@@ -106,8 +115,14 @@ function validacion(){
       alert("Introduce un valor mayor que 0");
    }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
       alert("Introduce un valor positivo");
-   }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
-      alert("Créditos introducidos no validos");
+   }else if(vCredT > credTavailable){
+      alert("Los créditos de teoria introducidos no son validos");
+   }else if(vCredP > credPavailable){
+      alert("Los créditos de prácticas introducidos no son validos");
+   }else if(vCredS > credSavailable){
+      alert("Los créditos de seminarios introducidos no son validos");
+   }else if(vCredT > credTsubject || vCredP > credPsubject || vCredS > credSsubject) {
+      alert("Valores introducidos incorrectos");
    }else {
       enviar = true;
    }

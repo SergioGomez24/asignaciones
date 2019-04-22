@@ -24,14 +24,14 @@
                 <div class="col-md-3">
                   <select name="subject_id" id="subject_id" class="form-control">
                     <option value="">Asignaturas</option>
-                    @foreach($arrayAsignaturas as $a)
+                    @foreach($arrayAsignaturasDirector as $a)
                       <option value="{{$a->id}}">{{$a->name}}</option>
                     @endforeach
                   </select>
                 </div>
 
                 <div class="col-md-3">
-                  <select name="teacher" id="teacher" class="form-control">
+                  <select name="teacher_id" id="teacher_id" class="form-control">
                     <option value="">Profesores</option>
                     @foreach($arrayProfesores as $p)
                       <option value="{{$p->id}}">{{$p->name}}</option>
@@ -65,10 +65,10 @@
                 <tr>
                   <td>{{$solicitud->asig}}</td>
                   <td>{{$solicitud->prof}}</td>
-                  <td>{{$solicitud->cTheory}}</td>
-                  <td>{{$solicitud->cPractice}}</td>
-                  <td>{{$solicitud->cSeminar}}</td>
-                  <td></td>
+                  <td class="text-center">{{$solicitud->cTheory}}</td>
+                  <td class="text-center">{{$solicitud->cPractice}}</td>
+                  <td class="text-center">{{$solicitud->cSeminar}}</td>
+                  <td class="text-center"></td>
                   <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}

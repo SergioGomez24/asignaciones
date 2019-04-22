@@ -30,8 +30,19 @@ class ElectionsController extends Controller
 
     public function getIndex($course, Request $request)
     {
-        $arrayAsignaturas = Subject::all();
-        $arrayProfesores = Teacher::all();
+        $arrayAsignaturas = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
+            ->select('subjects.id', 'subjects.name')
+            ->distinct()
+            ->where('solicitudes.course', $course)
+            ->orderBy('subjects.name')
+            ->get();
+
+        $arrayProfesores = Teacher::join('solicitudes', 'solicitudes.teacher_id', '=', 'teachers.id')
+            ->select('teachers.id', 'teachers.name')
+            ->distinct()
+            ->where('solicitudes.course', $course)
+            ->orderBy('teachers.name')
+            ->get();
         
         $arraySolicitudes = $this->getArraySolicitudes($course, $request);
 

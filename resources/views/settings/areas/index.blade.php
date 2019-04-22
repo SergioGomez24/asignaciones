@@ -1,11 +1,19 @@
 @extends('layouts.master')
+@section('breadcrumb')
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/settings') }}">Ajustes</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Areas</li>
+  </ol>
+</nav>
+@stop
 @section('content')
 <div class="row" style="margin-top:40px">
   <div class="offset-md-1 col-md-10">
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Lista de areas </h4>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/settings') }}"><img src={{ asset('img/keyboard_return.png') }} height="15" width="15"/></a></button>
         <a class="btn btn-primary btn-sm" href="{{ url('/settings/areas/create') }}" style="float: right;">Añadir area</a>
       </div>
       <div class="card-body">

@@ -1,14 +1,23 @@
 @extends('layouts.master')
 @section('content')
+<div class="container">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/elections') }}">Curso Elecciones</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Elecciones Curso {{$course}}</li>
+  </ol>
+</nav>
+</div>
+
+<div class="container">
 <div class="row" style="margin-top:40px">
   <div class="offset-md-1 col-md-10">
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Elecciones Curso {{$course}} </h4>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/elections') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
         @if($elecPermission == 1)
         <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/elections/pdf/'.$course) }}"><img src="{{ asset('img/descarga.png') }}" height="15" width="15"/></a></button>
-        
 
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>
         @endif
@@ -27,7 +36,7 @@
                 </div>
 
                 <div class="col-md-3">
-                  <select name="teacher" id="teacher" class="form-control">
+                  <select name="teacher_id" id="teacher_id" class="form-control">
                     <option value="">Profesores</option>
                     @foreach($arrayProfesores as $p)
                       <option value="{{$p->id}}">{{$p->name}}</option>
@@ -70,6 +79,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <script language="JavaScript">

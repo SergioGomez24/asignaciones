@@ -1,11 +1,22 @@
 @extends('layouts.master')
 @section('content')
+<div class="container">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/settings') }}">Ajustes</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/settings/elections') }}">Elecciones</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Añadir Elección</li>
+  </ol>
+</nav>
+</div>
+
+<div class="container">
 <div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header">
-            <h5 class="text-center"> Añadir elección </h5>
-            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/settings/elections') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
+            <h5 class="text-center"> Añadir Elección </h5>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST" onsubmit="return validar()">
@@ -32,6 +43,8 @@
       </div>
    </div>
 </div>
+</div>
+
 <script language="JavaScript">
    var course = document.getElementById("course").value;
 

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('img/logo.png') }}"/></a>
 
@@ -11,23 +11,23 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/')}}" style="color: black; font-weight: bold;">Inicio</a>
+                    <a class="nav-link" href="{{url('/')}}" style="color: black; font-weight: bold;"><i class="fas fa-home"></i> Inicio</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/subjects')}}" style="color: black; font-weight: bold;">Asignaturas</a>
+                    <a class="nav-link" href="{{url('/subjects')}}" style="color: black; font-weight: bold;"><i class="fas fa-book"></i> Asignaturas</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/teachers')}}" style="color: black; font-weight: bold;">Profesores</a>
+                    <a class="nav-link" href="{{url('/teachers')}}" style="color: black; font-weight: bold;"><i class="fas fa-graduation-cap"></i> Profesores</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/elections')}}" style="color: black; font-weight: bold;">Elecciones</a>
+                    <a class="nav-link" href="{{url('/elections')}}" style="color: black; font-weight: bold;"><i class="fas fa-vote-yea"></i> Elecciones</a>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black; font-weight: bold;">Solicitudes</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black; font-weight: bold;"><i class="fas fa-list-alt"></i> Solicitudes</a>
                     <div class="dropdown-menu">
                         @if (Auth()->user()->role == 'Director')
                         <a class="dropdown-item"  href="{{url('/solicitudes/director')}}" style="color: black; font-weight: bold;">Director</a>
@@ -40,7 +40,7 @@
 
                 @if (Auth()->user()->role == 'Director')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/settings')}}" style="color: black; font-weight: bold;">Ajustes</a>
+                    <a class="nav-link" href="{{url('/settings')}}" style="color: black; font-weight: bold;"><i class="fas fa-cogs"></i> Ajustes</a>
                 </li>
                 @endif
 
@@ -48,7 +48,7 @@
 
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black; font-weight: bold;">{{ auth()->user()->name }}</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black; font-weight: bold;"><i class="fas fa-user"></i> {{ auth()->user()->name }}</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item"  href="{{ url('/teachers/show/'.Auth()->user()->id ) }}" style="color: black; font-weight: bold;">Mi perfil</a>
                     

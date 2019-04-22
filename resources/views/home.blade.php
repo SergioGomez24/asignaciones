@@ -1,8 +1,15 @@
 @extends('layouts.master')
-
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Inicio</li>
+  </ol>
+  </div>
+</nav>
+@stop
 @section('content')
 <div class="row" style="margin-top:40px">
-<div class="container">
 	<div class="offset-md-1 col-md-10">
     <div class="jumbotron">
   		<h1 class="display-4">Universidad de Cádiz</h1>
@@ -15,6 +22,5 @@
         @endif
   		</p>
 	</div>
-</div>
 </div>
 @endsection

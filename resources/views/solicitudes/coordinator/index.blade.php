@@ -4,7 +4,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="text-center"> Selecciones Curso {{$course}} </h4>
+        <h4 class="text-center"> Solicitudes Curso {{$course}} </h4>
         <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/coordinators') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
 
         @if($coorPermission == 1)
@@ -38,42 +38,45 @@
 
       <div class="card-body">
         @if($coorPermission == 1)
-        <div class="group row text-center" style="align-content: center;">
-          <div class="col-md-3">
-            <form href = "coordinators/index/{$course}" method="GET">
-              <h6><label for="subject">Selecciona una asignatura</label></h6>
-              <select name="subject" id="subject" class="form-control" required>
-                <option value="">Elige una asignatura</option>
-                @foreach($arrayAsignaturasCoor as $a)
-                  <option value="{{$a->id}}">{{$a->name}}</option>
-                @endforeach
-              </select>
-            </form>
-          </div>
+          <form href = "coordinators/index/{$course}" method="GET">
+            <h6><label for="subject">Selecciona una asignatura</label></h6>
+            <select name="subject" id="subject" class="form-control" required>
+              <option value="">Elige una asignatura</option>
+              @foreach($arrayAsignaturasCoor as $a)
+                <option value="{{$a->id}}">{{$a->name}}</option>
+              @endforeach
+            </select>
+          </form>
 
           @if($subject_id != "")
-          <div class="col-md-2">
+          <div class="group row" style="margin-top: 10px;">
+          <div class="col-md-3">
+            <h6>Asignatura</h6>
+            <p id="name"></p>
+          </div>
+
+          <div class="col-md-2 text-center">
             <h6>Créditos Teoria</h6>
             <p id="cT"></p>
           </div>
 
-          <div class="col-md-2">
+          <div class="col-md-2 text-center">
             <h6>Créditos Práctica</h6>
             <p id="cP"></p>
           </div>
 
-          <div class="col-md-2">
+          <div class="col-md-2 text-center">
             <h6>Créditos Seminario</h6>
             <p id="cS"></p>
           </div>
 
-          <div class="col-md-2">
+          <div class="col-md-1 text-center">
             <h6>Total</h6>
             <p id="cTotal"></p>
           </div>
-        </div>
+          </div>
 
-        <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
+        <table class="table table-striped" id="miTabla" >
           <thead>
             <tr>
               <th scope="col">Asignatura</th>
@@ -91,9 +94,9 @@
               <tr>
                 <td>{{$solicitud->asig}}</td>
                 <td>{{$solicitud->prof}}</td>
-                <td>{{$solicitud->cTheory}}</td>
-                <td>{{$solicitud->cPractice}}</td>
-                <td>{{$solicitud->cSeminar}}</td>
+                <td class="text-center">{{$solicitud->cTheory}}</td>
+                <td class="text-center">{{$solicitud->cPractice}}</td>
+                <td class="text-center">{{$solicitud->cSeminar}}</td>
                 <td></td>
                 <td><a class="btn btn-secondary btn-sm" href="{{ url('/coordinators/edit/'.$solicitud->id) }}">Editar</a></td>
                 <td>
@@ -110,9 +113,9 @@
           <tfoot>
             <tr>
               <td colspan=2 style="font-weight: bold;">Total</td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
               <td></td>
             </tr>
           </tfoot>
@@ -150,6 +153,7 @@
     type:"GET", 
     data: {"id":asig}, 
     success: function(result){
+      $("#name").text(result.name);
       $("#cT").text(result.cTheory);  
       $("#cP").text(result.cPractice);
       $("#cS").text(result.cSeminar);

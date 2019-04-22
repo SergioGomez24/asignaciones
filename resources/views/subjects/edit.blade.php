@@ -1,11 +1,21 @@
 @extends('layouts.master')
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/subjects') }}">Asignaturas</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Editar Asignatura</li>
+  </ol>
+  </div>
+</nav>
+@stop
 @section('content')
 <div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header">
-            <h5 class="text-center"> Editar asignatura </h5>
-            <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/subjects') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
+            <h5 class="text-center"> Editar Asignatura </h5>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST" onsubmit="return validar()">
