@@ -1,16 +1,16 @@
 @extends('layouts.master')
-@section('content')
-<div class="container">
-<nav aria-label="breadcrumb">
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/teachers') }}">Profesores</a></li>
     <li class="breadcrumb-item active" aria-current="page">Editar Profesor</li>
   </ol>
+  </div>
 </nav>
-</div>
-
-<div class="container">
+@stop
+@section('content')
 <div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
@@ -91,6 +91,5 @@
          </div>
       </div>
    </div>
-</div>
 </div>
 @stop

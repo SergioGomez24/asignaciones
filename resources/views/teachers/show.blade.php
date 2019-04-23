@@ -1,11 +1,21 @@
 @extends('layouts.master')
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Mi perfil</li>
+  </ol>
+  </div>
+</nav>
+@stop
 @section('content')
 <div class="row" style="margin-top:40px">
   <div class="offset-md-1 col-md-10">
     <div class="card">
       <div class="card-header">
-        <h2 class="text-center"> {{$profesor->name}} </h2>
-        <a class="btn btn-secondary btn-sm" href="{{ url('/teachers/edit/'.$profesor->id) }}" style="float: right;">Editar</a>
+        <h4 class="text-center"> {{$profesor->name}} </h4>
+        <a class="btn btn-secondary btn-sm" href="{{ url('/teachers/edit/'.$profesor->id) }}" style="float: right;"><i class="fas fa-edit"></i> Editar</a>
       </div>
       <div class="card-body">
         <div class="group row">

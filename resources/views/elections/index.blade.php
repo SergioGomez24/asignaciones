@@ -1,16 +1,16 @@
 @extends('layouts.master')
-@section('content')
-<div class="container">
-<nav aria-label="breadcrumb">
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/elections') }}">Curso Elecciones</a></li>
     <li class="breadcrumb-item active" aria-current="page">Elecciones Curso {{$course}}</li>
   </ol>
+  </div>
 </nav>
-</div>
-
-<div class="container">
+@stop
+@section('content')
 <div class="row" style="margin-top:40px">
   <div class="offset-md-1 col-md-10">
     <div class="card">
@@ -44,6 +44,9 @@
                   </select>
                 </div>
                 <button class="btn-info btn-sm" type="submit">Aplicar</button>
+                @if($filter != 0)
+                <button class="btn-secondary btn-sm" type="submit" style="margin-left: 5px;">Quitar filtros</button>
+                @endif
               </div>
             </form>
           </div>
@@ -79,7 +82,6 @@
       </div>
     </div>
   </div>
-</div>
 </div>
 
 <script language="JavaScript">

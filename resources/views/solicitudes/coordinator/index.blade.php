@@ -1,11 +1,21 @@
 @extends('layouts.master')
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/coordinators') }}">Curso Solicitudes</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Solicitudes Curso {{$course}}</li>
+  </ol>
+  </div>
+</nav>
+@stop
 @section('content')
 <div class="row" style="margin-top:40px">
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Solicitudes Curso {{$course}} </h4>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/coordinators') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
 
         @if($coorPermission == 1)
         <form name="formPermission" action="{{action('SolicitudesController@editPermissionCoor', $course)}}" method="POST" style="display:inline">

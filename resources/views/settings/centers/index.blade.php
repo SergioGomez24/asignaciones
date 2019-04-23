@@ -1,12 +1,22 @@
 @extends('layouts.master')
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/settings') }}">Ajustes</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Centros</li>
+  </ol>
+  </div>
+</nav>
+@stop
 @section('content')
 <div class="row" style="margin-top:40px">
   <div class="offset-md-1 col-md-10">
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Lista de centros </h4>
-        <button class="btn btn-light btn-sm" style="float: left;"><a href="{{ url('/settings') }}"><img src="{{ asset('img/keyboard_return.png') }}" height="15" width="15"/></a></button>
-        <a class="btn btn-primary btn-sm" href="{{ url('/settings/centers/create') }}" style="float: right;">Añadir centro</a>
+        <a class="btn btn-primary btn-sm" href="{{ url('/settings/centers/create') }}" style="float: right;"><i class="fas fa-plus"></i> Añadir centro</a>
       </div>
       <div class="card-body">	
         <table class="table table-striped">
@@ -22,12 +32,12 @@
               <tr>
                 <td style="font-weight: bold;">{{$centro->name}}</td>
 
-                <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/settings/centers/edit/'.$centro->id) }}">Editar</a></td>
+                <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/settings/centers/edit/'.$centro->id) }}"><i class="fas fa-edit"></i> Editar</a></td>
 
                 <td align="right" ><form name="formBorrar" action="{{action('CentersController@deleteCenter', $centro->id)}}" method="POST">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
-                  <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button> 
+                  <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()"><i class="fas fa-trash"></i> Borrar</button> 
                 </form></td>
               </tr>
             @endforeach

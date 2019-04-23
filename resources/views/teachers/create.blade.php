@@ -1,21 +1,21 @@
 @extends('layouts.master')
-@section('content')
-<div class="container">
-<nav aria-label="breadcrumb">
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/teachers') }}">Profesores</a></li>
     <li class="breadcrumb-item active" aria-current="page">Añadir Profesor</li>
   </ol>
+  </div>
 </nav>
-</div>
-
-<div class="container">
+@stop
+@section('content')
 <div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header">
-            <h5 class="text-center" > Añadir profesor </h5>
+            <h5 class="text-center" > Añadir Profesor </h5>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST">
@@ -72,7 +72,7 @@
 
             <div class="form-group">
                <label for="cInitial" style="font-weight: bold;">Créditos iniciales</label>
-               <input type="number" name="cInitial" id="cInitial" class="form-control" required>
+               <input type="number" name="cInitial" id="cInitial" class="form-control" placeholder="Ejemplo: 24" required>
             </div>
 
             <div class="form-group">
@@ -95,6 +95,5 @@
          </div>
       </div>
    </div>
-</div>
 </div>
 @stop

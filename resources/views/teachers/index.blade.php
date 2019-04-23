@@ -1,22 +1,22 @@
 @extends('layouts.master')
-@section('content')
-<div class="container">
-<nav aria-label="breadcrumb">
+@section('breadcrumb')
+<nav class="bg-light">
+  <div class="container">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Profesores</li>
   </ol>
+  </div>
 </nav>
-</div>
-
-<div class="container">
+@stop
+@section('content')
 <div class="row" style="margin-top:40px">
   <div class="offset-md-1 col-md-10">
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Lista de profesores </h4>
         @if (Auth()->user()->role == 'Director')
-          <a class="btn btn-primary btn-sm" href="{{ url('/teachers/create') }}" style="float: right;">Añadir profesor</a>
+          <a class="btn btn-primary btn-sm" href="{{ url('/teachers/create') }}" style="float: right;"><i class="fas fa-plus"></i> Añadir profesor</a>
         @endif
       </div>
       <div class="card-body">
@@ -101,7 +101,6 @@
       </div>
     </div>
   </div>
-</div>
 </div>
 
 <script language="JavaScript"> 

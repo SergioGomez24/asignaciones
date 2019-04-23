@@ -18,7 +18,7 @@
           <h4> Lista de asignaturas </h4>
         </div>
         @if (Auth()->user()->role == 'Director')
-          <a class="btn btn-primary btn-sm" href="{{ url('/subjects/create') }}" style="float: right;">Añadir asignatura</a>
+          <a class="btn btn-primary btn-sm" href="{{ url('/subjects/create') }}" style="float: right;"><i class="fas fa-plus"></i> Añadir asignatura</a>
         @endif
       </div>
       <div class="card-body">

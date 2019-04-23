@@ -30,6 +30,10 @@ class ElectionsController extends Controller
 
     public function getIndex($course, Request $request)
     {
+        $subj_id = $request->get('subject_id');
+        $teacher_id = $request->get('teacher_id');
+        $filter = 0;
+
         $arrayAsignaturas = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
             ->select('subjects.id', 'subjects.name')
             ->distinct()
@@ -43,8 +47,38 @@ class ElectionsController extends Controller
             ->where('solicitudes.course', $course)
             ->orderBy('teachers.name')
             ->get();
-        
-        $arraySolicitudes = $this->getArraySolicitudes($course, $request);
+
+        $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
+            ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
+            ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->where('course', '=', $course)
+            ->subjectid($subj_id)
+            ->teacherid($teacher_id)
+            ->orderBy('teachers.name')
+            ->get();
+
+        if ($subj_id) {
+            $filter++;
+        }
+
+        if ($teacher_id) {
+            $filter++;
+        }
+
+
+        foreach ($arraySolicitudes as $key => $solicitud) {
+            if($solicitud->cTheory == 0){
+                $solicitud->cTheory = "";
+            }
+
+            if($solicitud->cPractice == 0){
+                $solicitud->cPractice = "";
+            }
+
+            if($solicitud->cSeminar == 0){
+                $solicitud->cSeminar = "";
+            }    
+        }
 
         $eleccionDir = Election::where('teacher_id', '1')
                                     ->where('course', $course)
@@ -58,6 +92,7 @@ class ElectionsController extends Controller
                                         ->with('arrayAsignaturas', $arrayAsignaturas)
                                         ->with('arrayProfesores', $arrayProfesores)
                                         ->with('elecPermission', $elecPermission)
+                                        ->with('filter', $filter)
                                         ->with('course', $course);
     }
 
@@ -89,38 +124,6 @@ class ElectionsController extends Controller
         $view =  \View::make('pdf.elections', compact('arraySolicitudes', 'date', 'course'))->render();
         $pdf = PDF::loadHTML($view);
         return $pdf->stream('elections');
-    }
-
-
-    public function getArraySolicitudes($course,Request $request) {
-
-        $subj_id = $request->get('subject_id');
-        $teacher_id = $request->get('teacher_id');
-
-        $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
-            ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
-            ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
-            ->where('course', '=', $course)
-            ->subjectid($subj_id)
-            ->teacherid($teacher_id)
-            ->orderBy('teachers.name')
-            ->get();
-
-        foreach ($arraySolicitudes as $key => $solicitud) {
-            if($solicitud->cTheory == 0){
-                $solicitud->cTheory = "";
-            }
-
-            if($solicitud->cPractice == 0){
-                $solicitud->cPractice = "";
-            }
-
-            if($solicitud->cSeminar == 0){
-                $solicitud->cSeminar = "";
-            }    
-        }
-
-        return $arraySolicitudes;
     }
 
     public function getCreate() 
