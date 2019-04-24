@@ -59,78 +59,65 @@
           </form>
 
           @if($subject_id != "")
-          <div class="group row" style="margin-top: 10px;">
-          <div class="col-md-3">
-            <h6>Asignatura</h6>
-            <p id="name"></p>
-          </div>
 
-          <div class="col-md-2 text-center">
-            <h6>Créditos Teoria</h6>
-            <p id="cT"></p>
-          </div>
+            <h4 class="text-center" id="titulo" style="margin-top: 10px;"></h4>
 
-          <div class="col-md-2 text-center">
-            <h6>Créditos Práctica</h6>
-            <p id="cP"></p>
-          </div>
-
-          <div class="col-md-2 text-center">
-            <h6>Créditos Seminario</h6>
-            <p id="cS"></p>
-          </div>
-
-          <div class="col-md-1 text-center">
-            <h6>Total</h6>
-            <p id="cTotal"></p>
-          </div>
-          </div>
-
-        <table class="table table-striped" id="miTabla" >
-          <thead>
-            <tr>
-              <th scope="col">Asignatura</th>
-              <th scope="col">Profesor</th>
-              <th scope="col">Créditos Teoría</th>
-              <th scope="col">Créditos Prácticas</th>
-              <th scope="col">Créditos Seminarios</th>
-              <th scope="col">Total</th>
-              <th scope="col">Editar</th>
-              <th scope="col">Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach( $arraySolicitudesCoor as $key => $solicitud )
-              <tr>
-                <td>{{$solicitud->asig}}</td>
-                <td>{{$solicitud->prof}}</td>
-                <td class="text-center">{{$solicitud->cTheory}}</td>
-                <td class="text-center">{{$solicitud->cPractice}}</td>
-                <td class="text-center">{{$solicitud->cSeminar}}</td>
-                <td></td>
-                <td><a class="btn btn-secondary btn-sm" href="{{ url('/coordinators/edit/'.$solicitud->id) }}">Editar</a></td>
-                <td>
-                  <form name="formBorrar" action="{{action('CoordinatorsController@deleteSolicitudeCoor', $solicitud->id)}}" method="POST" style="display:inline">
-                    {{ method_field('DELETE') }}
-                    {{ csrf_field() }}
-                    <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
-                  </form>
-                </td>
-              </tr>
-            @endforeach
-            {!! $arraySolicitudesCoor->render() !!}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan=2 style="font-weight: bold;">Total</td>
-              <td class="text-center"></td>
-              <td class="text-center"></td>
-              <td class="text-center"></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
-        @endif
+            <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
+              <thead>
+                <tr>
+                  <th scope="col">Asignatura</th>
+                  <th scope="col">Profesor</th>
+                  <th scope="col">Créditos Teoría</th>
+                  <th scope="col">Créditos Prácticas</th>
+                  <th scope="col">Créditos Seminarios</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Editar</th>
+                  <th scope="col">Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach( $arraySolicitudesCoor as $key => $solicitud )
+                  <tr>
+                    <td>{{$solicitud->asig}}</td>
+                    <td>{{$solicitud->prof}}</td>
+                    <td class="text-center">{{$solicitud->cTheory}}</td>
+                    <td class="text-center">{{$solicitud->cPractice}}</td>
+                    <td class="text-center">{{$solicitud->cSeminar}}</td>
+                    <td></td>
+                    <td><a class="btn btn-secondary btn-sm" href="{{ url('/coordinators/edit/'.$solicitud->id) }}">Editar</a></td>
+                    <td>
+                      <form name="formBorrar" action="{{action('CoordinatorsController@deleteSolicitudeCoor', $solicitud->id)}}" method="POST" style="display:inline">
+                      {{ method_field('DELETE') }}
+                      {{ csrf_field() }}
+                      <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
+                      </form>
+                    </td>
+                  </tr>
+                @endforeach
+                {!! $arraySolicitudesCoor->render() !!}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan=2 style="font-weight: bold;">Total Solicitudes</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td colspan=2 style="font-weight: bold;">Total Asignatura</td>
+                  <td class="text-center" id="cT"></td>
+                  <td class="text-center" id="cP"></td>
+                  <td class="text-center" id="cS"></td>
+                  <td id="cTotal"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          @endif
         @else
           <h6>Las solicitudes del coordinador no está disponible</h6>
         @endif
@@ -163,7 +150,7 @@
     type:"GET", 
     data: {"id":asig}, 
     success: function(result){
-      $("#name").text(result.name);
+      $("#titulo").text("Solicitudes "+ result.name);
       $("#cT").text(result.cTheory);  
       $("#cP").text(result.cPractice);
       $("#cS").text(result.cSeminar);

@@ -23,12 +23,12 @@
 
             <div class="form-group">
                <label for="code" style="font-weight: bold;">Código</label>
-               <input type="text" name="code" id="code" class="form-control" placeholder="Ejemplo: 111" required>
+               <input type="text" name="code" id="code" class="form-control" placeholder="Código" pattern="[0-9]+" title="Caracteres numericos" required>
             </div>
 
             <div class="form-group">
                <label for="name" style="font-weight: bold;">Nombre</label>
-               <input type="text" name="name" id="name" class="form-control" placeholder="Ejemplo: Programación" required>
+               <input type="text" name="name" id="name" class="form-control" placeholder="Nombre asignatura" pattern="[A-Za-z]+" title="Caracteres" required>
             </div>
 
             <div class="form-group">

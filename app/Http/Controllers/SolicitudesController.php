@@ -482,6 +482,7 @@ class SolicitudesController extends Controller
     {
         $usuario = Auth()->user()->id;
         $coorPermission = true;
+        $profPermission = false;
 
         $eleccionDir = Election::where('teacher_id', '1')
                              ->where('course', $course)
@@ -510,10 +511,24 @@ class SolicitudesController extends Controller
                 $coorPermission = false;
         }
 
+        $eleccionesProf = Election::where('course', $course)
+                                ->where('teacher_id', '!=', '1')
+                                ->get();
+
         if($coorPermission == true) {
-            foreach ($elecciones as $key => $c) {
-                $c->dirPermission = true;
-                $c->save();
+            foreach ($eleccionesProf as $key => $p) {
+                if($p->cAvailable - 9 > 0){
+                    $p->profPermission = true;
+                    $p->save();
+                    $profPermission = true;
+                }
+            }
+
+            if($profPermission == false){
+                foreach ($elecciones as $key => $c) {
+                    $c->dirPermission = true;
+                    $c->save();
+                }
             }
         }
 

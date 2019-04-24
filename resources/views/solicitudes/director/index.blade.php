@@ -18,10 +18,11 @@
         <h4 class="text-center"> Solicitudes Curso {{$course}} </h4>
 
         @if($dirPermission == 1)
+        
         <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir', $course)}}" method="POST" style="display:inline">
           {{ method_field('POST') }}
           {{ csrf_field() }}
-          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Enviar</button>
+          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Cerrar</button>
         </form>
         
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>

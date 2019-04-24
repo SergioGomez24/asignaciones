@@ -179,7 +179,6 @@
   var subObj_credT;
   var subObj_credS;
   var subObj_credP;
-  var numAplication;
 
   $('#certification').on('change', function(e) {
     certification_id = e.target.value;

@@ -24,12 +24,12 @@
 
             <div class="form-group">
                <label for="code" style="font-weight: bold;">Código</label>
-               <input type="text" name="code" id="code" value="{{$asignatura->code}}" class="form-control" required>
+               <input type="text" name="code" id="code" value="{{$asignatura->code}}" class="form-control" pattern="[0-9]+" title="Caracteres numericos" required>
             </div>
 
             <div class="form-group">
                <label for="name" style="font-weight: bold;">Nombre</label>
-               <input type="text" name="name" id="name" value="{{$asignatura->name}}" class="form-control" required>
+               <input type="text" name="name" id="name" value="{{$asignatura->name}}" class="form-control" pattern="[A-Za-z]+" title="Caracteres" required>
             </div>
 
             <div class="form-group">
