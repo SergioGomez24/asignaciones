@@ -18,12 +18,20 @@
         <h4 class="text-center"> Solicitudes Curso {{$course}} </h4>
 
         @if($dirPermission == 1)
-        
+        @if($state == 1)
         <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir', $course)}}" method="POST" style="display:inline">
           {{ method_field('POST') }}
           {{ csrf_field() }}
-          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Cerrar</button>
+          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Cerrar solicitudes</button>
         </form>
+        @else
+        <form name="formPermissionOpen" action="{{action('SolicitudesController@openElection', $course)}}" method="POST" style="display:inline">
+          {{ method_field('POST') }}
+          {{ csrf_field() }}
+          <button class="btn btn-secondary btn-sm" type="submit" onclick="return abrir()" style="float: left; margin-left: 5px;">Abrir solicitudes</button>
+        </form>
+        @endif
+
         
         <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>
         @endif
@@ -57,7 +65,8 @@
       </div>
 
       <div class="card-body">
-        @if($dirPermission == 1) 
+        @if($dirPermission == 1)
+        @if($state == 1) 
           <table class="table table-striped" id="miTabla">
             <thead>
               <tr>
@@ -91,6 +100,7 @@
               {!! $arraySolicitudes->render() !!}
             </tbody>
           </table>
+        @endif
         @else
           <h6>Las solicitudes no están disponibles</h6>
         @endif
@@ -162,12 +172,23 @@
   }
 
   function validar(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres enviar las solicitudes definitivamente?'
-                          + ' Una vez enviadas ya no podras modificarlas');
+    var mensaje = confirm('¿Estas seguro de que quieres cerrar las solicitudes?'
+                          + ' Una vez cerradas ya no podras modificarlas');
     var enviar = false;
 
     if(mensaje) {
       document.formPermission.submit();
+      enviar = true; 
+    }
+    return enviar;
+  }
+
+  function abrir(){ 
+    var mensaje = confirm('¿Estas seguro de que quieres abrir las solicitudes?');
+    var enviar = false;
+
+    if(mensaje) {
+      document.formPermissionOpen.submit();
       enviar = true; 
     }
     return enviar;

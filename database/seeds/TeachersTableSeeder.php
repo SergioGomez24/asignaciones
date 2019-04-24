@@ -9,7 +9,7 @@ class TeachersTableSeeder extends Seeder
 		DB::table('teachers')->delete();
 
 		$t = new Teacher;
-		$t->name = 'Jose Garcia';
+		$t->name = 'José García';
 		$t->dni = '11A';
 		$t->user_id = 1;
 		$t->category_id = 1;
@@ -20,7 +20,7 @@ class TeachersTableSeeder extends Seeder
 		$t->save();
 
 		$t = new Teacher;
-		$t->name = 'Sergio Gomez';
+		$t->name = 'Sergio Gómez';
 		$t->dni = '12A';
 		$t->user_id = 2;
 		$t->category_id = 2;
@@ -31,7 +31,7 @@ class TeachersTableSeeder extends Seeder
 		$t->save();
 
 		$t = new Teacher;
-		$t->name = 'Juan Gomez';
+		$t->name = 'Juan Gómez';
 		$t->dni = '13A';
 		$t->user_id = 3;
 		$t->category_id = 2;

@@ -9,12 +9,12 @@ class CategoriesTableSeeder extends Seeder
 		DB::table('categories')->delete();
 
 		$category = new Category;
-		$category->name = 'Catedratico';
+		$category->name = 'Catedrático';
 		$category->rank = '1';
 		$category->save();
 
         $category = new Category;
-        $category->name = 'Titular de escuela';
+        $category->name = 'Titular de Escuela';
         $category->rank = '2';
         $category->save();
 

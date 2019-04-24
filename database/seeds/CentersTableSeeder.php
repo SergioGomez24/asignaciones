@@ -9,7 +9,7 @@ class CentersTableSeeder extends Seeder
 		DB::table('centers')->delete();
 
 		$c = new Center;
-		$c->name = 'Escuela superior de Ingeniería';
+		$c->name = 'Escuela Superior de Ingeniería';
 		$c->save();
 
 	}

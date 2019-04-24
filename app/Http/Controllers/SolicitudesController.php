@@ -109,7 +109,6 @@ class SolicitudesController extends Controller
     {
         $arrayElecciones = Election::select('course')
                             ->distinct()
-                            ->where('state', true)
                             ->get();
         $cont = 0;
 
@@ -157,6 +156,7 @@ class SolicitudesController extends Controller
             $dirPermission = $eleccion->dirPermission;
             $profPermission = $eleccion->profPermission;
             $coorPermission = $eleccion->coorPermission;
+            $state = $eleccion->state;
         }
 
         return view('solicitudes.director.index')->with('arraySolicitudes', $arraySolicitudes)
@@ -167,7 +167,8 @@ class SolicitudesController extends Controller
                                           ->with('course', $course)
                                           ->with('dirPermission', $dirPermission)
                                           ->with('profPermission', $profPermission)
-                                          ->with('coorPermission', $coorPermission);
+                                          ->with('coorPermission', $coorPermission)
+                                          ->with('state', $state);
 
     }
 
@@ -249,16 +250,6 @@ class SolicitudesController extends Controller
         $arrayAsignaturas = Subject::whereNotIn('id', $arraySolicitudesElegidas)
                             ->orderBy('name')
                             ->get();
-
-        /*
-
-        foreach ($array as $key => $s) {
-            foreach ($arrayAsignaturas as $key => $a) {
-                if($s->subject_id == $a->id){
-                   // $arrayAsignaturas->pull($a->id);
-                } 
-            }
-        }*/
         
 
         foreach ($eleccionProfesor as $eleccion) {
@@ -525,7 +516,7 @@ class SolicitudesController extends Controller
             }
 
             if($profPermission == false){
-                foreach ($elecciones as $key => $c) {
+                foreach ($eleccionDir as $key => $c) {
                     $c->dirPermission = true;
                     $c->save();
                 }
@@ -538,7 +529,7 @@ class SolicitudesController extends Controller
 
     public function editPermissionDir(Request $request, $course)
     {
-        $usuario = Auth()->user()->id;
+        /*$usuario = Auth()->user()->id;
 
         $eleccion = Election::where('teacher_id', $usuario)
                              ->where('course', $course)
@@ -547,7 +538,7 @@ class SolicitudesController extends Controller
         foreach ($eleccion as $p) {
             $p->dirPermission = false;
             $p->save();
-        }
+        }*/
 
         $elecciones = Election::where('course', $course)
                               ->get();
@@ -558,7 +549,22 @@ class SolicitudesController extends Controller
             $eleccion->save();
         }
 
-        Notification::success('Las solicitudes fue enviadas exitosamente!');
+        Notification::success('Las solicitudes se cerraron exitosamente!');
         return redirect('/');
+    }
+
+    public function openElection(Request $request, $course)
+    {
+        $elecciones = Election::where('course', $course)
+                              ->get();
+
+        foreach($elecciones as $eleccion) {
+            $eleccion->elecPermission = false;
+            $eleccion->state = true;
+            $eleccion->save();
+        }
+
+        Notification::success('Las solicitudes se abrieron exitosamente!');
+        return redirect('/solicitudes/director/index/'. $course);
     }
 }

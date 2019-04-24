@@ -12,10 +12,6 @@ class CampusTableSeeder extends Seeder
 		$c->name = 'Campus de Puerto Real';
 		$c->save();
 
-        $c = new Campus;
-        $c->name = 'Campus de Cádiz';
-        $c->save();
-
 	}
 
     /**

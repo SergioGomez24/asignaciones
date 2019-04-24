@@ -10,7 +10,7 @@ class UsersTableSeeder extends Seeder
 		DB::table('users')->delete();
 
 		$user = new User;
-		$user->name = 'Jose Garcia';
+		$user->name = 'José García';
 		$user->email = 'jose@jose.com';
 		$user->password = bcrypt('hola');
 		$user->role = 'Director';
@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
 		$user->save();
 
 		$user = new User;
-		$user->name = 'Sergio Gomez';
+		$user->name = 'Sergio Gómez';
 		$user->email = 'sergio@sergio.com';
 		$user->password = bcrypt('hola');
 		$user->role = 'Profesor';
@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
 		$user->save();
 
 		$user = new User;
-		$user->name = 'Juan Gomez';
+		$user->name = 'Juan Gómez';
 		$user->email = 'juan@juan.com';
 		$user->password = bcrypt('hola');
 		$user->role = 'Profesor';

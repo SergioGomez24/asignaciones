@@ -50,12 +50,12 @@
 
       <div class="card-body">
         @if($profPermission == 1)
+          <h5 class="text-center" style="font-weight: bold;">Profesor: {{ auth()->user()->name }}</h5>
           <h6 style="float: right; font-weight: bold;">Créditos acumulados: {{$contCréditosProf}} de {{$cInitial}}</h6>
           <table class="table table-striped" id="miTabla">
             <thead>
               <tr>
                 <th scope="col">Asignatura</th>
-                <th scope="col">Profesor</th>
                 <th scope="col">Créditos Teoría</th>
                 <th scope="col">Créditos Prácticas</th>
                 <th scope="col">Créditos Seminarios</th>
@@ -68,10 +68,9 @@
               @foreach( $arraySolicitudesProf as $key => $solicitud )
                 <tr>
                   <td>{{$solicitud->asig}}</td>
-                  <td>{{$solicitud->prof}}</td>
-                  <td>{{$solicitud->cTheory}}</td>
-                  <td>{{$solicitud->cPractice}}</td>
-                  <td>{{$solicitud->cSeminar}}</td>
+                  <td class="text-center">{{$solicitud->cTheory}}</td>
+                  <td class="text-center">{{$solicitud->cPractice}}</td>
+                  <td class="text-center">{{$solicitud->cSeminar}}</td>
                   <td></td>
                   <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
@@ -118,9 +117,9 @@
         var columnas=e.querySelectorAll("td");
  
         // obtenemos los valores de la cantidad y importe
-        var cT = (columnas[2].textContent);
-        var cP = (columnas[3].textContent);
-        var cS = (columnas[4].textContent);
+        var cT = (columnas[1].textContent);
+        var cP = (columnas[2].textContent);
+        var cS = (columnas[3].textContent);
 
         if(cT == ""){
           cT = 0;
@@ -139,7 +138,7 @@
         cP = parseFloat(cP);
  
         // mostramos el total por fila
-        columnas[5].textContent=(cT+cP+cS).toFixed(1);
+        columnas[4].textContent=(cT+cP+cS).toFixed(1);
     });
   }
 

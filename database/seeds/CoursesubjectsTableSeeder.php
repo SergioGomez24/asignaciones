@@ -9,11 +9,11 @@ class CoursesubjectsTableSeeder extends Seeder
 		DB::table('coursesubjects')->delete();
 
 		$c = new Coursesubject;
-		$c->name = 'Primer Curso';
+		$c->name = 'Primero';
 		$c->save();
 
         $c = new Coursesubject;
-        $c->name = 'Segundo Curso';
+        $c->name = 'Segundo';
         $c->save();
 
 	}

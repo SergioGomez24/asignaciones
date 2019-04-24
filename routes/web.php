@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('/solicitudes/edit/profPermission/{course}', 'SolicitudesController@editPermissionProf');
 	Route::post('/solicitudes/edit/coorPermission/{course}', 'SolicitudesController@editPermissionCoor');
 	Route::post('/solicitudes/edit/dirPermission/{course}', 'SolicitudesController@editPermissionDir');
+	Route::post('/solicitudes/openElection/{course}', 'SolicitudesController@openElection');
 
 });
 

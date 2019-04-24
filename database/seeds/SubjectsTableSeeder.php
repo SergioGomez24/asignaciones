@@ -26,7 +26,7 @@ class SubjectsTableSeeder extends Seeder
 
 		$subject = new Subject;
 		$subject->code = '12';
-		$subject->name = 'Programación web';
+		$subject->name = 'Programación Web';
 		$subject->certification_id = 1;
 		$subject->area_id = 1;
 		$subject->campus_id = 1;
@@ -42,7 +42,7 @@ class SubjectsTableSeeder extends Seeder
 
 		$subject = new Subject;
 		$subject->code = '13';
-		$subject->name = 'Matematica discreta';
+		$subject->name = 'Matemáticas Discreta';
 		$subject->certification_id = 1;
 		$subject->area_id = 1;
 		$subject->campus_id = 1;
@@ -58,7 +58,7 @@ class SubjectsTableSeeder extends Seeder
 
 		$subject = new Subject;
 		$subject->code = '14';
-		$subject->name = 'Redes de computadores';
+		$subject->name = 'Redes de Computadores';
 		$subject->certification_id = 1;
 		$subject->area_id = 1;
 		$subject->campus_id = 1;
@@ -74,7 +74,7 @@ class SubjectsTableSeeder extends Seeder
 
 		$subject = new Subject;
 		$subject->code = '15';
-		$subject->name = 'Programación orienta a objetos';
+		$subject->name = 'Programación Orientada a Objetos';
 		$subject->certification_id = 1;
 		$subject->area_id = 1;
 		$subject->campus_id = 1;
@@ -90,7 +90,7 @@ class SubjectsTableSeeder extends Seeder
 
 		$subject = new Subject;
 		$subject->code = '16';
-		$subject->name = 'Administración de servidores';
+		$subject->name = 'Administración de Servidores';
 		$subject->certification_id = 1;
 		$subject->area_id = 1;
 		$subject->campus_id = 1;
