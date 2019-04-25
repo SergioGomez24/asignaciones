@@ -65,8 +65,8 @@
             <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
               <thead>
                 <tr>
-                  <th scope="col">Asignatura</th>
                   <th scope="col">Profesor</th>
+                  <th scope="col">Créditos Disponibles Profesor</th>
                   <th scope="col">Créditos Teoría</th>
                   <th scope="col">Créditos Prácticas</th>
                   <th scope="col">Créditos Seminarios</th>
@@ -78,8 +78,8 @@
               <tbody>
                 @foreach( $arraySolicitudesCoor as $key => $solicitud )
                   <tr>
-                    <td>{{$solicitud->asig}}</td>
                     <td>{{$solicitud->prof}}</td>
+                    <td></td>
                     <td class="text-center">{{$solicitud->cTheory}}</td>
                     <td class="text-center">{{$solicitud->cPractice}}</td>
                     <td class="text-center">{{$solicitud->cSeminar}}</td>

@@ -508,7 +508,7 @@ class SolicitudesController extends Controller
 
         if($coorPermission == true) {
             foreach ($eleccionesProf as $key => $p) {
-                if($p->cAvailable - 9 > 0){
+                if($p->cAvailable - 2 > 0){
                     $p->profPermission = true;
                     $p->save();
                     $profPermission = true;

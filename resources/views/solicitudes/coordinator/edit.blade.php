@@ -69,75 +69,93 @@
 
 <script type="text/javascript">
 
-   var subject_id = "{{$solicitud->subject_id}}";
-   var course = "{{$course}}";
-   var id = "{{$solicitud->id}}";
-   var credTsubject;
-   var credSsubject;
-   var credPsubject;
-   var credTavailable;
-   var credPavailable;
-   var credSavailable;
+  var subject_id = "{{$solicitud->subject_id}}";
+  var course = "{{$course}}";
+  var id = "{{$solicitud->id}}";
+  var vCredT = null;
+  var vCredP = null;
+  var vCredS = null;
+  var credTsubject;
+  var credSsubject;
+  var credPsubject;
+  var credTavailable;
+  var credPavailable;
+  var credSavailable;
 
-   $.ajax({
-      url: "{{url('json-subject')}}",
-      type:"GET", 
-      data: {"id":subject_id}, 
-      success: function(result){
-        credTsubject = result.cTheory;
-        credPsubject = result.cPractice;
-        credSsubject = result.cSeminar;
-      }
-   });
+  $.ajax({
+    url: "{{url('json-subject')}}",
+    type:"GET", 
+    data: {"id":subject_id}, 
+    success: function(result){
+      credTsubject = result.cTheory;
+      credPsubject = result.cPractice;
+      credSsubject = result.cSeminar;
+    }
+  });
 
-   $.ajax({
-      url: "{{url('json-solicitudes')}}",
-      type:"GET", 
-      data: {"subject_id":subject_id, "course":course, "id":id}, 
-      success: function(result){
-        $("#cT").text(result.totalT);  
-        $("#cP").text(result.totalP);
-        $("#cS").text(result.totalS);
-        credTavailable = result.totalT;
-        credPavailable = result.totalP;
-        credSavailable = result.totalS;
-      }
-   });
+  $.ajax({
+    url: "{{url('json-solicitudes')}}",
+    type:"GET", 
+    data: {"subject_id":subject_id, "course":course, "id":id}, 
+    success: function(result){
+      $("#cT").text(result.totalT);  
+      $("#cP").text(result.totalP);
+      $("#cS").text(result.totalS);
+      credTavailable = result.totalT;
+      credPavailable = result.totalP;
+      credSavailable = result.totalS;
+    }
+  });
 
-function validacion(){
-   var vCredT = document.getElementById("cTheory").value;
-   var vCredP = document.getElementById("cPractice").value;
-   var vCredS = document.getElementById("cSeminar").value;
-   var enviar = false;
+  $('#cTheory').on('change', function(e) {
+    vCredT = e.target.value;
+    console.log(vCredT);
+  });
 
-   credTavailable = parseFloat(credTavailable);
-   credPavailable = parseFloat(credPavailable);
-   credSavailable = parseFloat(credSavailable);
+  $('#cPractice').on('change', function(e) {
+    vCredP = e.target.value;
+    console.log(vCredP);
+    console.log(vCredT);
+    console.log(vCredS);
+  });
 
-   credTsubject = parseFloat(credTsubject);
-   credPsubject = parseFloat(credPsubject);
-   credSsubject = parseFloat(credSsubject);
+  $('#cSeminar').on('change', function(e) {
+    vCredS = e.target.value;
+    console.log(vCredS);
+  });
 
-   if(vCredS == "" && vCredT == "" && vCredP == ""){
+  function validacion(){
+
+    var enviar = false;
+
+    credTavailable = parseFloat(credTavailable);
+    credPavailable = parseFloat(credPavailable);
+    credSavailable = parseFloat(credSavailable);
+
+    credTsubject = parseFloat(credTsubject);
+    credPsubject = parseFloat(credPsubject);
+    credSsubject = parseFloat(credSsubject);
+
+    if(vCredS == "" && vCredT == "" && vCredP == ""){
       alert("Introduce los créditos");
-   }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
+    }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
       alert("Introduce un valor mayor que 0");
-   }else if(vCredT == "0.0" || vCredP == "0.0" || vCredS == "0.0"){
+    }else if(vCredT == "0.0" || vCredP == "0.0" || vCredS == "0.0"){
       alert("Introduce un valor mayor que 0");
-   }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
+    }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
       alert("Introduce un valor positivo");
-   }else if(vCredT > credTavailable){
+    }else if(vCredT > credTavailable){
       alert("Los créditos de teoria introducidos no son validos");
-   }else if(vCredP > credPavailable){
+    }else if(vCredP > credPavailable){
       alert("Los créditos de prácticas introducidos no son validos");
-   }else if(vCredS > credSavailable){
+    }else if(vCredS > credSavailable){
       alert("Los créditos de seminarios introducidos no son validos");
-   }else if(vCredT > credTsubject || vCredP > credPsubject || vCredS > credSsubject) {
+    }else if(vCredT > credTsubject || vCredP > credPsubject || vCredS > credSsubject) {
       alert("Valores introducidos incorrectos");
-   }else {
+    }else {
       enviar = true;
-   }
-   return enviar;
+    }
+    return enviar;
   }
 
 </script>

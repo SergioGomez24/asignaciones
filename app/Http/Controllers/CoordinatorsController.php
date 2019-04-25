@@ -97,15 +97,15 @@ class CoordinatorsController extends Controller
         $cPnew = $request->input('cPractice');
         $cSnew = $request->input('cSeminar');
 
-        if ($cTnew == "") {
+        if ($cTnew == null) {
             $cTnew = 0;
         }
 
-        if ($cPnew == "") {
+        if ($cPnew == null) {
             $cPnew = 0;
         }
 
-         if ($cSnew == "") {
+         if ($cSnew == null) {
             $cSnew = 0;
         }
 
