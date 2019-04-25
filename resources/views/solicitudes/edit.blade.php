@@ -79,50 +79,63 @@
 
 <script type="text/javascript">
 
-   var subject_id = "{{$solicitud->subject_id}}";
-   var subObj_credT;
-   var subObj_credS;
-   var subObj_credP;
+  var subject_id = "{{$solicitud->subject_id}}";
+  var teacher_id = "{{$solicitud->teacher_id}}";
+  var course = "{{$course}}";
+  var subObj_credT;
+  var subObj_credS;
+  var subObj_credP;
+  var cAvailable;
 
-   $.ajax({
-      url: "{{url('json-subject')}}",
-      type:"GET", 
-      data: {"id":subject_id}, 
-      success: function(result){
-        $("#cT").text(result.cTheory);  
-        $("#cP").text(result.cPractice);
-        $("#cS").text(result.cSeminar);
-        subObj_credT = result.cTheory;
-        subObj_credP = result.cPractice;
-        subObj_credS = result.cSeminar;
-      }
-   });
-   
+  $.ajax({
+    url: "{{url('json-subject')}}",
+    type:"GET", 
+    data: {"id":subject_id}, 
+    success: function(result){
+      $("#cT").text(result.cTheory);  
+      $("#cP").text(result.cPractice);
+      $("#cS").text(result.cSeminar);
+      subObj_credT = result.cTheory;
+      subObj_credP = result.cPractice;
+      subObj_credS = result.cSeminar;
+    }
+  });
 
-function validacion(){
-   var vCredT = document.getElementById("cTheory").value;
-   var vCredP = document.getElementById("cPractice").value;
-   var vCredS = document.getElementById("cSeminar").value;
-   var enviar = false;
+  $.ajax({
+    url: "{{url('json-electionProf')}}",
+    type:"GET", 
+    data: {"id":teacher_id, "course":course}, 
+    success: function(result){
+      cAvailable = result.cAvailable;
+    }
+  });
 
-   subObj_credT = parseFloat(subObj_credT);
-   subObj_credP = parseFloat(subObj_credP);
-   subObj_credS = parseFloat(subObj_credS);
+  function validacion(){
+    var vCredT = document.getElementById("cTheory").value;
+    var vCredP = document.getElementById("cPractice").value;
+    var vCredS = document.getElementById("cSeminar").value;
+    var enviar = false;
 
-   if(vCredS == "" && vCredT == "" && vCredP == ""){
+    subObj_credT = parseFloat(subObj_credT);
+    subObj_credP = parseFloat(subObj_credP);
+    subObj_credS = parseFloat(subObj_credS);
+
+    if(cAvailable == "0.0"){
+      alert("No tienes créditos disponibles");
+    }else if(vCredS == "" && vCredT == "" && vCredP == ""){
       alert("Introduce los créditos");
-   }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
+    }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
       alert("Introduce un valor mayor que 0");
-   }else if(vCredT == "0.0" || vCredP == "0.0" || vCredS == "0.0"){
+    }else if(vCredT == "0.0" || vCredP == "0.0" || vCredS == "0.0"){
       alert("Introduce un valor mayor que 0");
-   }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
+    }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
       alert("Introduce un valor positivo");
-   }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
+    }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
       alert("Créditos introducidos no validos");
-   }else {
+    }else {
       enviar = true;
-   }
-   return enviar;
+    }
+    return enviar;
   }
 
 </script>

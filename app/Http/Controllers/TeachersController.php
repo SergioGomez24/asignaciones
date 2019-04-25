@@ -56,6 +56,21 @@ class TeachersController extends Controller
         }
     }
 
+    public function getTeacherName(Request $request) {
+        if($request->ajax()){
+            $name = $request->name;
+
+            $info = Teacher::where('name', $name)
+                            ->get();
+
+            foreach ($info as $key => $i) {
+                $id = $i->id;
+            }
+
+            return response()->json(['id' => $id]);
+        }
+    }
+
     public function getCreate() 
     {
         $arrayCategorias = Category::all();

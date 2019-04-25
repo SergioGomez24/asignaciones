@@ -79,7 +79,7 @@
                 @foreach( $arraySolicitudesCoor as $key => $solicitud )
                   <tr>
                     <td>{{$solicitud->prof}}</td>
-                    <td></td>
+                    <td class="text-center"></td>
                     <td class="text-center">{{$solicitud->cTheory}}</td>
                     <td class="text-center">{{$solicitud->cPractice}}</td>
                     <td class="text-center">{{$solicitud->cSeminar}}</td>
@@ -131,10 +131,12 @@
   $(document).ready(function(){
     initTableSorter();
     calcular();
+    cDisponibles();
   });
 
   var select = document.getElementById('subject');
   var asig = "{{$subject_id}}";
+  var course = "{{$course}}";
   var cTotal = 0;
   var ct = 0;
   var cp = 0;
@@ -164,6 +166,35 @@
       $("#cTotal").text(cTotal);
     }
   });
+
+  function cDisponibles(){
+
+    var filas = document.querySelectorAll("#miTabla tbody tr");
+
+    filas.forEach(function(e) {
+      var columnas = e.querySelectorAll("td");
+      var name = (columnas[0].textContent);
+      var id;
+
+      $.ajax({
+        url: "{{url('json-teacherName')}}",
+        type:"GET", 
+        data: {"name":name}, 
+        success: function(result){
+          id = result.id;
+        }  
+      });
+
+      $.ajax({
+        url: "{{url('json-electionProf')}}",
+        type:"GET", 
+        data: {"id":id, "course":course}, 
+        success: function(result){
+          columnas[1].textContent = result.cAvailable.toFixed(1);
+        }  
+      });
+    });
+  }
 
   
   function initTableSorter() {

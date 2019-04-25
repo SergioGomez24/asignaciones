@@ -154,6 +154,7 @@ class ElectionsController extends Controller
 		return redirect('/settings/elections');
     }
 
+    /* obtener la eleccion de un curso */
     public function getElection() {
 
         $course = Input::get('course');
@@ -162,6 +163,27 @@ class ElectionsController extends Controller
                                ->get();
 
         return response()->json($elección);
+    }
+
+    /* obtener la elección de un Profesor */
+    public function getElectionProf(Request $request) {
+
+        if($request->ajax()){
+            $id = $request->id;
+            $course = $request->course;
+            $cAvailable = 0;
+
+            $eleccionProfesor = Election::where('teacher_id', '=', $id)
+                             ->where('course', '=', $course)
+                             ->get();
+
+            foreach ($eleccionProfesor as $eleccion) {
+                $cAvailable = $eleccion->cAvailable;
+            }
+
+
+            return response()->json(['cAvailable' => $cAvailable]);
+        }
     }
 
     public function getIndexSettings()

@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('teachers', 'TeachersController@getIndex');
 
 	Route::get('json-teacher', 'TeachersController@getTeacher');
+	Route::get('json-teacherName', 'TeachersController@getTeacherName');
 	Route::get('json-user', 'TeachersController@getUser');
 
 	Route::get('teachers/show/{id}', 'TeachersController@getShow');
@@ -67,6 +68,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('elections/index/{course}', 'ElectionsController@getIndex');
 
 	Route::get('json-election', 'ElectionsController@getElection');
+	Route::get('json-electionProf', 'ElectionsController@getElectionProf');
 
 	Route::get('elections/pdf/{course}', 'ElectionsController@elections');
 });
