@@ -144,7 +144,7 @@
 
   select.addEventListener('change', function(){
     this.form.submit();
-  }, false);
+  });
 
 
   $.ajax({
@@ -174,23 +174,20 @@
     filas.forEach(function(e) {
       var columnas = e.querySelectorAll("td");
       var name = (columnas[0].textContent);
-      var id;
 
       $.ajax({
         url: "{{url('json-teacherName')}}",
         type:"GET", 
         data: {"name":name}, 
         success: function(result){
-          id = result.id;
-        }  
-      });
-
-      $.ajax({
-        url: "{{url('json-electionProf')}}",
-        type:"GET", 
-        data: {"id":id, "course":course}, 
-        success: function(result){
-          columnas[1].textContent = result.cAvailable.toFixed(1);
+          $.ajax({
+            url: "{{url('json-electionProf')}}",
+            type:"GET", 
+            data: {"id":result.id, "course":course}, 
+            success: function(result){
+              columnas[1].textContent = result.cAvailable;
+            }  
+          });
         }  
       });
     });
