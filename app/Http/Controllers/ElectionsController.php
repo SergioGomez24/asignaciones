@@ -65,7 +65,6 @@ class ElectionsController extends Controller
             $filter++;
         }
 
-
         foreach ($arraySolicitudes as $key => $solicitud) {
             if($solicitud->cTheory == 0){
                 $solicitud->cTheory = "";

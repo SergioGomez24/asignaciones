@@ -19,42 +19,7 @@
           <div class="card-header">
             <h4 class="text-center"> Selección de asignaturas </h4>
             
-            <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold;float: right;">Filtrar por</button>
-
-            <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                <div class="group row">
-                  <div class="col-md-3">
-                    <select name="certification" id="certification" class="form-control">
-                      <option value="">Titulaciones</option>
-                      @foreach($arrayTitulaciones as $t)
-                        <option value="{{$t->id}}">{{$t->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-
-                  <div class="col-md-3">
-                    <select name="campus" id="campus" class="form-control">
-                      <option value="">Campus</option>
-                      @foreach($arrayCampus as $c)
-                        <option value="{{$c->id}}">{{$c->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-
-                  <div class="col-md-3">
-                    <select name="imparted" id="imparted" class="form-control">
-                      <option value="">Cursos</option>
-                      @foreach($arrayCursoAsignaturas as $c)
-                        <option value="{{$c->id}}">{{$c->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-
-                  <button class="btn-primary btn-sm" id="filters" type="button">Aplicar</button>
-                </div>
-              </div>
-            </div>
+            <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#filters" style="font-weight: bold;float: right;">Filtrar por</button>
           </div>
 
           <div class="card-body" style="padding:30px">
@@ -163,6 +128,53 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="filtersTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Filtrar por</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="bntCerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label style="font-weight: bold;">Titulaciones</label>
+          <select name="certification" id="certification" class="form-control">
+            <option value="">Titulaciones</option>
+            @foreach($arrayTitulaciones as $t)
+              <option value="{{$t->id}}">{{$t->name}}</option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label style="font-weight: bold;">Campus</label>
+          <select name="campus" id="campus" class="form-control">
+            <option value="">Campus</option>
+            @foreach($arrayCampus as $c)
+              <option value="{{$c->id}}">{{$c->name}}</option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label style="font-weight: bold;">Cursos</label>
+          <select name="imparted" id="imparted" class="form-control">
+            <option value="">Cursos</option>
+            @foreach($arrayCursoAsignaturas as $c)
+              <option value="{{$c->id}}">{{$c->name}}</option>
+            @endforeach
+          </select>
+        </div>
+
+        <button class="btn-primary btn-sm" id="filters" type="button">Aplicar</button>
       </div>
     </div>
   </div>
