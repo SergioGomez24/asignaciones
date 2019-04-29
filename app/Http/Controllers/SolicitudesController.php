@@ -320,8 +320,10 @@ class SolicitudesController extends Controller
     {
         $solicitud = Solicitude::findOrFail($id);
         $course = $solicitud->course;
+        $cAvailable = 0;
                 
         return view('solicitudes.edit')->with('solicitud', $solicitud)
+                                       ->with('cAvailable', $cAvailable)
                                        ->with('course', $course);
     }
 
@@ -332,6 +334,8 @@ class SolicitudesController extends Controller
         $cTnew = $request->input('cTheory');
         $cPnew = $request->input('cPractice');
         $cSnew = $request->input('cSeminar');
+        $cs = $request->get('cD');
+        dd($cs);
 
         if ($cTnew == "") {
             $cTnew = 0;

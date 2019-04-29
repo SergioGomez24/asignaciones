@@ -317,8 +317,12 @@
       alert("Introduce un valor mayor que 0");
     }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
       alert("Introduce un valor positivo");
-    }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
-      alert("Créditos introducidos no validos");
+    }else if(vCredT > subObj_credT) {
+      alert("Créditos de teoría introducidos no validos");
+    }else if(vCredP > subObj_credP) {
+      alert("Créditos de prácticas introducidos no validos");
+    }else if(vCredS > subObj_credS) {
+      alert("Créditos de seminarios introducidos no validos");
     }else if(cAvailable < 0) {
       alert("Créditos disponibles insuficientes");
     }else {
