@@ -38,6 +38,7 @@ class SolicitudesController extends Controller
         $subj_id = $request->get('subject_id');
         $teacher_id = $request->get('teacher_id');
         $contCréditosProf = 0;
+        $filter = 0;
 
         $arrayAsignaturasTeacher = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
                 ->select('subjects.id','subjects.name')
@@ -73,6 +74,14 @@ class SolicitudesController extends Controller
             }
         }
 
+        if ($subj_id) {
+            $filter++;
+        }
+
+        if ($teacher_id) {
+            $filter++;
+        }
+
         $teacher = Teacher::select('teachers.cInitial')
                             ->where('teachers.id', $usuario)
                             ->get();
@@ -99,6 +108,7 @@ class SolicitudesController extends Controller
                                           ->with('cInitial', $cInitial)
                                           ->with('contCréditosProf', $contCréditosProf)
                                           ->with('course', $course)
+                                          ->with('filter', $filter)
                                           ->with('dirPermission', $dirPermission)
                                           ->with('profPermission', $profPermission)
                                           ->with('coorPermission', $coorPermission);
@@ -124,6 +134,7 @@ class SolicitudesController extends Controller
         $usuario = Auth()->user()->id;
         $subj_id = $request->get('subject_id');
         $teacher_id = $request->get('teacher_id');
+        $filter = 0;
 
         $arrayAsignaturasDirector = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
                 ->select('subjects.id','subjects.name')
@@ -148,6 +159,14 @@ class SolicitudesController extends Controller
             ->orderBy('subjects.name')
             ->simplePaginate(8);
 
+        if ($subj_id) {
+            $filter++;
+        }
+
+        if ($teacher_id) {
+            $filter++;
+        }
+
         $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
                              ->where('course', '=', $course)
                              ->get();
@@ -165,6 +184,7 @@ class SolicitudesController extends Controller
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher_id', $teacher_id)
                                           ->with('course', $course)
+                                          ->with('filter', $filter)
                                           ->with('dirPermission', $dirPermission)
                                           ->with('profPermission', $profPermission)
                                           ->with('coorPermission', $coorPermission)

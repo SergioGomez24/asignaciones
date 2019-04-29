@@ -23,27 +23,7 @@
           {{ csrf_field() }}
           <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Enviar</button>
         </form>
-        
-        <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-weight: bold; float: right;">Filtrar por</button>
         @endif
-        <div class="collapse" id="collapseExample">
-          <div class="card card-body">
-            <form href = "coordinators/index/{$course}" method="GET">
-              <div class="group row">
-
-                <div class="col-md-3">
-                  <select name="teacher" id="teacher" class="form-control">
-                    <option value="">Profesores</option>
-                    @foreach($arrayProfesores as $p)
-                      <option value="{{$p->id}}">{{$p->name}}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <button class="btn-info btn-sm" type="submit">Aplicar</button>
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
 
       <div class="card-body">
