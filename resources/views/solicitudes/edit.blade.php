@@ -95,63 +95,6 @@
   var subObj_credP;
   var cAvailable = 0;
 
-  $('#cTheory').on('change', function(e) {
-    auxCredT = e.target.value;
-    var diferencia = 0;
-
-    if (auxCredT == "") {
-      auxCredT = 0;
-    }
-
-    if (vCredT < auxCredT) {
-      diferencia = auxCredT - vCredT;
-      cAvailable = cAvailable - diferencia;
-    }else if(vCredT > auxCredT){
-      diferencia = vCredT - auxCredT;
-      cAvailable = cAvailable + diferencia;
-    }
-    console.log(cAvailable);
-    $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
-  });
-
-  $('#cPractice').on('change', function(e) {
-    auxCredP = e.target.value;
-    var diferencia = 0;
-
-    if (auxCredP == "") {
-      auxCredP = 0;
-    }
-
-    if (vCredP < auxCredP) {
-      diferencia = auxCredP - vCredP;
-      cAvailable = cAvailable - diferencia;
-    }else if(vCredP > auxCredP){
-      diferencia = vCredP - auxCredP;
-      cAvailable = cAvailable + diferencia;
-    }
-    console.log(cAvailable);
-    $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
-  });
-
-  $('#cSeminar').on('change', function(e) {
-    auxCredS = e.target.value;
-    var diferencia = 0;
-
-    if (auxCredS == "") {
-      auxCredS = 0;
-    }
-
-    if (vCredS < auxCredS) {
-      diferencia = auxCredS - vCredS;
-      cAvailable = cAvailable - diferencia;
-    }else if(vCredS > auxCredS){
-      diferencia = vCredS - auxCredS;
-      cAvailable = cAvailable + diferencia;
-    }
-    console.log(cAvailable);
-    $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
-  });
-
   $.ajax({
     url: "{{url('json-subject')}}",
     type:"GET", 
@@ -177,6 +120,75 @@
     }
   });
 
+  $('#cTheory').on('change', function(e) {
+    auxCredT = e.target.value;
+    var diferencia = 0;
+
+    if (auxCredT == "") {
+      auxCredT = 0;
+    }
+
+    if (vCredT < auxCredT) {
+      diferencia = auxCredT - vCredT;
+      if (cAvailable - diferencia >= 0){
+        cAvailable = cAvailable - diferencia;
+      }else {
+        alert("No tiene créditos disponibles");
+      }
+    }else if(vCredT > auxCredT){
+      diferencia = vCredT - auxCredT;
+      cAvailable = cAvailable + diferencia;
+    }
+    console.log(cAvailable);
+    $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+  });
+
+  $('#cPractice').on('change', function(e) {
+    auxCredP = e.target.value;
+    var diferencia = 0;
+
+    if (auxCredP == "") {
+      auxCredP = 0;
+    }
+
+    if (vCredP < auxCredP) {
+      diferencia = auxCredP - vCredP;
+      if (cAvailable - diferencia >= 0){
+        cAvailable = cAvailable - diferencia;
+      }else {
+        alert("No tiene créditos disponibles");
+      }
+    }else if(vCredP > auxCredP){
+      diferencia = vCredP - auxCredP;
+      cAvailable = cAvailable + diferencia;
+    }
+    console.log(cAvailable);
+    $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+  });
+
+  $('#cSeminar').on('change', function(e) {
+    auxCredS = e.target.value;
+    var diferencia = 0;
+
+    if (auxCredS == "") {
+      auxCredS = 0;
+    }
+
+    if (vCredS < auxCredS) {
+      diferencia = auxCredS - vCredS;
+      if (cAvailable - diferencia >= 0){
+        cAvailable = cAvailable - diferencia;
+      }else {
+        alert("No tiene créditos disponibles");
+      }
+    }else if(vCredS > auxCredS){
+      diferencia = vCredS - auxCredS;
+      cAvailable = cAvailable + diferencia;
+    }
+    console.log(cAvailable);
+    $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+  });
+
   function validacion(){
     var enviar = false;
 
@@ -186,13 +198,9 @@
 
     if(cAvailable < 0){
       alert("No tienes créditos disponibles");
-    }else if(vCredS == "" && vCredT == "" && vCredP == ""){
+    }else if(auxCredT == "" && auxCredP == "" && auxCredS == ""){
       alert("Introduce los créditos");
-    }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
-      alert("Introduce un valor mayor que 0");
-    }else if(vCredT == "0.0" || vCredP == "0.0" || vCredS == "0.0"){
-      alert("Introduce un valor mayor que 0");
-    }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
+    }else if(auxCredT < 0 || auxCredP < 0 || auxCredS < 0){
       alert("Introduce un valor positivo");
     }else if(vCredT > subObj_credT || vCredP > subObj_credP || vCredS > subObj_credS) {
       alert("Créditos introducidos no validos");
