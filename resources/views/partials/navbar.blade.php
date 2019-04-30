@@ -11,36 +11,36 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/')}}" style="color: black; font-weight: bold;"><i class="fas fa-home"></i> Inicio</a>
+                    <a class="nav-link" href="{{url('/')}}" style="color: black;"><i class="fas fa-home"></i> Inicio</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/subjects')}}" style="color: black; font-weight: bold;"><i class="fas fa-book"></i> Asignaturas</a>
+                    <a class="nav-link" href="{{url('/subjects')}}" style="color: black;"><i class="fas fa-book"></i> Asignaturas</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/teachers')}}" style="color: black; font-weight: bold;"><i class="fas fa-graduation-cap"></i> Profesores</a>
+                    <a class="nav-link" href="{{url('/teachers')}}" style="color: black;"><i class="fas fa-graduation-cap"></i> Profesores</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/elections')}}" style="color: black; font-weight: bold;"><i class="fas fa-vote-yea"></i> Elecciones</a>
+                    <a class="nav-link" href="{{url('/elections')}}" style="color: black;"><i class="fas fa-vote-yea"></i> Elecciones</a>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black; font-weight: bold;"><i class="fas fa-list-alt"></i> Solicitudes</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black;"><i class="fas fa-list-alt"></i> Solicitudes</a>
                     <div class="dropdown-menu">
                         @if (Auth()->user()->role == 'Director')
-                        <a class="dropdown-item"  href="{{url('/solicitudes/director')}}" style="color: black; font-weight: bold;">Director</a>
+                        <a class="dropdown-item"  href="{{url('/solicitudes/director')}}" style="color: black;">Director</a>
                         @else
-                        <a class="dropdown-item"  href="{{url('/solicitudes/teacher')}}" style="color: black; font-weight: bold;">Profesor</a>
-                        <a class="dropdown-item" href="{{url('/coordinators')}}" style="color: black; font-weight: bold;">Coordinador</a>
+                        <a class="dropdown-item"  href="{{url('/solicitudes/teacher')}}" style="color: black;">Profesor</a>
+                        <a class="dropdown-item" href="{{url('/coordinators')}}" style="color: black;">Coordinador</a>
                         @endif
                     </div>
                 </li>
 
                 @if (Auth()->user()->role == 'Director')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/settings')}}" style="color: black; font-weight: bold;"><i class="fas fa-cogs"></i> Ajustes</a>
+                    <a class="nav-link" href="{{url('/settings')}}" style="color: black;"><i class="fas fa-cogs"></i> Ajustes</a>
                 </li>
                 @endif
 
@@ -48,13 +48,13 @@
 
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black; font-weight: bold;"><i class="fas fa-user"></i> {{ auth()->user()->name }}</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black;"><i class="fas fa-user"></i> {{ auth()->user()->name }}</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item"  href="{{ url('/teachers/show/'.Auth()->user()->id ) }}" style="color: black; font-weight: bold;">Mi perfil</a>
+                        <a class="dropdown-item"  href="{{ url('/teachers/show/'.Auth()->user()->id ) }}" style="color: black;">Mi perfil</a>
                     
                         <form action="{{ url('/logout') }}" method="POST" style="display:inline">
                         {{ csrf_field() }}
-                            <input type="submit" class="dropdown-item" style="display:inline;cursor:pointer;color: black; font-weight: bold;" value="Cerrar sesión"/>
+                            <input type="submit" class="dropdown-item" style="display:inline;cursor:pointer;color: black;" value="Cerrar sesión"/>
                         </form>
                     </div>
                 </li>

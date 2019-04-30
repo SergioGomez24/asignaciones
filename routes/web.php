@@ -14,9 +14,11 @@
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout');
 
+Route::get('home', 'HomeController@getIndex')->middleware('auth');
+
 Route::get('/', function(){
 		if(Auth::check()){
-			return view('home');
+			return redirect('home');
 		}else {
 			return view('auth.login');
 		}

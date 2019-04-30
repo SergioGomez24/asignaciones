@@ -30,7 +30,7 @@
          		{{ csrf_field() }}
 
             <h6 style="text-align:right;" id="cD"></h6>
-            <input type="hidden" name="cds" id="cds">
+            <input type="hidden" name="cds" id="cds" value="">
 
             <div class="group row text-center" style="align-content: center;">
             <div class="col-md-4">
@@ -94,7 +94,7 @@
   var subObj_credT;
   var subObj_credS;
   var subObj_credP;
-  var cAvailable = "{{$cAvailable}}";
+  var cAvailable = 0;
 
   $.ajax({
     url: "{{url('json-subject')}}",
@@ -134,6 +134,8 @@
       if (cAvailable - diferencia >= 0){
         cAvailable = cAvailable - diferencia;
         $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+        $('#cds').val(cAvailable);
+        vCredT = auxCredT;
       }else {
         alert("No tiene créditos disponibles");
       }
@@ -141,8 +143,10 @@
       diferencia = vCredT - auxCredT;
       cAvailable = cAvailable + diferencia;
       $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+      $('#cds').val(cAvailable);
+      vCredT = auxCredT;
     }
-    console.log(cAvailable);
+    
   });
 
   $('#cPractice').on('change', function(e) {
@@ -158,6 +162,8 @@
       if (cAvailable - diferencia >= 0){
         cAvailable = cAvailable - diferencia;
         $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+        $('#cds').val(cAvailable);
+        vCredP = auxCredP;
       }else {
         alert("No tiene créditos disponibles");
       }
@@ -165,8 +171,10 @@
       diferencia = vCredP - auxCredP;
       cAvailable = cAvailable + diferencia;
       $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+      $('#cds').val(cAvailable);
+      vCredP = auxCredP;
     }
-    console.log(cAvailable);
+    
   });
 
   $('#cSeminar').on('change', function(e) {
@@ -182,6 +190,8 @@
       if (cAvailable - diferencia >= 0){
         cAvailable = cAvailable - diferencia;
         $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+        $('#cds').val(cAvailable);
+        vCredS = auxCredS;
       }else {
         alert("No tiene créditos disponibles");
       }
@@ -189,8 +199,10 @@
       diferencia = vCredS - auxCredS;
       cAvailable = cAvailable + diferencia;
       $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+      $('#cds').val(cAvailable);
+      vCredS = auxCredS;
     }
-    console.log(cAvailable);
+    
   });
 
   function validacion(){
@@ -201,13 +213,17 @@
     subObj_credS = parseFloat(subObj_credS);
 
     if(cAvailable < 0){
-      alert("Error");
+      alert("No tienes créditos disponibles");
     }else if(auxCredT == "" && auxCredP == "" && auxCredS == ""){
       alert("Introduce los créditos");
     }else if(auxCredT < 0 || auxCredP < 0 || auxCredS < 0){
       alert("Introduce un valor positivo");
-    }else if(auxCredT > subObj_credT || auxCredP > subObj_credP || auxCredS > subObj_credS) {
-      alert("Créditos introducidos no validos");
+    }else if(auxCredT > subObj_credT ) {
+      alert("Créditos de teoría introducidos no validos");
+    }else if(auxCredP > subObj_credP){
+      alert("Créditos de prácticas introducidos no validos");
+    }else if(auxCredS > subObj_credS){
+      alert("Créditos de seminarios introducidos no validos");
     }else {
       enviar = true;
     }

@@ -23,19 +23,22 @@
          		{{ method_field('PUT') }}
          		{{ csrf_field() }}
 
+            <h6 style="text-align:right;" id="cD"></h6>
+            <input type="hidden" name="cds" id="cds" value="">
+
             <div class="group row text-center" style="align-content: center;">
             <div class="col-md-4">
-            <h6>Créditos Teoria Disponibles</h6>
+            <h6>Créditos Teoria</h6>
             <p id="cT"></p>
             </div>
 
             <div class="col-md-4">
-            <h6>Créditos Práctica Disponibles</h6>
+            <h6>Créditos Práctica</h6>
             <p id="cP"></p>
             </div>
 
             <div class="col-md-4">
-            <h6>Créditos Seminario Disponibles</h6>
+            <h6>Créditos Seminario</h6>
             <p id="cS"></p>
             </div>
             </div>
@@ -70,19 +73,24 @@
 <script type="text/javascript">
 
   var subject_id = "{{$solicitud->subject_id}}";
+  var teacher_id = "{{$solicitud->teacher_id}}";
   var course = "{{$course}}";
   var id = "{{$solicitud->id}}";
-  var vCredT = null;
-  var vCredP = null;
-  var vCredS = null;
-  var credTsubject;
+  var vCredT = document.getElementById("cTheory").value;
+  var vCredP = document.getElementById("cPractice").value;
+  var vCredS = document.getElementById("cSeminar").value;
+  var auxCredT;
+  var auxCredP;
+  var auxCredS;
+  /*var credTsubject;
   var credSsubject;
-  var credPsubject;
+  var credPsubject;*/
   var credTavailable;
   var credPavailable;
   var credSavailable;
+  var cAvailable = 0;
 
-  $.ajax({
+  /*$.ajax({
     url: "{{url('json-subject')}}",
     type:"GET", 
     data: {"id":subject_id}, 
@@ -91,7 +99,7 @@
       credPsubject = result.cPractice;
       credSsubject = result.cSeminar;
     }
-  });
+  });*/
 
   $.ajax({
     url: "{{url('json-solicitudes')}}",
@@ -107,21 +115,98 @@
     }
   });
 
+  $.ajax({
+    url: "{{url('json-electionProf')}}",
+    type:"GET", 
+    data: {"id":teacher_id, "course":course}, 
+    success: function(result){
+      cAvailable = result.cAvailable;
+      $("#cD").text("Créditos Disponibles: "+cAvailable);
+      cAvailable = parseFloat(cAvailable);
+    }
+  });
+
   $('#cTheory').on('change', function(e) {
-    vCredT = e.target.value;
-    console.log(vCredT);
+    auxCredT = e.target.value;
+    var diferencia = 0;
+
+    if (auxCredT == "") {
+      auxCredT = 0;
+    }
+
+    if (vCredT < auxCredT) {
+      diferencia = auxCredT - vCredT;
+      if (cAvailable - diferencia >= 0){
+        cAvailable = cAvailable - diferencia;
+        $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+        $('#cds').val(cAvailable);
+        vCredT = auxCredT;
+      }else {
+        alert("No tiene créditos disponibles");
+      }
+    }else if(vCredT > auxCredT){
+      diferencia = vCredT - auxCredT;
+      cAvailable = cAvailable + diferencia;
+      $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+      $('#cds').val(cAvailable);
+      vCredT = auxCredT;
+    }
+    
   });
 
   $('#cPractice').on('change', function(e) {
-    vCredP = e.target.value;
-    console.log(vCredP);
-    console.log(vCredT);
-    console.log(vCredS);
+    auxCredP = e.target.value;
+    var diferencia = 0;
+
+    if (auxCredP == "") {
+      auxCredP = 0;
+    }
+
+    if (vCredP < auxCredP) {
+      diferencia = auxCredP - vCredP;
+      if (cAvailable - diferencia >= 0){
+        cAvailable = cAvailable - diferencia;
+        $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+        $('#cds').val(cAvailable);
+        vCredP = auxCredP;
+      }else {
+        alert("No tiene créditos disponibles");
+      }
+    }else if(vCredP > auxCredP){
+      diferencia = vCredP - auxCredP;
+      cAvailable = cAvailable + diferencia;
+      $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+      $('#cds').val(cAvailable);
+      vCredP = auxCredP;
+    }
   });
 
   $('#cSeminar').on('change', function(e) {
-    vCredS = e.target.value;
-    console.log(vCredS);
+    auxCredS = e.target.value;
+    
+    var diferencia = 0;
+
+    if (auxCredS == "") {
+      auxCredS = 0;
+    }
+
+    if (vCredS < auxCredS) {
+      diferencia = auxCredS - vCredS;
+      if (cAvailable - diferencia >= 0){
+        cAvailable = cAvailable - diferencia;
+        $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+        $('#cds').val(cAvailable);
+        vCredS = auxCredS;
+      }else {
+        alert("No tiene créditos disponibles");
+      }
+    }else if(vCredS > auxCredS){
+      diferencia = vCredS - auxCredS;
+      cAvailable = cAvailable + diferencia;
+      $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+      $('#cds').val(cAvailable);
+      vCredS = auxCredS;
+    }
   });
 
   function validacion(){
@@ -132,26 +217,44 @@
     credPavailable = parseFloat(credPavailable);
     credSavailable = parseFloat(credSavailable);
 
-    credTsubject = parseFloat(credTsubject);
-    credPsubject = parseFloat(credPsubject);
-    credSsubject = parseFloat(credSsubject);
+    if (auxCredT == 0) {
+      auxCredT = null;
+    }
 
-    if(vCredS == "" && vCredT == "" && vCredP == ""){
+    if (auxCredP == 0) {
+      auxCredP = null;
+    }
+
+    if (auxCredS == 0) {
+      auxCredS = null;
+    }
+
+    /*credTsubject = parseFloat(credTsubject);
+    credPsubject = parseFloat(credPsubject);
+    credSsubject = parseFloat(credSsubject);*/
+
+    if(auxCredT == "" && auxCredP == "" && auxCredS == ""){
       alert("Introduce los créditos");
-    }else if(vCredT == "0" || vCredP == "0" || vCredS == "0"){
+    }else if(auxCredT == "0" || auxCredP == "0" || auxCredS == "0"){
       alert("Introduce un valor mayor que 0");
-    }else if(vCredT == "0.0" || vCredP == "0.0" || vCredS == "0.0"){
+    }else if(auxCredT == "0.0" || auxCredP == "0.0" || auxCredS == "0.0"){
       alert("Introduce un valor mayor que 0");
-    }else if(vCredT < 0 || vCredP < 0 || vCredS < 0){
+    }else if(auxCredT < 0 || auxCredP < 0 || auxCredS < 0){
       alert("Introduce un valor positivo");
-    }else if(vCredT > credTavailable){
+    }else if(auxCredT > credTavailable){
       alert("Los créditos de teoria introducidos no son validos");
+    }else if(auxCredP > credPavailable){
+      alert("Los créditos de práctica introducidos no son validos");
+    }else if(auxCredS > credSavailable){
+      alert("Los créditos de seminario introducidos no son validos");
+    /*}else if(vCredT > credTavailable){
+      alert("Los créditos de teoria no son validos");
     }else if(vCredP > credPavailable){
-      alert("Los créditos de prácticas introducidos no son validos");
+      alert("Los créditos de práctica no son validos");
     }else if(vCredS > credSavailable){
-      alert("Los créditos de seminarios introducidos no son validos");
-    }else if(vCredT > credTsubject || vCredP > credPsubject || vCredS > credSsubject) {
-      alert("Valores introducidos incorrectos");
+      alert("Los créditos de seminario no son validos");*/
+    /*}else if(vCredT > credTsubject || vCredP > credPsubject || vCredS > credSsubject) {
+      alert("Valores introducidos incorrectos");*/
     }else {
       enviar = true;
     }

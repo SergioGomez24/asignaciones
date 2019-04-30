@@ -1,15 +1,14 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container" style="margin-top:40px">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header text-center">{{ __('Login') }}</div>
+<div class="row justify-content-center" style="margin-top:40px;">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header text-center">{{ __('Login') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                        @csrf
+                        {{ csrf_field() }}
 
                         <div class="form-group row">
                             <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('Correo electrónico') }}</label>

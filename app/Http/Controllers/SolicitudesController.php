@@ -320,10 +320,8 @@ class SolicitudesController extends Controller
     {
         $solicitud = Solicitude::findOrFail($id);
         $course = $solicitud->course;
-        $cAvailable = 0;
                 
         return view('solicitudes.edit')->with('solicitud', $solicitud)
-                                       ->with('cAvailable', $cAvailable)
                                        ->with('course', $course);
     }
 
@@ -334,8 +332,7 @@ class SolicitudesController extends Controller
         $cTnew = $request->input('cTheory');
         $cPnew = $request->input('cPractice');
         $cSnew = $request->input('cSeminar');
-        $cs = $request->get('cD');
-        dd($cs);
+        $cAvailable = $request->input('cds');
 
         if ($cTnew == "") {
             $cTnew = 0;
@@ -356,46 +353,9 @@ class SolicitudesController extends Controller
                             ->where('course', $c)
                             ->get();
 
-        if ($a->cTheory < $cTnew) {
-            $diferencia = $cTnew - $a->cTheory;
-            foreach ($eleccion as $p) {
-                $p->cAvailable = $p->cAvailable - $diferencia;
-                $p->save();
-            }
-        } elseif($a->cTheory > $cTnew){
-            $diferencia = $a->cTheory - $cTnew;
-            foreach ($eleccion as $p) {
-                $p->cAvailable = $p->cAvailable + $diferencia;
-                $p->save();
-            }
-        }
-
-        if ($a->cPractice < $cPnew) {
-            $diferencia = $cPnew - $a->cPractice;
-            foreach ($eleccion as $p) {
-                $p->cAvailable = $p->cAvailable - $diferencia;
-                $p->save();
-            }
-        }elseif($a->cPractice > $cPnew){
-            $diferencia = $a->cPractice - $cPnew;
-            foreach ($eleccion as $p) {
-                $p->cAvailable = $p->cAvailable + $diferencia;
-                $p->save();
-            }
-        }
-
-        if ($a->cSeminar < $cSnew) {
-            $diferencia = $cSnew - $a->cSeminar;
-            foreach ($eleccion as $p) {
-                $p->cAvailable = $p->cAvailable - $diferencia;
-                $p->save();
-            }
-        }elseif($a->cSeminar > $cSnew){
-            $diferencia = $a->cSeminar - $cSnew;
-            foreach ($eleccion as $p) {
-                $p->cAvailable = $p->cAvailable + $diferencia;
-                $p->save();
-            }
+        foreach ($eleccion as $p) {
+            $p->cAvailable = $cAvailable;
+            $p->save();
         }
 
         if ($cTnew == 0) {
