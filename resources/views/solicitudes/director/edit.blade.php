@@ -4,14 +4,8 @@
   <div class="container">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
-
-    @if (Auth()->user()->role == 'Profesor')
-    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/teacher') }}">Curso Solicitudes</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/teacher/index/'.$course) }}">Solicitudes Curso {{$course}}</a></li>
-    @else
     <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director') }}">Curso Solicitudes</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director/index/'.$course) }}">Solicitudes Curso {{$course}}</a></li>
-    @endif
     <li class="breadcrumb-item active" aria-current="page">Editar Solicitud</li>
   </ol>
   </div>
@@ -19,20 +13,34 @@
 @stop
 @section('content')
 	<div class="row" style="margin-top:40px">
-   <div class="offset-md-3 col-md-6">
+   <div class="offset-md-2 col-md-8">
       <div class="card">
          <div class="card-header"> 
-            <h5 class="text-center"> Editar Solicitud </h5>
+            <h5 class="text-center"> Editar Solicitud </h5> 
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST" onsubmit="return validacion()">
          		{{ method_field('PUT') }}
          		{{ csrf_field() }}
 
-            <h6 style="text-align:right;" id="cD"></h6>
-            <input type="hidden" name="cds" id="cds" value="">
+            <div class="group row">
+            <div class="col-md-4">
+            <h6>Profesor</h6>
+            <p id="teacher"></p>
+            </div>
 
-            <div class="group row text-center" style="align-content: center;">
+            <div class="col-md-4">
+            <h6>Créditos Disponibles</h6>
+            <p id="cD"></p>
+            </div>
+
+            <div class="col-md-4">
+            <h6>Asignatura</h6>
+            <p id="subj"></p>
+            </div>
+            </div>
+
+            <div class="group row">
             <div class="col-md-4">
             <h6>Créditos Teoria</h6>
             <p id="cT"></p>
@@ -49,30 +57,30 @@
             </div>
             </div>
 
-            <div class="form-group">
+            <div class="group row">
+            <div class="col-md-4">
                <label for="cTheory" style="font-weight: bold;">Créditos Teoria</label>
                <input type="number" name="cTheory" id="cTheory" value="{{$solicitud->cTheory}}" step="0.1" class="form-control">
             </div>
 
-            <div class="form-group">
+            <div class="col-md-4">
                <label for="cPractice" style="font-weight: bold;">Créditos Práctica</label>
                <input type="number" name="cPractice" id="cPractice" value="{{$solicitud->cPractice}}" step="0.1" class="form-control">
             </div>
 
-            <div class="form-group">
+            <div class="col-md-4">
                <label for="cSeminar" style="font-weight: bold;">Créditos Seminario</label>
                <input type="number" name="cSeminar" id="cSeminar" value="{{$solicitud->cSeminar}}" step="0.1" class="form-control">
             </div>
+            </div>
 
-            <div class="form-group text-center">
-               <button type="submit" class="btn btn-primary">
+            <input type="hidden" name="cds" id="cds" value="">
+
+            <div class="form-group text-center" style="margin-top: 30px;">
+               <button type="submit" class="btn btn-primary" id="btnAceptar">
                   Editar
                </button>
-               @if (Auth()->user()->role == 'Profesor')
-               <a class="btn btn-secondary" href="{{ url('/solicitudes/teacher/index/'.$course) }}" role="button">Cancelar</a>
-               @else
-               <a class="btn btn-secondary" href="{{ url('/solicitudes/director/index/'.$course) }}" role="button">Cancelar</a>
-               @endif
+               <a class="btn btn-secondary" href="{{ url('/solicitudes/director/index/'.$course) }}" role="button" id="btnCancelar">Cancelar</a>
             </div>
             </form>
          </div>
@@ -85,15 +93,16 @@
   var subject_id = "{{$solicitud->subject_id}}";
   var teacher_id = "{{$solicitud->teacher_id}}";
   var course = "{{$course}}";
+  var id = "{{$solicitud->id}}";
   var vCredT = document.getElementById("cTheory").value;
   var vCredP = document.getElementById("cPractice").value;
   var vCredS = document.getElementById("cSeminar").value;
   var auxCredT;
   var auxCredP;
   var auxCredS;
-  var subObj_credT;
-  var subObj_credS;
-  var subObj_credP;
+  var credTavailable;
+  var credPavailable;
+  var credSavailable;
   var cAvailable = 0;
 
   $.ajax({
@@ -101,12 +110,30 @@
     type:"GET", 
     data: {"id":subject_id}, 
     success: function(result){
-      $("#cT").text(result.cTheory);  
-      $("#cP").text(result.cPractice);
-      $("#cS").text(result.cSeminar);
-      subObj_credT = result.cTheory;
-      subObj_credP = result.cPractice;
-      subObj_credS = result.cSeminar;
+      $("#subj").text(result.name);
+    }
+  });
+
+  $.ajax({
+    url: "{{url('json-teacher')}}",
+    type:"GET", 
+    data: {"id":teacher_id}, 
+    success: function(result){
+      $("#teacher").text(result.name);
+    }
+  });
+
+  $.ajax({
+    url: "{{url('json-solicitudes')}}",
+    type:"GET", 
+    data: {"subject_id":subject_id, "course":course, "id":id}, 
+    success: function(result){
+      $("#cT").text(result.totalT);  
+      $("#cP").text(result.totalP);
+      $("#cS").text(result.totalS);
+      credTavailable = result.totalT;
+      credPavailable = result.totalP;
+      credSavailable = result.totalS;
     }
   });
 
@@ -116,7 +143,7 @@
     data: {"id":teacher_id, "course":course}, 
     success: function(result){
       cAvailable = result.cAvailable;
-      $("#cD").text("Créditos Disponibles: "+cAvailable);
+      $("#cD").text(cAvailable);
       cAvailable = parseFloat(cAvailable);
     }
   });
@@ -133,7 +160,7 @@
       diferencia = auxCredT - vCredT;
       if (cAvailable - diferencia >= 0){
         cAvailable = cAvailable - diferencia;
-        $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+        $("#cD").text(cAvailable.toFixed(1));
         $('#cds').val(cAvailable);
         vCredT = auxCredT;
       }else {
@@ -142,7 +169,7 @@
     }else if(vCredT > auxCredT){
       diferencia = vCredT - auxCredT;
       cAvailable = cAvailable + diferencia;
-      $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+      $("#cD").text(cAvailable.toFixed(1));
       $('#cds').val(cAvailable);
       vCredT = auxCredT;
     }
@@ -161,7 +188,7 @@
       diferencia = auxCredP - vCredP;
       if (cAvailable - diferencia >= 0){
         cAvailable = cAvailable - diferencia;
-        $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+        $("#cD").text(cAvailable.toFixed(1));
         $('#cds').val(cAvailable);
         vCredP = auxCredP;
       }else {
@@ -170,15 +197,15 @@
     }else if(vCredP > auxCredP){
       diferencia = vCredP - auxCredP;
       cAvailable = cAvailable + diferencia;
-      $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+      $("#cD").text(cAvailable.toFixed(1));
       $('#cds').val(cAvailable);
       vCredP = auxCredP;
     }
-    
   });
 
   $('#cSeminar').on('change', function(e) {
     auxCredS = e.target.value;
+    
     var diferencia = 0;
 
     if (auxCredS == "") {
@@ -189,7 +216,7 @@
       diferencia = auxCredS - vCredS;
       if (cAvailable - diferencia >= 0){
         cAvailable = cAvailable - diferencia;
-        $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+        $("#cD").text(cAvailable.toFixed(1));
         $('#cds').val(cAvailable);
         vCredS = auxCredS;
       }else {
@@ -198,32 +225,54 @@
     }else if(vCredS > auxCredS){
       diferencia = vCredS - auxCredS;
       cAvailable = cAvailable + diferencia;
-      $("#cD").text("Créditos Disponibles: "+cAvailable.toFixed(1));
+      $("#cD").text(cAvailable.toFixed(1));
       $('#cds').val(cAvailable);
       vCredS = auxCredS;
     }
-    
   });
 
   function validacion(){
+
     var enviar = false;
 
-    subObj_credT = parseFloat(subObj_credT);
-    subObj_credP = parseFloat(subObj_credP);
-    subObj_credS = parseFloat(subObj_credS);
+    credTavailable = parseFloat(credTavailable);
+    credPavailable = parseFloat(credPavailable);
+    credSavailable = parseFloat(credSavailable);
 
-    if(cAvailable < 0){
-      alert("No tienes créditos disponibles");
-    }else if(auxCredT == "" && auxCredP == "" && auxCredS == ""){
+    if (auxCredT == 0) {
+      auxCredT = "";
+    }
+
+    if (auxCredP == 0) {
+      auxCredP = "";
+    }
+
+    if (auxCredS == 0) {
+      auxCredS = "";
+    }
+
+    if(auxCredT == "" && auxCredP == "" && auxCredS == ""){
+      alert("Introduce los créditos");
+    }else if(auxCredT == "" && vCredP == "" && vCredS == ""){
+      alert("Introduce los créditos");
+    }else if(vCredT == "" && auxCredP == "" && vCredS == ""){
+      alert("Introduce los créditos");
+    }else if(vCredT == "" && vCredP == "" && auxCredS == ""){
+      alert("Introduce los créditos");
+    }else if(auxCredT == "" && auxCredP == "" && vCredS == ""){
+      alert("Introduce los créditos");
+    }else if(vCredT == "" && auxCredP == "" && auxCredS == ""){
+      alert("Introduce los créditos");
+    }else if(auxCredT == "" && vCredP == "" && auxCredS == ""){
       alert("Introduce los créditos");
     }else if(auxCredT < 0 || auxCredP < 0 || auxCredS < 0){
       alert("Introduce un valor positivo");
-    }else if(auxCredT > subObj_credT ) {
-      alert("Créditos de teoría introducidos no validos");
-    }else if(auxCredP > subObj_credP){
-      alert("Créditos de prácticas introducidos no validos");
-    }else if(auxCredS > subObj_credS){
-      alert("Créditos de seminarios introducidos no validos");
+    }else if(auxCredT > credTavailable){
+      alert("Los créditos de teoria introducidos no son validos");
+    }else if(auxCredP > credPavailable){
+      alert("Los créditos de práctica introducidos no son validos");
+    }else if(auxCredS > credSavailable){
+      alert("Los créditos de seminario introducidos no son validos");
     }else {
       enviar = true;
     }

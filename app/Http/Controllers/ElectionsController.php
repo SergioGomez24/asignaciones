@@ -170,7 +170,7 @@ class ElectionsController extends Controller
         if($request->ajax()){
             $id = $request->id;
             $course = $request->course;
-            $cAvailable = 3;
+            $cAvailable = 0;
 
             $eleccionProfesor = Election::where('course', '=', $course)
                              ->where('teacher_id', '=', $id)
@@ -179,7 +179,6 @@ class ElectionsController extends Controller
             foreach ($eleccionProfesor as $eleccion) {
                 $cAvailable = $eleccion->cAvailable;
             }
-
 
             return response()->json(['cAvailable' => $cAvailable]);
         }

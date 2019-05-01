@@ -98,16 +98,16 @@ class CoordinatorsController extends Controller
         $cSnew = $request->input('cSeminar');
         $cAvailable = $request->input('cds');
 
-        if ($cTnew == null) {
-            $cTnew = 0;
+        if ($cTnew == "") {
+            $cTnew = null;
         }
 
-        if ($cPnew == null) {
-            $cPnew = 0;
+        if ($cPnew == "") {
+            $cPnew = null;
         }
 
-         if ($cSnew == null) {
-            $cSnew = 0;
+         if ($cSnew == "") {
+            $cSnew = null;
         }
 
         $a = Solicitude::findOrFail($id);
@@ -121,25 +121,14 @@ class CoordinatorsController extends Controller
             $p->cAvailable = $cAvailable;
             $p->save();
         }
-        
-
-        if ($cTnew == 0) {
-            $cTnew = null;
-        }
-
-        if ($cPnew == 0) {
-            $cPnew = null;
-        }
-
-        if ($cSnew == 0) {
-            $cSnew = null;
-        }
 
         $a->cTheory = $cTnew;
         $a->cSeminar = $cSnew;
         $a->cPractice = $cPnew;
         $a->save();
+
         Notification::success('La solicitud ha sido modificada exitosamente!');
+        
         return redirect('/coordinators/index/'. $c);
     }
 

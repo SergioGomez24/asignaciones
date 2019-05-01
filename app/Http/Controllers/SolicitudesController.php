@@ -277,7 +277,7 @@ class SolicitudesController extends Controller
             $profPermission = $eleccion->profPermission;
         }
 
-        if($cAvailable == 0 || $profPermission == 0){
+        if($profPermission == 0){
             return view('home');
         }else{
 
@@ -316,34 +316,33 @@ class SolicitudesController extends Controller
         return redirect('/solicitudes/create/'.$course);
     }
 
-    public function getEdit($id) 
+    /* Funciones para editar solicitudes Profesor */
+    public function getTeacherEdit($id) 
     {
         $solicitud = Solicitude::findOrFail($id);
         $course = $solicitud->course;
                 
-        return view('solicitudes.edit')->with('solicitud', $solicitud)
-                                       ->with('course', $course);
+        return view('solicitudes.teacher.edit')->with('solicitud', $solicitud)
+                                               ->with('course', $course);
     }
 
-    public function putEdit(Request $request, $id)
+    public function putTeacherEdit(Request $request, $id)
     {
-        $role = Auth()->user()->role;
-
         $cTnew = $request->input('cTheory');
         $cPnew = $request->input('cPractice');
         $cSnew = $request->input('cSeminar');
         $cAvailable = $request->input('cds');
 
         if ($cTnew == "") {
-            $cTnew = 0;
+            $cTnew = null;
         }
 
         if ($cPnew == "") {
-            $cPnew = 0;
+            $cPnew = null;
         }
 
         if ($cSnew == "") {
-            $cSnew = 0;
+            $cSnew = null;
         }
 
         $a = Solicitude::findOrFail($id);
@@ -358,16 +357,54 @@ class SolicitudesController extends Controller
             $p->save();
         }
 
-        if ($cTnew == 0) {
+        $a->cTheory = $cTnew;
+        $a->cSeminar = $cSnew;
+        $a->cPractice = $cPnew;
+        $a->save();
+        Notification::success('La solicitud ha sido modificada exitosamente!');
+
+        return redirect('/solicitudes/teacher/index/'. $c);  
+    }
+
+    /* Funciones para editar solicitudes Director */
+    public function getDirectorEdit($id) 
+    {
+        $solicitud = Solicitude::findOrFail($id);
+        $course = $solicitud->course;
+                
+        return view('solicitudes.director.edit')->with('solicitud', $solicitud)
+                                               ->with('course', $course);
+    }
+
+    public function putDirectorEdit(Request $request, $id)
+    {
+        $cTnew = $request->input('cTheory');
+        $cPnew = $request->input('cPractice');
+        $cSnew = $request->input('cSeminar');
+        $cAvailable = $request->input('cds');
+
+        if ($cTnew == "") {
             $cTnew = null;
         }
 
-        if ($cPnew == 0) {
+        if ($cPnew == "") {
             $cPnew = null;
         }
 
-        if ($cSnew == 0) {
+        if ($cSnew == "") {
             $cSnew = null;
+        }
+
+        $a = Solicitude::findOrFail($id);
+        $c = $a->course;
+
+        $eleccion = Election::where('teacher_id', $a->teacher_id)
+                            ->where('course', $c)
+                            ->get();
+
+        foreach ($eleccion as $p) {
+            $p->cAvailable = $cAvailable;
+            $p->save();
         }
 
         $a->cTheory = $cTnew;
@@ -376,13 +413,10 @@ class SolicitudesController extends Controller
         $a->save();
         Notification::success('La solicitud ha sido modificada exitosamente!');
 
-        if ($role == "Profesor") {
-            return redirect('/solicitudes/teacher/index/'. $c);
-        }else{
-            return redirect('/solicitudes/director/index/'. $c);
-        }    
+        return redirect('/solicitudes/director/index/'. $c);  
     }
 
+    /* Eliminar solicitud */
     public function deleteSolicitude(Request $request, $id)
     {
         $a = Solicitude::findOrFail($id);
@@ -449,7 +483,7 @@ class SolicitudesController extends Controller
         }
 
         Notification::success('Las solicitudes fue enviadas exitosamente!');
-        return redirect('/');
+        return redirect('home');
 
     }
 
@@ -508,21 +542,11 @@ class SolicitudesController extends Controller
         }
 
         Notification::success('Las solicitudes fue enviadas exitosamente!');
-        return redirect('/');
+        return redirect('home');
     }
 
     public function editPermissionDir(Request $request, $course)
     {
-        /*$usuario = Auth()->user()->id;
-
-        $eleccion = Election::where('teacher_id', $usuario)
-                             ->where('course', $course)
-                             ->get();
-
-        foreach ($eleccion as $p) {
-            $p->dirPermission = false;
-            $p->save();
-        }*/
 
         $elecciones = Election::where('course', $course)
                               ->get();
@@ -534,7 +558,7 @@ class SolicitudesController extends Controller
         }
 
         Notification::success('Las solicitudes se cerraron exitosamente!');
-        return redirect('/');
+        return redirect('home');
     }
 
     public function openElection(Request $request, $course)

@@ -4,8 +4,8 @@
   <div class="container">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/coordinators') }}">Curso Solicitudes</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/coordinators/index/'.$course) }}">Solicitudes Curso {{$course}}</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/teacher') }}">Curso Solicitudes</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/teacher/index/'.$course) }}">Solicitudes Curso {{$course}}</a></li>
     <li class="breadcrumb-item active" aria-current="page">Editar Solicitud</li>
   </ol>
   </div>
@@ -16,7 +16,7 @@
    <div class="offset-md-2 col-md-8">
       <div class="card">
          <div class="card-header"> 
-            <h5 class="text-center"> Editar Solicitud </h5> 
+            <h5 class="text-center"> Editar Solicitud </h5>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST" onsubmit="return validacion()">
@@ -38,7 +38,6 @@
             <h6>Asignatura</h6>
             <p id="subj"></p>
             </div>
-
             </div>
 
             <div class="group row">
@@ -81,7 +80,7 @@
                <button type="submit" class="btn btn-primary" id="btnAceptar">
                   Editar
                </button>
-               <a class="btn btn-secondary" href="{{ url('/coordinators/index/'.$course) }}" role="button" id="btnCancelar">Cancelar</a>
+               <a class="btn btn-secondary" href="{{ url('/solicitudes/teacher/index/'.$course) }}" role="button" id="btnCancelar">Cancelar</a>
             </div>
             </form>
          </div>
@@ -94,16 +93,15 @@
   var subject_id = "{{$solicitud->subject_id}}";
   var teacher_id = "{{$solicitud->teacher_id}}";
   var course = "{{$course}}";
-  var id = "{{$solicitud->id}}";
   var vCredT = document.getElementById("cTheory").value;
   var vCredP = document.getElementById("cPractice").value;
   var vCredS = document.getElementById("cSeminar").value;
   var auxCredT;
   var auxCredP;
   var auxCredS;
-  var credTavailable;
-  var credPavailable;
-  var credSavailable;
+  var subObj_credT;
+  var subObj_credS;
+  var subObj_credP;
   var cAvailable = 0;
 
   $.ajax({
@@ -111,7 +109,13 @@
     type:"GET", 
     data: {"id":subject_id}, 
     success: function(result){
-      $("#subj").text(result.name);
+      $("#subj").text(result.name); 
+      $("#cT").text(result.cTheory);  
+      $("#cP").text(result.cPractice);
+      $("#cS").text(result.cSeminar);
+      subObj_credT = result.cTheory;
+      subObj_credP = result.cPractice;
+      subObj_credS = result.cSeminar;
     }
   });
 
@@ -121,20 +125,6 @@
     data: {"id":teacher_id}, 
     success: function(result){
       $("#teacher").text(result.name);
-    }
-  });
-
-  $.ajax({
-    url: "{{url('json-solicitudes')}}",
-    type:"GET", 
-    data: {"subject_id":subject_id, "course":course, "id":id}, 
-    success: function(result){
-      $("#cT").text(result.totalT);  
-      $("#cP").text(result.totalP);
-      $("#cS").text(result.totalS);
-      credTavailable = result.totalT;
-      credPavailable = result.totalP;
-      credSavailable = result.totalS;
     }
   });
 
@@ -202,11 +192,11 @@
       $('#cds').val(cAvailable);
       vCredP = auxCredP;
     }
+    
   });
 
   $('#cSeminar').on('change', function(e) {
     auxCredS = e.target.value;
-    
     var diferencia = 0;
 
     if (auxCredS == "") {
@@ -230,15 +220,15 @@
       $('#cds').val(cAvailable);
       vCredS = auxCredS;
     }
+    
   });
 
   function validacion(){
-
     var enviar = false;
 
-    credTavailable = parseFloat(credTavailable);
-    credPavailable = parseFloat(credPavailable);
-    credSavailable = parseFloat(credSavailable);
+    subObj_credT = parseFloat(subObj_credT);
+    subObj_credP = parseFloat(subObj_credP);
+    subObj_credS = parseFloat(subObj_credS);
 
     if (auxCredT == 0) {
       auxCredT = "";
@@ -252,28 +242,18 @@
       auxCredS = "";
     }
 
-    if(auxCredT == "" && auxCredP == "" && auxCredS == ""){
-      alert("Introduce los créditos");
-    }else if(auxCredT == "" && vCredP == "" && vCredS == ""){
-      alert("Introduce los créditos");
-    }else if(vCredT == "" && auxCredP == "" && vCredS == ""){
-      alert("Introduce los créditos");
-    }else if(vCredT == "" && vCredP == "" && auxCredS == ""){
-      alert("Introduce los créditos");
-    }else if(auxCredT == "" && auxCredP == "" && vCredS == ""){
-      alert("Introduce los créditos");
-    }else if(vCredT == "" && auxCredP == "" && auxCredS == ""){
-      alert("Introduce los créditos");
-    }else if(auxCredT == "" && vCredP == "" && auxCredS == ""){
+    if(cAvailable < 0){
+      alert("No tienes créditos disponibles");
+    }else if(auxCredT == "" && auxCredP == "" && auxCredS == ""){
       alert("Introduce los créditos");
     }else if(auxCredT < 0 || auxCredP < 0 || auxCredS < 0){
       alert("Introduce un valor positivo");
-    }else if(auxCredT > credTavailable){
-      alert("Los créditos de teoria introducidos no son validos");
-    }else if(auxCredP > credPavailable){
-      alert("Los créditos de práctica introducidos no son validos");
-    }else if(auxCredS > credSavailable){
-      alert("Los créditos de seminario introducidos no son validos");
+    }else if(auxCredT > subObj_credT ) {
+      alert("Créditos de teoría introducidos no validos");
+    }else if(auxCredP > subObj_credP){
+      alert("Créditos de prácticas introducidos no validos");
+    }else if(auxCredS > subObj_credS){
+      alert("Créditos de seminarios introducidos no validos");
     }else {
       enviar = true;
     }

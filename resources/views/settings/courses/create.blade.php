@@ -58,7 +58,7 @@
    });
 
    function validacion(){
-      if(existe > "0") {
+      if(existe > 0) {
          alert("El curso ya existe");
          return false;
       } else {

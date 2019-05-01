@@ -52,7 +52,7 @@
                   <td class="text-center">{{$solicitud->cPractice}}</td>
                   <td class="text-center">{{$solicitud->cSeminar}}</td>
                   <td></td>
-                  <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/edit/'.$solicitud->id) }}">Editar</a></td>
+                  <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/teacher/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
                   {{ csrf_field() }}
