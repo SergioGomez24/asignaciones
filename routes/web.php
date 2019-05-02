@@ -91,7 +91,8 @@ Route::group(['middleware' => 'auth'], function() {
 	/* */
 	/* Rutas de Solicitudes de Director */
 	Route::get('solicitudes/director', 'SolicitudesController@getCourseDirector');
-	Route::get('solicitudes/director/index/{course}', 'SolicitudesController@getDirectorIndex');
+	Route::get('solicitudes/director/teacher/{course}', 'SolicitudesController@getTeacherList');
+	Route::get('solicitudes/director/index/{course}/{teacher_id}', 'SolicitudesController@getDirectorIndex');
 
 	Route::get('solicitudes/director/edit/{id}', 'SolicitudesController@getDirectorEdit');
 	Route::put('solicitudes/director/edit/{id}', 'SolicitudesController@putDirectorEdit');

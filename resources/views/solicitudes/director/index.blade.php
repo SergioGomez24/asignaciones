@@ -45,9 +45,9 @@
               <tr>
                 <th scope="col">Asignatura</th>
                 <th scope="col">Profesor</th>
-                <th scope="col">Créditos Teoría</th>
-                <th scope="col">Créditos Prácticas</th>
-                <th scope="col">Créditos Seminarios</th>
+                <th scope="col" class="text-center">Créditos Teoría</th>
+                <th scope="col" class="text-center">Créditos Prácticas</th>
+                <th scope="col" class="text-center">Créditos Seminarios</th>
                 <th scope="col">Total</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Eliminar</th>
@@ -98,21 +98,12 @@
             <label style="font-weight: bold;">Asignaturas</label>
             <select name="subject_id" id="subject_id" class="form-control">
               <option value="">Asignaturas</option>
-              @foreach($arrayAsignaturasDirector as $a)
+              @foreach($arrayAsignaturasProfesores as $a)
                 <option value="{{$a->id}}">{{$a->name}}</option>
               @endforeach
             </select>
           </div>
 
-          <div class="form-group">
-            <label style="font-weight: bold;">Profesores</label>
-            <select name="teacher_id" id="teacher_id" class="form-control">
-              <option value="">Profesores</option>
-              @foreach($arrayProfesores as $p)
-                <option value="{{$p->id}}">{{$p->name}}</option>
-              @endforeach
-            </select>
-          </div>
           <button class="btn-info btn-sm" type="submit">Aplicar</button>
           @if($filter != 0)
             <button class="btn-secondary btn-sm" type="submit" style="margin-left: 5px;">Quitar filtros</button>

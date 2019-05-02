@@ -23,11 +23,11 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/elections')}}" style="color: black;"><i class="fas fa-vote-yea"></i> Elecciones</a>
+                    <a class="nav-link" href="{{url('/elections')}}" style="color: black;"><i class="fas fa-list-alt"></i> Planificación</a>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black;"><i class="fas fa-list-alt"></i> Solicitudes</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: black;"><i class="fas fa-vote-yea"></i> Solicitudes</a>
                     <div class="dropdown-menu">
                         @if (Auth()->user()->role == 'Director')
                         <a class="dropdown-item"  href="{{url('/solicitudes/director')}}" style="color: black;">Director</a>

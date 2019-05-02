@@ -129,41 +129,42 @@ class SolicitudesController extends Controller
         return view('solicitudes.director.course', compact('arrayElecciones', 'cont'));
     }
 
-    public function getDirectorIndex($course, Request $request) {
+    public function getTeacherList($course) {
+
+        $arrayProfesores = Teacher::join('elections', 'elections.teacher_id', '=', 'teachers.id')
+            ->select('teachers.id', 'teachers.name', 'teachers.cInitial', 'elections.cAvailable')
+            ->where('teachers.id', '!=', '1')
+            ->where('elections.course', $course)
+            ->orderBy('teachers.name')
+            ->simplePaginate(8);
+
+        return view('solicitudes.director.teacher', compact('arrayProfesores', 'course'));
+    }
+
+    public function getDirectorIndex($course, $teacher_id, Request $request) {
 
         $usuario = Auth()->user()->id;
         $subj_id = $request->get('subject_id');
-        $teacher_id = $request->get('teacher_id');
         $filter = 0;
 
-        $arrayAsignaturasDirector = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
+        $arrayAsignaturasProfesores = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
                 ->select('subjects.id','subjects.name')
                 ->distinct()
                 ->where('solicitudes.course', $course)
+                ->where('solicitudes.teacher_id', $teacher_id)
                 ->orderBy('subjects.name')
                 ->get();
-
-        $arrayProfesores = Teacher::join('solicitudes', 'solicitudes.teacher_id', '=', 'teachers.id')
-            ->select('teachers.id', 'teachers.name')
-            ->distinct()
-            ->where('solicitudes.course', $course)
-            ->orderBy('teachers.name')
-            ->get();
 
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
             ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
             ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
+            ->where('solicitudes.teacher_id', $teacher_id)
             ->subjectid($subj_id)
-            ->teacherid($teacher_id)
             ->orderBy('subjects.name')
             ->simplePaginate(8);
 
         if ($subj_id) {
-            $filter++;
-        }
-
-        if ($teacher_id) {
             $filter++;
         }
 
@@ -179,10 +180,8 @@ class SolicitudesController extends Controller
         }
 
         return view('solicitudes.director.index')->with('arraySolicitudes', $arraySolicitudes)
-                                          ->with('arrayAsignaturasDirector', $arrayAsignaturasDirector)
-                                          ->with('arrayProfesores', $arrayProfesores)
+                                          ->with('arrayAsignaturasProfesores', $arrayAsignaturasProfesores)
                                           ->with('subj_id', $subj_id)
-                                          ->with('teacher_id', $teacher_id)
                                           ->with('course', $course)
                                           ->with('filter', $filter)
                                           ->with('dirPermission', $dirPermission)
