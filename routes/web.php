@@ -92,7 +92,7 @@ Route::group(['middleware' => 'auth'], function() {
 	/* Rutas de Solicitudes de Director */
 	Route::get('solicitudes/director', 'SolicitudesController@getCourseDirector');
 	Route::get('solicitudes/director/teacher/{course}', 'SolicitudesController@getTeacherList');
-	Route::get('solicitudes/director/index/{course}/{teacher_id}', 'SolicitudesController@getDirectorIndex');
+	Route::get('solicitudes/director/index/{course}/{teacher_id}', ['as' => 'solicitudesTeacher', 'uses' => 'SolicitudesController@getDirectorIndex']);
 
 	Route::get('solicitudes/director/edit/{id}', 'SolicitudesController@getDirectorEdit');
 	Route::put('solicitudes/director/edit/{id}', 'SolicitudesController@putDirectorEdit');
@@ -103,6 +103,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('json-solicitude', 'SolicitudesController@getSolicitude');
 
 	Route::get('json-solicitudes', 'SolicitudesController@getSolicitudes');
+	Route::get('json-solicitudesSubject', 'SolicitudesController@getSolicitudesSubject');
 
 	Route::get('solicitudes/course', 'SolicitudesController@getCourse');
 	Route::get('solicitudes/create/{course}', 'SolicitudesController@getCreate');

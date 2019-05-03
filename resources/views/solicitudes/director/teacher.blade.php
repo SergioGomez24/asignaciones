@@ -16,37 +16,50 @@
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Créditos Profesores Curso {{$course}} </h4>
-        <div class="card-body">
-          <table class="table table-striped" id="miTabla">
-            <thead>
+        @if($state == 1)
+        <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir', $course)}}" method="POST" style="display:inline">
+          {{ method_field('POST') }}
+          {{ csrf_field() }}
+          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Cerrar solicitudes</button>
+        </form>
+        @else
+        <form name="formPermissionOpen" action="{{action('SolicitudesController@openElection', $course)}}" method="POST" style="display:inline">
+          {{ method_field('POST') }}
+          {{ csrf_field() }}
+          <button class="btn btn-secondary btn-sm" type="submit" onclick="return abrir()" style="float: left; margin-left: 5px;">Abrir solicitudes</button>
+        </form>
+        @endif
+      </div>
+      <div class="card-body">
+        <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
+          <thead>
+            <tr>
+              <th scope="col">Profesor</th>
+              <th scope="col" class="text-center">Créditos Iniciales</th>
+              <th scope="col" class="text-center">Créditos Escogidos</th>
+              <th scope="col" class="text-center">Créditos Disponibles</th>
+            </tr>
+          </thead>
+          <tbody> 
+            @foreach( $arrayProfesores as $key => $profesor )
               <tr>
-                <th scope="col">Profesor</th>
-                <th scope="col" class="text-center">Créditos Iniciales</th>
-                <th scope="col" class="text-center">Créditos Escogidos</th>
-                <th scope="col" class="text-center">Créditos Disponibles</th>
-              </tr>
-            </thead>
-            <tbody> 
-              @foreach( $arrayProfesores as $key => $profesor )
-                <tr>
-                  <td><a href="{{ url('/solicitudes/director/index',['course' => $course, 'teacher_id' => $profesor->id])}}">{{$profesor->name}}</a></td>
-                  <td class="text-center">{{$profesor->cInitial}}</td>
-                  <td class="text-center"></td>
-                  <td class="text-center">{{$profesor->cAvailable}}</td>
-                </tr>
-              @endforeach
-              {!! $arrayProfesores->render() !!}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td style="font-weight: bold;">Total</td>
+                <td><a href="{{ url('/solicitudes/director/index',['course' => $course, 'teacher_id' => $profesor->id])}}">{{$profesor->name}}</a></td>
+                <td class="text-center">{{$profesor->cInitial}}</td>
                 <td class="text-center"></td>
-                <td class="text-center"></td>
-                <td></td>
+                <td class="text-center">{{$profesor->cAvailable}}</td>
               </tr>
-            </tfoot>
-          </table>
-        </div>
+            @endforeach
+            {!! $arrayProfesores->render() !!}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td style="font-weight: bold;">Total</td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
   </div>

@@ -5,6 +5,7 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director') }}">Curso Solicitudes</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director/teacher/'.$course) }}">Créditos Profesores</a></li>
     <li class="breadcrumb-item active" aria-current="page">Solicitudes Curso {{$course}}</li>
   </ol>
   </div>
@@ -19,36 +20,22 @@
 
         @if($dirPermission == 1)
         @if($state == 1)
-        <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir', $course)}}" method="POST" style="display:inline">
-          {{ method_field('POST') }}
-          {{ csrf_field() }}
-          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Cerrar solicitudes</button>
-        </form>
-
         <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#filters" style="font-weight: bold; float: right;">Filtrar por</button>
-        @else
-        <form name="formPermissionOpen" action="{{action('SolicitudesController@openElection', $course)}}" method="POST" style="display:inline">
-          {{ method_field('POST') }}
-          {{ csrf_field() }}
-          <button class="btn btn-secondary btn-sm" type="submit" onclick="return abrir()" style="float: left; margin-left: 5px;">Abrir solicitudes</button>
-        </form>
         @endif
-
         @endif
       </div>
 
       <div class="card-body">
         @if($dirPermission == 1)
         @if($state == 1) 
-          <table class="table table-striped" id="miTabla">
+          <h5 class="text-center" style="font-weight: bold;" id="teacher"></h5>
+          <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
             <thead>
               <tr>
                 <th scope="col">Asignatura</th>
-                <th scope="col">Profesor</th>
-                <th scope="col" class="text-center">Créditos Teoría</th>
-                <th scope="col" class="text-center">Créditos Prácticas</th>
-                <th scope="col" class="text-center">Créditos Seminarios</th>
-                <th scope="col">Total</th>
+                <th scope="col" class="text-center">Créditos Seleccionados</th>
+                <th scope="col" class="text-center">Créditos Asignatura</th>
+                <th scope="col" class="text-center">Créditos Pendientes</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Eliminar</th>
               </tr>
@@ -56,11 +43,13 @@
             <tbody> 
               @foreach( $arraySolicitudes as $key => $solicitud )
                 <tr>
+                  <input type="hidden" name="subject_id" id="subject_id" value="{{$solicitud->subject_id}}">
                   <td>{{$solicitud->asig}}</td>
-                  <td>{{$solicitud->prof}}</td>
-                  <td class="text-center">{{$solicitud->cTheory}}</td>
-                  <td class="text-center">{{$solicitud->cPractice}}</td>
-                  <td class="text-center">{{$solicitud->cSeminar}}</td>
+                  <input type="hidden" name="cT" id="cT" value="{{$solicitud->cTheory}}"></input>
+                  <input type="hidden" name="cP" id="cP" value="{{$solicitud->cPractice}}"></input>
+                  <input type="hidden" name="cP" id="cP" value="{{$solicitud->cSeminar}}"></input>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
                   <td class="text-center"></td>
                   <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/director/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
@@ -120,6 +109,17 @@
     initTableSorter();
     calcular();
   });
+
+  var teacher_id = "{{$teacher_id}}";
+
+  $.ajax({
+    url: "{{url('json-teacher')}}",
+    type:"GET", 
+    data: {"id":teacher_id}, 
+    success: function(result){
+      $("#teacher").text("Profesor: "+ result.name);
+    }
+  });
   
   function initTableSorter() {
   // call the tablesorter plugin
@@ -131,18 +131,21 @@
 
   function calcular() {
     // obtenemos todas las filas del tbody
-    var filas=document.querySelectorAll("#miTabla tbody tr");
+    var filas = document.querySelectorAll("#miTabla tbody tr");
+    var course = "{{$course}}";
  
     // recorremos cada una de las filas
     filas.forEach(function(e) {
  
         // obtenemos las columnas de cada fila
-        var columnas=e.querySelectorAll("td");
+        var columnas = e.querySelectorAll("td");
+
+        var col = e.querySelectorAll("input");
  
         // obtenemos los valores de la cantidad y importe
-        var cT = (columnas[2].textContent);
-        var cP = (columnas[3].textContent);
-        var cS = (columnas[4].textContent);
+        var cT = (col[1].value);
+        var cP = (col[2].value);
+        var cS = (col[3].value);
 
         if(cT == ""){
           cT = 0;
@@ -161,7 +164,33 @@
         cP = parseFloat(cP);
  
         // mostramos el total por fila
-        columnas[5].textContent=(cT+cP+cS).toFixed(1);
+        columnas[1].textContent=(cT+cP+cS).toFixed(1);
+
+        $.ajax({
+          url: "{{url('json-subject')}}",
+          type:"GET", 
+          data: {"id":col[0].value}, 
+          success: function(result){
+            var cTeoria = result.cTheory;
+            var cPractica = result.cPractice;
+            var cSeminario = result.cSeminar;
+            cTeoria = parseFloat(cTeoria);
+            cPractica = parseFloat(cPractica);
+            cSeminario = parseFloat(cSeminario);
+
+            var total = cTeoria+cPractica+cSeminario;
+            columnas[2].textContent = total.toFixed(1);
+          }
+        });
+
+        $.ajax({
+          url: "{{url('json-solicitudesSubject')}}",
+          type:"GET", 
+          data: {"subject_id":col[0].value, "course":course}, 
+          success: function(result){
+            columnas[3].textContent = result.total.toFixed(1);
+          }
+        });
     });
   }
 

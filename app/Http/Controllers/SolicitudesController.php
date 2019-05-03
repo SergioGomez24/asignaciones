@@ -131,6 +131,8 @@ class SolicitudesController extends Controller
 
     public function getTeacherList($course) {
 
+        $usuario = Auth()->user()->id;
+
         $arrayProfesores = Teacher::join('elections', 'elections.teacher_id', '=', 'teachers.id')
             ->select('teachers.id', 'teachers.name', 'teachers.cInitial', 'elections.cAvailable')
             ->where('teachers.id', '!=', '1')
@@ -138,7 +140,15 @@ class SolicitudesController extends Controller
             ->orderBy('teachers.name')
             ->simplePaginate(8);
 
-        return view('solicitudes.director.teacher', compact('arrayProfesores', 'course'));
+        $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
+                             ->where('course', '=', $course)
+                             ->get();
+
+        foreach ($eleccionProfesor as $eleccion) {
+            $state = $eleccion->state;
+        }
+
+        return view('solicitudes.director.teacher', compact('arrayProfesores', 'course', 'state'));
     }
 
     public function getDirectorIndex($course, $teacher_id, Request $request) {
@@ -157,7 +167,7 @@ class SolicitudesController extends Controller
 
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
             ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
-            ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->select('subjects.id AS subject_id', 'subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
             ->where('solicitudes.teacher_id', $teacher_id)
             ->subjectid($subj_id)
@@ -182,6 +192,7 @@ class SolicitudesController extends Controller
         return view('solicitudes.director.index')->with('arraySolicitudes', $arraySolicitudes)
                                           ->with('arrayAsignaturasProfesores', $arrayAsignaturasProfesores)
                                           ->with('subj_id', $subj_id)
+                                          ->with('teacher_id', $teacher_id)
                                           ->with('course', $course)
                                           ->with('filter', $filter)
                                           ->with('dirPermission', $dirPermission)
@@ -191,6 +202,7 @@ class SolicitudesController extends Controller
 
     }
 
+    /* Obtener una solicitud especifica */
     public function getSolicitude() {
         $subject_id = Input::get('subject_id');
         $teacher_id = Input::get('teacher_id');
@@ -204,6 +216,7 @@ class SolicitudesController extends Controller
         return response()->json($solicitud);
     }
 
+    /* Obtener las solicitudes sin contar la del profesor seleccionado */
     public function getSolicitudes(Request $request) {
 
         if($request->ajax()){
@@ -233,6 +246,39 @@ class SolicitudesController extends Controller
 
             
             return response()->json(['totalT' => $totalT, 'totalP' => $totalP, 'totalS' => $totalS ]);
+        }
+    }
+
+    /* Obtener las solicitudes de una asignatura */
+    public function getSolicitudesSubject(Request $request) {
+
+        if($request->ajax()){
+            $subject_id = $request->subject_id;
+            $course = $request->course;
+            $totalT = 0;
+            $totalP = 0;
+            $totalS = 0;
+            $total = 0;
+
+            $solicitudes = Solicitude::where('subject_id', '=', $subject_id)
+                                ->where('course', '=', $course)
+                                ->get();
+
+            foreach ($solicitudes as $key => $s) {
+                $totalT += $s->cTheory;
+                $totalP += $s->cPractice;
+                $totalS += $s->cSeminar;
+            }
+
+            $subject = Subject::findOrFail($subject_id);
+
+            $totalT = $subject->cTheory - $totalT;
+            $totalP = $subject->cPractice - $totalP;
+            $totalS = $subject->cSeminar - $totalS;
+
+            $total = $totalT+$totalP+$totalS;
+            
+            return response()->json(['total' => $total]);
         }
     }
 
@@ -412,7 +458,7 @@ class SolicitudesController extends Controller
         $a->save();
         Notification::success('La solicitud ha sido modificada exitosamente!');
 
-        return redirect('/solicitudes/director/index/'. $c);  
+        return redirect()->route('solicitudesTeacher', ['course' => $c, 'teacher_id' => $a->teacher_id]);  
     }
 
     /* Eliminar solicitud */
