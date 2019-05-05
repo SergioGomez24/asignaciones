@@ -145,10 +145,11 @@ class SolicitudesController extends Controller
                              ->get();
 
         foreach ($eleccionProfesor as $eleccion) {
+            $dirPermission = $eleccion->dirPermission;
             $state = $eleccion->state;
         }
 
-        return view('solicitudes.director.teacher', compact('arrayProfesores', 'course', 'state'));
+        return view('solicitudes.director.teacher', compact('arrayProfesores', 'course', 'dirPermission', 'state'));
     }
 
     public function getDirectorIndex($course, $teacher_id, Request $request) {
@@ -178,27 +179,12 @@ class SolicitudesController extends Controller
             $filter++;
         }
 
-        $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
-                             ->where('course', '=', $course)
-                             ->get();
-
-        foreach ($eleccionProfesor as $eleccion) {
-            $dirPermission = $eleccion->dirPermission;
-            $profPermission = $eleccion->profPermission;
-            $coorPermission = $eleccion->coorPermission;
-            $state = $eleccion->state;
-        }
-
         return view('solicitudes.director.index')->with('arraySolicitudes', $arraySolicitudes)
                                           ->with('arrayAsignaturasProfesores', $arrayAsignaturasProfesores)
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher_id', $teacher_id)
                                           ->with('course', $course)
-                                          ->with('filter', $filter)
-                                          ->with('dirPermission', $dirPermission)
-                                          ->with('profPermission', $profPermission)
-                                          ->with('coorPermission', $coorPermission)
-                                          ->with('state', $state);
+                                          ->with('filter', $filter);
 
     }
 
@@ -466,6 +452,7 @@ class SolicitudesController extends Controller
     {
         $a = Solicitude::findOrFail($id);
         $c = $a->course;
+        $p = $a->teacher_id;
         $a->delete();
 
         $role = Auth()->user()->role;
@@ -484,7 +471,7 @@ class SolicitudesController extends Controller
         if ($role == "Profesor") {
             return redirect('/solicitudes/teacher/index/'. $c);
         }else{
-            return redirect('/solicitudes/director/index/'. $c);
+            return redirect()->route('solicitudesTeacher', ['course' => $c, 'teacher_id' => $p]);
         }
     }
 
@@ -571,7 +558,7 @@ class SolicitudesController extends Controller
 
         if($coorPermission == true) {
             foreach ($eleccionesProf as $key => $p) {
-                if($p->cAvailable - 2 > 0){
+                if($p->cAvailable - $p->threshold > 0){
                     $p->profPermission = true;
                     $p->save();
                     $profPermission = true;
@@ -603,7 +590,7 @@ class SolicitudesController extends Controller
         }
 
         Notification::success('Las solicitudes se cerraron exitosamente!');
-        return redirect('home');
+        return redirect('/solicitudes/director/teacher/'. $course);
     }
 
     public function openElection(Request $request, $course)
@@ -618,6 +605,6 @@ class SolicitudesController extends Controller
         }
 
         Notification::success('Las solicitudes se abrieron exitosamente!');
-        return redirect('/solicitudes/director/index/'. $course);
+        return redirect('/solicitudes/director/teacher/'. $course);
     }
 }

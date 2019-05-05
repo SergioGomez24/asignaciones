@@ -95,6 +95,7 @@ class ElectionsController extends Controller
                                         ->with('course', $course);
     }
 
+    /* obtener la eleccion final en pdf */
     public function elections($course) 
     {
         $arraySolicitudes = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
@@ -123,34 +124,6 @@ class ElectionsController extends Controller
         $view =  \View::make('pdf.elections', compact('arraySolicitudes', 'date', 'course'))->render();
         $pdf = PDF::loadHTML($view);
         return $pdf->stream('elections');
-    }
-
-    public function getCreate() 
-    {
-    	$arrayCursos = Course::all();
-
-    	return view('settings.elections.create', ['arrayCursos' => $arrayCursos]);
-    }
-
-    public function postCreate(Request $request) 
-    {
-    	$arrayProfesores = Teacher::all();
-
-    	foreach ($arrayProfesores as $key => $profesor) {
-			$e = new Election;
-			$e->teacher_id = $profesor->id;
-			$e->course = $request->input('course');
-			$e->cAvailable = $profesor->cInitial;
-            $e->dirPermission = false;
-            $e->profPermission = true;
-            $e->coorPermission = false;
-            $e->elecPermission = false;
-            $e->state = true;
-			$e->save();
-		}
-
-		Notification::success('La elección se ha creado exitosamente!');
-		return redirect('/settings/elections');
     }
 
     /* obtener la eleccion de un curso */
@@ -184,15 +157,77 @@ class ElectionsController extends Controller
         }
     }
 
+    /* obtener las diferentes elecciones creadas */
     public function getIndexSettings()
     {
-        $arrayElecciones = Election::select('course')->distinct()->get();
+        $arrayElecciones = Election::select('course', 'threshold')->distinct()->get();
 
         return view('settings.elections.index',compact('arrayElecciones'));
 
     }
 
-      public function deleteElection(Request $request, $course)
+    /* Funciones para crear una elección */
+    public function getCreate() 
+    {
+        $arrayCursos = Course::all();
+
+        return view('settings.elections.create', ['arrayCursos' => $arrayCursos]);
+    }
+
+    public function postCreate(Request $request) 
+    {
+        $arrayProfesores = Teacher::all();
+
+        foreach ($arrayProfesores as $key => $profesor) {
+            $e = new Election;
+            $e->teacher_id = $profesor->id;
+            $e->course = $request->input('course');
+            $e->cAvailable = $profesor->cInitial;
+            $e->dirPermission = false;
+            $e->profPermission = true;
+            $e->coorPermission = false;
+            $e->elecPermission = false;
+            $e->state = true;
+            $e->threshold = $request->input('threshold');
+            $e->save();
+        }
+
+        Notification::success('La elección se ha creado exitosamente!');
+        return redirect('/settings/elections');
+    }
+
+    /* Funciones para editar una elección */
+    public function getEdit($course) 
+    {
+        $eleccion = Election::select('course', 'threshold')
+                            ->distinct()
+                            ->where('course', '=', $course)
+                            ->get();
+
+        foreach ($eleccion as $e) {
+            $threshold = $e->threshold;
+        } 
+                
+        return view('settings.elections.edit', compact('course', 'threshold'));
+    }
+
+    public function putEdit(Request $request, $course)
+    {
+        $elecciones = Election::where('course', '=', $course)
+                            ->get();
+
+        foreach ($elecciones as $e) {
+            $e->course = $request->input('course');
+            $e->threshold = $request->input('threshold');
+            $e->save();
+        }
+
+        Notification::success('La elección ha sido modificada exitosamente!');
+        return redirect('/settings/elections');
+    }
+
+    /* eliminar una eleccion */
+    public function deleteElection(Request $request, $course)
     {
         $elecciones = Election::where('course', '=', $course)
                                ->get();

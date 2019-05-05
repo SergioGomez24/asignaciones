@@ -5,8 +5,8 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/settings') }}">Ajustes</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/settings/coursesSubjects') }}">Cursos Asignaturas</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Editar Curso Asignatura</li>
+    <li class="breadcrumb-item"><a href="{{ url('/settings/elections') }}">Elecciones</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Editar Elección</li>
   </ol>
   </div>
 </nav>
@@ -16,7 +16,7 @@
    <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header">
-            <h5 class="text-center"> Editar Curso Asignatura </h5>
+            <h5 class="text-center"> Editar Elección </h5>
          </div>
          <div class="card-body" style="padding:30px">
          	<form method="POST">
@@ -24,15 +24,20 @@
          		{{ csrf_field() }}
 
             <div class="form-group">
-               <label for="name" style="font-weight: bold;">Nombre</label>
-               <input type="text" name="name" id="name" value="{{$cursoAsignatura->name}}" class="form-control" required>
+               <label for="course" style="font-weight: bold;">Curso</label>
+               <input type="text" name="course" id="course" value="{{$course}}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+               <label for="threshold" style="font-weight: bold;">Umbral</label>
+               <input type="number" name="threshold" id="threshold" value="{{$threshold}}" class="form-control" required>
             </div>
 
             <div class="form-group text-center">
                <button type="submit" class="btn btn-primary" id="btnAceptar">
                   Editar
                </button>
-               <a class="btn btn-secondary" href="{{ url('/settings/coursesSubjects') }}" role="button" id="btnCancelar">Cancelar</a>
+               <a class="btn btn-secondary" href="{{ url('/settings/elections') }}" role="button" id="btnCancelar">Cancelar</a>
             </div>
             </form>
          </div>

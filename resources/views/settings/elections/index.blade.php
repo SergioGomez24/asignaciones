@@ -23,6 +23,8 @@
           <thead>
             <tr>
               <td style="font-weight: bold;">Elección</td>
+              <td style="font-weight: bold;">Umbral</td>
+              <td align="right" style="font-weight: bold;">Editar</td>
               <td align="right" style="font-weight: bold;">Eliminar</td>
             </tr>
           </thead>
@@ -30,6 +32,10 @@
             @foreach( $arrayElecciones as $key => $eleccion )
               <tr>
                 <td style="font-weight: bold;">{{$eleccion->course}}</td>
+
+                <td style="font-weight: bold;">{{$eleccion->threshold}}</td>
+
+                <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/settings/elections/edit/'.$eleccion->course) }}"><i class="fas fa-edit"></i> Editar</a></td>
 
                 <td align="right" ><form name="formBorrar" action="{{action('ElectionsController@deleteElection', $eleccion->course)}}" method="POST">
                     {{ method_field('DELETE') }}

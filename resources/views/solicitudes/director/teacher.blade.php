@@ -16,6 +16,7 @@
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> Créditos Profesores Curso {{$course}} </h4>
+        @if($dirPermission == 1)
         @if($state == 1)
         <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir', $course)}}" method="POST" style="display:inline">
           {{ method_field('POST') }}
@@ -29,8 +30,11 @@
           <button class="btn btn-secondary btn-sm" type="submit" onclick="return abrir()" style="float: left; margin-left: 5px;">Abrir solicitudes</button>
         </form>
         @endif
+        @endif
       </div>
       <div class="card-body">
+      	@if($dirPermission == 1)
+      	@if($state == 1) 
         <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
           <thead>
             <tr>
@@ -60,6 +64,10 @@
             </tr>
           </tfoot>
         </table>
+        @endif
+        @else
+          <h6>Los créditos de los profesores no están disponibles</h6>
+        @endif
       </div>
     </div>
   </div>
@@ -120,6 +128,30 @@
     filas[1].textContent = totalI.toFixed(1);
     filas[2].textContent = totalE.toFixed(1);   
   }
+
+  function validar(){ 
+    var mensaje = confirm('¿Estas seguro de que quieres cerrar las solicitudes?'
+                          + ' Una vez cerradas ya no podras modificarlas');
+    var enviar = false;
+
+    if(mensaje) {
+      document.formPermission.submit();
+      enviar = true; 
+    }
+    return enviar;
+  }
+
+  function abrir(){ 
+    var mensaje = confirm('¿Estas seguro de que quieres abrir las solicitudes?');
+    var enviar = false;
+
+    if(mensaje) {
+      document.formPermissionOpen.submit();
+      enviar = true; 
+    }
+    return enviar;
+  }
+
 </script>
 @stop
 

@@ -25,6 +25,7 @@ class CreateElectionsTable extends Migration
             $table->boolean('coorPermission');
             $table->boolean('elecPermission');
             $table->boolean('state');
+            $table->integer('threshold')->unsigned();
             $table->timestamps();
         });
     }

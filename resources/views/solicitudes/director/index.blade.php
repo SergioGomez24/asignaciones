@@ -18,16 +18,11 @@
       <div class="card-header">
         <h4 class="text-center"> Solicitudes Curso {{$course}} </h4>
 
-        @if($dirPermission == 1)
-        @if($state == 1)
         <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#filters" style="font-weight: bold; float: right;">Filtrar por</button>
-        @endif
-        @endif
+        
       </div>
 
       <div class="card-body">
-        @if($dirPermission == 1)
-        @if($state == 1) 
           <h5 class="text-center" style="font-weight: bold;" id="teacher"></h5>
           <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
             <thead>
@@ -62,10 +57,6 @@
               {!! $arraySolicitudes->render() !!}
             </tbody>
           </table>
-        @endif
-        @else
-          <h6>Las solicitudes no están disponibles</h6>
-        @endif
       </div>
     </div>
   </div>
@@ -200,29 +191,6 @@
 
     if(mensaje) {
       document.formBorrar.submit();
-      enviar = true; 
-    }
-    return enviar;
-  }
-
-  function validar(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres cerrar las solicitudes?'
-                          + ' Una vez cerradas ya no podras modificarlas');
-    var enviar = false;
-
-    if(mensaje) {
-      document.formPermission.submit();
-      enviar = true; 
-    }
-    return enviar;
-  }
-
-  function abrir(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres abrir las solicitudes?');
-    var enviar = false;
-
-    if(mensaje) {
-      document.formPermissionOpen.submit();
       enviar = true; 
     }
     return enviar;

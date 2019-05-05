@@ -80,7 +80,7 @@
                <button type="submit" class="btn btn-primary" id="btnAceptar">
                   Editar
                </button>
-               <a class="btn btn-secondary" href="{{ url('/solicitudes/director/index/'.$course) }}" role="button" id="btnCancelar">Cancelar</a>
+               <a class="btn btn-secondary" href="{{ url('/solicitudes/director/index',['course' => $course, 'teacher_id' => $solicitud->teacher_id]) }}" role="button" id="btnCancelar">Cancelar</a>
             </div>
             </form>
          </div>
@@ -173,7 +173,6 @@
       $('#cds').val(cAvailable);
       vCredT = auxCredT;
     }
-    
   });
 
   $('#cPractice').on('change', function(e) {

@@ -32,11 +32,16 @@
                </select>
             </div>
 
+            <div class="form-group">
+               <label for="threshold" style="font-weight: bold;">Umbral</label>
+               <input type="number" name="threshold" id="threshold" class="form-control" required>
+            </div>
+
             <div class="form-group text-center">
-               <button type="submit" class="btn btn-primary">
+               <button type="submit" class="btn btn-primary" id="btnAceptar">
                   Añadir
                </button>
-               <a class="btn btn-secondary" href="{{ url('/settings/elections') }}" role="button">Cancelar</a>
+               <a class="btn btn-secondary" href="{{ url('/settings/elections') }}" role="button" id="btnCancelar">Cancelar</a>
             </div>
             </form>
          </div>

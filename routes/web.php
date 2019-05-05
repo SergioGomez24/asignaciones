@@ -263,6 +263,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('settings/elections/create', 'ElectionsController@getCreate');
 	Route::post('settings/elections/create', 'ElectionsController@postCreate');
 
+	Route::get('settings/elections/edit/{course}', 'ElectionsController@getEdit');
+	Route::put('settings/elections/edit/{course}', 'ElectionsController@putEdit');
+
 	Route::delete('/settings/elections/delete/{course}', 'ElectionsController@deleteElection');
 
 });

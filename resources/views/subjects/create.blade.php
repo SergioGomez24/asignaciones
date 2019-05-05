@@ -128,10 +128,10 @@
 
 
             <div class="form-group text-center">
-               <button type="submit" class="btn btn-primary">
+               <button type="submit" class="btn btn-primary" id="btnAceptar">
                    Añadir
                </button>
-               <a class="btn btn-secondary" href="{{ url('/subjects') }}" role="button">Cancelar</a>
+               <a class="btn btn-secondary" href="{{ url('/subjects') }}" role="button" id="btnCancelar">Cancelar</a>
             </div>
             </form>
          </div>
