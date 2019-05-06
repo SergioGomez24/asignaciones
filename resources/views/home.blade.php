@@ -17,9 +17,6 @@
   		<hr class="my-4">
   		<p></p>
   		<p class="lead">
-        @if (Auth()->user()->role == 'Profesor')
-          <a class="btn btn-primary btn-lg" href="{{url('/solicitudes/course')}}" role="button">Iniciar solicitud</a>
-        @endif
   		</p>
 	</div>
 </div>

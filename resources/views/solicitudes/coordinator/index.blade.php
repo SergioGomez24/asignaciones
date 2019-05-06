@@ -21,7 +21,7 @@
         <form name="formPermission" action="{{action('SolicitudesController@editPermissionCoor', $course)}}" method="POST" style="display:inline">
           {{ method_field('POST') }}
           {{ csrf_field() }}
-          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Enviar</button>
+          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Enviar solicitudes</button>
         </form>
         @endif
       </div>
@@ -110,42 +110,16 @@
 
   $(document).ready(function(){
     initTableSorter();
-    calcular();
     cDisponibles();
   });
 
-  var select = document.getElementById('subject');
-  var asig = "{{$subject_id}}";
-  var course = "{{$course}}";
-  var cTotal = 0;
-  var ct = 0;
-  var cp = 0;
-  var cs = 0;
-
-  select.addEventListener('change', function(){
-    this.form.submit();
-  });
-
-
-  $.ajax({
-    url: "{{url('json-subject')}}",
-    type:"GET", 
-    data: {"id":asig}, 
-    success: function(result){
-      $("#titulo").text("Solicitudes "+ result.name);
-      $("#cT").text(result.cTheory);  
-      $("#cP").text(result.cPractice);
-      $("#cS").text(result.cSeminar);
-      ct = result.cTheory;
-      cp = result.cPractice;
-      cs = result.cSeminar;
-      ct = parseFloat(ct);
-      cp = parseFloat(cp);
-      cs = parseFloat(cs);
-      cTotal = ct + cp + cs;
-      $("#cTotal").text(cTotal);
-    }
-  });
+  function initTableSorter() {
+  // call the tablesorter plugin
+    $('table').tablesorter({
+    // Sort on the second column, in ascending order
+    //  sortList: [[1,0]]
+    });
+  }
 
   function cDisponibles(){
 
@@ -173,67 +147,91 @@
     });
   }
 
-  
-  function initTableSorter() {
-  // call the tablesorter plugin
-    $('table').tablesorter({
-    // Sort on the second column, in ascending order
-    //  sortList: [[1,0]]
-    });
-  }
+  var select = document.getElementById('subject');
+  var asig = "{{$subject_id}}";
+  var course = "{{$course}}";
+  /* Variables para los créditos de la asignatura */
+  var ctAsig = 0;
+  var cpAsig = 0;
+  var csAsig = 0;
+  var cTotalAsig = 0;
+  /* Variables para los créditos de las solicitudes */
+  var totalTsol = 0;
+  var totalPsol = 0;
+  var totalSsol = 0;
 
-  function calcular() {
-    // obtenemos todas las filas del tbody
-    var filas = document.querySelectorAll("#miTabla tbody tr");
+  select.addEventListener('change', function(){
+    this.form.submit();
+  });
+
+  $.ajax({
+    url: "{{url('json-subject')}}",
+    type:"GET", 
+    data: {"id":asig}, 
+    success: function(result){
+      $("#titulo").text("Solicitudes "+ result.name);
+      $("#cT").text(result.cTheory);  
+      $("#cP").text(result.cPractice);
+      $("#cS").text(result.cSeminar);
+      ctAsig = result.cTheory;
+      cpAsig = result.cPractice;
+      csAsig = result.cSeminar;
+      ctAsig = parseFloat(ctAsig);
+      cpAsig = parseFloat(cpAsig);
+      csAsig = parseFloat(csAsig);
+      cTotalAsig = ctAsig + cpAsig + csAsig;
+      $("#cTotal").text(cTotalAsig);
+    }
+  });
+
+  // obtenemos todas las filas del tbody
+  var filas = document.querySelectorAll("#miTabla tbody tr");
     
-    var totalT = 0;
-    var totalP = 0;
-    var totalS = 0;
-    var total = 0;
+  var total = 0;
  
-    // recorremos cada una de las filas
-    filas.forEach(function(e) {
+  // recorremos cada una de las filas
+  filas.forEach(function(e) {
  
-        // obtenemos las columnas de cada fila
-        var columnas = e.querySelectorAll("td");
+    // obtenemos las columnas de cada fila
+    var columnas = e.querySelectorAll("td");
  
-        // obtenemos los valores
-        var cT = (columnas[2].textContent);
-        var cP = (columnas[3].textContent);
-        var cS = (columnas[4].textContent);
+    // obtenemos los valores
+    var cT = (columnas[2].textContent);
+    var cP = (columnas[3].textContent);
+    var cS = (columnas[4].textContent);
 
-        if(cT == ""){
-          cT = 0;
-        }
+    if(cT == ""){
+      cT = 0;
+    }
 
-        if(cP == ""){
-          cP = 0;
-        }
+    if(cP == ""){
+      cP = 0;
+    }
 
-        if(cS == ""){
-          cS = 0;
-        }
+    if(cS == ""){
+      cS = 0;
+    }
 
-        cT = parseFloat(cT);
-        cS = parseFloat(cS);
-        cP = parseFloat(cP);
+    cT = parseFloat(cT);
+    cS = parseFloat(cS);
+    cP = parseFloat(cP);
  
-        // mostramos el total por fila
-        columnas[5].textContent = (cT+cP+cS).toFixed(1);
+    // mostramos el total por fila
+    columnas[5].textContent = (cT+cP+cS).toFixed(1);
         
-        totalT += cT;
-        totalP += cP;
-        totalS += cS;
-        total += cT+cP+cS;
-    });
+    totalTsol += cT;
+    totalPsol += cP;
+    totalSsol += cS;
+    total += cT+cP+cS;
+  });
  
-    // mostramos la suma total
-    var filas = document.querySelectorAll("#miTabla tfoot tr td");
-    filas[1].textContent = totalT.toFixed(1);
-    filas[2].textContent = totalP.toFixed(1);
-    filas[3].textContent = totalS.toFixed(1);
-    filas[4].textContent = total.toFixed(1);
-  }
+  // mostramos la suma total
+  var filas = document.querySelectorAll("#miTabla tfoot tr td");
+  filas[1].textContent = totalTsol.toFixed(1);
+  filas[2].textContent = totalPsol.toFixed(1);
+  filas[3].textContent = totalSsol.toFixed(1);
+  filas[4].textContent = total.toFixed(1);
+
 
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta solicitud?');
@@ -252,8 +250,12 @@
     var enviar = false;
 
     if(mensaje) {
-      document.formPermission.submit();
-      enviar = true; 
+      if(totalTsol <= ctAsig && totalPsol <= cpAsig && totalSsol <= csAsig) {
+        document.formPermission.submit();
+        enviar = true; 
+      } else {
+        alert("Los créditos solicitados no son validos");
+      }
     }
     return enviar;
   }

@@ -18,21 +18,40 @@
         <h4 class="text-center"> Selecciones Curso {{$course}} </h4>
 
         @if($profPermission == 1)
-        <form name="formPermission" action="{{action('SolicitudesController@editPermissionProf', $course)}}" method="POST">
-          {{ method_field('POST') }}
-          {{ csrf_field() }}
-          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Enviar</button>
-        </form>
-
+        @if($contCréditosProf == 0)
+        <a class="btn btn-primary btn-sm" href="{{ url('/solicitudes/create/' .$course ) }}" role="button">Iniciar solicitud</a>
+        
+        @else
         <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#filters" style="font-weight: bold; float: right;">Filtrar por</button>
+        @if($contCréditosProf != $cInitial)
+        <a class="btn btn-primary btn-sm" href="{{ url('/solicitudes/create/' .$course ) }}" role="button">Continuar solicitud</a>
+        @else
+        <a class="btn btn-primary btn-sm disabled" href="" role="button">Continuar solicitud</a>
+        @endif
+        @endif
         @endif
       </div>
 
       <div class="card-body">
         @if($profPermission == 1)
+          @if($contCréditosProf != 0)
           <h5 class="text-center" style="font-weight: bold;">Profesor: {{ auth()->user()->name }}</h5>
+
+          <div class="group row">
+            <div class="col-md-6">
+          <form name="formPermission" action="{{action('SolicitudesController@editPermissionProf', $course)}}" method="POST">
+          {{ method_field('POST') }}
+          {{ csrf_field() }}
+          <button class="btn btn-success btn-sm" type="submit" onclick="return validar()" style="float: left;">Enviar solicitudes</button>
+          </form>
+           </div>
+
+           <div class="col-md-6">
           <h6 style="float: right; font-weight: bold;">Créditos acumulados: {{$contCréditosProf}} de {{$cInitial}}</h6>
-          <table class="table table-striped" id="miTabla">
+            </div>
+          </div>
+
+          <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
             <thead>
               <tr>
                 <th scope="col">Asignatura</th>
@@ -60,9 +79,12 @@
                   </form></td>
                 </tr>
               @endforeach
-            {!! $arraySolicitudesProf->render() !!}
-          </tbody>
-        </table>
+              {!! $arraySolicitudesProf->render() !!}
+            </tbody>
+          </table>
+          @else
+            <h6>No hay solicitudes elegidas para este curso</h6>
+          @endif
         @else
           <h6>Las solicitudes no están disponibles</h6>
         @endif
@@ -71,7 +93,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="filtersTitle" aria-hidden="true">
+<div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="filtersTitle" aria-hidden="true"> 
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">

@@ -36,7 +36,6 @@ class SolicitudesController extends Controller
     {
         $usuario = Auth()->user()->id;
         $subj_id = $request->get('subject_id');
-        $teacher_id = $request->get('teacher_id');
         $contCréditosProf = 0;
         $filter = 0;
 
@@ -54,7 +53,6 @@ class SolicitudesController extends Controller
             ->where('course', '=', $course)
             ->where('solicitudes.teacher_id', '=', $usuario)
             ->subjectid($subj_id)
-            ->teacherid($teacher_id)
             ->orderBy('subjects.name')
             ->simplePaginate(8);
 
@@ -75,10 +73,6 @@ class SolicitudesController extends Controller
         }
 
         if ($subj_id) {
-            $filter++;
-        }
-
-        if ($teacher_id) {
             $filter++;
         }
 
@@ -104,7 +98,6 @@ class SolicitudesController extends Controller
         return view('solicitudes.teacher.index')->with('arraySolicitudesProf', $arraySolicitudesProf)
                                           ->with('arrayAsignaturasTeacher', $arrayAsignaturasTeacher)
                                           ->with('subj_id', $subj_id)
-                                          ->with('teacher_id', $teacher_id)
                                           ->with('cInitial', $cInitial)
                                           ->with('contCréditosProf', $contCréditosProf)
                                           ->with('course', $course)
@@ -269,26 +262,17 @@ class SolicitudesController extends Controller
     }
 
     /* Funciones para crear solicitudes */
-    public function getCourse() 
-    {
-        $arrayElecciones = Election::select('course')->distinct()
-                                    ->where('state', true)
-                                    ->get();
-        $cont = 0;
-
-        foreach ($arrayElecciones as $key => $e) {
-            $cont = $cont + 1;
-        }
-
-        return view('solicitudes.course',compact('arrayElecciones', 'cont'));
-    }
-
-    public function getCreate($course) 
+    public function getCreate($course, Request $request) 
     {
         $usuario = Auth()->user()->id;
         $arrayCampus = Campus::all();
         $arrayTitulaciones = Certification::all();
         $arrayCursoAsignaturas = Coursesubject::all();
+        $cert_id = $request->get('certification');
+        $camp_id = $request->get('campus');
+        $impart_id = $request->get('imparted');
+        $filter = 0;
+
         $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
                                     ->where('course', '=', $course)
                                     ->get();
@@ -299,8 +283,23 @@ class SolicitudesController extends Controller
                                     ->get();
 
         $arrayAsignaturas = Subject::whereNotIn('id', $arraySolicitudesElegidas)
+                            ->certificationid($cert_id)
+                            ->campusid($camp_id)
+                            ->impartedid($impart_id)
                             ->orderBy('name')
                             ->get();
+
+        if ($cert_id) {
+            $filter++;
+        }
+
+        if ($camp_id) {
+            $filter++;
+        }
+
+        if ($impart_id) {
+            $filter++;
+        }
         
 
         foreach ($eleccionProfesor as $eleccion) {
@@ -308,17 +307,13 @@ class SolicitudesController extends Controller
             $profPermission = $eleccion->profPermission;
         }
 
-        if($profPermission == 0){
-            return view('home');
-        }else{
-
         return view('solicitudes.create')->with('course',$course)
                                           ->with('arrayAsignaturas',$arrayAsignaturas)
                                           ->with('arrayCampus',$arrayCampus)
                                           ->with('arrayTitulaciones',$arrayTitulaciones)
                                           ->with('cAvailable', $cAvailable)
+                                          ->with('filter', $filter)
                                           ->with('arrayCursoAsignaturas',$arrayCursoAsignaturas);
-        }
     }
 
     public function postCreate($course, Request $request) 
@@ -332,7 +327,9 @@ class SolicitudesController extends Controller
         $a->cTheory = $request->input('cTheory');
         $a->cPractice = $request->input('cPractice');
         $a->cSeminar = $request->input('cSeminar');
+        $a->state = true;
         $a->save();
+
         Notification::success('La solicitud se ha guardado exitosamente!');
 
         $eleccion = Election::where('teacher_id', $a->teacher_id)

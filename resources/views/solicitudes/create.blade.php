@@ -4,7 +4,8 @@
   <div class="container">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/course') }}">Curso Solicitudes</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/teacher') }}">Curso Solicitudes</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/teacher/index/'.$course) }}">Solicitudes Curso {{$course}}</a></li>
     <li class="breadcrumb-item active" aria-current="page">Selección de Asignaturas</li>
   </ol>
   </div>
@@ -124,7 +125,7 @@
               </div>
             </form>
             <div>
-              <a class="btn btn-primary btn-sm" href="{{ url('/') }}" style="float: right;">finalizar</a>
+              <a class="btn btn-primary btn-sm" href="{{ url('/solicitudes/teacher/index/'.$course) }}" style="float: right;">finalizar</a>
             </div>
           </div>
         </div>
@@ -143,6 +144,7 @@
         </button>
       </div>
       <div class="modal-body">
+        <form href = "solicitudes/create/{$course}" method="GET">
 
         <div class="form-group">
           <label style="font-weight: bold;">Titulaciones</label>
@@ -174,7 +176,11 @@
           </select>
         </div>
 
-        <button class="btn-primary btn-sm" id="filters" type="button">Aplicar</button>
+        <button class="btn-info btn-sm" type="submit">Aplicar</button>
+          @if($filter != 0)
+            <button class="btn-secondary btn-sm" type="submit" style="margin-left: 5px;">Quitar filtros</button>
+          @endif
+        </form>
       </div>
     </div>
   </div>
@@ -182,42 +188,12 @@
 
 <script type="text/javascript">
 
-  var certification_id = document.getElementById("certification").value;
-  var campus_id = document.getElementById("campus").value;
-  var imparted_id = document.getElementById("imparted").value;
   var subject_id = document.getElementById("subject").value;
   var teacher_id = "{{ auth()->user()->id }}";
   var course = "{{$course}}";
   var subObj_credT;
   var subObj_credS;
   var subObj_credP;
-
-  $('#certification').on('change', function(e) {
-    certification_id = e.target.value;
-    console.log(certification_id);
-  });
-
-  $('#campus').on('change', function(e) {
-    campus_id = e.target.value;
-    console.log(campus_id);
-  });
-
-  $('#imparted').on('change', function(e) {
-    imparted_id = e.target.value;
-    console.log(imparted_id);
-  });
-
-  $('#filters').on('click', function(e) {
-    $.get('/asignaciones/public/json-subjects?certification_id='+ certification_id + '&campus_id='+ campus_id + '&imparted_id='+ imparted_id, function(data) {
-      console.log(data);
-      $('#subject').empty();
-      $('#subject').append('<option value="">Elige una asignatura</option>');
-
-      $.each(data, function(index, subjectsObj) {
-        $('#subject').append('<option value="'+ subjectsObj.id +'">'+ subjectsObj.name +'</option>');
-      })
-    });
-  });
 
   $('#subject').on('change', function(e) {
     subject_id = e.target.value;

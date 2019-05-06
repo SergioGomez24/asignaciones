@@ -24,6 +24,7 @@ class CreateSolicitudesTable extends Migration
             $table->decimal('cTheory',3,1)->unsigned()->nullable();
             $table->decimal('cPractice',3,1)->unsigned()->nullable();
             $table->decimal('cSeminar',3,1)->unsigned()->nullable();
+            $table->boolean('state');
             $table->timestamps();
         });
     }
