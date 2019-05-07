@@ -25,8 +25,6 @@
         <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#filters" style="font-weight: bold; float: right;">Filtrar por</button>
         @if($contCréditosProf != $cInitial)
         <a class="btn btn-primary btn-sm" href="{{ url('/solicitudes/create/' .$course ) }}" role="button">Continuar solicitud</a>
-        @else
-        <a class="btn btn-primary btn-sm disabled" href="" role="button">Continuar solicitud</a>
         @endif
         @endif
         @endif
@@ -42,7 +40,7 @@
           <form name="formPermission" action="{{action('SolicitudesController@editPermissionProf', $course)}}" method="POST">
           {{ method_field('POST') }}
           {{ csrf_field() }}
-          <button class="btn btn-success btn-sm" type="submit" onclick="return validar()" style="float: left;">Enviar solicitudes</button>
+          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left;">Enviar solicitudes</button>
           </form>
            </div>
 

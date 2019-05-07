@@ -49,7 +49,7 @@ class SolicitudesController extends Controller
 
         $arraySolicitudesProf = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
             ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
-            ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
+            ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id', 'solicitudes.state')
             ->where('course', '=', $course)
             ->where('solicitudes.teacher_id', '=', $usuario)
             ->subjectid($subj_id)
@@ -89,9 +89,7 @@ class SolicitudesController extends Controller
                              ->get();
 
         foreach ($eleccionProfesor as $eleccion) {
-            $dirPermission = $eleccion->dirPermission;
             $profPermission = $eleccion->profPermission;
-            $coorPermission = $eleccion->coorPermission;
         }
 
 
@@ -102,9 +100,7 @@ class SolicitudesController extends Controller
                                           ->with('contCréditosProf', $contCréditosProf)
                                           ->with('course', $course)
                                           ->with('filter', $filter)
-                                          ->with('dirPermission', $dirPermission)
-                                          ->with('profPermission', $profPermission)
-                                          ->with('coorPermission', $coorPermission);
+                                          ->with('profPermission', $profPermission);
     }
 
     /* Funciones para solicitudes Director */
@@ -531,7 +527,6 @@ class SolicitudesController extends Controller
             $d->save();
         }
 
-
         $eleccion = Election::where('teacher_id', $usuario)
                              ->where('course', $course)
                              ->get();
@@ -566,6 +561,56 @@ class SolicitudesController extends Controller
                 foreach ($eleccionDir as $key => $c) {
                     $c->dirPermission = true;
                     $c->save();
+                }
+            }
+        }
+
+        $arrayAsignaturasCoor = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
+                ->select('subjects.id','subjects.name', 'subjects.cTheory', 'subjects.cPractice', 'subjects.cSeminar')
+                ->distinct()
+                ->where('subjects.coordinator_id', '=', $usuario)
+                ->where('solicitudes.course', $course)
+                ->orderBy('subjects.name')
+                ->get();
+
+        $arraySolicitudesCoor = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
+            ->select('subjects.name', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar','solicitudes.state', 'solicitudes.id')
+            ->where('course', '=', $course)
+            ->where('subjects.coordinator_id', '=', $usuario)
+            ->orderBy('subjects.name')
+            ->get();
+
+        foreach ($arrayAsignaturasCoor as $key => $asignatura) {
+            $contT = 0;
+            $contP = 0;
+            $contS = 0;
+            foreach ($arraySolicitudesCoor as $key => $solicitud) {
+                if($asignatura->name == $solicitud->name){
+                    if($solicitud->cTheory == null){
+                        $solicitud->cTheory = 0;
+                    }
+
+                    if($solicitud->cPractice == null){
+                        $solicitud->cPractice = 0;
+                    }
+
+                    if($solicitud->cSeminar == null){
+                        $solicitud->cSeminar = 0;
+                    }
+
+                    $contT += $solicitud->cTheory;
+                    $contP += $solicitud->cPractice;
+                    $contS += $solicitud->cSeminar;
+                }
+            }
+
+            if($asignatura->cTheory == $contT && $asignatura->cPractice == $contP && $asignatura->cSeminar == $contS) {
+                foreach ($arraySolicitudesCoor as $key => $s) {
+                    if($asignatura->name == $s->name){
+                        $sol = Solicitude::findOrFail($s->id);
+                        $sol->state = false;
+                        $sol->save();
+                    }
                 }
             }
         }

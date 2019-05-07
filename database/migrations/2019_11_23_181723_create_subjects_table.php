@@ -25,9 +25,9 @@ class CreateSubjectsTable extends Migration
             $table->foreign('campus_id')->references('id')->on('campus');
             $table->integer('center_id')->unsigned();
             $table->foreign('center_id')->references('id')->on('centers');
-            $table->decimal('cTheory',10,0)->nullable()->unsigned();
-            $table->decimal('cSeminar',10,0)->nullable()->unsigned();
-            $table->decimal('cPractice',10,0)->nullable()->unsigned();
+            $table->decimal('cTheory',10,1)->nullable()->unsigned();
+            $table->decimal('cSeminar',10,1)->nullable()->unsigned();
+            $table->decimal('cPractice',10,1)->nullable()->unsigned();
             $table->integer('duration_id')->unsigned();
             $table->foreign('duration_id')->references('id')->on('durationsubjects');
             $table->integer('imparted_id')->unsigned();
