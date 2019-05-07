@@ -482,7 +482,6 @@ class SolicitudesController extends Controller
             $d->save();
         }
 
-
         $eleccion = Election::where('teacher_id', $usuario)
                              ->where('course', $course)
                              ->get();
@@ -491,6 +490,16 @@ class SolicitudesController extends Controller
             $p->profPermission = false;
             $p->save();
         }
+
+        /* POR AQUI */
+        $arrayAsignaturasCoor = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
+                ->select('subjects.id','subjects.name')
+                ->distinct()
+                ->where('subjects.coordinator_id', '=', $usuario)
+                ->where('solicitudes.state', true)
+                ->where('solicitudes.course', $course)
+                ->orderBy('subjects.name')
+                ->get();
 
         $elecciones = Election::where('course', $course)
                                 ->get();

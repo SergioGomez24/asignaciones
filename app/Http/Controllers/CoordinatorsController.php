@@ -39,6 +39,7 @@ class CoordinatorsController extends Controller
                 ->select('subjects.id','subjects.name')
                 ->distinct()
                 ->where('subjects.coordinator_id', '=', $usuario)
+                ->where('solicitudes.state', true)
                 ->where('solicitudes.course', $course)
                 ->orderBy('subjects.name')
                 ->get();

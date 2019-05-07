@@ -69,12 +69,17 @@
                   <td class="text-center">{{$solicitud->cPractice}}</td>
                   <td class="text-center">{{$solicitud->cSeminar}}</td>
                   <td></td>
+                  @if($solicitud->state == true)
                   <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/teacher/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
                   {{ csrf_field() }}
                   <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
                   </form></td>
+                  @else
+                  <td><a class="btn btn-secondary btn-sm disabled">Editar</a></td>
+                  <td><button class="btn btn-danger btn-sm disabled">Borrar</button></td>
+                  @endif
                 </tr>
               @endforeach
               {!! $arraySolicitudesProf->render() !!}
