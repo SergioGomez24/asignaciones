@@ -28,7 +28,7 @@
 
             <div class="form-group">
                <label for="name" style="font-weight: bold;">Nombre</label>
-               <input type="text" name="name" id="name" class="form-control" placeholder="Nombre asignatura" pattern="[A-Za-z]+" title="Caracteres" required>
+               <input type="text" name="name" id="name" class="form-control" placeholder="Nombre asignatura" pattern="[A-Za-z ]+" title="Caracteres" required>
             </div>
 
             <div class="form-group">
@@ -139,18 +139,54 @@
    </div>
 </div>
 
-<script language="JavaScript"> 
+<script language="JavaScript">
+
+  var codigo = document.getElementById("code").value;
+  var nombre = document.getElementById("name").value;
+
+  var numCode;
+  var numName;
+
+  $('#code').on('change', function(e) {
+    codigo = e.target.value;
+    $.ajax({
+      url: "{{url('json-subjectCode')}}",
+      type:"GET", 
+      data: {"code":codigo}, 
+      success: function(result){
+        numCode = result.cont;
+      }
+    });
+  });
+
+  $('#name').on('change', function(e) {
+    nombre = e.target.value;
+    $.ajax({
+      url: "{{url('json-subjectName')}}",
+      type:"GET", 
+      data: {"name":nombre}, 
+      success: function(result){
+        numName = result.cont;
+      }
+    });
+  });
+
   function validar(){
     var vCredT = document.getElementById("cTheory").value;
     var vCredP = document.getElementById("cPractice").value;
     var vCredS = document.getElementById("cSeminar").value;
+    var enviar = false;
 
     if(vCredS == "" && vCredT == "" && vCredP == ""){
       alert("Introduce los créditos");
-      return false;
+    }else if(numCode > 0){
+      alert("El código introducido ya existe");
+    }else if(numName > 0){
+      alert("El nombre introducido ya existe");
     }else{
-      return true;
+      enviar = true;
     }
+    return enviar;
   }
 </script>
 @stop

@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('json-subjects', 'SubjectsController@getSubjects');
 	Route::get('json-subject', 'SubjectsController@getSubject');
+	Route::get('json-subjectCode', 'SubjectsController@getSubjectCode');
+	Route::get('json-subjectName', 'SubjectsController@getSubjectName');
 
 	Route::get('subjects/create', 'SubjectsController@getCreate')->middleware('role');
 	Route::post('subjects/create', 'SubjectsController@postCreate')->middleware('role');

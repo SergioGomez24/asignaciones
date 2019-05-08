@@ -71,6 +71,36 @@ class SubjectsController extends Controller
         }
     }
 
+    public function getSubjectCode(Request $request) {
+        if($request->ajax()){
+            $code = $request->code;
+            $cont = 0;
+            $info = Subject::where('code', $code)
+                            ->get();
+
+            foreach ($info as $i) {
+                $cont = 1;
+            }
+
+            return response()->json(['cont' => $cont]);
+        }
+    }
+
+    public function getSubjectName(Request $request) {
+        if($request->ajax()){
+            $name = $request->name;
+            $cont = 0;
+            $info = Subject::where('name', $name)
+                            ->get();
+
+            foreach ($info as $i) {
+                $cont = 1;
+            }
+
+            return response()->json(['cont' => $cont]);
+        }
+    }
+
     public function getCreate() 
     {
         $arrayTitulaciones = Certification::all();
