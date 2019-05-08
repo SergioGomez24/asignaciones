@@ -35,7 +35,7 @@
           <tbody>	
 		        @foreach( $arrayAsignaturas as $key => $asignatura )
               <tr>
-                <td><button class="btn btn-light btn-sm" data-toggle="modal" data-target="#showSubject" value="{{$asignatura->id}}" style="font-weight: bold;">{{$asignatura->name}}</button>
+                <td><button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#showSubject" value="{{$asignatura->id}}" style="font-weight: bold;">{{$asignatura->name}}</button>
                 </td>
 
                 @if (Auth()->user()->role == 'Director')
@@ -61,7 +61,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="showSubjectTitle"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="bntCerrar">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCerrar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -217,9 +217,11 @@
     });
   });
 
-  $('#bntCerrar').on('hidden.bs.modal', function(e)
+  $('#showSubject').on('hidden.bs.modal', function()
     { 
-      $(this).removeData('bs.modal');
+      $(this).remove('bs.modal');
+      //$(this).find('modal-content').reset();
+      
     });  
 
   function pregunta(){ 

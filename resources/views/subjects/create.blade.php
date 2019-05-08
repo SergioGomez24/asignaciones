@@ -182,7 +182,7 @@
     }else if(numCode > 0){
       alert("El código introducido ya existe");
     }else if(numName > 0){
-      alert("El nombre introducido ya existe");
+      alert("El nombre de la asignatura introducido ya existe");
     }else{
       enviar = true;
     }
