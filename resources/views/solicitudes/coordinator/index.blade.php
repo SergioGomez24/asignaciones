@@ -180,7 +180,7 @@
       cpAsig = parseFloat(cpAsig);
       csAsig = parseFloat(csAsig);
       cTotalAsig = ctAsig + cpAsig + csAsig;
-      $("#cTotal").text(cTotalAsig);
+      $("#cTotal").text(cTotalAsig.toFixed(1));
     }
   });
 

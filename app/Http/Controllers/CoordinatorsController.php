@@ -113,6 +113,7 @@ class CoordinatorsController extends Controller
 
         $a = Solicitude::findOrFail($id);
         $c = $a->course;
+        $s = $a->subject_id;
 
         $eleccion = Election::where('teacher_id', $a->teacher_id)
                             ->where('course', $c)
@@ -130,7 +131,7 @@ class CoordinatorsController extends Controller
 
         Notification::success('La solicitud ha sido modificada exitosamente!');
         
-        return redirect('/coordinators/index/'. $c);
+        return redirect('/coordinators/index/'.$c'?subject='.$s);
     }
 
     public function deleteSolicitudeCoor(Request $request, $id)

@@ -61,7 +61,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="showSubjectTitle"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCerrar">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -135,6 +135,15 @@
     });
   }
 
+  var cert_id;
+  var area_id;
+  var camp_id;
+  var cent_id;
+  var dur_id;
+  var imp_id;
+  var type_id;
+  var coor_id;
+
   $('#showSubject').on('show.bs.modal', function(e) {
     var button = $(e.relatedTarget)
     var id = button.val();
@@ -149,80 +158,95 @@
         $("#cT").text(result.cTheory);  
         $("#cP").text(result.cPractice);
         $("#cS").text(result.cSeminar);
+        cert_id = result.certification_id;
+        area_id = result.area_id;
+        camp_id = result.campus_id;
+        cent_id = result.center_id;
+        dur_id = result.duration_id;
+        imp_id = result.imparted_id;
+        type_id = result.typeSubject_id;
+        coor_id = result.coordinator_id;
+
         $.ajax({
           url: "{{url('json-certification')}}",
           type:"GET", 
-          data: {"id":result.certification_id}, 
+          data: {"id":cert_id}, 
           success: function(result){
             $("#cert").text(result.name);
           }
         });
+
         $.ajax({
           url: "{{url('json-area')}}",
           type:"GET", 
-          data: {"id":result.area_id}, 
+          data: {"id":area_id}, 
           success: function(result){
             $("#area").text(result.name);
           }
         });
+
         $.ajax({
           url: "{{url('json-campus')}}",
           type:"GET", 
-          data: {"id":result.campus_id}, 
+          data: {"id":camp_id}, 
           success: function(result){
             $("#cam").text(result.name);
           }
         });
+
         $.ajax({
           url: "{{url('json-center')}}",
           type:"GET", 
-          data: {"id":result.center_id}, 
+          data: {"id":cent_id}, 
           success: function(result){
             $("#center").text(result.name);
           }
         });
+
         $.ajax({
           url: "{{url('json-duration')}}",
           type:"GET", 
-          data: {"id":result.duration_id}, 
+          data: {"id":dur_id}, 
           success: function(result){
             $("#duration").text(result.name);
           }
         });
+
         $.ajax({
           url: "{{url('json-imparted')}}",
           type:"GET", 
-          data: {"id":result.imparted_id}, 
+          data: {"id":imp_id}, 
           success: function(result){
             $("#imp").text(result.name);
           }
         });
+
         $.ajax({
           url: "{{url('json-typeSubject')}}",
           type:"GET", 
-          data: {"id":result.typeSubject_id}, 
+          data: {"id":type_id}, 
           success: function(result){
             $("#typeSubject").text(result.name);
           }
         });
+
         $.ajax({
           url: "{{url('json-coordinator')}}",
           type:"GET", 
-          data: {"id":result.coordinator_id}, 
+          data: {"id":coor_id}, 
           success: function(result){
             $("#coordinator").text(result.name);
           }
         });
       }
-    });
+    });    
   });
 
-  $('#showSubject').on('hidden.bs.modal', function()
-    { 
-      $(this).remove('bs.modal');
-      //$(this).find('modal-content').reset();
-      
-    });  
+  $('#showSubject').on('hidden.bs.modal', function(e)
+  { 
+    e.preventDefault();
+    $(this).remove('bs.modal');
+  });  
 
   function pregunta(){ 
     var mensaje = confirm('¿Estas seguro de que quieres borrar esta asignatura?');
