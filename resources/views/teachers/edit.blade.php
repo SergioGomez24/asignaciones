@@ -18,18 +18,18 @@
             <h5 class="text-center"> Editar Profesor </h5>
          </div>
          <div class="card-body" style="padding:30px">
-         	<form method="POST">
+         	<form method="POST" onsubmit="return validar()">
          		{{ method_field('PUT') }}
          		{{ csrf_field() }}
 
             <div class="form-group">
                <label for="name" style="font-weight: bold;">Nombre Apellidos</label>
-               <input type="text" name="name" id="name" value="{{$profesor->name}}" class="form-control" required>
+               <input type="text" name="name" id="name" value="{{$profesor->name}}" class="form-control" pattern="[A-Za-záéíóúÁÉÍÓÚ ]+" title="Caracteres" required>
             </div>
 
             <div class="form-group">
                <label for="dni" style="font-weight: bold;">DNI</label>
-               <input type="text" name="dni" id="dni" value="{{$profesor->dni}}" class="form-control" required>
+               <input type="text" name="dni" id="dni" value="{{$profesor->dni}}" class="form-control" pattern="[0-9]{2}[A-Z]{1}" title="Formato:12A" required>
             </div>
 
             <div class="form-group">
@@ -92,4 +92,67 @@
       </div>
    </div>
 </div>
+
+<script language="JavaScript">
+
+  var dni = document.getElementById("dni").value;
+  var nombre = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
+
+  var numDni;
+  var numName;
+  var numEmail;
+
+  $('#dni').on('change', function(e) {
+    dni = e.target.value;
+    $.ajax({
+      url: "{{url('json-teacherDni')}}",
+      type:"GET", 
+      data: {"dni":dni}, 
+      success: function(result){
+        numDni = result.cont;
+      }
+    });
+  });
+
+  $('#name').on('change', function(e) {
+    nombre = e.target.value;
+    $.ajax({
+      url: "{{url('json-userName')}}",
+      type:"GET", 
+      data: {"name":nombre}, 
+      success: function(result){
+        numName = result.cont;
+      }
+    });
+  });
+
+  $('#email').on('change', function(e) {
+    email = e.target.value;
+    $.ajax({
+      url: "{{url('json-userEmail')}}",
+      type:"GET", 
+      data: {"email":email}, 
+      success: function(result){
+        numEmail = result.cont;
+      }
+    });
+  });
+
+  function validar(){
+    
+    var enviar = false;
+
+    if(numEmail > 0){
+      alert("El correo introducido ya existe");
+    }else if(numDni > 0){
+      alert("El dni introducido ya existe");
+    }else if(numName > 0){
+      alert("El nombre del profesor introducido ya existe");
+    }else{
+      enviar = true;
+    }
+    return enviar;
+  }
+</script>
 @stop

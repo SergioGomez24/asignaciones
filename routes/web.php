@@ -51,7 +51,10 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('json-teacher', 'TeachersController@getTeacher');
 	Route::get('json-teacherName', 'TeachersController@getTeacherName');
+	Route::get('json-teacherDni', 'TeachersController@getTeacherDni');
 	Route::get('json-user', 'TeachersController@getUser');
+	Route::get('json-userEmail', 'TeachersController@getUserEmail');
+	Route::get('json-userName', 'TeachersController@getUserName');
 
 	Route::get('teachers/show/{id}', 'TeachersController@getShow');
 

@@ -73,17 +73,17 @@
 
             <div class="form-group">
                <label for="cTheory" style="font-weight: bold;">Créditos Teoria</label>
-               <input type="number" name="cTheory" id="cTheory" class="form-control" placeholder="Ejemplo: 2">
-            </div>
-
-            <div class="form-group">
-               <label for="cSeminar" style="font-weight: bold;">Créditos Seminario</label>
-               <input type="number" name="cSeminar" id="cSeminar" class="form-control" placeholder="Ejemplo: 2">
+               <input type="number" name="cTheory" id="cTheory" class="form-control" placeholder="Créditos Teoria" title="Caracteres numericos">
             </div>
 
             <div class="form-group">
                <label for="cPractice" style="font-weight: bold;">Créditos Práctica</label>
-               <input type="number" name="cPractice" id="cPractice" class="form-control" placeholder="Ejemplo: 2">
+               <input type="number" name="cPractice" id="cPractice" class="form-control" placeholder="Créditos Práctica" title="Caracteres numericos">
+            </div>
+
+            <div class="form-group">
+               <label for="cSeminar" style="font-weight: bold;">Créditos Seminario</label>
+               <input type="number" name="cSeminar" id="cSeminar" class="form-control" placeholder="Créditos Seminario" title="Caracteres numericos">
             </div>
 
             <div class="form-group">

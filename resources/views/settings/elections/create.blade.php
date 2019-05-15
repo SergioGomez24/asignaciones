@@ -34,7 +34,7 @@
 
             <div class="form-group">
                <label for="threshold" style="font-weight: bold;">Umbral</label>
-               <input type="number" name="threshold" id="threshold" class="form-control" required>
+               <input type="number" name="threshold" id="threshold" class="form-control" placeholder="Umbral" required>
             </div>
 
             <div class="form-group text-center">

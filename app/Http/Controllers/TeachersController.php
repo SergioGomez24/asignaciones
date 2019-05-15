@@ -71,6 +71,54 @@ class TeachersController extends Controller
         }
     }
 
+    public function getTeacherDni(Request $request) {
+        if($request->ajax()){
+            $dni = $request->dni;
+            $cont = 0;
+
+            $info = Teacher::where('dni', $dni)
+                            ->get();
+
+            foreach ($info as $key => $i) {
+                $cont = 1;
+            }
+
+            return response()->json(['cont' => $cont]);
+        }
+    }
+
+    public function getUserEmail(Request $request) {
+        if($request->ajax()){
+            $email = $request->email;
+            $cont = 0;
+
+            $info = User::where('email', $email)
+                            ->get();
+
+            foreach ($info as $key => $i) {
+                $cont = 1;
+            }
+
+            return response()->json(['cont' => $cont]);
+        }
+    }
+
+    public function getUserName(Request $request) {
+        if($request->ajax()){
+            $name = $request->name;
+            $cont = 0;
+
+            $info = Teacher::where('name', $name)
+                            ->get();
+
+            foreach ($info as $key => $i) {
+                $cont = 1;
+            }
+
+            return response()->json(['cont' => $cont]);
+        }
+    }
+
     public function getCreate() 
     {
         $arrayCategorias = Category::all();
