@@ -21,13 +21,13 @@
         <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir', $course)}}" method="POST" style="display:inline">
           {{ method_field('POST') }}
           {{ csrf_field() }}
-          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Cerrar solicitudes</button>
+          <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Cerrar elecciones</button>
         </form>
         @else
         <form name="formPermissionOpen" action="{{action('SolicitudesController@openElection', $course)}}" method="POST" style="display:inline">
           {{ method_field('POST') }}
           {{ csrf_field() }}
-          <button class="btn btn-secondary btn-sm" type="submit" onclick="return abrir()" style="float: left; margin-left: 5px;">Abrir solicitudes</button>
+          <button class="btn btn-secondary btn-sm" type="submit" onclick="return abrir()" style="float: left; margin-left: 5px;">Abrir elecciones</button>
         </form>
         @endif
         @endif
