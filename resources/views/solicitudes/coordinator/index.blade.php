@@ -28,17 +28,8 @@
 
       <div class="card-body">
         @if($coorPermission == 1)
-          <form href = "coordinators/index/{$course}" method="GET">
-            <h6><label for="subject">Selecciona una asignatura</label></h6>
-            <select name="subject" id="subject" class="form-control" required>
-              <option value="">Elige una asignatura</option>
-              @foreach($arrayAsignaturasCoor as $a)
-                <option value="{{$a->id}}">{{$a->name}}</option>
-              @endforeach
-            </select>
-          </form>
 
-          @if($subject_id != "")
+          @if($subject != "")
 
             <h4 class="text-center" id="titulo" style="margin-top: 10px;"></h4>
 
@@ -148,7 +139,7 @@
   }
 
   var select = document.getElementById('subject');
-  var asig = "{{$subject_id}}";
+  var asig = "{{$subject}}";
   var course = "{{$course}}";
   /* Variables para los créditos de la asignatura */
   var ctAsig = 0;

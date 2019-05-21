@@ -197,6 +197,51 @@ class TeachersController extends Controller
         return redirect('/teachers');
     }
 
+    public function getEditPerfil($id) 
+    {
+        $profesor = Teacher::findOrFail($id);
+
+        $usuario = User::findOrFail($id);
+
+        $cat_id = $profesor->category_id;
+        $categoria = Category::findOrFail($cat_id);
+
+        $a_id = $profesor->area_id;
+        $area = Area::findOrFail($a_id);
+
+        $arrayCategorias = Category::all();
+        $arrayAreas = Area::all(); 
+                
+        return view('teachers.perfil')->with('profesor',$profesor)
+                                    ->with('usuario',$usuario)
+                                    ->with('categoria',$categoria)
+                                    ->with('area',$area)
+                                    ->with('arrayCategorias',$arrayCategorias)
+                                    ->with('arrayAreas',$arrayAreas);
+    }
+
+    public function putEditPerfil(Request $request, $id)
+    {
+        $t = Teacher::findOrFail($id);
+        $t->name = $request->input('name');
+        $t->dni = $request->input('dni');
+        $t->category_id = $request->input('category_id');
+        $t->area_id = $request->input('area_id');
+        $t->cInitial = $request->input('cInitial');
+        $t->dateCategory = $request->input('dateCategory');
+        $t->dateUCA = $request->input('dateUCA');
+        $t->save();
+
+        $u = User::findOrFail($id);
+        $u->name = $request->input('name');
+        $u->email = $request->input('email');
+        $u->role = $request->input('role');
+        $u->save();
+
+        Notification::success('El perfil ha sido modificado exitosamente!');
+        return redirect('/teachers/show'.$id);
+    }
+
     public function deleteTeacher(Request $request, $id)
     {
         $t = Teacher::findOrFail($id);

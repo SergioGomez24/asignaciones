@@ -15,7 +15,7 @@
     <div class="card">
       <div class="card-header">
         <h4 class="text-center"> {{$profesor->name}} </h4>
-        <a class="btn btn-secondary btn-sm" href="{{ url('/teachers/edit/'.$profesor->id) }}" style="float: right;"><i class="fas fa-edit"></i> Editar</a>
+        <a class="btn btn-secondary btn-sm" href="{{ url('/teachers/perfil/'.$profesor->id) }}" style="float: right;"><i class="fas fa-edit"></i> Editar Perfil</a>
       </div>
       <div class="card-body">
         <div class="group row">
