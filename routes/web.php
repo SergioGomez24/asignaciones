@@ -130,8 +130,8 @@ Route::group(['middleware' => 'auth'], function() {
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('coordinators', 'CoordinatorsController@getCourse');
-	Route::get('coordinators/subjects/{course}', 'CoordinatorsController@getIndexSubjects');
-	Route::get('coordinators/index/{course}/{subject}', 'CoordinatorsController@getIndex');
+	Route::get('coordinators/subjects/{course}', 'CoordinatorsController@getSubjectsCoor');
+	Route::get('coordinators/index/{course}', 'CoordinatorsController@getIndex');
 
 	Route::get('json-coordinator', 'CoordinatorsController@getCoordinator');
 

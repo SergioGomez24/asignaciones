@@ -18,18 +18,29 @@
         <h4 class="text-center"> Solicitudes Curso {{$course}} </h4>
 
         @if($coorPermission == 1)
+        @if($subject_id != "")
         <form name="formPermission" action="{{action('SolicitudesController@editPermissionCoor', $course)}}" method="POST" style="display:inline">
           {{ method_field('POST') }}
           {{ csrf_field() }}
           <button class="btn btn-primary btn-sm" type="submit" onclick="return validar()" style="float: left; margin-left: 5px;">Enviar solicitudes</button>
         </form>
         @endif
+        @endif
       </div>
 
       <div class="card-body">
         @if($coorPermission == 1)
+          <form href = "coordinators/index/{$course}" method="GET">
+            <h6><label for="subject">Selecciona una asignatura</label></h6>
+            <select name="subject" id="subject" class="form-control" required>
+              <option value="">Elige una asignatura</option>
+              @foreach($arrayAsignaturasCoor as $a)
+                <option value="{{$a->id}}">{{$a->name}}</option>
+              @endforeach
+            </select>
+          </form>
 
-          @if($subject != "")
+          @if($subject_id != "")
 
             <h4 class="text-center" id="titulo" style="margin-top: 10px;"></h4>
 
@@ -139,7 +150,7 @@
   }
 
   var select = document.getElementById('subject');
-  var asig = "{{$subject}}";
+  var asig = "{{$subject_id}}";
   var course = "{{$course}}";
   /* Variables para los créditos de la asignatura */
   var ctAsig = 0;

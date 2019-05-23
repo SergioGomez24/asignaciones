@@ -27,9 +27,13 @@ class CoordinatorsController extends Controller
         return view('solicitudes.coordinator.course', compact('arrayElecciones', 'cont'));
     }
 
-    public function getIndexSubjects($course, Request $request){
-
+    /* Mostrar la tabla de solicitudes para los coordinadores */
+    public function getIndex($course, Request $request)
+    {
         $usuario = Auth()->user()->id;
+        $arrayProfesores = Teacher::all();
+        $subject_id = $request->get('subject');
+        $teacher_id = $request->get('teacher_id');
 
         $arrayAsignaturasCoor = Subject::join('solicitudes', 'solicitudes.subject_id', '=', 'subjects.id')
                 ->select('subjects.id','subjects.name')
@@ -40,32 +44,11 @@ class CoordinatorsController extends Controller
                 ->orderBy('subjects.name')
                 ->get();
 
-        $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
-                             ->where('course', '=', $course)
-                             ->get();
-
-        foreach ($eleccionProfesor as $eleccion) {
-            $coorPermission = $eleccion->coorPermission;
-        }
-
-        return view('solicitudes.coordinator.subjects')->with('arrayAsignaturasCoor', $arrayAsignaturasCoor)
-                                                       ->with('coorPermission', $coorPermission)
-                                                       ->with('course', $course);
-    }
-
-
-    /* Mostrar la tabla de solicitudes para los coordinadores */
-    public function getIndex($course, $subject, Request $request)
-    {
-        $usuario = Auth()->user()->id;
-        $arrayProfesores = Teacher::all();
-        $teacher_id = $request->get('teacher_id');
-
         $arraySolicitudesCoor = Solicitude::join('subjects','subjects.id', '=', 'solicitudes.subject_id')
             ->join('teachers', 'teachers.id', '=', 'solicitudes.teacher_id')
             ->select('subjects.name AS asig', 'teachers.name AS prof', 'solicitudes.cTheory', 'solicitudes.cPractice', 'solicitudes.cSeminar', 'solicitudes.id')
             ->where('course', '=', $course)
-            ->subjectid($subject)
+            ->subjectid($subject_id)
             ->teacherid($teacher_id)
             ->orderBy('teachers.name')
             ->simplePaginate(7);
@@ -81,9 +64,10 @@ class CoordinatorsController extends Controller
         }
 
         return view('solicitudes.coordinator.index')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
+                                                      ->with('arrayAsignaturasCoor', $arrayAsignaturasCoor)
                                                       ->with('arrayProfesores', $arrayProfesores)
                                                       ->with('teacher_id', $teacher_id)
-                                                      ->with('subject', $subject)
+                                                      ->with('subject_id', $subject_id)
                                                       ->with('course', $course)
                                                       ->with('dirPermission', $dirPermission)
                                                       ->with('profPermission', $profPermission)
