@@ -131,14 +131,14 @@ class CoordinatorsController extends Controller
 
         Notification::success('La solicitud ha sido modificada exitosamente!');
         
-        return redirect('/coordinators/index/'.$c);
-        //return redirect('/coordinators/index/'.$c'?subject='.$s);
+        return redirect("/coordinators/index/{$c}?subject={$s}");
     }
 
     public function deleteSolicitudeCoor(Request $request, $id)
     {
         $a = Solicitude::findOrFail($id);
         $c = $a->course;
+        $s = $a->subject_id;
         $a->delete();
 
         $eleccion = Election::where('teacher_id', $a->teacher_id)
@@ -151,6 +151,6 @@ class CoordinatorsController extends Controller
         }
 
         Notification::success('La solicitud fue eliminada exitosamente!');
-        return redirect('/coordinators/index/'. $c);
+        return redirect("/coordinators/index/{$c}?subject={$s}");
     }
 }

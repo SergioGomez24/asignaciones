@@ -5,7 +5,8 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director') }}">Curso Solicitudes</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director/index/'.$course) }}">Solicitudes Curso {{$course}}</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director/teacher/'.$course) }}">Créditos Profesores</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director/index',['course' => $course, 'teacher_id' => $teacher_id]) }}">Solicitudes Curso {{$course}}</a></li>
     <li class="breadcrumb-item active" aria-current="page">Editar Solicitud</li>
   </ol>
   </div>

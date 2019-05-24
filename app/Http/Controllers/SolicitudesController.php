@@ -143,7 +143,6 @@ class SolicitudesController extends Controller
 
     public function getDirectorIndex($course, $teacher_id, Request $request) {
 
-        $usuario = Auth()->user()->id;
         $subj_id = $request->get('subject_id');
         $filter = 0;
 
@@ -164,6 +163,19 @@ class SolicitudesController extends Controller
             ->orderBy('subjects.name')
             ->simplePaginate(8);
 
+        $teacher = Teacher::findOrFail($teacher_id);
+        $cInitial = $teacher->cInitial;
+
+        $eleccionProfesor = Election::where('teacher_id', '=', $teacher_id)
+                             ->where('course', '=', $course)
+                             ->get();
+
+        foreach ($eleccionProfesor as $key => $p) {
+            $cAvailable = $p->cAvailable;
+        }
+
+        $contCréditosProf = $cInitial - $cAvailable;
+
         if ($subj_id) {
             $filter++;
         }
@@ -173,8 +185,68 @@ class SolicitudesController extends Controller
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher_id', $teacher_id)
                                           ->with('course', $course)
+                                          ->with('cInitial', $cInitial)
+                                          ->with('contCréditosProf', $contCréditosProf)
                                           ->with('filter', $filter);
 
+    }
+
+    /* Crear una solicitud desde el director */
+    public function getDirectorCreate($course, $teacher_id) 
+    {
+
+        $eleccionProfesor = Election::where('teacher_id', '=', $teacher_id)
+                                    ->where('course', '=', $course)
+                                    ->get();
+
+        $arraySolicitudesElegidas = Solicitude::select('solicitudes.subject_id')
+                                    ->where('teacher_id', '=', $teacher_id)
+                                    ->where('course', '=', $course)
+                                    ->get();
+
+        $arrayAsignaturas = Subject::whereNotIn('id', $arraySolicitudesElegidas)
+                            ->orderBy('name')
+                            ->get();
+
+        $teacher = Teacher::findOrFail($teacher_id);
+        $name = $teacher->name;
+
+        foreach ($eleccionProfesor as $eleccion) {
+            $cAvailable = $eleccion->cAvailable;
+        }
+
+        return view('solicitudes.director.create')->with('course',$course)
+                                          ->with('teacher_id',$teacher_id)
+                                          ->with('name',$name)
+                                          ->with('arrayAsignaturas',$arrayAsignaturas)
+                                          ->with('cAvailable', $cAvailable);
+    }
+
+    public function postDirectorCreate($course, $teacher_id, Request $request) 
+    {
+
+        $a = new Solicitude;
+        $a->subject_id = $request->input('subject');
+        $a->teacher_id = $teacher_id;
+        $a->course = $course;
+        $a->cTheory = $request->input('cTheory');
+        $a->cPractice = $request->input('cPractice');
+        $a->cSeminar = $request->input('cSeminar');
+        $a->state = true;
+        $a->save();
+
+        Notification::success('La solicitud se ha guardado exitosamente!');
+
+        $eleccion = Election::where('teacher_id', $a->teacher_id)
+                             ->where('course', $a->course)
+                             ->get();
+
+        foreach ($eleccion as $p) {
+            $p->cAvailable = $p->cAvailable - $a->cTheory - $a->cPractice - $a->cSeminar;
+            $p->save();
+        }
+
+        return redirect("/solicitudes/director/index/{$course}/{$teacher_id}");
     }
 
     /* Obtener una solicitud especifica */
@@ -253,7 +325,7 @@ class SolicitudesController extends Controller
 
             $total = $totalT+$totalP+$totalS;
             
-            return response()->json(['total' => $total]);
+            return response()->json(['total' => $total, 'totalT' => $totalT, 'totalP' => $totalP, 'totalS' => $totalS]);
         }
     }
 
@@ -395,8 +467,10 @@ class SolicitudesController extends Controller
     {
         $solicitud = Solicitude::findOrFail($id);
         $course = $solicitud->course;
+        $teacher_id = $solicitud->teacher_id;
                 
         return view('solicitudes.director.edit')->with('solicitud', $solicitud)
+                                                ->with('teacher_id', $teacher_id)
                                                ->with('course', $course);
     }
 
@@ -437,7 +511,7 @@ class SolicitudesController extends Controller
         $a->save();
         Notification::success('La solicitud ha sido modificada exitosamente!');
 
-        return redirect()->route('solicitudesTeacher', ['course' => $c, 'teacher_id' => $a->teacher_id]);  
+        return redirect("/solicitudes/director/index/{$c}/{$a->teacher_id}");  
     }
 
     /* Eliminar solicitud */
@@ -445,7 +519,6 @@ class SolicitudesController extends Controller
     {
         $a = Solicitude::findOrFail($id);
         $c = $a->course;
-        $p = $a->teacher_id;
         $a->delete();
 
         $role = Auth()->user()->role;
@@ -464,7 +537,7 @@ class SolicitudesController extends Controller
         if ($role == "Profesor") {
             return redirect('/solicitudes/teacher/index/'. $c);
         }else{
-            return redirect()->route('solicitudesTeacher', ['course' => $c, 'teacher_id' => $p]);
+            return redirect("/solicitudes/director/index/{$c}/{$a->teacher_id}");
         }
     }
 

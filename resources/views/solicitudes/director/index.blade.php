@@ -18,12 +18,17 @@
       <div class="card-header">
         <h4 class="text-center"> Solicitudes Curso {{$course}} </h4>
 
+        @if($contCréditosProf < $cInitial)
+        <a class="btn btn-primary btn-sm" href="{{ url('/solicitudes/director/create',['course' => $course, 'teacher_id' => $teacher_id]) }}" style="float: left;">Añadir solicitud</a>
+        @endif
+
         <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#filters" style="font-weight: bold; float: right;">Filtrar por</button>
         
       </div>
 
       <div class="card-body">
           <h5 class="text-center" style="font-weight: bold;" id="teacher"></h5>
+          <h6 style="float: right; font-weight: bold;">Créditos acumulados: {{$contCréditosProf}} de {{$cInitial}}</h6>
           <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
             <thead>
               <tr>

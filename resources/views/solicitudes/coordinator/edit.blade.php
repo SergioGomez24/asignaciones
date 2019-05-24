@@ -5,7 +5,7 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/coordinators') }}">Curso Solicitudes</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/coordinators/index/'.$course) }}">Solicitudes Curso {{$course}}</a></li>
+    <li class="breadcrumb-item"><a href={{ url("/coordinators/index/{$course}?subject={$solicitud->subject_id}") }}>Solicitudes Curso {{$course}}</a></li>
     <li class="breadcrumb-item active" aria-current="page">Editar Solicitud</li>
   </ol>
   </div>
@@ -38,7 +38,6 @@
             <h6>Asignatura</h6>
             <p id="subj"></p>
             </div>
-
             </div>
 
             <div class="group row">
@@ -81,7 +80,7 @@
                <button type="submit" class="btn btn-primary" id="btnAceptar">
                   Editar
                </button>
-               <a class="btn btn-secondary" href="{{ url('/coordinators/index/'.$course) }}" role="button" id="btnCancelar">Cancelar</a>
+               <a class="btn btn-secondary" role="button" id="btnCancelar" href={{ url("/coordinators/index/{$course}?subject={$solicitud->subject_id}") }} >Cancelar</a>
             </div>
             </form>
          </div>
