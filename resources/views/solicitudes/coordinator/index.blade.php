@@ -252,11 +252,11 @@
     var enviar = false;
 
     if(mensaje) {
-      if(totalTsol <= ctAsig && totalPsol <= cpAsig && totalSsol <= csAsig) {
-        document.formPermission.submit();
-        enviar = true; 
+      if(totalTsol > ctAsig || totalPsol > cpAsig || totalSsol > csAsig) {
+        alert("Los créditos solicitados no son validos"); 
       } else {
-        alert("Los créditos solicitados no son validos");
+        document.formPermission.submit();
+        enviar = true;
       }
     }
     return enviar;

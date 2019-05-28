@@ -107,8 +107,8 @@
         $("#cP").text(result.totalP);
         $("#cS").text(result.totalS);
         subObj_credT = result.totalT;
-        subObj_credS = result.totalP;
-        subObj_credP = result.totalS;
+        subObj_credP = result.totalP;
+        subObj_credS = result.totalS;
       }
     });
   });
