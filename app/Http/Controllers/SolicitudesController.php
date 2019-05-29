@@ -22,6 +22,7 @@ class SolicitudesController extends Controller
     	$arrayElecciones = Election::select('course')
                             ->distinct()
                             ->where('state', true)
+                            ->where('profPermission', 1)
                             ->get();
         $cont = 0;
 
@@ -108,6 +109,8 @@ class SolicitudesController extends Controller
     {
         $arrayElecciones = Election::select('course')
                             ->distinct()
+                            ->where('state', 1)
+                            ->where('dirPermission', 1)
                             ->get();
         $cont = 0;
 
@@ -717,22 +720,8 @@ class SolicitudesController extends Controller
             $eleccion->save();
         }
 
-        Notification::success('Las solicitudes se cerraron exitosamente!');
-        return redirect('/solicitudes/director/teacher/'. $course);
+        Notification::success('Las elecciones se cerraron exitosamente!');
+        return redirect('home');
     }
 
-    public function openElection(Request $request, $course)
-    {
-        $elecciones = Election::where('course', $course)
-                              ->get();
-
-        foreach($elecciones as $eleccion) {
-            $eleccion->elecPermission = false;
-            $eleccion->state = true;
-            $eleccion->save();
-        }
-
-        Notification::success('Las solicitudes se abrieron exitosamente!');
-        return redirect('/solicitudes/director/teacher/'. $course);
-    }
 }

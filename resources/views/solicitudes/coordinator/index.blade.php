@@ -253,7 +253,7 @@
 
     if(mensaje) {
       if(totalTsol > ctAsig || totalPsol > cpAsig || totalSsol > csAsig) {
-        alert("Los créditos solicitados no son validos"); 
+        alert("Los créditos totales de las solicitudes no son validos"); 
       } else {
         document.formPermission.submit();
         enviar = true;

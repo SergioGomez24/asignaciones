@@ -61,8 +61,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('teachers/create', 'TeachersController@getCreate')->middleware('role');
 	Route::post('teachers/create', 'TeachersController@postCreate')->middleware('role');
 
-	Route::get('teachers/edit/{id}', 'TeachersController@getEdit');
-	Route::put('teachers/edit/{id}', 'TeachersController@putEdit');
+	Route::get('teachers/edit/{id}', 'TeachersController@getEdit')->middleware('role');
+	Route::put('teachers/edit/{id}', 'TeachersController@putEdit')->middleware('role');
 
 	Route::get('teachers/perfil/{id}', 'TeachersController@getEditPerfil');
 	Route::put('teachers/perfil/{id}', 'TeachersController@putEditPerfil');
@@ -145,7 +145,7 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 /* Ajustes */
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => ['auth', 'role']], function() {
 
 	Route::get('settings', function() {
 	return view('settings.index');

@@ -33,6 +33,19 @@
                <input type="number" name="threshold" id="threshold" value="{{$threshold}}" class="form-control" required>
             </div>
 
+            <div class="form-group">
+               <label for="state" style="font-weight: bold;">Estado</label>
+               <select name="state" id="state" class="form-control" required>
+                  @if($state == 0)
+                  <option value="{{$state}}">Cerrada</option>
+                  @else
+                  <option value="{{$state}}">Abierta</option>
+                  @endif
+                  <option value="1">Abierta</option>
+                  <option value="0">Cerrada</option>
+               </select>
+            </div>
+
             <div class="form-group text-center">
                <button type="submit" class="btn btn-primary" id="btnAceptar">
                   Editar

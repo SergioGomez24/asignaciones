@@ -17,7 +17,10 @@ class ElectionsController extends Controller
 {
     public function getCourse()
     {
-        $arrayElecciones = Election::select('course')->distinct()->get();
+        $arrayElecciones = Election::select('course')
+                                    ->distinct()
+                                    ->where('state', 0)
+                                    ->get();
         $cont = 0;
 
         foreach ($arrayElecciones as $key => $e) {
@@ -160,7 +163,7 @@ class ElectionsController extends Controller
     /* obtener las diferentes elecciones creadas */
     public function getIndexSettings()
     {
-        $arrayElecciones = Election::select('course', 'threshold')->distinct()->get();
+        $arrayElecciones = Election::select('course', 'threshold', 'state')->distinct()->get();
 
         return view('settings.elections.index',compact('arrayElecciones'));
 
@@ -199,16 +202,17 @@ class ElectionsController extends Controller
     /* Funciones para editar una elección */
     public function getEdit($course) 
     {
-        $eleccion = Election::select('course', 'threshold')
+        $eleccion = Election::select('course', 'threshold', 'state')
                             ->distinct()
                             ->where('course', '=', $course)
                             ->get();
 
         foreach ($eleccion as $e) {
             $threshold = $e->threshold;
+            $state = $e->state;
         } 
                 
-        return view('settings.elections.edit', compact('course', 'threshold'));
+        return view('settings.elections.edit', compact('course', 'threshold', 'state'));
     }
 
     public function putEdit(Request $request, $course)
@@ -219,6 +223,7 @@ class ElectionsController extends Controller
         foreach ($elecciones as $e) {
             $e->course = $request->input('course');
             $e->threshold = $request->input('threshold');
+            $e->state = $request->input('state');
             $e->save();
         }
 

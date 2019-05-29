@@ -17,6 +17,7 @@ class CoordinatorsController extends Controller
         $arrayElecciones = Election::select('course')
                             ->distinct()
                             ->where('state', true)
+                            ->where('coorPermission', 1)
                             ->get();
         $cont = 0;
 

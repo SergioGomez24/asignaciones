@@ -19,13 +19,14 @@
         <a class="btn btn-primary btn-sm" href="{{ url('/settings/elections/create') }}" style="float: right;"><i class="fas fa-plus"></i> Añadir elección</a>
       </div>
       <div class="card-body">	
-        <table class="table table-striped">
+        <table class="table table-striped" style="text-align: center;">
           <thead>
             <tr>
               <td style="font-weight: bold;">Elección</td>
               <td style="font-weight: bold;">Umbral</td>
-              <td align="right" style="font-weight: bold;">Editar</td>
-              <td align="right" style="font-weight: bold;">Eliminar</td>
+              <td style="font-weight: bold;">Estado</td>
+              <td style="font-weight: bold;">Editar</td>
+              <td style="font-weight: bold;">Eliminar</td>
             </tr>
           </thead>
           <tbody> 
@@ -34,10 +35,15 @@
                 <td style="font-weight: bold;">{{$eleccion->course}}</td>
 
                 <td style="font-weight: bold;">{{$eleccion->threshold}}</td>
+                @if($eleccion->state == 0)
+                <td style="font-weight: bold;">Cerrada</td>
+                @else
+                <td style="font-weight: bold;">Abierta</td>
+                @endif
 
-                <td align="right" ><a class="btn btn-secondary btn-sm" href="{{ url('/settings/elections/edit/'.$eleccion->course) }}"><i class="fas fa-edit"></i> Editar</a></td>
+                <td ><a class="btn btn-secondary btn-sm" href="{{ url('/settings/elections/edit/'.$eleccion->course) }}"><i class="fas fa-edit"></i> Editar</a></td>
 
-                <td align="right" ><form name="formBorrar" action="{{action('ElectionsController@deleteElection', $eleccion->course)}}" method="POST">
+                <td ><form name="formBorrar" action="{{action('ElectionsController@deleteElection', $eleccion->course)}}" method="POST">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
                   <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()"><i class="fas fa-trash"></i> Borrar</button> 
