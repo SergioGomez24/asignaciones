@@ -5,7 +5,8 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director') }}">Curso Solicitudes</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Créditos Profesores</li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director/menu/'.$course) }}">Elecciones {{$course}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Gestión Elecciones {{$course}}</li>
   </ol>
   </div>
 </nav>
@@ -15,7 +16,7 @@
   <div class="offset-md-2 col-md-8">
     <div class="card">
       <div class="card-header">
-        <h4 class="text-center"> Créditos Profesores Curso {{$course}} </h4>
+        <h4 class="text-center"> Gestión Elecciones {{$course}} </h4>
         @if($dirPermission == 1)
         @if($state == 1)
         <form name="formPermission" action="{{action('SolicitudesController@editPermissionDir', $course)}}" method="POST" style="display:inline">
@@ -27,7 +28,6 @@
         @endif
       </div>
       <div class="card-body">
-      	@if($dirPermission == 1)
       	@if($state == 1) 
         <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
           <thead>
@@ -58,9 +58,6 @@
             </tr>
           </tfoot>
         </table>
-        @endif
-        @else
-          <h6>Los créditos de los profesores no están disponibles</h6>
         @endif
       </div>
     </div>

@@ -21,7 +21,7 @@
         <h5>No hay elecciones disponibles</h5>
       @else   
       @foreach( $arrayElecciones as $key => $eleccion )
-      <h5><a href="{{ url('/solicitudes/director/teacher/' . $eleccion->course ) }}" style="color: #000000;">Curso {{$eleccion->course}}</a></h5>
+      <h5><a href="{{ url('/solicitudes/director/menu/' . $eleccion->course ) }}" style="color: #000000;">Curso {{$eleccion->course}}</a></h5>
         </br>
       @endforeach
       @endif

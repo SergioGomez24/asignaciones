@@ -5,8 +5,9 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director') }}">Curso Solicitudes</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director/teacher/'.$course) }}">Créditos Profesores</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Solicitudes Curso {{$course}}</li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director/menu/'.$course) }}">Elecciones {{$course}}</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/solicitudes/director/teacher/'.$course) }}">Gestión Elecciones {{$course}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Solicitudes Profesor</li>
   </ol>
   </div>
 </nav>
@@ -16,10 +17,12 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="text-center"> Solicitudes Curso {{$course}} </h4>
+        <h4 class="text-center" id="teacher"></h4>
 
+        @if($dirPermission == 1)
         @if($contCréditosProf < $cInitial)
         <a class="btn btn-primary btn-sm" href="{{ url('/solicitudes/director/create',['course' => $course, 'teacher_id' => $teacher_id]) }}" style="float: left;">Añadir solicitud</a>
+        @endif
         @endif
 
         <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#filters" style="font-weight: bold; float: right;">Filtrar por</button>
@@ -27,7 +30,6 @@
       </div>
 
       <div class="card-body">
-          <h5 class="text-center" style="font-weight: bold;" id="teacher"></h5>
           <h6 style="float: right; font-weight: bold;">Créditos acumulados: {{$contCréditosProf}} de {{$cInitial}}</h6>
           <table class="table table-striped" id="miTabla" style="margin-top: 10px;">
             <thead>
@@ -51,12 +53,17 @@
                   <td class="text-center"></td>
                   <td class="text-center"></td>
                   <td class="text-center"></td>
+                  @if($dirPermission == 1)
                   <td><a class="btn btn-secondary btn-sm" href="{{ url('/solicitudes/director/edit/'.$solicitud->id) }}">Editar</a></td>
                   <td><form name="formBorrar" action="{{action('SolicitudesController@deleteSolicitude', $solicitud->id)}}" method="POST" style="display:inline">
                   {{ method_field('DELETE') }}
                   {{ csrf_field() }}
                   <button class="btn btn-danger btn-sm" type="submit" onclick="return pregunta()">Borrar</button>
                   </form></td>
+                  @else
+                  <td><button class="btn btn-secondary btn-sm" disabled>Editar</button></td>
+                  <td><button class="btn btn-danger btn-sm" disabled>Eliminar</button></td>
+                  @endif
                 </tr>
               @endforeach
               {!! $arraySolicitudes->render() !!}
@@ -113,7 +120,7 @@
     type:"GET", 
     data: {"id":teacher_id}, 
     success: function(result){
-      $("#teacher").text("Profesor: "+ result.name);
+      $("#teacher").text("Solicitudes Profesor "+result.name);
     }
   });
   

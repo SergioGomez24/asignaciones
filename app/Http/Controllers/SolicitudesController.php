@@ -110,7 +110,6 @@ class SolicitudesController extends Controller
         $arrayElecciones = Election::select('course')
                             ->distinct()
                             ->where('state', 1)
-                            ->where('dirPermission', 1)
                             ->get();
         $cont = 0;
 
@@ -119,6 +118,32 @@ class SolicitudesController extends Controller
         }
 
         return view('solicitudes.director.course', compact('arrayElecciones', 'cont'));
+    }
+
+    public function getMenu($course)
+    {
+        return view('solicitudes.director.menu', compact('course'));
+    }
+
+    public function getState($course)
+    {
+        $usuario = Auth()->user()->id;
+
+        $elecciones = Election::join('teachers', 'teachers.id', '=', 'elections.teacher_id')
+                            ->select('teachers.name', 'elections.profPermission', 'elections.coorPermission')
+                            ->where('elections.course', $course)
+                            ->where('elections.teacher_id', '!=', $usuario)
+                            ->get();
+
+        $arraySolicitudesElegidas = Solicitude::join('subjects', 'subjects.id', '=', 
+                                        'solicitudes.subject_id')
+                                        ->select('subjects.name', 'solicitudes.state')
+                                        ->distinct()
+                                        ->where('solicitudes.course', $course)
+                                        ->get();
+
+
+        return view('solicitudes.director.state', compact('course', 'elecciones', 'arraySolicitudesElegidas'));
     }
 
     public function getTeacherList($course) {
@@ -132,11 +157,11 @@ class SolicitudesController extends Controller
             ->orderBy('teachers.name')
             ->simplePaginate(8);
 
-        $eleccionProfesor = Election::where('teacher_id', '=', $usuario)
+        $eleccionDir = Election::where('teacher_id', '=', $usuario)
                              ->where('course', '=', $course)
                              ->get();
 
-        foreach ($eleccionProfesor as $eleccion) {
+        foreach ($eleccionDir as $eleccion) {
             $dirPermission = $eleccion->dirPermission;
             $state = $eleccion->state;
         }
@@ -144,7 +169,9 @@ class SolicitudesController extends Controller
         return view('solicitudes.director.teacher', compact('arrayProfesores', 'course', 'dirPermission', 'state'));
     }
 
-    public function getDirectorIndex($course, $teacher_id, Request $request) {
+    public function getDirectorIndex($course, $teacher_id, Request $request) 
+    {
+        $usuario = Auth()->user()->id;
 
         $subj_id = $request->get('subject_id');
         $filter = 0;
@@ -169,6 +196,14 @@ class SolicitudesController extends Controller
         $teacher = Teacher::findOrFail($teacher_id);
         $cInitial = $teacher->cInitial;
 
+        $eleccionDir = Election::where('teacher_id', $usuario)
+                                ->where('course', $course)
+                                ->get(); 
+
+        foreach ($eleccionDir as $key => $d) {
+            $dirPermission = $d->dirPermission;
+        }
+
         $eleccionProfesor = Election::where('teacher_id', '=', $teacher_id)
                              ->where('course', '=', $course)
                              ->get();
@@ -187,11 +222,11 @@ class SolicitudesController extends Controller
                                           ->with('arrayAsignaturasProfesores', $arrayAsignaturasProfesores)
                                           ->with('subj_id', $subj_id)
                                           ->with('teacher_id', $teacher_id)
+                                          ->with('dirPermission', $dirPermission)
                                           ->with('course', $course)
                                           ->with('cInitial', $cInitial)
                                           ->with('contCréditosProf', $contCréditosProf)
                                           ->with('filter', $filter);
-
     }
 
     /* Crear una solicitud desde el director */

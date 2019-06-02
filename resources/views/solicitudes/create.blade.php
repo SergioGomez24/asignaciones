@@ -120,7 +120,7 @@
 
               <div class="form-group text-center">
                 <button type="submit" id="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">
-                  enviar solicitud
+                  Añadir solicitud
                 </button>
               </div>
             </form>
