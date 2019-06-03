@@ -121,23 +121,12 @@
   }
 
   function validar(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres cerrar las solicitudes?'
+    var mensaje = confirm('¿Estas seguro de que quieres cerrar las elecciones?'
                           + ' Una vez cerradas ya no podras modificarlas');
     var enviar = false;
 
     if(mensaje) {
       document.formPermission.submit();
-      enviar = true; 
-    }
-    return enviar;
-  }
-
-  function abrir(){ 
-    var mensaje = confirm('¿Estas seguro de que quieres abrir las solicitudes?');
-    var enviar = false;
-
-    if(mensaje) {
-      document.formPermissionOpen.submit();
       enviar = true; 
     }
     return enviar;

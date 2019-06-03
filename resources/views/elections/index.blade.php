@@ -5,7 +5,7 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/elections') }}">Curso Elecciones</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Elecciones Curso {{$course}}</li>
+    <li class="breadcrumb-item active" aria-current="page">Planificación Curso {{$course}}</li>
   </ol>
   </div>
 </nav>
@@ -15,7 +15,7 @@
   <div class="offset-md-1 col-md-10">
     <div class="card">
       <div class="card-header">
-        <h4 class="text-center"> Elecciones Curso {{$course}} </h4>
+        <h4 class="text-center"> Planificación Curso {{$course}} </h4>
         @if($elecPermission == 1)
         <a href="{{ url('/elections/pdf/'.$course) }}" type="btn btn-light btn-sm" style="float: left;"><img src="{{ asset('img/descarga.png') }}" height="15" width="15"/></a>
 
