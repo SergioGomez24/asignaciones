@@ -12,6 +12,10 @@
 </nav>
 @stop
 @section('content')
+<div class="alert alert-success" id="success-alert">
+  <strong>La elección se ha creado exitosamente!</strong>
+</div>
+
 <div class="row" style="margin-top:40px">
    <div class="offset-md-3 col-md-6">
       <div class="card">
@@ -54,6 +58,10 @@
 
    var numElections;
 
+  $(document).ready(function(){
+    $(".alert").hide();
+  });
+
    $('#course').on('change', function(e) {
       course = e.target.value;
       $.get('/asignaciones/public/json-election?course='+ course, function(data) {
@@ -67,6 +75,10 @@
          alert("Eleccion ya creada");
          return false;
       }else{
+        $(".alert").show();
+        $(".alert").delay(4000).slideUp(200, function() {
+          $(this).alert('close');
+        });
          return true;
       }
    }

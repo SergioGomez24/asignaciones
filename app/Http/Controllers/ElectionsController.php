@@ -195,7 +195,7 @@ class ElectionsController extends Controller
             $e->save();
         }
 
-        Notification::success('La elección se ha creado exitosamente!');
+        //Notification::success('La elección se ha creado exitosamente!');
         return redirect('/settings/elections');
     }
 
