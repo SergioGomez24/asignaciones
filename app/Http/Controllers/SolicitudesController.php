@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use App\Course;
 use App\Solicitude;
 use App\Subject;
@@ -12,6 +13,10 @@ use App\Certification;
 use App\Teacher;
 use App\Coursesubject;
 use App\Election;
+use App\Mail\PermisoCoordinador;
+use App\Mail\PermisoProfesor;
+use App\Mail\PermisoDirector;
+use App\Mail\Planificacion;
 use Notification;
 
 class SolicitudesController extends Controller
@@ -630,6 +635,7 @@ class SolicitudesController extends Controller
                 if ($cont > 0) {
                     $c->coorPermission = true;
                     $c->save();
+                    Mail::to("sergiogb2492@gmail.com")->send(new PermisoCoordinador());
                 }
             }
         }
@@ -676,6 +682,7 @@ class SolicitudesController extends Controller
                     $p->profPermission = true;
                     $p->save();
                     $profPermission = true;
+                    Mail::to("sergiogb2492@gmail.com")->send(new PermisoProfesor());
                 }
             }
 
@@ -683,6 +690,7 @@ class SolicitudesController extends Controller
                 foreach ($eleccionDir as $key => $c) {
                     $c->dirPermission = true;
                     $c->save();
+                    Mail::to("sergiogb2492@gmail.com")->send(new PermisoDirector());
                 }
             }
         }
@@ -754,6 +762,8 @@ class SolicitudesController extends Controller
             $eleccion->state = false;
             $eleccion->save();
         }
+
+        Mail::to("sergiogb2492@gmail.com")->send(new Planificacion());
 
         Notification::success('Las elecciones se cerraron exitosamente!');
         return redirect('home');
