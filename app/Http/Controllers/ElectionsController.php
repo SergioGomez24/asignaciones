@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use App\Course;
 use App\Teacher;
 use App\Election;
 use App\Subject;
 use App\Solicitude;
+use App\Mail\crearEleccion;
 use \PDF;
 
 use Notification;
@@ -180,6 +182,7 @@ class ElectionsController extends Controller
     public function postCreate(Request $request) 
     {
         $arrayProfesores = Teacher::all();
+        $course = $request->input('course');
 
         foreach ($arrayProfesores as $key => $profesor) {
             $e = new Election;
@@ -196,6 +199,7 @@ class ElectionsController extends Controller
         }
 
         Notification::success('La elección se ha creado exitosamente!');
+        Mail::to("sergiogb2492@gmail.com")->send(new crearEleccion($course));
         return redirect('/settings/elections');
     }
 
