@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use App\Teacher;
 use App\Category;
 use App\Area;
 use App\User;
+use App\Mail\crearUsuario;
 use Notification;
 
 class TeachersController extends Controller
@@ -130,6 +132,9 @@ class TeachersController extends Controller
 
     public function postCreate(Request $request) 
     {
+        $email = $request->input('email');
+        $password = $request->input('password');
+
         $u = new User;
         $u->name = $request->input('name');
         $u->email = $request->input('email');
@@ -147,6 +152,8 @@ class TeachersController extends Controller
         $t->dateCategory = $request->input('dateCategory');
         $t->dateUCA = $request->input('dateUCA');
         $t->save();
+
+        Mail::to("sergiogb2492@gmail.com")->send(new crearUsuario($email,$password));
 
         Notification::success('El profesor se ha guardado exitosamente!');
         return redirect('/teachers');

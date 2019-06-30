@@ -25,7 +25,7 @@ class TeachersTableSeeder extends Seeder
 		$t->user_id = 2;
 		$t->category_id = 2;
 		$t->area_id = 1;
-		$t->cInitial = 18;
+		$t->cInitial = 6;
 		$t->dateCategory = '2018-09-21';
 		$t->dateUCA = '2018-09-16';
 		$t->save();
@@ -36,7 +36,7 @@ class TeachersTableSeeder extends Seeder
 		$t->user_id = 3;
 		$t->category_id = 2;
 		$t->area_id = 1;
-		$t->cInitial = 18;
+		$t->cInitial = 6;
 		$t->dateCategory = '2018-09-22';
 		$t->dateUCA = '2018-09-17';
 		$t->save();
