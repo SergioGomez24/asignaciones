@@ -30,10 +30,11 @@ class CentersController extends Controller
     }
 
     public function postCreate(Request $request) 
-     {
+    {
         $c = new Center;
         $c->name = $request->input('name');
         $c->save();
+
         Notification::success('El centro se ha guardado exitosamente!');
         return redirect('/settings/centers');
     }
@@ -50,6 +51,7 @@ class CentersController extends Controller
         $c = Center::findOrFail($id);
         $c->name = $request->input('name');
         $c->save();
+
         Notification::success('El centro ha sido modificado exitosamente!');
         return redirect('/settings/centers');
     }
@@ -61,5 +63,4 @@ class CentersController extends Controller
         Notification::success('El centro fue eliminado exitosamente!');
         return redirect('/settings/centers');
     }
-
 }

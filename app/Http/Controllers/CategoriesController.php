@@ -16,7 +16,7 @@ class CategoriesController extends Controller
     }
 
     public function getCategory(Request $request) {
-        if($request->ajax()){
+        if($request->ajax()) {
             $id = $request->id;
             $info = Category::find($id);
 
@@ -30,11 +30,12 @@ class CategoriesController extends Controller
     }
 
     public function postCreate(Request $request) 
-     {
+    {
         $c = new Category;
         $c->name = $request->input('name');
         $c->rank = $request->input('rank');
         $c->save();
+
         Notification::success('La categoria se ha guardado exitosamente!');
         return redirect('/settings/categories');
     }
@@ -63,5 +64,4 @@ class CategoriesController extends Controller
         Notification::success('La categoria fue eliminada exitosamente!');
         return redirect('/settings/categories');
     }
-
 }

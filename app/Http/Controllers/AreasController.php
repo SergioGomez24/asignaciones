@@ -30,7 +30,7 @@ class AreasController extends Controller
     }
 
     public function postCreate(Request $request) 
-     {
+    {
         $a = new Area;
         $a->name = $request->input('name');
         $a->save();

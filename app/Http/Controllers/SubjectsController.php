@@ -25,7 +25,8 @@ class SubjectsController extends Controller
     	return view('subjects.index', ['arrayAsignaturas' => $arrayAsignaturas]);
     }
 
-    public function getSubjects() {
+    public function getSubjects() 
+    {
         $cert_id = Input::get('certification_id');
         $camp_id = Input::get('campus_id');
         $imparted_id = Input::get('imparted_id');
@@ -139,6 +140,7 @@ class SubjectsController extends Controller
         $a->typeSubject_id = $request->input('typeSubject_id');
         $a->coordinator_id = $request->input('coordinator_id');
         $a->save();
+
         Notification::success('La asignatura se ha guardado exitosamente!');
         return redirect('/subjects');
     }
@@ -216,6 +218,7 @@ class SubjectsController extends Controller
         $a->typeSubject_id = $request->input('typeSubject_id');
         $a->coordinator_id = $request->input('coordinator_id');
         $a->save();
+        
         Notification::success('La asignatura ha sido modificada exitosamente!');
         return redirect('/subjects');
     }
@@ -224,6 +227,7 @@ class SubjectsController extends Controller
     {
         $a = Subject::findOrFail($id);
         $a->delete();
+
         Notification::success('La asignatura fue eliminada exitosamente!');
         return redirect('/subjects');
     }

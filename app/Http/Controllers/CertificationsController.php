@@ -16,7 +16,7 @@ class CertificationsController extends Controller
     }
 
     public function getCertification(Request $request) {
-        if($request->ajax()){
+        if($request->ajax()) {
             $id = $request->id;
             $info = Certification::find($id);
             
@@ -30,10 +30,11 @@ class CertificationsController extends Controller
     }
 
     public function postCreate(Request $request) 
-     {
+    {
         $c = new Certification;
         $c->name = $request->input('name');
         $c->save();
+
         Notification::success('La titulacion se ha guardado exitosamente!');
         return redirect('/settings/certifications');
     }
@@ -50,6 +51,7 @@ class CertificationsController extends Controller
         $c = Certification::findOrFail($id);
         $c->name = $request->input('name');
         $c->save();
+
         Notification::success('La titulacion ha sido modificada exitosamente!');
         return redirect('/settings/certifications');
     }
@@ -58,6 +60,7 @@ class CertificationsController extends Controller
     {
         $c = Certification::findOrFail($id);
         $c->delete();
+        
         Notification::success('La titulacion fue eliminada exitosamente!');
         return redirect('/settings/certifications');
     }

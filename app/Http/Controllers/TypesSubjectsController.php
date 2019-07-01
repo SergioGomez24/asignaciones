@@ -30,10 +30,11 @@ class TypesSubjectsController extends Controller
     }
 
     public function postCreate(Request $request) 
-     {
+    {
         $a = new Typesubject;
         $a->name = $request->input('name');
         $a->save();
+
         Notification::success('El tipo asignatura se ha guardado exitosamente!');
         return redirect('/settings/typesSubjects');
     }
@@ -50,6 +51,7 @@ class TypesSubjectsController extends Controller
         $a = Typsubject::findOrFail($id);
         $a->name = $request->input('name');
         $a->save();
+
         Notification::success('El tipo asignatura ha sido modificado exitosamente!');
         return redirect('/settings/typesSubjects');
     }
@@ -58,6 +60,7 @@ class TypesSubjectsController extends Controller
     {
         $a = Typesubject::findOrFail($id);
         $a->delete();
+        
         Notification::success('El tipo asignatura fue eliminado exitosamente!');
         return redirect('/settings/typesSubjects');
     }

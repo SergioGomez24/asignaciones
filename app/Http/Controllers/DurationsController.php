@@ -30,10 +30,11 @@ class DurationsController extends Controller
     }
 
     public function postCreate(Request $request) 
-     {
+    {
         $a = new Durationsubject;
         $a->name = $request->input('name');
         $a->save();
+
         Notification::success('La duración se ha guardado exitosamente!');
         return redirect('/settings/duration');
     }
@@ -50,6 +51,7 @@ class DurationsController extends Controller
         $a = Durationsubject::findOrFail($id);
         $a->name = $request->input('name');
         $a->save();
+
         Notification::success('La duración ha sido modificada exitosamente!');
         return redirect('/settings/duration');
     }
@@ -58,6 +60,7 @@ class DurationsController extends Controller
     {
         $a = Durationsubject::findOrFail($id);
         $a->delete();
+        
         Notification::success('La duración fue eliminada exitosamente!');
         return redirect('/settings/duration');
     }

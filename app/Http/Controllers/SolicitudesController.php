@@ -642,7 +642,6 @@ class SolicitudesController extends Controller
 
         Notification::success('Las solicitudes fue enviadas exitosamente!');
         return redirect('home');
-
     }
 
     public function editPermissionCoor(Request $request, $course)
@@ -763,10 +762,8 @@ class SolicitudesController extends Controller
             $eleccion->save();
         }
 
-        Mail::to("sergiogb2492@gmail.com")->send(new Planificacion());
-
         Notification::success('Las elecciones se cerraron exitosamente!');
+        Mail::to("sergiogb2492@gmail.com")->send(new Planificacion());
         return redirect('home');
     }
-
 }

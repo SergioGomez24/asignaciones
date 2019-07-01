@@ -30,7 +30,6 @@ class ElectionsController extends Controller
         }
 
         return view('elections.course',compact('arrayElecciones', 'cont'));
-
     }
 
     public function getIndex($course, Request $request)

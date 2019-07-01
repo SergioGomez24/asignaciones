@@ -31,10 +31,11 @@ class CampusController extends Controller
     }
 
     public function postCreate(Request $request) 
-     {
+    {
         $c = new Campus;
         $c->name = $request->input('name');
         $c->save();
+
         Notification::success('El campus se ha guardado exitosamente!');
         return redirect('/settings/campus');
     }
@@ -51,6 +52,7 @@ class CampusController extends Controller
         $c = Campus::findOrFail($id);
         $c->name = $request->input('name');
         $c->save();
+        
         Notification::success('El campus ha sido modificado exitosamente!');
         return redirect('/settings/campus');
     }

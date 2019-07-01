@@ -65,14 +65,14 @@ class CoordinatorsController extends Controller
         }
 
         return view('solicitudes.coordinator.index')->with('arraySolicitudesCoor', $arraySolicitudesCoor)
-                                                      ->with('arrayAsignaturasCoor', $arrayAsignaturasCoor)
-                                                      ->with('arrayProfesores', $arrayProfesores)
-                                                      ->with('teacher_id', $teacher_id)
-                                                      ->with('subject_id', $subject_id)
-                                                      ->with('course', $course)
-                                                      ->with('dirPermission', $dirPermission)
-                                                      ->with('profPermission', $profPermission)
-                                                      ->with('coorPermission', $coorPermission);
+                                                ->with('arrayAsignaturasCoor', $arrayAsignaturasCoor)
+                                                ->with('arrayProfesores', $arrayProfesores)
+                                                ->with('teacher_id', $teacher_id)
+                                                ->with('subject_id', $subject_id)
+                                                ->with('course', $course)
+                                                ->with('dirPermission', $dirPermission)
+                                                ->with('profPermission', $profPermission)
+                                                ->with('coorPermission', $coorPermission);
     }
 
     public function getCoordinator(Request $request) {

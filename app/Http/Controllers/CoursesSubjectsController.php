@@ -30,10 +30,11 @@ class CoursesSubjectsController extends Controller
     }
 
     public function postCreate(Request $request) 
-     {
+    {
         $a = new Coursesubject;
         $a->name = $request->input('name');
         $a->save();
+        
         Notification::success('El curso asignatura se ha guardado exitosamente!');
         return redirect('/settings/coursesSubjects');
     }
@@ -50,6 +51,7 @@ class CoursesSubjectsController extends Controller
         $a = Coursesubject::findOrFail($id);
         $a->name = $request->input('name');
         $a->save();
+
         Notification::success('El curso asignatura ha sido modificado exitosamente!');
         return redirect('/settings/coursesSubjects');
     }
@@ -58,6 +60,7 @@ class CoursesSubjectsController extends Controller
     {
         $a = Coursesubject::findOrFail($id);
         $a->delete();
+
         Notification::success('El curso asignatura fue eliminado exitosamente!');
         return redirect('/settings/coursesSubjects');
     }

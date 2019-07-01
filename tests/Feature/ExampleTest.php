@@ -33,7 +33,7 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /*public function testSubjectsCreatepost()
+    public function testSubjectsCreatepost()
     {
         $this->withoutMiddleware();
 
@@ -49,7 +49,7 @@ class ExampleTest extends TestCase
         $response = $this->get('subjects/edit/');
 
         $response->assertStatus(200);
-    }*/
+    }
 
     public function testTeachers()
     {
