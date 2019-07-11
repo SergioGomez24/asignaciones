@@ -562,6 +562,7 @@ class SolicitudesController extends Controller
     {
         $a = Solicitude::findOrFail($id);
         $c = $a->course;
+        $t = $a->teacher_id;
         $a->delete();
 
         $role = Auth()->user()->role;
@@ -580,7 +581,7 @@ class SolicitudesController extends Controller
         if ($role == "Profesor") {
             return redirect('/solicitudes/teacher/index/'. $c);
         }else{
-            return redirect("/solicitudes/director/index/{$c}/{$a->teacher_id}");
+            return redirect("/solicitudes/director/index/{$c}/{$t}");
         }
     }
 
