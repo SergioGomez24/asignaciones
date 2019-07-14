@@ -617,6 +617,7 @@ class SolicitudesController extends Controller
         }
 
         if($coorPermission == true) {
+            Mail::to('sergiogb2492@gmail.com')->send(new PermisoCoordinador());
             foreach ($elecciones as $key => $c) {
                 $cont = 0;
 
@@ -636,7 +637,6 @@ class SolicitudesController extends Controller
                 if ($cont > 0) {
                     $c->coorPermission = true;
                     $c->save();
-                    Mail::to("sergiogb2492@gmail.com")->send(new PermisoCoordinador());
                 }
             }
         }
@@ -687,10 +687,10 @@ class SolicitudesController extends Controller
             }
 
             if($profPermission == false){
+                Mail::to("sergiogb2492@gmail.com")->send(new PermisoDirector());
                 foreach ($eleccionDir as $key => $c) {
                     $c->dirPermission = true;
                     $c->save();
-                    Mail::to("sergiogb2492@gmail.com")->send(new PermisoDirector());
                 }
             }
         }
@@ -757,6 +757,8 @@ class SolicitudesController extends Controller
         $elecciones = Election::where('course', $course)
                               ->get();
 
+        Mail::to('sergiogb2492@gmail.com')->send(new Planificacion());
+
         foreach($elecciones as $eleccion) {
             $eleccion->elecPermission = true;
             $eleccion->state = false;
@@ -764,7 +766,6 @@ class SolicitudesController extends Controller
         }
 
         Notification::success('Las elecciones se cerraron exitosamente!');
-        Mail::to("sergiogb2492@gmail.com")->send(new Planificacion());
         return redirect('home');
     }
 }
